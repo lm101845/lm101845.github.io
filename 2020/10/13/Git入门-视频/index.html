@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="(注1：一个Git和Github从去年11月到现在，已经快过去了一年了，我也是服了，到现在也还不熟悉。不过今时不同往日，随着时间的推移，我的水平提升了，现在这个时候再来开始系统学Git和Github我感觉已经完全没有什么问题了，之前抄了一段时间的文章，发现效果不佳，于是还是准备去看一些视频。)  (注2：网上随便搜了搜，视频还是挺丰富的，找了几个还不错的，本篇博文就作为视频笔记了。)  看故事学G">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git入门(视频)">
+<meta property="og:url" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/index.html">
+<meta property="og:site_name" content="木子小屋">
+<meta property="og:description" content="(注1：一个Git和Github从去年11月到现在，已经快过去了一年了，我也是服了，到现在也还不熟悉。不过今时不同往日，随着时间的推移，我的水平提升了，现在这个时候再来开始系统学Git和Github我感觉已经完全没有什么问题了，之前抄了一段时间的文章，发现效果不佳，于是还是准备去看一些视频。)  (注2：网上随便搜了搜，视频还是挺丰富的，找了几个还不错的，本篇博文就作为视频笔记了。)  看故事学G">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/01.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/02.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/04.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/03.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/05.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/06.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/07.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/08.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/09.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/11.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/10.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/12.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/13.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/14.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/15.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/16.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/17.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/18.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/19.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/20.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/21.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/22.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/23.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/24.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/25.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/26.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/27.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/28.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/29.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/30.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/31.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/32.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/33.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/34.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/35.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/36.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/38.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/37.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/39.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/40.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/41.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/42.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/43.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/44.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/45.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/46.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/47.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/48.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/28.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/49.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/50.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/51.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/52.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/53.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/54.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/55.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/56.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/57.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/58.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/59.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/60.png">
+<meta property="og:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/61.png">
+<meta property="article:published_time" content="2020-10-13T15:20:40.000Z">
+<meta property="article:modified_time" content="2020-10-13T15:20:40.000Z">
+<meta property="article:author" content="筛滤淘">
+<meta property="article:tag" content="Git">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/01.png">
+
+<link rel="canonical" href="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Git入门(视频) | 木子小屋</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?79d7cb9c8fa9e57a2723fb8645f37638";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">木子小屋</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Talk is cheap. Show me the code.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cat.jpg">
+      <meta itemprop="name" content="筛滤淘">
+      <meta itemprop="description" content="前端知识点总结">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="木子小屋">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Git入门(视频)
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-10-13 23:20:40" itemprop="dateCreated datePublished" datetime="2020-10-13T23:20:40+08:00">2020-10-13</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>(注1：一个Git和Github从去年11月到现在，已经快过去了一年了，我也是服了，到现在也还不熟悉。不过今时不同往日，随着时间的推移，我的水平提升了，现在这个时候再来开始系统学Git和Github我感觉已经完全没有什么问题了，之前抄了一段时间的文章，发现效果不佳，于是还是准备去看一些视频。)</p>
+<p>(注2：网上随便搜了搜，视频还是挺丰富的，找了几个还不错的，本篇博文就作为视频笔记了。)</p>
+<h1 id="看故事学Git–就看这个了"><a href="#看故事学Git–就看这个了" class="headerlink" title="看故事学Git–就看这个了"></a><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1pD4y1m7bX?p=1">看故事学Git–就看这个了</a></h1><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV15J411973T?p=1">尚硅谷Git教程全套完整版（12h深入掌握git-没看）</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1pW411A7a5?p=1">尚硅谷GitHub基础全套完整版教程-没看</a></p>
+<h1 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h1><h2 id="Git是什么"><a href="#Git是什么" class="headerlink" title="Git是什么"></a>Git是什么</h2><p>Git是一个分布式的版本控制软件。</p>
+<ul>
+<li>软件，类似于QQ、office，DOTA等安装到电脑上才能使用的工具。</li>
+<li>版本控制，类似于毕业论文、写文案、视频剪辑等，需要反复修改和保留原历史数据。</li>
+<li>分布式<ul>
+<li>文件夹拷贝</li>
+<li>本地版本控制</li>
+<li>集中式版本控制</li>
+<li>分布式版本控制</li>
+</ul>
+</li>
+</ul>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/01.png" class>
+
+<h2 id="为什么要做版本控制"><a href="#为什么要做版本控制" class="headerlink" title="为什么要做版本控制"></a>为什么要做版本控制</h2><p>要保留之前所有的版本，以便回滚和修改。</p>
+<h2 id="安装Git"><a href="#安装Git" class="headerlink" title="安装Git"></a>安装Git</h2><p>Git这个软件是装在你自己的电脑上的，并且只能完成你自己电脑上的版本控制。</p>
+<p><strong>中心</strong>不需要安装Git软件。(你可以把中心当成是代码托管的仓库)这个仓库现在还没有呢，如果想有，还得借助Github或Gitlab网站，要联网。</p>
+<p>我们这里讲的是不联网的，只是在本地做版本控制，还不能提交到代码仓库呢。</p>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/02.png" class>
+
+<p><a target="_blank" rel="noopener" href="https://git-scm.com/book/zh/v2/%E8%B5%B7%E6%AD%A5-%E5%AE%89%E8%A3%85-Git">安装 Git</a></p>
+<h1 id="“东北热”创业史"><a href="#“东北热”创业史" class="headerlink" title="“东北热”创业史"></a>“东北热”创业史</h1><h2 id="第一阶段：单枪匹马开始干"><a href="#第一阶段：单枪匹马开始干" class="headerlink" title="第一阶段：单枪匹马开始干"></a>第一阶段：单枪匹马开始干</h2><p>新建一个<code>dbhot</code>文件夹，让Git帮我们对其进行管理。</p>
+<blockquote>
+<p><code>dbhot</code>文件夹是教室里的学生，Git是老师，老师要管理学生,首先要进入教室，然后老师要对学生进行统一洗脑(初始化)，洗脑成功后Git就成了教室里的老大了，每个学生都要听他的话了。最后再看一下同学们的当前状态怎么样。</p>
+</blockquote>
+<p>想要让git对一个目录进行版本控制需要以下步骤：</p>
+<ul>
+<li><p>进入要管理的文件夹</p>
+</li>
+<li><p>执行初始化命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
+<p>执行初始化命令后要管理的<code>dbhot</code>文件夹里面会出现一个默认隐藏的<code>.git</code>文件夹，今后所有的配置及版本信息都会存储到这个<code>.git</code>文件夹里面，所以你最好不要随便动里面的东西。</p>
+</li>
+</ul>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/04.png" class>
+
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/03.png" class>
+
+<ul>
+<li><p>管理目录下的文件状态</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br><span class="line">注：新增的文件和修改过后的文件都是红色</span><br></pre></td></tr></table></figure>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/05.png" class>
+
+<p>如果再往dbhot文件夹下再新增一个<code>test.txt</code>文件，再执行<code>git status</code>命令，新增的文件也能检测到：</p>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/06.png" class>
+
+<blockquote>
+<p><code>git status</code>就是用于检测当前文件夹里的文件状态的。</p>
+</blockquote>
+</li>
+<li><p>管理指定文件（<strong>红变绿</strong>）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add 文件名			——这是管理某一个文件名</span><br><span class="line">git add .					——这是管理所有的文件名(add和点中间有空格)</span><br></pre></td></tr></table></figure>
+<p>检测到状态之后就要对它进行管理了，就要生成版本了。</p>
+</li>
+</ul>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/07.png" class>
+
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/08.png" class>
+
+<ul>
+<li><p>生成版本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m &#39;描述信息&#39;</span><br></pre></td></tr></table></figure>
+<p>这3个文件都已经被管理起来了，但是还不够，你还得让它们跳转到另外一个状态：生成一个版本。(这个就相当于V1.0版了，生成版本可以很好的记录下当前所做的的一系列操作。)</p>
+</li>
+</ul>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/09.png" class>
+
+<ul>
+<li>生成版本后又对其中一个文件进行修改</li>
+</ul>
+<p>对3个文件生成了一个版本后，发现<code>index.html</code>还有点问题，对它进行了一些修改，此时Git是可以检测到<code>index.html</code>发生了修改的。</p>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/11.png" class>
+
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/10.png" class>
+
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/12.png" class>
+
+<ul>
+<li><p>查看所有的版本的记录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log</span><br></pre></td></tr></table></figure>
+<p>这里我们已经生成了2个版本了，如果查看这2个版本的记录呢？使用<code>git log</code>命令即可。</p>
+</li>
+</ul>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/13.png" class>
+
+<ul>
+<li><p>个人信息配置：用户名、邮箱(一次即可)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.email &quot;you@example.com&quot;</span><br><span class="line">git config --global user.name &quot;Your Name&quot;</span><br></pre></td></tr></table></figure>
+<p>当你在进行上述操作遇到错误时，可能是因为你没有进行个人信息配置导致的。</p>
+</li>
+</ul>
+<h3 id="第一阶段小结"><a href="#第一阶段小结" class="headerlink" title="第一阶段小结"></a>第一阶段小结</h3><img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/14.png" class>
+
+<blockquote>
+<p>看了视频后，完全能看懂了，现在头脑中开始逐渐清晰了起来，不再那么迷糊了。</p>
+</blockquote>
+<h3 id="补充：Git三大区域"><a href="#补充：Git三大区域" class="headerlink" title="补充：Git三大区域"></a>补充：Git三大区域</h3><img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/15.png" class>
+
+<blockquote>
+<p>记得经常用<code>git status</code>来查看状态。</p>
+</blockquote>
+<h2 id="第二阶段：拓展新功能-正常功能"><a href="#第二阶段：拓展新功能-正常功能" class="headerlink" title="第二阶段：拓展新功能(正常功能)"></a>第二阶段：拓展新功能(正常功能)</h2><p>我在<code>index.html</code>里又新增了短视频功能</p>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/16.png" class>
+
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/17.png" class>
+
+<h2 id="第三阶段：”约饭”功能-涉黄功能"><a href="#第三阶段：”约饭”功能-涉黄功能" class="headerlink" title="第三阶段：”约饭”功能(涉黄功能)"></a>第三阶段：”约饭”功能(涉黄功能)</h2><p>只有短视频功能的时候，营业收入只有100多万，加了”约饭”功能后，营业收入突破了1000万。</p>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/18.png" class>
+
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/19.png" class>
+
+<p>随着网站的运行，有关部门发现”约饭”的功能涉黄，要求整改，这个”约饭”功能不能要了，要下线才能继续运营。</p>
+<p>我们重新改代码会非常麻烦，而用版本控制的一个好处是可以让它快速回滚到<strong>前面</strong>的版本状态(你想回滚到哪个状态就可以回滚到哪个状态)。</p>
+<ul>
+<li><p>回滚至之前版本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git log(查看所有的版本)</span><br><span class="line">git reset --hard 版本号</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>版本号就是上图中黄色的部分，commit之后的那一长串。</p>
+</blockquote>
+</li>
+</ul>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/20.png" class>
+
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/21.png" class>
+
+<ul>
+<li>回滚至之后版本</li>
+</ul>
+<p>后来经过贿赂有关部门，可以再重新上线”约饭”功能了。因为”约饭”功能以前写过，可以不用再重新写一遍代码了，回滚到之后的版本就可以了。</p>
+<p>但是这次查看所有版本的时候不要用<code>git log</code>了，使用这个命令查看不到回滚之后的版本号的。</p>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/22.png" class>
+
+<p>这个时候应该使用<code>git reflog</code>命令查看所有版本。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git reflog</span><br><span class="line">git reset --hard 版本号</span><br></pre></td></tr></table></figure>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/23.png" class>
+
+<blockquote>
+<p>e112867 就是”约饭”功能的版本号</p>
+</blockquote>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/24.png" class>
+
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/25.png" class>
+
+<h3 id="Git命令小总结"><a href="#Git命令小总结" class="headerlink" title="Git命令小总结"></a>Git命令小总结</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line">git add</span><br><span class="line">git commit</span><br><span class="line">git 1og</span><br><span class="line">git reflog</span><br><span class="line">git reset--hard版本号</span><br></pre></td></tr></table></figure>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/26.png" class>
+
+<h2 id="第四阶段：商城-amp-紧急修复bug"><a href="#第四阶段：商城-amp-紧急修复bug" class="headerlink" title="第四阶段：商城&amp;紧急修复bug"></a>第四阶段：商城&amp;紧急修复bug</h2><blockquote>
+<p>加入<strong>新增的商城功能</strong>要写2个月，当我写到1个月的时候，发现”约饭”的功能出Bug了，需要紧急修复。</p>
+<p>但是<strong>我这个商城功能刚开发一半</strong>，怎么样我<strong>既能回到”约饭”那个版本并且我现在写的商城功能也能暂时保存一下</strong>呢？保存在哪里呢？按照以前我们储备的只是是无法实现的，而现在可以通过”分支”功能来实现。</p>
+</blockquote>
+<h3 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h3><p>分支可以给使用者提供多个环境，意味着你可以把你的工作从开发主线上分离开来，以免影响开发主线。</p>
+<ul>
+<li><p>第一阶段之单枪匹马开始干：自己写了100个文件，版本为C1。</p>
+</li>
+<li><p>第二阶段之拓展新功能：修改了10个文件，新增了20个文件，版本为C2。C1和C2的区别就是修改了10个文件，新增了20个文件，剩下的90个文件都是没有发生变化的。版本C2将这不变的90个文件复制一份放到C2里面，而是只保留了修改的10个文件，新增的20个文件。这不变的90个文件自己没有保存以后自己想要怎么办呢？C2弄了一个指针指向C1，以后想要的话就可以通过指针再将这不变的90个文件给拿到了。</p>
+</li>
+<li><p>第三阶段只约饭功能：类似的也生成了一个版本C3</p>
+</li>
+<li><p>接下来我还想再版本C3的基础上进行开发，这个时候你可以顺着C1——&gt;C2——&gt;C3的顺序再来一个C4,也可以新建一个分支进行后续版本的开发。</p>
+</li>
+</ul>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/27.png" class>
+
+<h3 id="紧急修复bug方案"><a href="#紧急修复bug方案" class="headerlink" title="紧急修复bug方案"></a>紧急修复bug方案</h3><blockquote>
+<p>线上代码出Bug了我们可以<strong>新建一个分支专门用于写处理Bug的代码</strong>，等代码写完后我们可以再将这个分支合并到主分支里面去解决Bug。</p>
+<p>默认主干线叫做:master，分支(branch)具体叫什么名字你随便取。</p>
+</blockquote>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/28.png" class>
+
+<h3 id="命令总结"><a href="#命令总结" class="headerlink" title="命令总结"></a>命令总结</h3><ul>
+<li><p>查看当前所在的分支</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch</span><br></pre></td></tr></table></figure>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/29.png" class>
+</li>
+<li><p>创建新分支</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch 分支名称</span><br></pre></td></tr></table></figure></li>
+<li><p>切换分支</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout 分支名称</span><br></pre></td></tr></table></figure></li>
+<li><p>分支合并(可能产生的冲突)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git merge 要合并的分支</span><br><span class="line">注意：先切换分支再合并</span><br></pre></td></tr></table></figure></li>
+<li><p>删除分支</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -d 分支名称</span><br></pre></td></tr></table></figure>
+<p>我们想要在新的分支下面创建一个新功能，新建一个分支dev，并且查看当前分支。然后切换到dev分支，在<strong>dev分支下</strong>写代码。</p>
+</li>
+</ul>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/30.png" class>
+
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/31.png" class>
+
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/32.png" class>
+
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/33.png" class>
+
+<p>我们之后再切换到master分支，再看<code>index.html</code>代码，发现它又变成了C3版本的代码了。</p>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/34.png" class>
+
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/35.png" class>
+
+<p>如果你再切换为dev分支的话，再打开<code>index.html</code>，会发现新增的代码又回来了。说白了，dev分支里存的是C4版本，master分支里存的是C3版本。</p>
+<p>即分支与分支之间给你做了一个<strong>代码的隔离</strong>。</p>
+<p>我们再<strong>在master分支下</strong>新建一个bug分支，用来修复bug问题。</p>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/36.png" class>
+
+<p>接下来我再跳转到bug分支，在C3的基础上给它进行修改代码，调试bug。</p>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/38.png" class>
+
+<p>注意：修改bug分支里的代码不影响C3的。</p>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/37.png" class>
+
+<p>修复完bug后对代码进行提交。</p>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/39.png" class>
+
+<p>但是注意：bug修复完是在bug分支里修复的，版本是C5,但是master分支(版本C3)里面的bug还是没有修复的，还是有的。 </p>
+<p>一般我们认为<strong>master分支是线上分支，是代码正式跑在线上环境的分支</strong>。你在bug分支上修复完bug之后，你应该把代码合并到主分支上来，这样公司线上的bug就可以被修复了。</p>
+<p>所以接下来我们要把bug分支的代码合并到master分支上面去。</p>
+<p><strong>重点：要想bug分支合并到master分支上，必须先切换回master分支！！！</strong></p>
+<p>相当于你站在master分支上，把bug分支上的代码给他拉过来，合并过来。</p>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/40.png" class>
+
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/41.png" class>
+
+<p>bug分支合并完后就失去了利用价值，就可以把它给删掉了。</p>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/42.png" class>
+
+<p>修复完bug后我们应该再回到dev分支(C4版本)，把商城的功能给它开发完(前面只是开发了50%)</p>
+<p><strong>注意：因为dev分支(C4版本)是从C3版本拆分而来的，所以dev分支里面的bug还没有修复呢！！！</strong></p>
+<p>但是bug问题你先别管，这个分支主要是来开发新功能的，所以你只需要关注开发新功能就好了。</p>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/43.png" class>
+
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/44.png" class>
+
+<p>dev分支里的功能开发完毕以后，也要把它合并到master主分支上面去。</p>
+<p>我们<strong>首先</strong>需要再切换到master分支，然后把dev分支合并到master分支。</p>
+<p>但是我们合并完后发现它报错了(产生了冲突)：</p>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/45.png" class>
+
+<p>原因如下：</p>
+<p>原来我们修复bug之后，对C3的代码做了一些修改生成了C5,而在商城的时候，dev分支那个版本是没有修复bug的(因为直接从主分支C3版本基础上新建的C4商城版本)，它只是开发了新功能。</p>
+<p>而C5修复bug的代码和C4开发新功能的代码可能会产生不一样的地方，如果有不一样的地方它就会有冲突了。</p>
+<p>产生冲突之后打开<code>index.html</code>，它就混乱了，产生了下面的这些东西：</p>
+<p>(如果改了同一行文件，它就不知道怎么合并了，就会乱了，它会把2个文件都给你放到里面去)</p>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/46.png" class>
+
+<p>此时我们可以手动找到<code>index.html</code>，手动把冲突给解决掉(把<code>&lt;li&gt;约饭&lt;/li&gt;</code>给删除了就好了)</p>
+<p>修复后的<code>index.html</code>代码如下：</p>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/47.png" class>
+
+<p>然后再进行代码提交即可。</p>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/48.png" class>
+
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/28.png" class>
+
+<h3 id="工作流"><a href="#工作流" class="headerlink" title="工作流"></a>工作流</h3><p>公司让你创建一个新项目，最最最基础的，你要先创建2个分支(master分支自动创建)：默认的<strong>master分支</strong>(只保留正式版本，即真实上线的版本，它里面永远是稳定的)和<strong>dev分支</strong>(专门用于做开发的分支，dev是development的简写)。</p>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/49.png" class>
+
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/50.png" class>
+
+<h2 id="第五阶段：进军三里屯"><a href="#第五阶段：进军三里屯" class="headerlink" title="第五阶段：进军三里屯"></a>第五阶段：进军三里屯</h2><blockquote>
+<p>现在的分支默认是main了，不是master了！！！但是就是我想与时俱进，把默认分支由master改成main后，就发生了一系列问题，我现在有没有能力解决，所以后面我又把默认分支改成master了。这个改成main的事情以后再说了吧。</p>
+<p>学到这里的时候我出了一些问题了，老是报各种各样的错误了。</p>
+<p>现在是2020年12月9日，重新弄了一个<code>dbhot</code>文件夹，重新开始弄。</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/110274580">Git、GitHub、GitLab三者之间的联系以及区别</a></p>
+<p>有钱之后就要造呀，一个人在三里屯买了一层楼做办公室。</p>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/51.png" class>
+
+<blockquote>
+<p>GitHub就类似于百度云，只不过它可以和Git做一个无缝的衔接。但是Git和GitHub二者没有任何关系，Git是一个软件，而GitHub是一个网站，是专门用于做代码托管的仓库。除了GitHub以外，还有GitLab,Coding,码云，开源中国等类似的代码托管的网站。</p>
+</blockquote>
+<h3 id="第一天上班前在家上传代码"><a href="#第一天上班前在家上传代码" class="headerlink" title="第一天上班前在家上传代码"></a>第一天上班前在家上传代码</h3><p><strong>类似于在家上传文件到百度云。</strong></p>
+<blockquote>
+<p>push：把代码从本机上传到远程GitHub服务器</p>
+<p>pull：把代码从Github服务器下载到本机</p>
+</blockquote>
+<p>首先，需要注册github账号，并创建远程仓库，然后再执行如下命令，将代码上传到github。</p>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/52.png" class>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1. 给远程仓库起别名</span><br><span class="line">	 git remote add origin 远程仓库地址</span><br><span class="line">	 </span><br><span class="line">2. 向远程推送代码</span><br><span class="line">	 git push -u origin 分支</span><br></pre></td></tr></table></figure>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/53.png" class>
+
+<blockquote>
+<p>注意，要先把分支切换到master分支，然后再顺序执行上面的这2行代码。(后来我发现好像不用刻意切换分支也行。)</p>
+</blockquote>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/54.png" class>
+
+<blockquote>
+<p>而我们本地是有<code>master</code>和<code>dev</code>2个分支的，还有个<code>dev</code>分支没有推送上去，所以还要执行<code>git push -u origin dev</code>这个代码推送一下<code>dev</code>分支。</p>
+</blockquote>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/55.png" class>
+
+<h3 id="初次在公司新电脑下载代码"><a href="#初次在公司新电脑下载代码" class="headerlink" title="初次在公司新电脑下载代码"></a>初次在公司新电脑下载代码</h3><p><strong>类似于在公司下载百度云里面的文件(文件是当初在家里上传的)。</strong></p>
+<p>首先在公司电脑上新建一个文件夹，我的就取名叫<code>dbhot-公司</code>，就在这个文件夹中克隆GitHub(远程仓库上的代码)</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">克隆远程仓库代码：</span><br><span class="line">git clone远程仓库地址（内部已实现git remote add origin 远程仓库地址）</span><br></pre></td></tr></table></figure>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/56.png" class>
+
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/57.png" class>
+
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/58.png" class>
+
+<blockquote>
+<p>远程仓库有2个分支，你<code>git clone</code>下来后，看似只有一个master分支，其实不是的。其实它把所有的分支都复制下来了，只不过在这里它没有帮助我们显示出来。</p>
+</blockquote>
+<ul>
+<li><p>虽然你没有直接显示出来其他的分支，但是我是可以切换的</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">切换分支：</span><br><span class="line">git checkout 分支</span><br></pre></td></tr></table></figure></li>
+<li><p>在公司下载完代码后，继续开发(不然你说你下载完代码后干什么呢？)</p>
+</li>
+<li><p>注意：接下来的操作都是在公司的电脑上完成的。</p>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">1. 切换到dev分支进行开发</span><br><span class="line">   git checkout dev</span><br><span class="line">   </span><br><span class="line">2. 把master分支合并到dev[仅一次](因为此时dev分支上的代码比master少，不是最新最全的代码)</span><br><span class="line">	 git merge master</span><br><span class="line">	 </span><br><span class="line">3. 修改代码(在公司电脑dev分支下新建一个a1.py的文件)</span><br><span class="line">	 touch a1.py</span><br><span class="line">	 </span><br><span class="line">4. 提交代码(相当于上传到&quot;百度云&quot;)</span><br><span class="line">	git add .</span><br><span class="line">	git commit -m &#x27;在公司第一天在dev分支下开发的代码&#x27;</span><br><span class="line">	git push -u origin dev(-u可以省略)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：我现在是在dev分支下开发的代码(新增了<code>a1.py</code>这个文件，master分支还没有更新呢！！)</p>
+</blockquote>
+<h3 id="下班回到家继续写代码"><a href="#下班回到家继续写代码" class="headerlink" title="下班回到家继续写代码"></a>下班回到家继续写代码</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/xiaobinqt/article/details/83546322">git 解决 fatal: ‘origin’ does not appear to be a git repository</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">1. 切换到dev分支进行开发</span><br><span class="line">	 git checkout dev</span><br><span class="line"></span><br><span class="line">2. 拉代码</span><br><span class="line">   git pull origin dev</span><br><span class="line"></span><br><span class="line">3. 继续开发(在家里电脑dev分支下新建一个a2.py的文件)</span><br><span class="line">	 touch a2.py</span><br><span class="line">	 </span><br><span class="line">4. 提交代码(再次上传到&quot;百度云&quot;)</span><br><span class="line">   git add</span><br><span class="line">   git commit-m&#x27;在家里半夜三更在dev分支下开发的代码&#x27;</span><br><span class="line">   git push origin dev</span><br></pre></td></tr></table></figure>
+<h3 id="到公司继续开发"><a href="#到公司继续开发" class="headerlink" title="到公司继续开发"></a>到公司继续开发</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">1. 切换到dev分支进行开发(因为你在家里是在dev分支下新增了a2.py文件)</span><br><span class="line">	 git checkout dev</span><br><span class="line"></span><br><span class="line">2. 拉最新代码(不必再Clone，只需要通过pull获取最新代码即可--相当于从百度云下载最新的dev分支上的代码)</span><br><span class="line">	 如果想在公司的电脑上继续开发，应该是在昨晚家里提交代码的基础上(新增了a2.py)开发的，所以第一步要获取	 最新的代码</span><br><span class="line">   git pull origin dev</span><br><span class="line"></span><br><span class="line">3. 继续开发(在公司电脑dev分支下新建一个a3.py的文件)</span><br><span class="line">	 touch a3.py</span><br><span class="line">	 </span><br><span class="line">4. 提交代码(第3次上传到&quot;百度云&quot;)</span><br><span class="line">   git add</span><br><span class="line">   git commit-m&#x27;在公司第二天在dev分支下开发的代码a3.py&#x27;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>开发完<code>a3.py</code>后，我们就当它开发完毕了，此时不急着上传代码了，要先进行分支合并了。</p>
+</blockquote>
+<h3 id="开发完毕，要上线-公司电脑上"><a href="#开发完毕，要上线-公司电脑上" class="headerlink" title="开发完毕，要上线(公司电脑上)"></a>开发完毕，要上线(公司电脑上)</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1. 将dev分支合并到master，进行上线</span><br><span class="line">	 git checkout master</span><br><span class="line">   git merge dev </span><br><span class="line">   git push origin master</span><br><span class="line">   </span><br><span class="line">2. 把dev分支也推送到远程</span><br><span class="line">	 git checkout dev</span><br><span class="line">	 git merge master(这样dev分支也是最新的代码了)</span><br><span class="line">	 git push origin dev</span><br></pre></td></tr></table></figure>
+<h3 id="再次回到家中，进行代码修改"><a href="#再次回到家中，进行代码修改" class="headerlink" title="再次回到家中，进行代码修改"></a>再次回到家中，进行代码修改</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.把最新版的master和dev分支都下载(pull)下来。</span><br><span class="line">	git pull origin dev</span><br><span class="line">	git pull origin master</span><br><span class="line">2.接着再循环上述操作，如此循环往复，直到项目完成</span><br></pre></td></tr></table></figure>
+<h3 id="在公司约妹子忘记提交代码"><a href="#在公司约妹子忘记提交代码" class="headerlink" title="在公司约妹子忘记提交代码"></a>在公司约妹子忘记提交代码</h3><p>又是不知道某一天，在公司开发代码，出现了一些意外。。。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">1.拉代码</span><br><span class="line">	git pull origin dev</span><br><span class="line">	</span><br><span class="line">2.继续开发(在公司电脑dev分支下修改a1.py文件，新增文字：功能完成50%)</span><br><span class="line"></span><br><span class="line">3.提交代码</span><br><span class="line">	git add .</span><br><span class="line">	git commit -m&#x27;xx&#x27;</span><br><span class="line">	</span><br><span class="line">注：忘记push了</span><br></pre></td></tr></table></figure>
+<h3 id="回家继续写代码-这下记得上传代码了"><a href="#回家继续写代码-这下记得上传代码了" class="headerlink" title="回家继续写代码(这下记得上传代码了)"></a>回家继续写代码(这下记得上传代码了)</h3><p>家里的代码不是最新的，在公司的代码又忘记上传到百度云上了，只能暂时在旧版本的代码基础上继续开发了。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1. 拉代码，发现在公司写的代码忘记提交....</span><br><span class="line">	 git pull origin dev(这个下载下来的代码不是最新的，里面的a1.py文件里面没有内容的)</span><br><span class="line">	 </span><br><span class="line">2. 继续开发(即使代码不是最新的)</span><br><span class="line"></span><br><span class="line">3.提交代码</span><br><span class="line">	git add .</span><br><span class="line">	git commit -m&#x27;在旧版本库中在家里开发了其他的功能(修改了a1.py和a2.py)&#x27;</span><br><span class="line">	git push origin dev(在家里，头脑清醒，这下记得把代码上传到百度云了) </span><br></pre></td></tr></table></figure>
+<h3 id="到公司继续写代码"><a href="#到公司继续写代码" class="headerlink" title="到公司继续写代码"></a>到公司继续写代码</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">1. 拉代码，把晚上在家写的代码拉到本地（有合并、可能产生冲突）</span><br><span class="line">	 你在公司修改了a1.py,你在家修改了a1.py和a2.py</span><br><span class="line">	 那么这2个a1.py进行合并就可能产生冲突</span><br><span class="line">	 git pull origin dev</span><br><span class="line">	 </span><br><span class="line">2. 如果有冲突，手动解决冲突</span><br><span class="line"></span><br><span class="line">3. 继续开发其他功能</span><br><span class="line"></span><br><span class="line">4. 把dev分支也推送到远程(解决冲突之后的dev分支)</span><br><span class="line">	 git add .</span><br><span class="line">	 git commit -m&#x27;xx&#x27;</span><br><span class="line">	 git push origin dev</span><br></pre></td></tr></table></figure>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/59.png" class>
+
+<blockquote>
+<p>如果你想上线的话，再执行<strong>开发完毕，要上线</strong>里面的代码即可。</p>
+</blockquote>
+<h3 id="分享2个命令"><a href="#分享2个命令" class="headerlink" title="分享2个命令"></a>分享2个命令</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git pull origin dev</span><br><span class="line"></span><br><span class="line">等价于下面的2个命令(但是一般情况下不用下面的这2个命令，因为毕竟上面的更简单。)</span><br><span class="line"></span><br><span class="line">git fetch origin dev</span><br><span class="line">git merge origin/dev</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>我试了一下，下面的2个分支好像要在master分支下执行才行。</p>
+</blockquote>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/60.png" class>
+
+<h3 id="rebase-变基-的作用"><a href="#rebase-变基-的作用" class="headerlink" title="rebase(变基)的作用"></a>rebase(变基)的作用</h3><p>rebase可以保持提交记录简洁，不分叉。</p>
+<img data-src="/2020/10/13/Git%E5%85%A5%E9%97%A8-%E8%A7%86%E9%A2%91/61.png" class>
+
+<ul>
+<li><p>第一种：老板给你一段初始代码C1，要你在一周的时间在这个代码的基础上开发一个新的功能，你每天写一点，每天都<code>git add .</code>、 <code>git commit-m&#39;&#39;</code>、<code>git push</code>一下，然后最终开发完成，代码为C8。这些提交记录对你来说可能是重要的，但是对老板来说，他只关心结果，不关心过程，所以老板只关心初始代码C1和开发完成的代码C8，中间的代码C2-C7他不管的。</p>
+</li>
+<li><p>所以如果你每天修改一次代码就提交一次，那么你的记录就会变得非常非常多。而<code>rebase</code>可以帮助你把你的多个提交记录整合为一个提交记录</p>
+</li>
+<li><p>从当前最新版本找到包括这条记录在内的前3条记录给它进行合并</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zndxall/p/14087020.html">git rebase -i HEAD~3合并多个提交为一个提交</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rebase -i HEAD~3</span><br></pre></td></tr></table></figure></li>
+<li><p>后面会自动打开VIM编辑器，对其进行修改。</p>
+</li>
+<li><p>注意：如果某个记录已经提交到远程仓库了，那么你就最好不要对它进行提交合并了。</p>
+</li>
+<li><p>尽量合并那些还没有提交到版本库的提交记录。</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Git/" rel="tag"># Git</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/10/13/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E7%A6%BB%E6%95%A3%E6%95%B0%E5%AD%A6%E5%8F%8A%E5%85%B6%E8%BF%90%E7%94%A8(%E7%AC%AC7%E7%89%88)/" rel="prev" title="离散数学及其运用(第7版)">
+      <i class="fa fa-chevron-left"></i> 离散数学及其运用(第7版)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/10/16/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9ACSS%E4%B8%96%E7%95%8C/" rel="next" title="读书笔记：CSS世界">
+      读书笔记：CSS世界 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9C%8B%E6%95%85%E4%BA%8B%E5%AD%A6Git%E2%80%93%E5%B0%B1%E7%9C%8B%E8%BF%99%E4%B8%AA%E4%BA%86"><span class="nav-text">看故事学Git–就看这个了</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8"><span class="nav-text">快速入门</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Git%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-text">Git是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%81%9A%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6"><span class="nav-text">为什么要做版本控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Git"><span class="nav-text">安装Git</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E2%80%9C%E4%B8%9C%E5%8C%97%E7%83%AD%E2%80%9D%E5%88%9B%E4%B8%9A%E5%8F%B2"><span class="nav-text">“东北热”创业史</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%EF%BC%9A%E5%8D%95%E6%9E%AA%E5%8C%B9%E9%A9%AC%E5%BC%80%E5%A7%8B%E5%B9%B2"><span class="nav-text">第一阶段：单枪匹马开始干</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%E5%B0%8F%E7%BB%93"><span class="nav-text">第一阶段小结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A5%E5%85%85%EF%BC%9AGit%E4%B8%89%E5%A4%A7%E5%8C%BA%E5%9F%9F"><span class="nav-text">补充：Git三大区域</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%EF%BC%9A%E6%8B%93%E5%B1%95%E6%96%B0%E5%8A%9F%E8%83%BD-%E6%AD%A3%E5%B8%B8%E5%8A%9F%E8%83%BD"><span class="nav-text">第二阶段：拓展新功能(正常功能)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%EF%BC%9A%E2%80%9D%E7%BA%A6%E9%A5%AD%E2%80%9D%E5%8A%9F%E8%83%BD-%E6%B6%89%E9%BB%84%E5%8A%9F%E8%83%BD"><span class="nav-text">第三阶段：”约饭”功能(涉黄功能)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Git%E5%91%BD%E4%BB%A4%E5%B0%8F%E6%80%BB%E7%BB%93"><span class="nav-text">Git命令小总结</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E9%98%B6%E6%AE%B5%EF%BC%9A%E5%95%86%E5%9F%8E-amp-%E7%B4%A7%E6%80%A5%E4%BF%AE%E5%A4%8Dbug"><span class="nav-text">第四阶段：商城&amp;紧急修复bug</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%94%AF"><span class="nav-text">分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B4%A7%E6%80%A5%E4%BF%AE%E5%A4%8Dbug%E6%96%B9%E6%A1%88"><span class="nav-text">紧急修复bug方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93"><span class="nav-text">命令总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="nav-text">工作流</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%94%E9%98%B6%E6%AE%B5%EF%BC%9A%E8%BF%9B%E5%86%9B%E4%B8%89%E9%87%8C%E5%B1%AF"><span class="nav-text">第五阶段：进军三里屯</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E5%A4%A9%E4%B8%8A%E7%8F%AD%E5%89%8D%E5%9C%A8%E5%AE%B6%E4%B8%8A%E4%BC%A0%E4%BB%A3%E7%A0%81"><span class="nav-text">第一天上班前在家上传代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9D%E6%AC%A1%E5%9C%A8%E5%85%AC%E5%8F%B8%E6%96%B0%E7%94%B5%E8%84%91%E4%B8%8B%E8%BD%BD%E4%BB%A3%E7%A0%81"><span class="nav-text">初次在公司新电脑下载代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E7%8F%AD%E5%9B%9E%E5%88%B0%E5%AE%B6%E7%BB%A7%E7%BB%AD%E5%86%99%E4%BB%A3%E7%A0%81"><span class="nav-text">下班回到家继续写代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%B0%E5%85%AC%E5%8F%B8%E7%BB%A7%E7%BB%AD%E5%BC%80%E5%8F%91"><span class="nav-text">到公司继续开发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E5%AE%8C%E6%AF%95%EF%BC%8C%E8%A6%81%E4%B8%8A%E7%BA%BF-%E5%85%AC%E5%8F%B8%E7%94%B5%E8%84%91%E4%B8%8A"><span class="nav-text">开发完毕，要上线(公司电脑上)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%8D%E6%AC%A1%E5%9B%9E%E5%88%B0%E5%AE%B6%E4%B8%AD%EF%BC%8C%E8%BF%9B%E8%A1%8C%E4%BB%A3%E7%A0%81%E4%BF%AE%E6%94%B9"><span class="nav-text">再次回到家中，进行代码修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E5%85%AC%E5%8F%B8%E7%BA%A6%E5%A6%B9%E5%AD%90%E5%BF%98%E8%AE%B0%E6%8F%90%E4%BA%A4%E4%BB%A3%E7%A0%81"><span class="nav-text">在公司约妹子忘记提交代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9E%E5%AE%B6%E7%BB%A7%E7%BB%AD%E5%86%99%E4%BB%A3%E7%A0%81-%E8%BF%99%E4%B8%8B%E8%AE%B0%E5%BE%97%E4%B8%8A%E4%BC%A0%E4%BB%A3%E7%A0%81%E4%BA%86"><span class="nav-text">回家继续写代码(这下记得上传代码了)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%B0%E5%85%AC%E5%8F%B8%E7%BB%A7%E7%BB%AD%E5%86%99%E4%BB%A3%E7%A0%81"><span class="nav-text">到公司继续写代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E4%BA%AB2%E4%B8%AA%E5%91%BD%E4%BB%A4"><span class="nav-text">分享2个命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rebase-%E5%8F%98%E5%9F%BA-%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-text">rebase(变基)的作用</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="筛滤淘"
+      src="/images/cat.jpg">
+  <p class="site-author-name" itemprop="name">筛滤淘</p>
+  <div class="site-description" itemprop="description">前端知识点总结</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">129</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lm101845" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lm101845" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1018457683@qq.com" title="E-Mail → mailto:1018457683@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.jianshu.com/u/6879af8ace24" title="简 书 → https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;6879af8ace24" rel="noopener" target="_blank"><i class="fa fa-jianshu fa-fw"></i>简 书</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/9002959" title="B  站 → https:&#x2F;&#x2F;space.bilibili.com&#x2F;9002959" rel="noopener" target="_blank"><i class="fa fa-bilibili fa-fw"></i>B  站</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">筛滤淘</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">3.7m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">56:03</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

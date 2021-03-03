@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="(注1：现在是2020年10月13日，此文宣告死亡，放弃，但是暂时也不删。)  关于Github的优秀入门教程，网上一搜一大推，但那毕竟是别人总结出来的，不是我。  我看过的关于Github的不错的教程：  怎样使用 GitHub？文科妹子写的 Github 入门教程  专为设计师而写的GitHub快速入门教程  新手该如何使用 GitHub？  一些关于Github的好的网站  HelloGit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Github从入门到熟悉">
+<meta property="og:url" content="http://example.com/2019/11/12/Github%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%86%9F%E6%82%89/index.html">
+<meta property="og:site_name" content="木子小屋">
+<meta property="og:description" content="(注1：现在是2020年10月13日，此文宣告死亡，放弃，但是暂时也不删。)  关于Github的优秀入门教程，网上一搜一大推，但那毕竟是别人总结出来的，不是我。  我看过的关于Github的不错的教程：  怎样使用 GitHub？文科妹子写的 Github 入门教程  专为设计师而写的GitHub快速入门教程  新手该如何使用 GitHub？  一些关于Github的好的网站  HelloGit">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2019/11/12/Github%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%86%9F%E6%82%89/01.png">
+<meta property="og:image" content="http://example.com/2019/11/12/Github%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%86%9F%E6%82%89/08.png">
+<meta property="og:image" content="http://example.com/2019/11/12/Github%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%86%9F%E6%82%89/02.png">
+<meta property="og:image" content="http://example.com/2019/11/12/Github%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%86%9F%E6%82%89/03.png">
+<meta property="og:image" content="http://example.com/2019/11/12/Github%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%86%9F%E6%82%89/04.png">
+<meta property="og:image" content="http://example.com/2019/11/12/Github%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%86%9F%E6%82%89/05.png">
+<meta property="og:image" content="http://example.com/2019/11/12/Github%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%86%9F%E6%82%89/06.png">
+<meta property="og:image" content="http://example.com/2019/11/12/Github%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%86%9F%E6%82%89/09.png">
+<meta property="og:image" content="http://example.com/2019/11/12/Github%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%86%9F%E6%82%89/07.png">
+<meta property="og:image" content="http://example.com/2019/11/12/Github%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%86%9F%E6%82%89/10.png">
+<meta property="article:published_time" content="2019-11-11T16:55:36.000Z">
+<meta property="article:modified_time" content="2019-11-11T16:55:36.000Z">
+<meta property="article:author" content="筛滤淘">
+<meta property="article:tag" content="工具">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2019/11/12/Github%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%86%9F%E6%82%89/01.png">
+
+<link rel="canonical" href="http://example.com/2019/11/12/Github%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%86%9F%E6%82%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Github从入门到熟悉 | 木子小屋</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?79d7cb9c8fa9e57a2723fb8645f37638";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">木子小屋</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Talk is cheap. Show me the code.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/11/12/Github%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%86%9F%E6%82%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cat.jpg">
+      <meta itemprop="name" content="筛滤淘">
+      <meta itemprop="description" content="前端知识点总结">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="木子小屋">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Github从入门到熟悉
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-12 00:55:36" itemprop="dateCreated datePublished" datetime="2019-11-12T00:55:36+08:00">2019-11-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B7%A5%E5%85%B7%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">工具学习</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>(注1：现在是2020年10月13日，此文宣告死亡，放弃，但是暂时也不删。)</p>
+<p>关于Github的优秀入门教程，网上一搜一大推，但那毕竟是别人总结出来的，不是我。</p>
+<blockquote>
+<p>我看过的关于Github的不错的教程：</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/20070065/answer/79557687">怎样使用 GitHub？文科妹子写的 Github 入门教程</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.ui.cn/detail/20957.html">专为设计师而写的GitHub快速入门教程</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/21669554/answer/790851463">新手该如何使用 GitHub？</a></p>
+<blockquote>
+<p>一些关于Github的好的网站</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://hellogithub.com/">HelloGitHub</a></p>
+<blockquote>
+<p>Git 跟 GitHub 的关系：</p>
+<p>解释1：大概就是「魔兽争霸」与「对战平台」的关系吧。</p>
+<p>解释2：Git是一款免费、开源的分布式版本控制系统； Github是用Git做版本控制的代码托管平台</p>
+<p>解释3：在 Git 中，开发者将源代码存入名叫“Git 仓库”的资料库中<br>并加以使用。而 GitHub 则是在网络上提供 Git 仓库的一项服务。<br>也就是说，GitHub 上公开的软件源代码全都由 Git 进行管<br>理。理解 Git，是熟练运用 GitHub 的关键所在。</p>
+</blockquote>
+<p>虽然从去年（2018年）就注册了Github,也看过不少的入门视频和教程，但是总感觉隔着一层纱，对它熟悉不起来。究其原因，主要是自己并不常使用它，虽然Github上优秀的开源项目(优不优秀主要看star数多不多，毕竟群众的眼睛是雪亮的)种类繁多，浩如烟海，但自己毕竟是计算机初学者，编程语言和计算机基础知识都不扎实，即使看到star数特别多的项目，自己也人云亦云的star一下，但终究不知道这个明星项目到底是干什么用的，有什么优点，项目下的这些文件夹又都有什么用。最终star了一大推项目，如同一个收藏家，虽然明知是宝藏，却如同一个盲人，不懂得鉴赏，那宝藏对我来说又有何用呢？</p>
+<p>这次自己新注册了一个账号，开始认真的系统学习Github。自己的原则是：</p>
+<ol>
+<li>Github本质上是一个英文网站，首先你要搞清楚这个网站中每个英文单词的含义和用法吧。</li>
+<li>只star自己看得懂的项目和今后必须要看懂的项目。</li>
+<li>一边学，一边练，找一些前端初级的项目看一下。</li>
+<li>找了一本书《Github入门与实践》参考，书贵精不贵多。</li>
+</ol>
+<p>自己现在的水平是：这个网站上的单词我都还没有完全熟悉它是什么意思，有什么用，接下来，就用我自己的方式记录下自己学习Github这一过程吧。</p>
+<p>Github简介：</p>
+<blockquote>
+<p>github是一个基于git的代码托管平台，付费用户可以建私人仓库，我们一般的免费用户只能使用公共仓库，也就是代码要公开。</p>
+<p>Github 由Chris Wanstrath, PJ Hyett 与Tom Preston-Werner三位开发者在2008年4月创办。迄今拥有59名全职员工，主要提供基于git的版本托管服务。</p>
+</blockquote>
+<p>这是我打开Github时的初始网页：</p>
+<img data-src="/2019/11/12/Github%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%86%9F%E6%82%89/01.png" class width="01">
+
+<blockquote>
+<p>GitHub 除项目之外，还可以把注意力集中到人身上。我们不但能阅<br>览一个人公开的所有源代码，只要查看其控制面板中的 News Feed，还能知道他对哪些仓库感兴趣，什么时候做过提交等。一个人在 GitHub<br>进行的开发是一目了然的</p>
+</blockquote>
+<h1 id="相关术语01"><a href="#相关术语01" class="headerlink" title="相关术语01"></a>相关术语01</h1><h2 id="Repository-仓库"><a href="#Repository-仓库" class="headerlink" title="Repository:仓库"></a>Repository:仓库</h2><p>简称repo,可以理解为”仓库”，我们的项目就存放在仓库之中。也就是说，如果我们想要建立项目，就得先建立仓库；如果你开源的项目多了，你就拥有了多个 Repositories 。</p>
+<h2 id="Issues-问题"><a href="#Issues-问题" class="headerlink" title="Issues:问题"></a>Issues:问题</h2><p>可以理解为“问题”，举一个简单的例子，如果我们开源一个项目，如果别人看了我们的项目，并且发现了bug，或者感觉那个地方有待改进，他就可以给我们提出Issue，等我们把Issues解决之后，就可以把这些Issues关闭；反之，我们也可以给他人提出Issue。</p>
+<p>Issue 功能，是将一个任务或问题分配给一个 Issue 进行追踪和管理<br>的功能。</p>
+<p>在 GitHub 上，每当进行Pull Request(见下文)，<br>都会同时创建一个 Issue。<br>每一个功能更改或修正都对应一个 Issue，讨论或修正都以这个<br>Issue 为中心进行。只要查看 Issue，就能知道和这个更改相关的一切信<br>息，并以此进行管理。</p>
+<img data-src="/2019/11/12/Github%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%86%9F%E6%82%89/08.png" class width="08">
+
+
+
+<p>打开Marketplace后显示这个，我暂时用不到：（截了一部分，应该是市场中的各种工具，有的要钱有的不要钱）</p>
+<img data-src="/2019/11/12/Github%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%86%9F%E6%82%89/02.png" class width="02">
+
+<p>打开Explore后显示这个：</p>
+<img data-src="/2019/11/12/Github%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%86%9F%E6%82%89/03.png" class width="03">
+
+<p>随便打开一个自己收藏的项目：</p>
+<img data-src="/2019/11/12/Github%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%86%9F%E6%82%89/04.png" class width="04">
+
+<h2 id="Star-收藏"><a href="#Star-收藏" class="headerlink" title="Star:收藏"></a>Star:收藏</h2><p>收藏项目，方便下次查看。</p>
+<p>仓库主页star按钮，意思为收藏项目的人数，在 GitHub 上如果你有一个项目获得100个star都算很不容易了！</p>
+<p>（这个vue.js是尤雨溪开发的一个前端框架，有15万多关注，很厉害）</p>
+<h2 id="Fork：复制克隆项目"><a href="#Fork：复制克隆项目" class="headerlink" title="Fork：复制克隆项目"></a>Fork：复制克隆项目</h2><p>这个不好翻译，如果实在要翻译我把他翻译成分叉，什么意思呢？</p>
+<p>你开源了一个项目，别人想在你这个项目的基础上做些改进，然后应用到自己的项目中，</p>
+<p>这个时候他就可以 Fork 你的项目（打开项目主页点击右上角的fork按钮即可），</p>
+<p>然后他的 GitHub 主页上就多了一个项目，只不过这个项目是基于你的项目基础（本质上是在原有项目的基础上新建了一个分支），他就可以随心所欲的去改进，但是丝毫不会影响原有项目的代码与结构。</p>
+<img data-src="/2019/11/12/Github%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%86%9F%E6%82%89/05.png" class width="05">
+
+<h2 id="Pull-Request-发起请求"><a href="#Pull-Request-发起请求" class="headerlink" title="Pull Request:发起请求"></a>Pull Request:发起请求</h2><p>发起请求，这个其实是基于 Fork 的，还是上面那个例子，如果别人在你基础上做了改进，后来觉得改进的很不错，应该要把这些改进让更多的人收益，于是就想把自己的改进合并到原有项目里，这个时候他就可以发起一个 Pull Request（简称PR） ，原有项目创建人，也就是你，就可以收到这个请求，这个时候你会仔细review他的代码，并且测试觉得OK了，就会接受他的PR，这个时候他做的改进原有项目就会拥有了。</p>
+<img data-src="/2019/11/12/Github%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%86%9F%E6%82%89/06.png" class width="06">
+
+<h2 id="Watch：关注"><a href="#Watch：关注" class="headerlink" title="Watch：关注"></a>Watch：关注</h2><p>关注项目，当项目更新可以接收到通知。</p>
+<p>这个也好理解就是观察，如果你 Watch 了某个项目，那么以后只要这个项目有任何更新，你都会第一时间收到关于这个项目的通知提醒。</p>
+<h2 id="Commit-提交-快照"><a href="#Commit-提交-快照" class="headerlink" title="Commit:提交(快照)"></a>Commit:提交(快照)</h2><p>你出了一版方案A，在大家讨论后，你改到B，结果再讨论，大家觉得还是不如用A，这时发现A没有另存，还得再改回去！在GitHub中就不用担心，它会记录你提交的每个版本，并把这些都放在一个仓库（Repository）里，而每一次提交改变就是 Commit，你可以随时回退到任意一个版本。</p>
+<h2 id="Branch-分支"><a href="#Branch-分支" class="headerlink" title="Branch:分支"></a>Branch:分支</h2><p>此外你还很可能遇到方案衍生的情况，在方案A的基础上，改出了一种方案B，又改出了一种方案C，可能还分别衍生出B1、B2及C1、C2，在GitHub里有分支（Branches）可以记录这种方案的分化过程。</p>
+<h2 id="Wiki-维基"><a href="#Wiki-维基" class="headerlink" title="Wiki:维基"></a>Wiki:维基</h2><p>通过 Wiki 功能，任何人都能随时对一篇文章进行更改并保存，因<br>此可以多人共同完成一篇文章。该功能常用在开发文档或手册的编写中。</p>
+<p>Wiki 页也是作为 Git 仓库进行管理的，改版的历史记录会被切实保<br>存下来，使用者可以放心改写。由于其支持克隆至本地进行编辑，所以<br>程序员使用时可以不必开启浏览器。</p>
+<img data-src="/2019/11/12/Github%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%86%9F%E6%82%89/09.png" class width="09">
+
+<h2 id="Git-仓库"><a href="#Git-仓库" class="headerlink" title="Git 仓库"></a>Git 仓库</h2><p>一般情况下，我们可以免费建立任意个 GitHub 提供的 Git 仓库。但<br>如果需要建立只对特定人物或只对自己公开的私有仓库，则需要依照套<br>餐类型支付每月最低 7 美元的使用费。</p>
+<h2 id="Organization-组织"><a href="#Organization-组织" class="headerlink" title="Organization:组织"></a>Organization:组织</h2><p>通常来说，个人使用时只要使用个人账户就足够了，但如果是公<br>司，建议使用 Organization 账户。它的优点在于可以统一管理账户和权<br>限，还能统一支付一些费用。</p>
+<p>如果只使用公开仓库，是可以免费创建 Organization 账户的。因此，<br>如果是以交流群或 IT 小团体的形式进行软件开发时不妨试一试。</p>
+<img data-src="/2019/11/12/Github%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%86%9F%E6%82%89/07.png" class width="07">
+
+<hr>
+<h1 id="相关术语02"><a href="#相关术语02" class="headerlink" title="相关术语02"></a>相关术语02</h1><h2 id="社会化编程："><a href="#社会化编程：" class="headerlink" title="社会化编程："></a>社会化编程：</h2><p>在 GitHub 出现之前，软件开发中只有一小部分人拥有更改源代码<br>的权利，这个特权阶级掌握着开发的主导权。开发者在改写、发布源代码之外，往往需要花更多时间和精力去说服这个特权阶级。这导致了许<br>多起初效率很高的流行软件越发保守化，最终被时代所抛弃。</p>
+<p>但是，GitHub 的出现为软件开发者的世界带来了真正意义上的“民<br>主”，让所有人都平等地拥有了更改源代码的权利。这在软件开发领域<br>是一场巨大的革命。而革命领导者 GitHub 的口号便是“社会化编程”。</p>
+<h1 id="创建新仓库"><a href="#创建新仓库" class="headerlink" title="创建新仓库"></a>创建新仓库</h1><img data-src="/2019/11/12/Github%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%86%9F%E6%82%89/10.png" class width="10">
+
+<p>输入选择都完成后，点击 Create repository 按钮，完成仓库的创建。</p>
+<h2 id="README-md"><a href="#README-md" class="headerlink" title="README.md"></a>README.md</h2><p>README.md 在初始化时已经生成好了。README.md 文件的内容<br>会自动显示在仓库的首页当中。因此，人们一般会在这个文件中标明本<br>仓库所包含的软件的概要、使用流程、许可协议等信息。如果使用<br>Markdown 语法进行描述，还可以添加标记，提高可读性。</p>
+<blockquote>
+<p>使用 GitHub 后，很多文档都需要用 Markdown 来书写。也就是说，<br>全世界有大量程序员都在使用 Markdown，因此掌握这种语法已经成为<br>程序员的标准技能之一。请各位也务必学会 Markdown 语法。</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag"># 工具</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/11/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A102%EF%BC%88%E7%AC%AC3%E7%89%88%EF%BC%89/" rel="prev" title="读书笔记：JavaScript高级程序设计02（第3版）">
+      <i class="fa fa-chevron-left"></i> 读书笔记：JavaScript高级程序设计02（第3版）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/11/12/Git%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%86%9F%E6%82%89/" rel="next" title="Git从入门到熟悉">
+      Git从入门到熟悉 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E6%9C%AF%E8%AF%AD01"><span class="nav-text">相关术语01</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Repository-%E4%BB%93%E5%BA%93"><span class="nav-text">Repository:仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Issues-%E9%97%AE%E9%A2%98"><span class="nav-text">Issues:问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Star-%E6%94%B6%E8%97%8F"><span class="nav-text">Star:收藏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fork%EF%BC%9A%E5%A4%8D%E5%88%B6%E5%85%8B%E9%9A%86%E9%A1%B9%E7%9B%AE"><span class="nav-text">Fork：复制克隆项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Pull-Request-%E5%8F%91%E8%B5%B7%E8%AF%B7%E6%B1%82"><span class="nav-text">Pull Request:发起请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Watch%EF%BC%9A%E5%85%B3%E6%B3%A8"><span class="nav-text">Watch：关注</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Commit-%E6%8F%90%E4%BA%A4-%E5%BF%AB%E7%85%A7"><span class="nav-text">Commit:提交(快照)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Branch-%E5%88%86%E6%94%AF"><span class="nav-text">Branch:分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Wiki-%E7%BB%B4%E5%9F%BA"><span class="nav-text">Wiki:维基</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Git-%E4%BB%93%E5%BA%93"><span class="nav-text">Git 仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Organization-%E7%BB%84%E7%BB%87"><span class="nav-text">Organization:组织</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E6%9C%AF%E8%AF%AD02"><span class="nav-text">相关术语02</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A4%BE%E4%BC%9A%E5%8C%96%E7%BC%96%E7%A8%8B%EF%BC%9A"><span class="nav-text">社会化编程：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%96%B0%E4%BB%93%E5%BA%93"><span class="nav-text">创建新仓库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#README-md"><span class="nav-text">README.md</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="筛滤淘"
+      src="/images/cat.jpg">
+  <p class="site-author-name" itemprop="name">筛滤淘</p>
+  <div class="site-description" itemprop="description">前端知识点总结</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">129</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lm101845" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lm101845" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1018457683@qq.com" title="E-Mail → mailto:1018457683@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.jianshu.com/u/6879af8ace24" title="简 书 → https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;6879af8ace24" rel="noopener" target="_blank"><i class="fa fa-jianshu fa-fw"></i>简 书</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/9002959" title="B  站 → https:&#x2F;&#x2F;space.bilibili.com&#x2F;9002959" rel="noopener" target="_blank"><i class="fa fa-bilibili fa-fw"></i>B  站</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">筛滤淘</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">3.7m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">56:03</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

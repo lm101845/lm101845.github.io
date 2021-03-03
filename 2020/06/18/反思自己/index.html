@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="反思自己 今天是2020年6月18日，之前乱七八糟的看了一些网络安全等的视频，直到这几天才开始重心重新回到前端上面来，首先是尝试着独立手写以前看的视频的静态页面，发现自己写不了，无奈只好再回过头来看一遍视频，再把去年8月份学的CSS视频再重新补回来。  视频看着看着，再看看时间，突然感觉到一丝无奈。  就算是去年2019年8月份开始学前端吧，不知不觉也快要一年了，期间自己怕基础知识不扎实，断断续续">
+<meta property="og:type" content="article">
+<meta property="og:title" content="反思自己">
+<meta property="og:url" content="http://example.com/2020/06/18/%E5%8F%8D%E6%80%9D%E8%87%AA%E5%B7%B1/index.html">
+<meta property="og:site_name" content="木子小屋">
+<meta property="og:description" content="反思自己 今天是2020年6月18日，之前乱七八糟的看了一些网络安全等的视频，直到这几天才开始重心重新回到前端上面来，首先是尝试着独立手写以前看的视频的静态页面，发现自己写不了，无奈只好再回过头来看一遍视频，再把去年8月份学的CSS视频再重新补回来。  视频看着看着，再看看时间，突然感觉到一丝无奈。  就算是去年2019年8月份开始学前端吧，不知不觉也快要一年了，期间自己怕基础知识不扎实，断断续续">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-06-18T15:24:06.000Z">
+<meta property="article:modified_time" content="2020-06-18T15:24:06.000Z">
+<meta property="article:author" content="筛滤淘">
+<meta property="article:tag" content="整理过往">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2020/06/18/%E5%8F%8D%E6%80%9D%E8%87%AA%E5%B7%B1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>反思自己 | 木子小屋</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?79d7cb9c8fa9e57a2723fb8645f37638";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">木子小屋</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Talk is cheap. Show me the code.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/06/18/%E5%8F%8D%E6%80%9D%E8%87%AA%E5%B7%B1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cat.jpg">
+      <meta itemprop="name" content="筛滤淘">
+      <meta itemprop="description" content="前端知识点总结">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="木子小屋">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          反思自己
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-06-18 23:24:06" itemprop="dateCreated datePublished" datetime="2020-06-18T23:24:06+08:00">2020-06-18</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="反思自己"><a href="#反思自己" class="headerlink" title="反思自己"></a>反思自己</h1><p>今天是2020年6月18日，之前乱七八糟的看了一些网络安全等的视频，直到这几天才开始重心重新回到前端上面来，首先是尝试着独立手写以前看的视频的静态页面，发现自己写不了，无奈只好再回过头来看一遍视频，再把去年8月份学的CSS视频再重新补回来。</p>
+<p>视频看着看着，再看看时间，突然感觉到一丝无奈。</p>
+<p>就算是去年2019年8月份开始学前端吧，不知不觉也快要一年了，期间自己怕基础知识不扎实，断断续续看了很多计算机专业书，做了些读书笔记，直白点就是抄，通过抄的方式放缓自己阅读的进度，让自己产生一些思考。不过这些专业书很多都是看到一部分就没有办法再看下去了，最终也就只脑海里留下了个大概的印象。</p>
+<p>后来又因为学习进度严重落下而感到恐慌，于是开始双管齐下甚至三，四管齐下，在当前知识并未掌握熟练的情况下迫不及待的开新坑，HTML,CSS静态页面还没学完就急着学JS，JS还没学完就急着学Vue,Vue囫囵吞枣的看完了基础知识又急着学ES6,接着是node.js……就这样，后面全部都是夹生饭，唯一的收获也就是满足了一下我的好奇心，对这些只是大体有了印象而已。</p>
+<p>现在，感觉自己又重头开始了，不管怎么说，先写三个静态页面吧，还是要自己先写一遍，必须要自己先写一遍，遇到不会写的和发现这个知识点薄弱的再通过看视频，查资料，看书等方式查漏补缺。有道页面算一个，京东商城算一个，品优购算一个。先把这3个静态页面做完再说！！！！！别心比天高了！！！一定要脚踏实地啊，毕竟，几乎前端所有的知识我都大体过了一遍了，也满足了自己的好奇心了，现在就要开始专攻了！！！！！！</p>
+<p>再给半年的时间吧！从今天2020年6月18日开始算起，这半年的时间就开始主做项目了！通过项目来巩固知识点了啊！现在已经没有太多的时间来看理论书籍了，况且后面我也看不懂了！还是要在项目的磨砺中慢慢的掌握理论了啊！</p>
+<p>日撸代码几百行！烂泥也能扶上墙！别管方法好与烂！拿起键盘就是干！</p>
+<p>现在的自己，迫切的需要提升自己的代码量了。看书和看视频的时间太多了，敲代码的时间太少了！</p>
+<p>所以这接下来的6个月要以敲代码为主了，其他的统统靠后了！</p>
+<p>这3个静态页面完成后，自己的HTML,CSS估计也差不多了能用了，这个时候开始把没有学完的DOM,BOM给弄完，做一些简单的交互。</p>
+<p>计划别做太多，就这些就够了，不然每次做了计划总是完不成也没有用。</p>
+<p>(今天下午接到我爸爸的电话，我爷爷去世了，从5月26日姑妈告诉我爷爷生病到现在，不过短短23天的时间，爷爷就去世了。我今天请了4天假，但是北京现在新冠肺炎这个时候正严重，全城戒严，我住的地方属于中风险地区，我问了说不准回去,想去做核酸检测附近都预约满了，就算做了中风险地区也不给出去，于事无补，二叔他们也给我打电话说北京严重别让我回去了，我明天还准备去火车站问一下的，现在想想还是算了吧，没办法了，就不回去了，我不知道该说些什么了。人总是会死的，没办法，08年我外婆去世，我当时初二，我也没有哭，20年我爷爷去世，我的心情也还算平静，也没有哭。但是死亡，我是真真切切的感受到了死亡，感觉也愈发的深刻了。</p>
+<p>死亡，多少人恐惧，但是真的降临到自己或者自己身边的人时，反而有一种说不出的感觉。人都是会死亡的，或早或晚。不知道说些什么）</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%95%B4%E7%90%86%E8%BF%87%E5%BE%80/" rel="tag"># 整理过往</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/06/10/%E6%88%91%E8%BF%992%E4%B8%AA%E5%A4%9A%E6%9C%88%E6%9D%A5%E5%81%9A%E4%BA%86%E4%BB%80%E4%B9%88/" rel="prev" title="我这2个多月来做了什么">
+      <i class="fa fa-chevron-left"></i> 我这2个多月来做了什么
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/06/30/PHP%E5%85%A5%E9%97%A8/" rel="next" title="PHP入门">
+      PHP入门 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%8D%E6%80%9D%E8%87%AA%E5%B7%B1"><span class="nav-text">反思自己</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="筛滤淘"
+      src="/images/cat.jpg">
+  <p class="site-author-name" itemprop="name">筛滤淘</p>
+  <div class="site-description" itemprop="description">前端知识点总结</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">129</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lm101845" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lm101845" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1018457683@qq.com" title="E-Mail → mailto:1018457683@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.jianshu.com/u/6879af8ace24" title="简 书 → https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;6879af8ace24" rel="noopener" target="_blank"><i class="fa fa-jianshu fa-fw"></i>简 书</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/9002959" title="B  站 → https:&#x2F;&#x2F;space.bilibili.com&#x2F;9002959" rel="noopener" target="_blank"><i class="fa fa-bilibili fa-fw"></i>B  站</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">筛滤淘</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">3.7m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">56:03</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

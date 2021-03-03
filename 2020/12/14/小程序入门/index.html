@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="(注1：现在是2020年12月14日，我想了一下，Vue 3.0及配套的TypeScript以及React都可以先缓缓，但是小程序还是要学一下的，以后抽点时间学吧，不学不行啊。)  (注2：现在是2020年12月19日，我还是选择王红元的视频，这个小程序还是和之前看的Vue视频项目一样，还是一样的商城项目，只不过一个用是Vue写的，一个是用小程序写的。)  (注3：王红元小程序视频链接)  (注4">
+<meta property="og:type" content="article">
+<meta property="og:title" content="小程序入门">
+<meta property="og:url" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="木子小屋">
+<meta property="og:description" content="(注1：现在是2020年12月14日，我想了一下，Vue 3.0及配套的TypeScript以及React都可以先缓缓，但是小程序还是要学一下的，以后抽点时间学吧，不学不行啊。)  (注2：现在是2020年12月19日，我还是选择王红元的视频，这个小程序还是和之前看的Vue视频项目一样，还是一样的商城项目，只不过一个用是Vue写的，一个是用小程序写的。)  (注3：王红元小程序视频链接)  (注4">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/01.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/02.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/03.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/04.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/05.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/06.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/07.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/08.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/09.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/10.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/11.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/12.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/13.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/14.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/15.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/16.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/17.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/18.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/19.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/20.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/21.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/22.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/23.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/24.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/25.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/26.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/27.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/28.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/29.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/30.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/31.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/32.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/33.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/34.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/35.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/36.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/37.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/38.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/39.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/40.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/41.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/42.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/43.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/44.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/45.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/46.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/47.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/48.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/49.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/50.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/51.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/52.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/53.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/54.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/55.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/56.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/57.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/58.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/59.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/60.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/61.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/62.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/63.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/64.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/65.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/66.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/67.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/68.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/69.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/70.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/71.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/72.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/74.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/73.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/75.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/76.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/77.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/78.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/79.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/80.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/81.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/82.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/83.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/84.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/85.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/86.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/87.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/88.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/89.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/90.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/91.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/92.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/93.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/94.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/95.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/96.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/97.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/98.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/99.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/100.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/101.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/102.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/103.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/104.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/105.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/106.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/107.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/108.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/109.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/110.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/111.png">
+<meta property="og:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/112.png">
+<meta property="article:published_time" content="2020-12-14T05:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-14T05:00:00.000Z">
+<meta property="article:author" content="筛滤淘">
+<meta property="article:tag" content="小程序">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/01.png">
+
+<link rel="canonical" href="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>小程序入门 | 木子小屋</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?79d7cb9c8fa9e57a2723fb8645f37638";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">木子小屋</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Talk is cheap. Show me the code.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cat.jpg">
+      <meta itemprop="name" content="筛滤淘">
+      <meta itemprop="description" content="前端知识点总结">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="木子小屋">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          小程序入门
+        </h1>
+
+        <div class="post-meta">
+          
+            <i class="fa fa-thumb-tack"></i>
+            <font color="green">置顶</font>
+            <span class="post-meta-divider">|</span>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-12-14 13:00:00" itemprop="dateCreated datePublished" datetime="2020-12-14T13:00:00+08:00">2020-12-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" itemprop="url" rel="index"><span itemprop="name">小程序</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.9k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>(注1：现在是2020年12月14日，我想了一下，<code>Vue 3.0</code>及配套的<code>TypeScript</code>以及<code>React</code>都可以先缓缓，但是小程序还是要学一下的，以后抽点时间学吧，不学不行啊。)</p>
+<p>(注2：现在是2020年12月19日，我还是选择王红元的视频，这个小程序还是和之前看的Vue视频项目一样，还是一样的商城项目，只不过一个用是Vue写的，一个是用小程序写的。)</p>
+<p>(注3：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Kt411V7rg">王红元小程序视频链接</a>)</p>
+<p>(注4：现在是2021年1月12日，不要慌，还是先按部就班的来一点一点把没学完的东西学完再说啊。找工作要准备的东西又多又杂，那又怎么样呢？自己慌了只能让情况变得更糟，事情总要一件一件的去做的，是需要时间的。我相信自己现在的学习速度肯定会比以前快很多的，所以不要担心啊。)</p>
+<p>(注5：现在是2021年1月25日，10多天没学习了，继续开始学习吧。)</p>
+<p>(注6：现在是2021年2月18日，提醒一下，本篇博文里面只有PPT，代码和笔记都是在自己的GitHub仓库中，老师每讲一个知识点都打了一个tag，具体想学习哪个知识点点击到哪个tag即可。<a target="_blank" rel="noopener" href="https://github.com/lm101845/LearnMiniProgram">我的小程序学习仓库地址</a>)</p>
+<p>(注7：现在是2021年2月21日，我觉得学习小程序对于学习Vue也是有着促进作用的，它们两个之间有很多相同的地方。)</p>
+<h1 id="邂逅小程序开发"><a href="#邂逅小程序开发" class="headerlink" title="邂逅小程序开发"></a>邂逅小程序开发</h1><h2 id="课前提醒"><a href="#课前提醒" class="headerlink" title="课前提醒"></a>课前提醒</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/01.png" class>
+
+<h2 id="学习路线和课程大纲"><a href="#学习路线和课程大纲" class="headerlink" title="学习路线和课程大纲"></a>学习路线和课程大纲</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/02.png" class>
+
+<h2 id="阶段一大纲"><a href="#阶段一大纲" class="headerlink" title="阶段一大纲"></a>阶段一大纲</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/03.png" class>
+
+<h2 id="什么是小程序"><a href="#什么是小程序" class="headerlink" title="什么是小程序"></a>什么是小程序</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/04.png" class>
+
+<h2 id="小程序的出现带来了什么"><a href="#小程序的出现带来了什么" class="headerlink" title="小程序的出现带来了什么"></a>小程序的出现带来了什么</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/05.png" class>
+
+<img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/06.png" class>
+
+<h2 id="小程序开发的必要性"><a href="#小程序开发的必要性" class="headerlink" title="小程序开发的必要性"></a>小程序开发的必要性</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/07.png" class>
+
+<h2 id="WebView的发展和不足"><a href="#WebView的发展和不足" class="headerlink" title="WebView的发展和不足"></a>WebView的发展和不足</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/08.png" class>
+
+<h2 id="Native的优势和劣势"><a href="#Native的优势和劣势" class="headerlink" title="Native的优势和劣势"></a>Native的优势和劣势</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/09.png" class>
+
+<h2 id="小程序的诞生"><a href="#小程序的诞生" class="headerlink" title="小程序的诞生"></a>小程序的诞生</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/10.png" class>
+
+<h2 id="小程序的历史"><a href="#小程序的历史" class="headerlink" title="小程序的历史"></a>小程序的历史</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/11.png" class>
+
+<h2 id="小程序预备知识"><a href="#小程序预备知识" class="headerlink" title="小程序预备知识"></a>小程序预备知识</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/12.png" class>
+
+<h2 id="开发前准备工作"><a href="#开发前准备工作" class="headerlink" title="开发前准备工作"></a>开发前准备工作</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/13.png" class>
+
+<h2 id="注册账号-申请AppID"><a href="#注册账号-申请AppID" class="headerlink" title="注册账号-申请AppID"></a>注册账号-申请AppID</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/14.png" class>
+
+<h2 id="注册成功-查看AppID-查看文档"><a href="#注册成功-查看AppID-查看文档" class="headerlink" title="注册成功-查看AppID-查看文档"></a>注册成功-查看AppID-查看文档</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/15.png" class>
+
+<h2 id="小程序开发工具"><a href="#小程序开发工具" class="headerlink" title="小程序开发工具"></a>小程序开发工具</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/16.png" class>
+
+<h2 id="创建第一个小程序应用"><a href="#创建第一个小程序应用" class="headerlink" title="创建第一个小程序应用"></a>创建第一个小程序应用</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/17.png" class>
+
+<h2 id="开发工具介绍"><a href="#开发工具介绍" class="headerlink" title="开发工具介绍"></a>开发工具介绍</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/18.png" class>
+
+<h2 id="应用程序的结构"><a href="#应用程序的结构" class="headerlink" title="应用程序的结构"></a>应用程序的结构</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/19.png" class>
+
+<img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/20.png" class>
+
+<h2 id="从零搭建项目-一"><a href="#从零搭建项目-一" class="headerlink" title="从零搭建项目(一)"></a>从零搭建项目(一)</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/21.png" class>
+
+<h2 id="从零搭建项目-二"><a href="#从零搭建项目-二" class="headerlink" title="从零搭建项目(二)"></a>从零搭建项目(二)</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/22.png" class>
+
+<h2 id="从零搭建项目-三"><a href="#从零搭建项目-三" class="headerlink" title="从零搭建项目(三)"></a>从零搭建项目(三)</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/23.png" class>
+
+<h2 id="从零搭建项目-四"><a href="#从零搭建项目-四" class="headerlink" title="从零搭建项目(四)"></a>从零搭建项目(四)</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/24.png" class>
+
+<h2 id="从零搭建项目-五"><a href="#从零搭建项目-五" class="headerlink" title="从零搭建项目(五)"></a>从零搭建项目(五)</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/25.png" class>
+
+<h2 id="多个项目管理方式"><a href="#多个项目管理方式" class="headerlink" title="多个项目管理方式"></a>多个项目管理方式</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/26.png" class>
+
+<h2 id="将项目加入git管理"><a href="#将项目加入git管理" class="headerlink" title="将项目加入git管理"></a>将项目加入git管理</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/27.png" class>
+
+<img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/28.png" class>
+
+<h2 id="小程序初体验"><a href="#小程序初体验" class="headerlink" title="小程序初体验"></a>小程序初体验</h2><blockquote>
+<p>感觉找到了当初学王红元老师Vue时的感觉了，这都一年过去了。</p>
+</blockquote>
+<img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/29.png" class>
+
+<h2 id="小程序的MVVM架构"><a href="#小程序的MVVM架构" class="headerlink" title="小程序的MVVM架构"></a>小程序的MVVM架构</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/30.png" class>
+
+<h2 id="命令式编程——声明式编程"><a href="#命令式编程——声明式编程" class="headerlink" title="命令式编程——声明式编程"></a>命令式编程——声明式编程</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/31.png" class>
+
+<h1 id="小程序架构和配置"><a href="#小程序架构和配置" class="headerlink" title="小程序架构和配置"></a>小程序架构和配置</h1><h2 id="配置小程序"><a href="#配置小程序" class="headerlink" title="配置小程序"></a>配置小程序</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/32.png" class>
+
+<h2 id="全局配置"><a href="#全局配置" class="headerlink" title="全局配置"></a>全局配置</h2><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/9ac4782e65e6">微信小程序pages中写好路径保存文件不会自动生成问题</a></p>
+<img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/33.png" class>
+
+<p>我遇到的问题：</p>
+<ul>
+<li>右击pages-新建文件夹profile-右击profile-新建pages，但是什么反应也没有啊，不自动生成4件套啊。</li>
+<li>我直接在<code>app.json</code>里面的”pages”下添加：<code>&quot;pages/category/category&quot;</code>，它也不自动生成4件套。</li>
+<li>而且我右击文件夹也没有新建目录这个选项，以前好像还有的，这是怎么回事呢？</li>
+</ul>
+<p>回答：</p>
+<ul>
+<li>现在的版本变了，首先右击pages新建文件夹，然后再右击这个文件夹新建component就可以了。</li>
+</ul>
+<h2 id="案例实现"><a href="#案例实现" class="headerlink" title="案例实现"></a>案例实现</h2><p><a target="_blank" rel="noopener" href="https://www.pianshen.com/article/2286670820/">微信开发者工具未找到入口 app.json 文件,或者文件读取失败</a></p>
+<img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/34.png" class>
+
+<p>我遇到的问题：</p>
+<ul>
+<li>[ app.json 文件内容错误] app.json: app.json 未找到</li>
+<li>我明明在<code>home.wxml</code>和<code>home.wxss</code>里面写了内容和样式，但是窗口中什么也不显示，而且还报上面的错误。</li>
+<li>我最后把微信开发者工具删了，重装了一遍。把文件删了，<code>git clone</code>重新下载了一遍，然后就好了。</li>
+</ul>
+<p>按住<code>Alt+Shift+F</code>就可以对代码进行格式化了。</p>
+<h2 id="页面配置"><a href="#页面配置" class="headerlink" title="页面配置"></a>页面配置</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/35.png" class>
+
+<h2 id="小程序的双线程模型"><a href="#小程序的双线程模型" class="headerlink" title="小程序的双线程模型"></a>小程序的双线程模型</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/36.png" class>
+
+<h2 id="界面渲染过程–wxml和DOM树"><a href="#界面渲染过程–wxml和DOM树" class="headerlink" title="界面渲染过程–wxml和DOM树"></a>界面渲染过程–wxml和DOM树</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/37.png" class>
+
+<h2 id="界面渲染过程–初始化渲染"><a href="#界面渲染过程–初始化渲染" class="headerlink" title="界面渲染过程–初始化渲染"></a>界面渲染过程–初始化渲染</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/38.png" class>
+
+<h2 id="界面渲染过程-–-数据发生变化"><a href="#界面渲染过程-–-数据发生变化" class="headerlink" title="界面渲染过程 – 数据发生变化"></a>界面渲染过程 – 数据发生变化</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/39.png" class>
+
+<h2 id="界面渲染的整体流程"><a href="#界面渲染的整体流程" class="headerlink" title="界面渲染的整体流程"></a>界面渲染的整体流程</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/40.png" class>
+
+<h2 id="小程序的启动流程"><a href="#小程序的启动流程" class="headerlink" title="小程序的启动流程"></a>小程序的启动流程</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/41.png" class>
+
+<h2 id="参数解析"><a href="#参数解析" class="headerlink" title="参数解析"></a>参数解析</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/42.png" class>
+
+<h2 id="注册App时做什么呢"><a href="#注册App时做什么呢" class="headerlink" title="注册App时做什么呢?"></a>注册App时做什么呢?</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/43.png" class>
+
+<h2 id="获取用户信息-–-保存全局变量"><a href="#获取用户信息-–-保存全局变量" class="headerlink" title="获取用户信息 – 保存全局变量"></a>获取用户信息 – 保存全局变量</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/44.png" class>
+
+<h2 id="注册小程序-代码演示"><a href="#注册小程序-代码演示" class="headerlink" title="注册小程序 - 代码演示"></a>注册小程序 - 代码演示</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/45.png" class>
+
+<h2 id="注册页面"><a href="#注册页面" class="headerlink" title="注册页面"></a>注册页面</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/46.png" class>
+
+<h2 id="注册Page时做什么呢"><a href="#注册Page时做什么呢" class="headerlink" title="注册Page时做什么呢?"></a>注册Page时做什么呢?</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/47.png" class>
+
+<h2 id="Page实例生命周期"><a href="#Page实例生命周期" class="headerlink" title="Page实例生命周期"></a>Page实例生命周期</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/48.png" class>
+
+<ul>
+<li>一个页面加载是2个线程同时在执行的，一个是渲染层(View Thread),一个是逻辑层(AppService Thread)。</li>
+<li>2个线程同时start。渲染层会初始化(init)，逻辑层会创建页面出来。</li>
+<li>逻辑层可能有一些数据，是需要渲染层进行渲染的，所以渲染层会通知(Notify)逻辑层来拿数据，而逻辑层会等待渲染层取数据的通知。(waiting notify)。此时执行到这里的时候会阻塞住的。</li>
+<li>逻辑层此时发送初始化数据给渲染层(send initial data)，然后渲染层会第一次渲染出页面(first render)。</li>
+<li>界面渲染出来之后，它会告诉逻辑层这个页面已经准备(ready)渲染了，此时逻辑层会执行一个回调函数onReady。</li>
+<li>之前的数据，比如说一个变量叫message。值为”哈哈哈”，你后来可能把这个数据值改成了”呵呵呵”，则需要将最新的数据再发送给渲染层，进行重新渲染。</li>
+<li>我们一旦将页面隐藏，则逻辑层会退到后台中去。(set to background)。</li>
+<li>如果我们再将页面显示，则逻辑层又会回到前台去。(set to foreground)</li>
+</ul>
+<h1 id="常见内置组件"><a href="#常见内置组件" class="headerlink" title="常见内置组件"></a>常见内置组件</h1><h2 id="Text组件"><a href="#Text组件" class="headerlink" title="Text组件"></a>Text组件</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/49.png" class>
+
+<h2 id="Button组件解析"><a href="#Button组件解析" class="headerlink" title="Button组件解析"></a>Button组件解析</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/50.png" class>
+
+<h3 id="Button组件演练"><a href="#Button组件演练" class="headerlink" title="Button组件演练"></a>Button组件演练</h3><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/51.png" class>
+
+<h3 id="open-type的取值"><a href="#open-type的取值" class="headerlink" title="open-type的取值"></a>open-type的取值</h3><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/52.png" class>
+
+<h2 id="View组件"><a href="#View组件" class="headerlink" title="View组件"></a>View组件</h2><ul>
+<li>类似于前端的div，是一个容器。</li>
+</ul>
+<img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/53.png" class>
+
+<h2 id="Image组件"><a href="#Image组件" class="headerlink" title="Image组件"></a>Image组件</h2><h3 id="Image组件介绍"><a href="#Image组件介绍" class="headerlink" title="Image组件介绍"></a>Image组件介绍</h3><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/54.png" class>
+
+<h3 id="Image组件演练"><a href="#Image组件演练" class="headerlink" title="Image组件演练"></a>Image组件演练</h3><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/55.png" class>
+
+<h2 id="Input组件"><a href="#Input组件" class="headerlink" title="Input组件"></a>Input组件</h2><h3 id="Input组件介绍"><a href="#Input组件介绍" class="headerlink" title="Input组件介绍"></a>Input组件介绍</h3><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/56.png" class>
+
+<h3 id="Input组件演练"><a href="#Input组件演练" class="headerlink" title="Input组件演练"></a>Input组件演练</h3><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/57.png" class>
+
+<h2 id="scroll-view组件"><a href="#scroll-view组件" class="headerlink" title="scroll-view组件"></a>scroll-view组件</h2><h3 id="scroll-view组件介绍"><a href="#scroll-view组件介绍" class="headerlink" title="scroll-view组件介绍"></a>scroll-view组件介绍</h3><ul>
+<li>在小程序中只要你内容的高度超出了界面的高度，自动就可以滚动。所以页面的滚动是不需要使用<code>scroll-view</code>的。</li>
+<li>所以<code>scroll-view</code>一般是用来实现局部滚动的。</li>
+</ul>
+<img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/58.png" class>
+
+<h3 id="scroll-view代码演练"><a href="#scroll-view代码演练" class="headerlink" title="scroll-view代码演练"></a>scroll-view代码演练</h3><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/59.png" class>
+
+<h2 id="共同属性"><a href="#共同属性" class="headerlink" title="共同属性"></a>共同属性</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/60.png" class>
+
+<h1 id="WXSS-amp-WXML-amp-WXS"><a href="#WXSS-amp-WXML-amp-WXS" class="headerlink" title="WXSS&amp;WXML&amp;WXS"></a>WXSS&amp;WXML&amp;WXS</h1><h2 id="WXSS样式"><a href="#WXSS样式" class="headerlink" title="WXSS样式"></a>WXSS样式</h2><h3 id="样式页面写法"><a href="#样式页面写法" class="headerlink" title="样式页面写法"></a>样式页面写法</h3><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/61.png" class>
+
+<h3 id="支持的选择器"><a href="#支持的选择器" class="headerlink" title="支持的选择器"></a>支持的选择器</h3><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/62.png" class>
+
+<h3 id="选择器权重"><a href="#选择器权重" class="headerlink" title="选择器权重"></a>选择器权重</h3><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/63.png" class>
+
+<h3 id="扩展：尺寸单位"><a href="#扩展：尺寸单位" class="headerlink" title="扩展：尺寸单位"></a>扩展：尺寸单位</h3><ul>
+<li>iphone6中设置一个盒子大小为100px*100px，然后把它变成iphone5，屏幕变小了，我不希望你这个盒子还是100px*100px，希望你也相应的进行缩小一下，即相当于给它做一个适配。 </li>
+</ul>
+<img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/64.png" class>
+
+<h3 id="扩展：样式导入"><a href="#扩展：样式导入" class="headerlink" title="扩展：样式导入"></a>扩展：样式导入</h3><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/65.png" class>
+
+<h3 id="官方样式库"><a href="#官方样式库" class="headerlink" title="官方样式库"></a>官方样式库</h3><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/66.png" class>
+
+<h2 id="WXML语法"><a href="#WXML语法" class="headerlink" title="WXML语法"></a>WXML语法</h2><h3 id="Mustache语法-一"><a href="#Mustache语法-一" class="headerlink" title="Mustache语法(一)"></a>Mustache语法(一)</h3><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/67.png" class>
+
+<h3 id="逻辑判断"><a href="#逻辑判断" class="headerlink" title="逻辑判断"></a>逻辑判断</h3><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/68.png" class>
+
+<h4 id="逻辑判断补充"><a href="#逻辑判断补充" class="headerlink" title="逻辑判断补充"></a>逻辑判断补充</h4><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/69.png" class>
+
+<h3 id="列表渲染-wx-for基础"><a href="#列表渲染-wx-for基础" class="headerlink" title="列表渲染-wx:for基础"></a>列表渲染-wx:for基础</h3><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/70.png" class>
+
+<h4 id="block标签"><a href="#block标签" class="headerlink" title="block标签"></a>block标签</h4><ul>
+<li>注意：<code>block</code>它不是一个组件，它就是一个标签，而且最终这个标签是不会被渲染出来的。</li>
+</ul>
+<img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/71.png" class>
+
+<h4 id="列表渲染-item-index名称"><a href="#列表渲染-item-index名称" class="headerlink" title="列表渲染-item/index名称"></a>列表渲染-item/index名称</h4><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/72.png" class>
+
+<h4 id="列表渲染-key的作用"><a href="#列表渲染-key的作用" class="headerlink" title="列表渲染-key的作用"></a>列表渲染-key的作用</h4><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/74.png" class>
+
+<ul>
+<li>使用<code>wx:for</code>遍历一个数组<code>[&#39;a&#39;,&#39;b&#39;,&#39;c&#39;]</code>，遍历好后再插入一个<code>d</code>到这个数组中间，让它变成<code>[&#39;a&#39;,&#39;d&#39;,b&#39;,&#39;c&#39;]</code>。</li>
+<li>因为数据发生了改变，所以它需要重新进行遍历了。</li>
+<li>如果没有key的话，第一个是a,不变，第二个变成d了，它就会将原来的b替换为d,第三个变成b了，它就会将原来的c变成b，第4个变成c，这样子很没有效率。</li>
+<li>如果给每个view绑定一个key,则这个新加进来的d会直接插入到第二个位置。</li>
+<li>原因是key的主要作用是可以给每个view绑定一个id了，当我们数据发生变化的时候，它会优先对比一下id，看一下有没有发生变化，如果id没有发生变化的话，它会优先对上面的view进行复用，而不像没有key的时候，所有的数据都发生变化。</li>
+</ul>
+<img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/73.png" class>
+
+<h3 id="模版语法"><a href="#模版语法" class="headerlink" title="模版语法"></a>模版语法</h3><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/75.png" class>
+
+<h3 id="wxml的引入"><a href="#wxml的引入" class="headerlink" title="wxml的引入"></a>wxml的引入</h3><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/76.png" class>
+
+<h3 id="include引入"><a href="#include引入" class="headerlink" title="include引入"></a>include引入</h3><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/77.png" class>
+
+<h2 id="WXS语法"><a href="#WXS语法" class="headerlink" title="WXS语法"></a>WXS语法</h2><h3 id="WXS模块"><a href="#WXS模块" class="headerlink" title="WXS模块"></a>WXS模块</h3><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/78.png" class>
+
+<h1 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h1><h2 id="事件的介绍"><a href="#事件的介绍" class="headerlink" title="事件的介绍"></a>事件的介绍</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/79.png" class>
+
+<h2 id="常见事件类型"><a href="#常见事件类型" class="headerlink" title="常见事件类型"></a>常见事件类型</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/80.png" class>
+
+<h2 id="事件类型演练"><a href="#事件类型演练" class="headerlink" title="事件类型演练"></a>事件类型演练</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/81.png" class>
+
+<h2 id="事件对象介绍"><a href="#事件对象介绍" class="headerlink" title="事件对象介绍"></a>事件对象介绍</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/82.png" class>
+
+<h2 id="touches和changedTouches的区别"><a href="#touches和changedTouches的区别" class="headerlink" title="touches和changedTouches的区别"></a>touches和changedTouches的区别</h2><ul>
+<li>touches用来记录有几根手指在小程序中触摸的，以及对应的触摸点的信息。</li>
+<li>changedTouches是用于记录<strong>变化</strong>的。</li>
+</ul>
+<img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/83.png" class>
+
+<h2 id="currentTarget和target的区别"><a href="#currentTarget和target的区别" class="headerlink" title="currentTarget和target的区别"></a>currentTarget和target的区别</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/84.png" class>
+
+<h2 id="事件参数的传递"><a href="#事件参数的传递" class="headerlink" title="事件参数的传递"></a>事件参数的传递</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/85.png" class>
+
+<h2 id="事件冒泡和事件捕获"><a href="#事件冒泡和事件捕获" class="headerlink" title="事件冒泡和事件捕获"></a>事件冒泡和事件捕获</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/86.png" class>
+
+<h1 id="组件化开发"><a href="#组件化开发" class="headerlink" title="组件化开发"></a>组件化开发</h1><blockquote>
+<p>小程序和Vue有太多相似的东西了，学习小程序就当时复习一遍Vue了吧。</p>
+</blockquote>
+<h2 id="组件化思想"><a href="#组件化思想" class="headerlink" title="组件化思想"></a>组件化思想</h2><h3 id="什么是组件化"><a href="#什么是组件化" class="headerlink" title="什么是组件化"></a>什么是组件化</h3><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/87.png" class>
+
+<h3 id="小程序组件化思想"><a href="#小程序组件化思想" class="headerlink" title="小程序组件化思想"></a>小程序组件化思想</h3><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/88.png" class>
+
+<h2 id="自定义组件"><a href="#自定义组件" class="headerlink" title="自定义组件"></a>自定义组件</h2><h3 id="创建一个自定义组件"><a href="#创建一个自定义组件" class="headerlink" title="创建一个自定义组件"></a>创建一个自定义组件</h3><ul>
+<li>如果你想使用某个自定义组件，必须在某个页面的<code>xx.json</code>里面进行一个注册。</li>
+<li>只有在多个页面里面都用到的组件，才建议在<code>app.json</code>里面注册，如果这个组件只在某个页面中使用，你最好单独在这个页面中注册比较好。</li>
+</ul>
+<img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/89.png" class>
+
+<h3 id="使用自定义组件和细节注意事项"><a href="#使用自定义组件和细节注意事项" class="headerlink" title="使用自定义组件和细节注意事项"></a>使用自定义组件和细节注意事项</h3><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/90.png" class>
+
+<h2 id="组件样式细节"><a href="#组件样式细节" class="headerlink" title="组件样式细节"></a>组件样式细节</h2><h3 id="组件的样式细节"><a href="#组件的样式细节" class="headerlink" title="组件的样式细节"></a>组件的样式细节</h3><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/91.png" class>
+
+<h3 id="样式的相互影响"><a href="#样式的相互影响" class="headerlink" title="样式的相互影响"></a>样式的相互影响</h3><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/92.png" class>
+
+<h2 id="组件通信"><a href="#组件通信" class="headerlink" title="组件通信"></a>组件通信</h2><h3 id="组件和页面通信"><a href="#组件和页面通信" class="headerlink" title="组件和页面通信"></a>组件和页面通信</h3><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/93.png" class>
+
+<h3 id="向组件传递数据-properties"><a href="#向组件传递数据-properties" class="headerlink" title="向组件传递数据-properties"></a>向组件传递数据-properties</h3><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/94.png" class>
+
+<h3 id="组件向外传递事件-自定义事件"><a href="#组件向外传递事件-自定义事件" class="headerlink" title="组件向外传递事件-自定义事件"></a>组件向外传递事件-自定义事件</h3><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/95.png" class>
+
+<h3 id="自定义组件练习"><a href="#自定义组件练习" class="headerlink" title="自定义组件练习"></a>自定义组件练习</h3><ul>
+<li>我希望这个组件的文字是不确定的，外界传过来什么文字，我就展示什么文字。(这里外界传过来的文字是流行、新款和精选。)</li>
+</ul>
+<img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/96.png" class>
+
+<h3 id="页面直接调用组件方法"><a href="#页面直接调用组件方法" class="headerlink" title="页面直接调用组件方法"></a>页面直接调用组件方法</h3><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/97.png" class>
+
+<h2 id="插槽"><a href="#插槽" class="headerlink" title="插槽"></a>插槽</h2><blockquote>
+<p>我Vue有关插槽的部分感觉都快忘得差不多了，正好趁着学习小程序插槽的机会来复习一下，挺好。</p>
+</blockquote>
+<h3 id="什么是插槽"><a href="#什么是插槽" class="headerlink" title="什么是插槽"></a>什么是插槽</h3><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/98.png" class>
+
+<h3 id="单个插槽的使用"><a href="#单个插槽的使用" class="headerlink" title="单个插槽的使用"></a>单个插槽的使用</h3><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/99.png" class>
+
+<h2 id="Component构造器"><a href="#Component构造器" class="headerlink" title="Component构造器"></a>Component构造器</h2><ul>
+<li>组件本身有生命周期</li>
+<li>监听组件所在页面的生命周期</li>
+</ul>
+<img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/100.png" class>
+
+<img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/101.png" class>
+
+<h1 id="小程序系统API"><a href="#小程序系统API" class="headerlink" title="小程序系统API"></a>小程序系统API</h1><h2 id="网络请求-基本使用"><a href="#网络请求-基本使用" class="headerlink" title="网络请求-基本使用"></a>网络请求-基本使用</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/102.png" class>
+
+<h2 id="网络请求-代码演练"><a href="#网络请求-代码演练" class="headerlink" title="网络请求-代码演练"></a>网络请求-代码演练</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/103.png" class>
+
+<h2 id="网络请求-请求封装"><a href="#网络请求-请求封装" class="headerlink" title="网络请求-请求封装"></a>网络请求-请求封装</h2><ul>
+<li>为什么要对网络请求进行封装呢？</li>
+<li>试想一下，如果你有10个页面，这10个页面都要调用网络请求，都要调用<code>wx.request()</code>这个函数。</li>
+<li>但是这种调用方法，从开发规范的角度来说它是非常不合理的。</li>
+<li>比如有一天小程序感觉<code>wx.request()</code>这个函数名字不太好，于是把这个方法给废弃了，以后都用<code>wx.network()</code>这个方法了(只是举个例子)。</li>
+<li>那你之前10个页面都用<code>wx.request()</code>进行的网络请求，都要每个都对它进行修改。</li>
+<li>总之，它们之间的耦合度太高了，就很不好。</li>
+<li>解决方法：我搞一个工具类，使用工具类对它进行一次封装。</li>
+</ul>
+<img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/104.png" class>
+
+<h1 id="展示弹窗"><a href="#展示弹窗" class="headerlink" title="展示弹窗"></a>展示弹窗</h1><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/105.png" class>
+
+<h1 id="页面分享"><a href="#页面分享" class="headerlink" title="页面分享"></a>页面分享</h1><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/106.png" class>
+
+<h1 id="小程序登陆"><a href="#小程序登陆" class="headerlink" title="小程序登陆"></a>小程序登陆</h1><h2 id="小程序登陆流程"><a href="#小程序登陆流程" class="headerlink" title="小程序登陆流程"></a>小程序登陆流程</h2><ul>
+<li>openid是每一个微信用户的唯一标识。</li>
+</ul>
+<img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/107.png" class>
+
+<h2 id="小程序登陆演练"><a href="#小程序登陆演练" class="headerlink" title="小程序登陆演练"></a>小程序登陆演练</h2><ul>
+<li>一般情况下登陆在<code>app.js</code>里面做，没有必要在进入到某个界面里面才进行登陆。</li>
+<li>code只有5分钟的有效期。</li>
+</ul>
+<img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/108.png" class>
+
+<h2 id="界面跳转"><a href="#界面跳转" class="headerlink" title="界面跳转"></a>界面跳转</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/109.png" class>
+
+<h3 id="open-type的取值-1"><a href="#open-type的取值-1" class="headerlink" title="open-type的取值"></a><code>open-type</code>的取值</h3><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/110.png" class>
+
+<h2 id="数据传递-传递方式分析"><a href="#数据传递-传递方式分析" class="headerlink" title="数据传递-传递方式分析"></a>数据传递-传递方式分析</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/111.png" class>
+
+<h2 id="代码的跳转和返回"><a href="#代码的跳转和返回" class="headerlink" title="代码的跳转和返回"></a>代码的跳转和返回</h2><img data-src="/2020/12/14/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%85%A5%E9%97%A8/112.png" class>
+
+<h1 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h1><p>小程序的基础知识就讲完了，接下来老师就开始讲用小程序搭建的商城项目了，我另起了一个博客来写完善这个小程序项目的过程。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" rel="tag"># 小程序</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/12/14/React%E5%AE%9E%E7%94%A8%E6%95%99%E7%A8%8B/" rel="prev" title="React实用教程">
+      <i class="fa fa-chevron-left"></i> React实用教程
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/12/15/%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%AE%98%E6%96%B9%E6%96%87%E6%A1%A3%E5%AD%A6%E4%B9%A0/" rel="next" title="小程序官方文档学习">
+      小程序官方文档学习 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%82%82%E9%80%85%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91"><span class="nav-text">邂逅小程序开发</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BE%E5%89%8D%E6%8F%90%E9%86%92"><span class="nav-text">课前提醒</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF%E5%92%8C%E8%AF%BE%E7%A8%8B%E5%A4%A7%E7%BA%B2"><span class="nav-text">学习路线和课程大纲</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%B6%E6%AE%B5%E4%B8%80%E5%A4%A7%E7%BA%B2"><span class="nav-text">阶段一大纲</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%B0%8F%E7%A8%8B%E5%BA%8F"><span class="nav-text">什么是小程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%87%BA%E7%8E%B0%E5%B8%A6%E6%9D%A5%E4%BA%86%E4%BB%80%E4%B9%88"><span class="nav-text">小程序的出现带来了什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91%E7%9A%84%E5%BF%85%E8%A6%81%E6%80%A7"><span class="nav-text">小程序开发的必要性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WebView%E7%9A%84%E5%8F%91%E5%B1%95%E5%92%8C%E4%B8%8D%E8%B6%B3"><span class="nav-text">WebView的发展和不足</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Native%E7%9A%84%E4%BC%98%E5%8A%BF%E5%92%8C%E5%8A%A3%E5%8A%BF"><span class="nav-text">Native的优势和劣势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9A%84%E8%AF%9E%E7%94%9F"><span class="nav-text">小程序的诞生</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%8E%86%E5%8F%B2"><span class="nav-text">小程序的历史</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86"><span class="nav-text">小程序预备知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E5%89%8D%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-text">开发前准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E5%86%8C%E8%B4%A6%E5%8F%B7-%E7%94%B3%E8%AF%B7AppID"><span class="nav-text">注册账号-申请AppID</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E5%86%8C%E6%88%90%E5%8A%9F-%E6%9F%A5%E7%9C%8BAppID-%E6%9F%A5%E7%9C%8B%E6%96%87%E6%A1%A3"><span class="nav-text">注册成功-查看AppID-查看文档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7"><span class="nav-text">小程序开发工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%BA%94%E7%94%A8"><span class="nav-text">创建第一个小程序应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7%E4%BB%8B%E7%BB%8D"><span class="nav-text">开发工具介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E7%9A%84%E7%BB%93%E6%9E%84"><span class="nav-text">应用程序的结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BA%E9%A1%B9%E7%9B%AE-%E4%B8%80"><span class="nav-text">从零搭建项目(一)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BA%E9%A1%B9%E7%9B%AE-%E4%BA%8C"><span class="nav-text">从零搭建项目(二)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BA%E9%A1%B9%E7%9B%AE-%E4%B8%89"><span class="nav-text">从零搭建项目(三)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BA%E9%A1%B9%E7%9B%AE-%E5%9B%9B"><span class="nav-text">从零搭建项目(四)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BA%E9%A1%B9%E7%9B%AE-%E4%BA%94"><span class="nav-text">从零搭建项目(五)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E4%B8%AA%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86%E6%96%B9%E5%BC%8F"><span class="nav-text">多个项目管理方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%86%E9%A1%B9%E7%9B%AE%E5%8A%A0%E5%85%A5git%E7%AE%A1%E7%90%86"><span class="nav-text">将项目加入git管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%88%9D%E4%BD%93%E9%AA%8C"><span class="nav-text">小程序初体验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9A%84MVVM%E6%9E%B6%E6%9E%84"><span class="nav-text">小程序的MVVM架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E5%BC%8F%E7%BC%96%E7%A8%8B%E2%80%94%E2%80%94%E5%A3%B0%E6%98%8E%E5%BC%8F%E7%BC%96%E7%A8%8B"><span class="nav-text">命令式编程——声明式编程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%9E%B6%E6%9E%84%E5%92%8C%E9%85%8D%E7%BD%AE"><span class="nav-text">小程序架构和配置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%B0%8F%E7%A8%8B%E5%BA%8F"><span class="nav-text">配置小程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E9%85%8D%E7%BD%AE"><span class="nav-text">全局配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E5%AE%9E%E7%8E%B0"><span class="nav-text">案例实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B5%E9%9D%A2%E9%85%8D%E7%BD%AE"><span class="nav-text">页面配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%8F%8C%E7%BA%BF%E7%A8%8B%E6%A8%A1%E5%9E%8B"><span class="nav-text">小程序的双线程模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%95%8C%E9%9D%A2%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B%E2%80%93wxml%E5%92%8CDOM%E6%A0%91"><span class="nav-text">界面渲染过程–wxml和DOM树</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%95%8C%E9%9D%A2%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B%E2%80%93%E5%88%9D%E5%A7%8B%E5%8C%96%E6%B8%B2%E6%9F%93"><span class="nav-text">界面渲染过程–初始化渲染</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%95%8C%E9%9D%A2%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B-%E2%80%93-%E6%95%B0%E6%8D%AE%E5%8F%91%E7%94%9F%E5%8F%98%E5%8C%96"><span class="nav-text">界面渲染过程 – 数据发生变化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%95%8C%E9%9D%A2%E6%B8%B2%E6%9F%93%E7%9A%84%E6%95%B4%E4%BD%93%E6%B5%81%E7%A8%8B"><span class="nav-text">界面渲染的整体流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B"><span class="nav-text">小程序的启动流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E8%A7%A3%E6%9E%90"><span class="nav-text">参数解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E5%86%8CApp%E6%97%B6%E5%81%9A%E4%BB%80%E4%B9%88%E5%91%A2"><span class="nav-text">注册App时做什么呢?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF-%E2%80%93-%E4%BF%9D%E5%AD%98%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="nav-text">获取用户信息 – 保存全局变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E5%86%8C%E5%B0%8F%E7%A8%8B%E5%BA%8F-%E4%BB%A3%E7%A0%81%E6%BC%94%E7%A4%BA"><span class="nav-text">注册小程序 - 代码演示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E5%86%8C%E9%A1%B5%E9%9D%A2"><span class="nav-text">注册页面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E5%86%8CPage%E6%97%B6%E5%81%9A%E4%BB%80%E4%B9%88%E5%91%A2"><span class="nav-text">注册Page时做什么呢?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Page%E5%AE%9E%E4%BE%8B%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-text">Page实例生命周期</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E5%86%85%E7%BD%AE%E7%BB%84%E4%BB%B6"><span class="nav-text">常见内置组件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Text%E7%BB%84%E4%BB%B6"><span class="nav-text">Text组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Button%E7%BB%84%E4%BB%B6%E8%A7%A3%E6%9E%90"><span class="nav-text">Button组件解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Button%E7%BB%84%E4%BB%B6%E6%BC%94%E7%BB%83"><span class="nav-text">Button组件演练</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#open-type%E7%9A%84%E5%8F%96%E5%80%BC"><span class="nav-text">open-type的取值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#View%E7%BB%84%E4%BB%B6"><span class="nav-text">View组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Image%E7%BB%84%E4%BB%B6"><span class="nav-text">Image组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Image%E7%BB%84%E4%BB%B6%E4%BB%8B%E7%BB%8D"><span class="nav-text">Image组件介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Image%E7%BB%84%E4%BB%B6%E6%BC%94%E7%BB%83"><span class="nav-text">Image组件演练</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Input%E7%BB%84%E4%BB%B6"><span class="nav-text">Input组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Input%E7%BB%84%E4%BB%B6%E4%BB%8B%E7%BB%8D"><span class="nav-text">Input组件介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Input%E7%BB%84%E4%BB%B6%E6%BC%94%E7%BB%83"><span class="nav-text">Input组件演练</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#scroll-view%E7%BB%84%E4%BB%B6"><span class="nav-text">scroll-view组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#scroll-view%E7%BB%84%E4%BB%B6%E4%BB%8B%E7%BB%8D"><span class="nav-text">scroll-view组件介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#scroll-view%E4%BB%A3%E7%A0%81%E6%BC%94%E7%BB%83"><span class="nav-text">scroll-view代码演练</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B1%E5%90%8C%E5%B1%9E%E6%80%A7"><span class="nav-text">共同属性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WXSS-amp-WXML-amp-WXS"><span class="nav-text">WXSS&amp;WXML&amp;WXS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#WXSS%E6%A0%B7%E5%BC%8F"><span class="nav-text">WXSS样式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B7%E5%BC%8F%E9%A1%B5%E9%9D%A2%E5%86%99%E6%B3%95"><span class="nav-text">样式页面写法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%AF%E6%8C%81%E7%9A%84%E9%80%89%E6%8B%A9%E5%99%A8"><span class="nav-text">支持的选择器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E5%99%A8%E6%9D%83%E9%87%8D"><span class="nav-text">选择器权重</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%EF%BC%9A%E5%B0%BA%E5%AF%B8%E5%8D%95%E4%BD%8D"><span class="nav-text">扩展：尺寸单位</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%EF%BC%9A%E6%A0%B7%E5%BC%8F%E5%AF%BC%E5%85%A5"><span class="nav-text">扩展：样式导入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%98%E6%96%B9%E6%A0%B7%E5%BC%8F%E5%BA%93"><span class="nav-text">官方样式库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WXML%E8%AF%AD%E6%B3%95"><span class="nav-text">WXML语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mustache%E8%AF%AD%E6%B3%95-%E4%B8%80"><span class="nav-text">Mustache语法(一)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E5%88%A4%E6%96%AD"><span class="nav-text">逻辑判断</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E5%88%A4%E6%96%AD%E8%A1%A5%E5%85%85"><span class="nav-text">逻辑判断补充</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%97%E8%A1%A8%E6%B8%B2%E6%9F%93-wx-for%E5%9F%BA%E7%A1%80"><span class="nav-text">列表渲染-wx:for基础</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#block%E6%A0%87%E7%AD%BE"><span class="nav-text">block标签</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%97%E8%A1%A8%E6%B8%B2%E6%9F%93-item-index%E5%90%8D%E7%A7%B0"><span class="nav-text">列表渲染-item&#x2F;index名称</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%97%E8%A1%A8%E6%B8%B2%E6%9F%93-key%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-text">列表渲染-key的作用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E7%89%88%E8%AF%AD%E6%B3%95"><span class="nav-text">模版语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wxml%E7%9A%84%E5%BC%95%E5%85%A5"><span class="nav-text">wxml的引入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#include%E5%BC%95%E5%85%A5"><span class="nav-text">include引入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WXS%E8%AF%AD%E6%B3%95"><span class="nav-text">WXS语法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#WXS%E6%A8%A1%E5%9D%97"><span class="nav-text">WXS模块</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6"><span class="nav-text">事件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E7%9A%84%E4%BB%8B%E7%BB%8D"><span class="nav-text">事件的介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E4%BA%8B%E4%BB%B6%E7%B1%BB%E5%9E%8B"><span class="nav-text">常见事件类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E7%B1%BB%E5%9E%8B%E6%BC%94%E7%BB%83"><span class="nav-text">事件类型演练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E5%AF%B9%E8%B1%A1%E4%BB%8B%E7%BB%8D"><span class="nav-text">事件对象介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#touches%E5%92%8CchangedTouches%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-text">touches和changedTouches的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#currentTarget%E5%92%8Ctarget%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-text">currentTarget和target的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E5%8F%82%E6%95%B0%E7%9A%84%E4%BC%A0%E9%80%92"><span class="nav-text">事件参数的传递</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E5%86%92%E6%B3%A1%E5%92%8C%E4%BA%8B%E4%BB%B6%E6%8D%95%E8%8E%B7"><span class="nav-text">事件冒泡和事件捕获</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6%E5%8C%96%E5%BC%80%E5%8F%91"><span class="nav-text">组件化开发</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6%E5%8C%96%E6%80%9D%E6%83%B3"><span class="nav-text">组件化思想</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%BB%84%E4%BB%B6%E5%8C%96"><span class="nav-text">什么是组件化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%BB%84%E4%BB%B6%E5%8C%96%E6%80%9D%E6%83%B3"><span class="nav-text">小程序组件化思想</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%84%E4%BB%B6"><span class="nav-text">自定义组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%84%E4%BB%B6"><span class="nav-text">创建一个自定义组件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%84%E4%BB%B6%E5%92%8C%E7%BB%86%E8%8A%82%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-text">使用自定义组件和细节注意事项</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6%E6%A0%B7%E5%BC%8F%E7%BB%86%E8%8A%82"><span class="nav-text">组件样式细节</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6%E7%9A%84%E6%A0%B7%E5%BC%8F%E7%BB%86%E8%8A%82"><span class="nav-text">组件的样式细节</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B7%E5%BC%8F%E7%9A%84%E7%9B%B8%E4%BA%92%E5%BD%B1%E5%93%8D"><span class="nav-text">样式的相互影响</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1"><span class="nav-text">组件通信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6%E5%92%8C%E9%A1%B5%E9%9D%A2%E9%80%9A%E4%BF%A1"><span class="nav-text">组件和页面通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%91%E7%BB%84%E4%BB%B6%E4%BC%A0%E9%80%92%E6%95%B0%E6%8D%AE-properties"><span class="nav-text">向组件传递数据-properties</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6%E5%90%91%E5%A4%96%E4%BC%A0%E9%80%92%E4%BA%8B%E4%BB%B6-%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BA%8B%E4%BB%B6"><span class="nav-text">组件向外传递事件-自定义事件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%84%E4%BB%B6%E7%BB%83%E4%B9%A0"><span class="nav-text">自定义组件练习</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B5%E9%9D%A2%E7%9B%B4%E6%8E%A5%E8%B0%83%E7%94%A8%E7%BB%84%E4%BB%B6%E6%96%B9%E6%B3%95"><span class="nav-text">页面直接调用组件方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E6%A7%BD"><span class="nav-text">插槽</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%8F%92%E6%A7%BD"><span class="nav-text">什么是插槽</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E4%B8%AA%E6%8F%92%E6%A7%BD%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-text">单个插槽的使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Component%E6%9E%84%E9%80%A0%E5%99%A8"><span class="nav-text">Component构造器</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%B3%BB%E7%BB%9FAPI"><span class="nav-text">小程序系统API</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-text">网络请求-基本使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82-%E4%BB%A3%E7%A0%81%E6%BC%94%E7%BB%83"><span class="nav-text">网络请求-代码演练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82-%E8%AF%B7%E6%B1%82%E5%B0%81%E8%A3%85"><span class="nav-text">网络请求-请求封装</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B1%95%E7%A4%BA%E5%BC%B9%E7%AA%97"><span class="nav-text">展示弹窗</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B5%E9%9D%A2%E5%88%86%E4%BA%AB"><span class="nav-text">页面分享</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%99%BB%E9%99%86"><span class="nav-text">小程序登陆</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%99%BB%E9%99%86%E6%B5%81%E7%A8%8B"><span class="nav-text">小程序登陆流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%99%BB%E9%99%86%E6%BC%94%E7%BB%83"><span class="nav-text">小程序登陆演练</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%95%8C%E9%9D%A2%E8%B7%B3%E8%BD%AC"><span class="nav-text">界面跳转</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#open-type%E7%9A%84%E5%8F%96%E5%80%BC-1"><span class="nav-text">open-type的取值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E4%BC%A0%E9%80%92-%E4%BC%A0%E9%80%92%E6%96%B9%E5%BC%8F%E5%88%86%E6%9E%90"><span class="nav-text">数据传递-传递方式分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E7%9A%84%E8%B7%B3%E8%BD%AC%E5%92%8C%E8%BF%94%E5%9B%9E"><span class="nav-text">代码的跳转和返回</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%93%E6%9D%9F"><span class="nav-text">结束</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="筛滤淘"
+      src="/images/cat.jpg">
+  <p class="site-author-name" itemprop="name">筛滤淘</p>
+  <div class="site-description" itemprop="description">前端知识点总结</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">129</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lm101845" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lm101845" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1018457683@qq.com" title="E-Mail → mailto:1018457683@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.jianshu.com/u/6879af8ace24" title="简 书 → https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;6879af8ace24" rel="noopener" target="_blank"><i class="fa fa-jianshu fa-fw"></i>简 书</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/9002959" title="B  站 → https:&#x2F;&#x2F;space.bilibili.com&#x2F;9002959" rel="noopener" target="_blank"><i class="fa fa-bilibili fa-fw"></i>B  站</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">筛滤淘</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">3.7m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">56:03</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

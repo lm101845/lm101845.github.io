@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="前言 汇编语言是很多相关课程（如：数据结构、操作系统、微机原理等）的重要基础。其实仅从课程关系的角度讨论汇编语言的重要性未免片面，概括地说，如果读者想从事计算机科学方面的工作的话，汇编语言的基础是必不可缺的。原因很简单，我们的工作平台、研究对象都是机器，汇编语言是人和计算机沟通的最直接的方式，它描述了机器最终所要执行的指令序列。我们想深入研究英国文化，不会英语行吗？汇编语言是和具体的微处理器相联系">
+<meta property="og:type" content="article">
+<meta property="og:title" content="读书笔记：汇编语言">
+<meta property="og:url" content="http://example.com/2020/07/29/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/index.html">
+<meta property="og:site_name" content="木子小屋">
+<meta property="og:description" content="前言 汇编语言是很多相关课程（如：数据结构、操作系统、微机原理等）的重要基础。其实仅从课程关系的角度讨论汇编语言的重要性未免片面，概括地说，如果读者想从事计算机科学方面的工作的话，汇编语言的基础是必不可缺的。原因很简单，我们的工作平台、研究对象都是机器，汇编语言是人和计算机沟通的最直接的方式，它描述了机器最终所要执行的指令序列。我们想深入研究英国文化，不会英语行吗？汇编语言是和具体的微处理器相联系">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2020/07/29/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/01.png">
+<meta property="og:image" content="http://example.com/2020/07/29/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/02.png">
+<meta property="og:image" content="http://example.com/2020/07/29/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/03.png">
+<meta property="og:image" content="http://example.com/2020/07/29/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/04.png">
+<meta property="og:image" content="http://example.com/2020/07/29/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/05.png">
+<meta property="article:published_time" content="2020-07-29T08:15:00.000Z">
+<meta property="article:modified_time" content="2020-07-29T08:15:00.000Z">
+<meta property="article:author" content="筛滤淘">
+<meta property="article:tag" content="读书笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2020/07/29/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/01.png">
+
+<link rel="canonical" href="http://example.com/2020/07/29/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>读书笔记：汇编语言 | 木子小屋</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?79d7cb9c8fa9e57a2723fb8645f37638";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">木子小屋</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Talk is cheap. Show me the code.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/07/29/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cat.jpg">
+      <meta itemprop="name" content="筛滤淘">
+      <meta itemprop="description" content="前端知识点总结">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="木子小屋">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          读书笔记：汇编语言
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-07-29 16:15:00" itemprop="dateCreated datePublished" datetime="2020-07-29T16:15:00+08:00">2020-07-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">计算机底层原理</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>7.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>7 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>汇编语言是很多相关课程（如：数据结构、操作系统、微机原理等）的重要基础。其实仅从课程关系的角度讨论汇编语言的重要性未免片面，概括地说，如果读者想从事计算机科学方面的工作的话，汇编语言的基础是必不可缺的。原因很简单，我们的工作平台、研究对象都是机器，汇编语言是人和计算机沟通的最直接的方式，它描述了机器最终所要执行的指令序列。我们想深入研究英国文化，不会英语行吗？汇编语言是和具体的微处理器相联系的，每一种微处理器的汇编语言都不一样，我们只能通过一种常用的、结构简洁的微处理器的汇编语言来进行学习，从而达到学习汇编的两个最根本的目的：充分获得底层编程的体验，深刻理解机器运行程序的机理。这两个目的达到了，其他目的也就自然而然地达到了。举例来说，你在学习操作系统等课程时，对许多问题就会有很通透的理解。</p>
+<p>我们的学习不能在一台抽象的计算机上来进行，必须针对一台具体的计算机来完成学习过程。为了使学习的过程容易展开，本书采用以8086CPU为中央处理器的PC机来进行学习。8086CPU可以满足以下条件：常用而结构简洁，常用保证了可以方便地进行实践，结构简洁则便于进行教学。纯粹的8086PC机已经不存在了，对于现今的机器来讲，它已经属于古玩。但是，现在的任何一台PC机中的微处理器，只要是和Intel兼容的系列，都可以8086的方式进行工作。可以将一个奔腾系列的微处理器当作一个快速的8086微处理器来用。整个奔腾PC的工作情况也是如此，可以当作一台高速的8086PC来用。关于微处理器及相关的一些问题请参看附注1。</p>
+<p>为了更好地引导、帮助读者学习汇编语言，作者精心创作了这本书。下面对教学思想和教学内容的问题进行一些探讨，希望在一些重要的问题上和读者达到共识。</p>
+<p><strong>1.教学思想</strong></p>
+<p>一门课程是由相互关联的知识构成的，这些知识在一本书中如何组织则是一种信息组织和加工的艺术。学习是一个循序渐进的过程，但并不是所有的教学都是以这种方式完成的，这并不是我们所希望看到的事情，因为任何不以循序渐进的方式进行的学习，都将出现盲目探索和不成系统的情况，最终学习到的也大都是相对零散的知识，并不能建立起一个系统的知识结构。非循序渐进的学习，也达不到循序渐进学习所能达到的深度，因为后者是步步深入的，每一步都以前一步为基础。</p>
+<p>读者也许会问：“我们不是一直以循序渐进的方式学习吗？有哪本书不是从第一章到最后一章，又有哪门课不是从头讲到尾的呢？”</p>
+<p><strong>一本书从第一章到最后一章，一门课从头到尾，这是一个时间先后的问题，这并不等于就是以循序渐进的方式在学习。</strong>我们常有这样的感受，想认真地学习一门较难的课程，可是却经常看不懂书上的内容；有时觉得懂了，可又总有一种不能通透的感觉，觉得书上的内容再反复看，也不能深入下去了。这些情况都说明，我们并未真正以循序渐进的方式学习。</p>
+<p>不能循序渐进地学习的根本原因在于：读者所用的教材并未真正地按循序渐进的原则来构造。这不是一个简单的问题，不是按传统的方法划分一下章节就可以解决的。举例来说，在传统的汇编教材中，一般都在开始的章节中集中讲CPU的编程结构，这一章往往成为大多数初学者的障碍。这章所讲的内容有的需要了解其他的知识才能深入理解，可是这些知识都被忽略；有的需要有编程经验才能深入理解，或不进行具体编程就根本无法理解，可编程要在后面的章节里进行…..</p>
+<p>我们需要为读者构造合理的学习线索，这个学习线索应真正地遵循循序渐进的原则。我们需要打破传统的章节划分，以一种新的艺术来对课程的内容进行补充、分割、重组，使其成为一个个串连在学习线索上的完成特定教学功能的教学节点。这本书以此作为创作的核心理念，打破了传统的章节划分，构造了合理的学习线索，将课程的内容拆解到学习线索中的各个教学节点中去，学习主线索上的教学节点有4类：<strong>（1）知识点（即各小节内容）</strong>;<br><strong>（2）检测点</strong>；<strong>（3）问题和分析</strong>；<strong>（4）实验</strong>。还有一种被称为附注的教学节点不在学习主线索之中，是由知识点引出的节点，属于选看内容。</p>
+<p>应用这本书，读者将沿着学习线索来学习一个个知识点，通过一个个检测点，被线索引入到一个个问题分析之中，并完成一个个实验，线索上的每一个教学节点都是后续内容的基础；每一个节点的信息量或难度，又只比前面的多一点，读者在每一步的学习中都会有一种有的放矢的感觉。大的困难被分割，读者在学习的过程中可逐步克服。</p>
+<p>这好似航行，我们为读者设计一条航线，航线上分布着港口，每一个港口都是下一个港口的起点。漫长的旅途被一个个港口分割，我们通过到达每个港口来完成整个航行。</p>
+<p>为了按循序渐进的原则构造学习线索，本书采用了一种全新的信息组织和加工艺术，我们称其为：知识屏蔽。以往的教材<strong>只注重知识的授予，并不注重知识的屏蔽</strong>。实际上，在教学中<strong>知识的屏蔽</strong>十分重要，这是一个重点突出的问题。计算机是一门交叉学科，一部分知识往往还连带着其他的相关内容，这些连带的相关内容如果处理不好，将影响读者对目前要掌握的知识的理解。本书采用了<strong>知识屏蔽</strong>的方法，对教学内容进行了<strong>最小化分割</strong>，<strong>力求使我们在学习过程中所接触到的每一个知识点都是当前惟一要去理解的东西</strong>。我们在看到这个知识点之前，己理解了从前所有的内容；<strong>在学习这个知识点的过程中，以后的知识也不会对我们造成干扰</strong>。我们在整个学习过程中，每一步都走得清楚而扎实，不知不觉中，由当初的一个简单的问题开始，在经历了一个每一步都相对简单的过程之后，被带入了一个深的层次。这同沿着楼梯上高楼一样，迈出的每一步都不高，结果却上了楼顶。</p>
+<p><strong>2.本书的结构</strong></p>
+<p>本书由若干章构成，一章包含若干知识点，根据具体内容，还可能包含检测点、问题和分析、实验、附注等教学节点。书中的所有教学节点，除附注之外，都在一个全程的主线索之中。</p>
+<p>由于本书具有很强的线索性，我们的学习一定要按照教学的线索进行，有两点是必须要遵守的原则：<strong>（1）没有通过检测点不要向下学习</strong>；<strong>（2）没有完成当前的实验不要向下学习</strong>。</p>
+<p>下面的表格详细说明了书中的各种教学节点和它们的组织情况。</p>
+<img data-src="/2020/07/29/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/01.png" class>
+
+<p><strong>3.教学重点和内容特点</strong></p>
+<p>本书的教学重心是：通过学习关键指令来深入理解机器工作的基本原理，培养底层编程意识和思想。本着上面的原则，本书的内容将和传统的教材有着很大的不同：</p>
+<p>（1）不讲解每一条指令的功能<br>指令仅仅是学习机器基本原理和设计思想的一种实例。而逐条地讲解每一条指令的功能，不是本书的重点所在，它应该是一本指令手册的核心内容。这就好像文学作品和字典的区别，前者的重心在于用文字表达思想，后者讲解每个字的用法。</p>
+<p>（2）编程的平台是硬件而不是操作系统<br>这一点尤为重要，直接影响到以后的操作系统的教学。我们必须通过一定的编程实践，体验一个裸机的环境，在一个没有操作系统的环境中直接对硬件编程。这样的体会和经验非常重要，这样我们才能真正体会到汇编语言的作用，并且看到没有操作系统的计算机系统是怎样的。这为以后的操作系统的学习打下了一个重要的基础。</p>
+<p>（3）着重讲解重要指令和关键概念<br>本书的所有内容都是围绕着“深入理解机器工作的基本原理”和“培养底层编程意识和思想”这两个核心目标来进行的。对所有和这两个目标关系并不密切的内容，都进行了舍弃。使读者可以集中注意力真正理解和掌握那些具有普遍意义的指令和关键概念。</p>
+<p>本书在深入到本质的层面上对重要指令和关键概念进行了讲解和讨论。这些指令和概念有：jmp、条件转移指令、call.ret、栈指令、int，iret.cmp，loop、分段、寻址方式等。</p>
+<p><strong>4.读者定位</strong></p>
+<p>本书可用作大学计算机专业本科的汇编教材和希望深入学习计算机科学的读者的自学教材。本书的读者应具备以下基础：</p>
+<ul>
+<li>具有计算机的使用经验；</li>
+<li>具有二进制、十六进制等基础知识；</li>
+<li>具有一门高级语言（BASIC，PASCAL，C…）的基本编程基础。</li>
+</ul>
+<h1 id="第1章：基础知识"><a href="#第1章：基础知识" class="headerlink" title="第1章：基础知识"></a>第1章：基础知识</h1><p>汇编语言是直接在硬件之上工作的编程语言，首先要了解硬件系统的结构，才能有效地应用汇编语言对其编程。在本章中，对硬件系统结构的问题进行一部分的探讨，以使后续的课程可在一个好的基础上进行。当课程进行到需要补充新的基础知识（关于编程结构或其他的）时候，再对相关的基础知识进行介绍和探讨。本书的<strong>原则</strong>是，<strong>以后用到的知识，以后再说</strong>。</p>
+<p>在汇编课程中不对硬件系统进行全面和深入的研究，因为这不在本课程的范围之内。关于PC机及CPU物理结构和编程结构的全面研究，在《微机原理与接口》中进行；对于计算机一般的结构、功能、性能的研究在一门称为《组成原理》的理论层次更高的课程中进行。汇编课程的研究重点放在如何利用硬件系统的编程结构和指令集有效灵活地控制系统进行工作。</p>
+<h2 id="机器语言"><a href="#机器语言" class="headerlink" title="机器语言"></a>机器语言</h2><p>说到江编语言的产生，首先要讲一下机器语言。机器语言是机器指令的集合。机器指令展开来讲就是一台机器可以正确执行的命令。电子计算机的机器指令是一列二进制数字。计算机将之转变为一列高低电平，以使计算机的电子器件受到驱动，进行运算。</p>
+<p>上面所说的计算机指的是可以执行机器指令，进行运算的机器。这是早期计算机的概念。现在，在常用的PC机中，有一个芯片来完成上面所说的计算机的功能。这个芯片就是我们常说的CPU（Central Processing Unit，中央处理单元），CPU是一种微处理器。以后我们提到的计算机是指由CPU和其他受CPU直接或间接控制的芯片、器件、设备组成的计算机系统，比如我们最常见的PC机。</p>
+<p>每一种微处理器，由于硬件设计和内部结构的不同，就需要用不同的电平脉冲来控制，使它工作。所以每一种微处理器都有自己的机器指令集，也就是机器语言。</p>
+<p>早期的程序设计均使用机器语言。程序员们将用0、1数字编成的程序代码打在纸带或卡片上，1打孔，0不打孔，再将程序通过纸带机或卡片机输入计算机，进行运算。</p>
+<p>应用8086CPU完成运算s=768+12288-1280，机器码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">101100000000000000000011</span><br><span class="line">000001010000000000110000</span><br><span class="line">001011010000000000000101</span><br></pre></td></tr></table></figure>
+<p>假如将程序错写成以下这样，请读者找出错误。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">101100000000000000000011</span><br><span class="line">000001010000000000110000</span><br><span class="line">000101101000000000000101</span><br></pre></td></tr></table></figure>
+<p>要书写和阅读机器码程序不是一件简单的工作，要记住所有抽象的二进制码。上面只是一个非常简单的小程序，就暴露了机器码的晦涩难懂和不易查错。写如此小的一个程序尚且如此，实际上一个有用的程序至少要有几十行机器码，那么，情况将怎么样呢？</p>
+<p>在显示器上输出”welcome to masm”，机器码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">00011110</span><br><span class="line">1011100000000000000000000</span><br><span class="line">01010000</span><br><span class="line">101110001100011000001111</span><br><span class="line">1000111011011000</span><br><span class="line">1011010000000110</span><br><span class="line">1011000000000000</span><br><span class="line">1011011100000111</span><br><span class="line">101110010000000000000000</span><br><span class="line">1011011000011000</span><br><span class="line">1011001001001111</span><br><span class="line">1100110100010000</span><br><span class="line">1011010000000010</span><br><span class="line">1011011100000000</span><br><span class="line">1011011000000000</span><br><span class="line">1011001000000000</span><br><span class="line">1100110100010000</span><br><span class="line">1011010000001001</span><br><span class="line">10001101000101100010101000000000</span><br><span class="line">1100110100100001</span><br><span class="line">1011010000001010</span><br><span class="line">10001101000101100011000100000000</span><br><span class="line">1100110100100001</span><br><span class="line">1011010000000110</span><br><span class="line">1011000000010100</span><br><span class="line">1011011100011001</span><br><span class="line">1011010100001011</span><br><span class="line">1011000100010011</span><br><span class="line">1011011000001101</span><br><span class="line">1011001000111100</span><br><span class="line">1100110100010000</span><br><span class="line">1101010000000010</span><br><span class="line">1101011100000000</span><br><span class="line">1101000000001100</span><br><span class="line">1101001000010100</span><br><span class="line">1100110100010000</span><br><span class="line">1011010000001001</span><br><span class="line">10001101000101100000000000000000</span><br><span class="line">1100110100100001</span><br><span class="line">11001011</span><br></pre></td></tr></table></figure>
+<p>看到这样的程序，读者会有什么感想？如果程序里有一个”1”被误写为”0”，又如何去查找呢？</p>
+<h2 id="汇编语言的产生"><a href="#汇编语言的产生" class="headerlink" title="汇编语言的产生"></a>汇编语言的产生</h2><p>早期的程序员们很快就发现了使用机器语言带来的麻烦，它是如此难于辨别和记忆，给整个产业的发展带来了障碍。于是汇编语言产生了。</p>
+<p>汇编语言的主体是汇编指令。汇编指令和机器指令的差别在于指令的表示方法上。汇编指令是机器指令便于记忆的书写格式。<br>例如：机器指令1000100111011000表示把<strong>寄存器</strong>BX的内容送到AX中。汇编指令则写成mov ax，bx。这样的写法与人类语言接近，便于阅读和记忆。</p>
+<blockquote>
+<p>我叫阿Q，是CPU一号车间里的员工，我所在的这个CPU足足有<strong>8个核</strong>，就有<strong>8个车间</strong>，干起活来杠杠滴。</p>
+<p>我所在的一号车间里，除了负责<strong>执行指令</strong>的我，还有负责<strong>取指令</strong>的小A，负责<strong>分析指令</strong>的小胖和负责<strong>结果回写</strong>的老K。</p>
+<p>CPU的每个车间都有<strong>一堆箱子</strong>，人们把这些箱子叫做<strong>寄存器</strong>，我所在的一号车间也不例外，我们每天的工作就是不断执行指令，然后折腾这些箱子，往里面存东西取东西。</p>
+<p>由于我们四个人的出色工作，一号车间业绩突出，在年会上还多次获得了最佳CPU核心奖呢。</p>
+</blockquote>
+<p>操作：寄存器BX的内容送到AX中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">机器指令：10001001110110000</span><br><span class="line">汇编指令：mov ax,bx</span><br></pre></td></tr></table></figure>
+<p>（<strong>寄存器</strong>，简单地讲是<strong>CPU中可以存储数据的器件</strong>，<strong>一个CPU中有多个寄存器</strong>。AX是其中一个寄存器的代号，BX是另一个寄存器的代号。更详细的内容我们在以后的课程中将会讲到。）</p>
+<p>此后，程序员们就用汇编指令编写源程序。可是，<strong>计算机能读懂的只有机器指令</strong>，那么如何让计算机执行程序员用汇编指令编写的程序呢？这时，就需要有一个能够将汇编指令转换成机器指令的翻译程序，这样的程序被称为<strong>编译器</strong>。程序员用<strong>汇编语言写出源程序</strong>，再用<strong>汇编编译器将其编译为机器码</strong>，由计算机<strong>最终执行</strong>。图1.1描述了这个工作过程。</p>
+<img data-src="/2020/07/29/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/02.png" class>
+
+<h2 id="汇编语言的组成"><a href="#汇编语言的组成" class="headerlink" title="汇编语言的组成"></a>汇编语言的组成</h2><p>汇编语言发展至今，由以下3类指令组成。</p>
+<ul>
+<li><p><strong>汇编指令</strong>：<strong>机器码的助记符</strong>，有对应的机器码。</p>
+</li>
+<li><p><strong>伪指令</strong>：没有对应的机器码，由编译器执行，计算机并不执行。</p>
+</li>
+<li><p><strong>其他符号</strong>：如：+、一、*、/等，由编译器识别，没有对应的机器码。</p>
+</li>
+</ul>
+<p>汇编语言的<strong>核心是汇编指令</strong>，它决定了汇编语言的特性。</p>
+<h2 id="存储器"><a href="#存储器" class="headerlink" title="存储器"></a>存储器</h2><p>CPU是计算机的核心部件，它控制整个计算机的运作并进行运算。要想让一个CPU工作，就必须向它提供<strong>指令和数据</strong>。指令和数据在<strong>存储器</strong>中存放，也就是平时所说的<strong>内存</strong>。在一台PC机中<strong>内存的作用仅次于CPU</strong>。离开了内存,性能再好的CPU也无法工作。这就像<strong>再聪明的大脑，没有了记忆也无法进行思考</strong>。<strong>磁盘不同于内存</strong>，磁盘上的数据或程序如果不读到内存中，就无法被CPU使用。要灵活地利用汇编语言编程，首先要了解CPU是如何从内存中读取信息，以及向内存中写入信息的。</p>
+<h2 id="指令和数据"><a href="#指令和数据" class="headerlink" title="指令和数据"></a>指令和数据</h2><p>指令和数据是应用上的概念。<strong>在内存或磁盘上，指令和数据没有任何区别，都是二进制信息</strong>。CPU在工作的时候把有的信息看作指令，有的信息看作数据，<strong>为同样的信息赋予了不同的意义</strong>。就像<strong>围棋的棋子，在棋盒里的时候没有任何区别，在对弈的时候就有了不同的意义</strong>。</p>
+<p>例如：内存中的二进制信息1000100111011000，计算机<strong>可以</strong>把它看作大小为89D8H的数据来处理，<strong>也可以</strong>将其看作指令mov ax，bx来执行。</p>
+<img data-src="/2020/07/29/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/03.png" class>
+
+<h2 id="存储单元"><a href="#存储单元" class="headerlink" title="存储单元"></a>存储单元</h2><p>存储器被划分成若干个存储单元，每个存储单元从0开始顺序编号，例如一个存储器有128个存储单元，编号从0~127。如图1.2所示。</p>
+<p>那么一个存储单元能存储多少信息呢？<strong>电子计算机的最小信息单位是bit（音译为比特）</strong>，<strong>也就是一个二进制位</strong>。<br>8个bit组成一个Byte，也就是通常讲的一个字节。微型机存储器的存储单元可以存储一个字节，即8个二进制位。一个存储器有128个存储单元，它可以存储128个字节。</p>
+<p><strong>微机存储器的容量是以字节为最小单位来计算的</strong>(比特实在是太小了，不好算)。对于拥有128个<strong>存储单元</strong>的存储器，我们可以说，它的容量是128字节。</p>
+<img data-src="/2020/07/29/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/04.png" class>
+
+<p>对于大容量的存储器一般还用以下单位来计量容量（以下用B来代表Byte）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1KB&#x3D; 1024B  1MB&#x3D;1024KB 1GB &#x3D;1024MB  1TB&#x3D;1024GB  (1Byte &#x3D; 8bit)</span><br></pre></td></tr></table></figure>
+<h2 id="CPU对存储器的读写"><a href="#CPU对存储器的读写" class="headerlink" title="CPU对存储器的读写"></a>CPU对存储器的读写</h2><p>以上讲到，<strong>存储器</strong>被<strong>划分</strong>成<strong>多个存储单元</strong>，存储单元<strong>从零开始顺序编号</strong>。这些<strong>编号</strong>可以看作<strong>存储单元在存储器中</strong>的<strong>地址</strong>。就像一条街，每个房子都有门牌号码。</p>
+<p>CPU要从内存中<strong>读数据</strong>，首先要指定<strong>存储单元</strong>的<strong>地址</strong>。也就是说它要先确定读取哪个存储单元中的数据。<strong>就像在一条街上找人，先要确定他住哪个房子里</strong>。</p>
+<p>另外，在一台微机中，<strong>不只有存储器这一种器件</strong>。CPU在读写数据时还要<strong>指明</strong>，它要对<strong>哪一个器件进行操作</strong>，<strong>进行哪种操作</strong>，<strong>是从中读出数据，还是向里面写入数据</strong>。</p>
+<p>可见，CPU要想进行<strong>数据的读写</strong>，必须和<strong>外部器件（标准的说法是芯片）</strong>进行<strong>3类信息的交互</strong>：</p>
+<ul>
+<li>存储单元的地址（<strong>地址信息</strong>）。</li>
+<li>器件的选择，读或写的命令（<strong>控制信息</strong>）。</li>
+<li>读或写的数据（<strong>数据信息</strong>）。</li>
+</ul>
+<p>那么CPU是通过什么将<strong>地址</strong>、<strong>数据</strong>和<strong>控制信息</strong>传到<strong>存储器芯片</strong>中的呢？电子计算机能处理、传输的信息都是<strong>电信号</strong>，<strong>电信号当然要用导线传送</strong>。在计算机中专门有连接CPU和其他芯片的导线，通常称为<strong>总线</strong>。总线从<strong>物理</strong>上来讲，就是<strong>一根根导线的集合</strong>。根据<strong>传送信息的不同</strong>，总线从<strong>逻辑</strong>上又分为3类，即<strong>地址总线</strong>、<strong>控制总线</strong>和<strong>数据总线</strong>。</p>
+<p>CPU从3号单元中读取数据的过程（见图1.3）如下：</p>
+<img data-src="/2020/07/29/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80/05.png" class>
+
+<p>（1）CPU通过地址线将地址信息3发出。<br>（2）CPU通过控制线发出内存读命令，选中存储器芯片，并通知它，将要从中读取数据。<br>（3）存储器将3号单元中的数据08通过数据线送入CPU。</p>
+<p>写操作与读操作的步骤相似。向3号单元写入数据26：</p>
+<p>（1）CPU通过地址线将地址信息3发出。<br>（2）CPU通过控制线发出内存写命令，选中存储器芯片，并通知它，要向其中写入数据。<br>（3）CPU通过数据线将数据26送入内存的3号单元中。</p>
+<p>从上面我们知道CPU是如何进行数据读写的。可是，我们如何命令计算机进行数据的读写呢？</p>
+<p>要让一个计算机或微处理器工作，应向它输入能够驱动它进行工作的电平信息（机器码）。</p>
+<p>对于8086CPU，下面的机器码能够完成从3号单元读数据：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">机器码：101000000000001 1000000000</span><br></pre></td></tr></table></figure>
+<p>含义：从3号单元读取数据送入寄存器AX</p>
+<p> CPU接收这条机器码后将完成上面所述的读写工作。<br>机器码难于记忆，用汇编指令来表示，情况如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">机器码：10100000 0000001 0000000000</span><br></pre></td></tr></table></figure>
+<p>对应的汇编指令：MOV AX，[3]</p>
+<p>含义：传送3号单元的内容到AX。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag"># 读书笔记</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/07/20/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F(%E7%AC%AC3%E7%89%88)/" rel="prev" title="读书笔记：深入理解计算机系统(第3版)">
+      <i class="fa fa-chevron-left"></i> 读书笔记：深入理解计算机系统(第3版)
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/08/04/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%BF%85%E7%9F%A5%E5%BF%85%E4%BC%9A/" rel="next" title="读书笔记：正则表达式必知必会">
+      读书笔记：正则表达式必知必会 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC1%E7%AB%A0%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-text">第1章：基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E8%AF%AD%E8%A8%80"><span class="nav-text">机器语言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E7%9A%84%E4%BA%A7%E7%94%9F"><span class="nav-text">汇编语言的产生</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E7%9A%84%E7%BB%84%E6%88%90"><span class="nav-text">汇编语言的组成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E5%99%A8"><span class="nav-text">存储器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%E5%92%8C%E6%95%B0%E6%8D%AE"><span class="nav-text">指令和数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%98%E5%82%A8%E5%8D%95%E5%85%83"><span class="nav-text">存储单元</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CPU%E5%AF%B9%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E8%AF%BB%E5%86%99"><span class="nav-text">CPU对存储器的读写</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="筛滤淘"
+      src="/images/cat.jpg">
+  <p class="site-author-name" itemprop="name">筛滤淘</p>
+  <div class="site-description" itemprop="description">前端知识点总结</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">129</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lm101845" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lm101845" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1018457683@qq.com" title="E-Mail → mailto:1018457683@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.jianshu.com/u/6879af8ace24" title="简 书 → https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;6879af8ace24" rel="noopener" target="_blank"><i class="fa fa-jianshu fa-fw"></i>简 书</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/9002959" title="B  站 → https:&#x2F;&#x2F;space.bilibili.com&#x2F;9002959" rel="noopener" target="_blank"><i class="fa fa-bilibili fa-fw"></i>B  站</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">筛滤淘</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">3.7m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">56:03</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

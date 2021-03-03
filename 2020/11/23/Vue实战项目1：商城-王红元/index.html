@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="(注1：视频链接 ，老师叫王红元，这个实战项目是紧跟着Vue基础知识之后的，因为基础知识部分写的博文字数太多了，所以我单独又写了一篇博文记录这个项目的创建过程。)  (注2：因为这个视频是2018年的，所以Vue的版本用的是V2.x，webpack，VueCli也都不是最新版本，不过这个没有什么大的问题，先学老版本，后面的新版本新增的知识点应该不会太多，过渡过来应该不会太复杂。)  (注3：这个项">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue实战项目1：商城(王红元)">
+<meta property="og:url" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/index.html">
+<meta property="og:site_name" content="木子小屋">
+<meta property="og:description" content="(注1：视频链接 ，老师叫王红元，这个实战项目是紧跟着Vue基础知识之后的，因为基础知识部分写的博文字数太多了，所以我单独又写了一篇博文记录这个项目的创建过程。)  (注2：因为这个视频是2018年的，所以Vue的版本用的是V2.x，webpack，VueCli也都不是最新版本，不过这个没有什么大的问题，先学老版本，后面的新版本新增的知识点应该不会太多，过渡过来应该不会太复杂。)  (注3：这个项">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/01.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/02.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/03.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/04.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/05.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/06.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/07.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/16.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/08.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/09.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/10.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/11.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/12.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/13.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/14.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/15.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/17.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/18.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/19.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/20.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/21.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/22.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/23.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/24.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/25.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/26.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/27.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/28.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/29.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/30.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/31.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/32.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/33.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/35.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/36.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/37.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/38.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/39.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/40.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/41.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/42.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/43.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/44.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/45.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/46.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/47.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/48.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/49.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/50.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/51.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/52.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/53.png">
+<meta property="og:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/54.png">
+<meta property="article:published_time" content="2020-11-23T15:32:09.000Z">
+<meta property="article:modified_time" content="2020-11-23T15:32:09.000Z">
+<meta property="article:author" content="筛滤淘">
+<meta property="article:tag" content="项目作品">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/01.png">
+
+<link rel="canonical" href="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Vue实战项目1：商城(王红元) | 木子小屋</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?79d7cb9c8fa9e57a2723fb8645f37638";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">木子小屋</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Talk is cheap. Show me the code.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cat.jpg">
+      <meta itemprop="name" content="筛滤淘">
+      <meta itemprop="description" content="前端知识点总结">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="木子小屋">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vue实战项目1：商城(王红元)
+        </h1>
+
+        <div class="post-meta">
+          
+            <i class="fa fa-thumb-tack"></i>
+            <font color="green">置顶</font>
+            <span class="post-meta-divider">|</span>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-11-23 23:32:09" itemprop="dateCreated datePublished" datetime="2020-11-23T23:32:09+08:00">2020-11-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%A1%B9%E7%9B%AE%E4%BD%9C%E5%93%81/" itemprop="url" rel="index"><span itemprop="name">项目作品</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>34k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>31 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>(注1：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV15741177Eh?from=search&seid=16250798732798430553">视频链接</a> ，老师叫王红元，这个实战项目是紧跟着Vue基础知识之后的，因为基础知识部分写的博文字数太多了，所以我单独又写了一篇博文记录这个项目的创建过程。)</p>
+<p>(注2：因为这个视频是2018年的，所以Vue的版本用的是V2.x，webpack，VueCli也都不是最新版本，不过这个没有什么大的问题，先学老版本，后面的新版本新增的知识点应该不会太多，过渡过来应该不会太复杂。)</p>
+<p>(注3：这个项目的接口数据好像是需要加老师微信买一下，好像是9块钱吧，这个也是老师自己搭建服务器做的接口，也是花了成本的，我觉得这个钱花的没问题的。——最终我花了10块钱，给老师凑了个整。老师给了我接口，也让我加了个群。)</p>
+<p>(注4：现在是2020年11月30日，因为想着版本问题，误删了Hexo有关的东西，然后我这4,5天就一直在重新弄自己的博客了，还把自己的仓库删除重新建了，里面的Commits全部没有了，心态炸裂。不管怎么样，Hexo又重新装了一遍，现在开始学习Vue项目吧。)</p>
+<p>(注5：现在是2020年12月07日，将近一周没有看项目视频了，从此以后，以这个为主要重点！！！我80%的精力都要放到这上面来了！！！)</p>
+<p>(注6：现在是2020年12月08日，我这篇博文只是粗略的描述了一些步骤，里面还有无数的细节我没有办法事无巨细的记录其中，所以，要想真正的了解这个项目，只能完整的看一遍视频。这篇博文只是起到一部分唤起记忆的作用而已。)</p>
+<p>(注7：现在是2021年1月1日，这个项目做着做着自己慢慢的有了一些感觉了，就是从后端传过来的数据池中挑选出想要的数据，然后用直观的形式(图片、文字等)将这些数据进行展示，再加一些动态交互的效果，这个就是前端要做的工作啊。)</p>
+<p>(注8：现在是2021年1月7日，视频全部看完，但是项目还没完，还有<code>分类</code>和<code>我的</code>老师没有讲，我也没有写，打算过一段时间后自己重温一遍这个项目，自己单独写一遍，然后把剩下的内容也写了。这个项目从2020年11月30日开始看，到现在为止，已经花了有37,8天的时间了，统计了一下学习时长，大概是76个小时。掌握程度自己评估为60%，给自己打个及格分吧，虽然里面有很多知识不熟悉甚至完全不懂，但是还是有收获的。在此感谢codewhy王红元老师，讲的真的挺好的，感谢。)</p>
+<p>(注9：我和这个视频的第一次亲密接触是2020年1月1日元旦，当时自己JS水平都不行，当时心里很慌，觉得自己学习进度太慢，于是硬着头皮看了Vue，这个视频看了70%多，一直看到2月份左右，基础知识点都快看完了，但是掌握程度估计只有10%，后来实在看不懂，就把Vue暂时放下了，回去继续巩固DOM、JS之类的了，一直到2020年9月份才开始重新学习Vue，基础知识学了3个多月，项目学了1个多月，一直到今天，2021年的1月初，才算比较仔细和完整的学完了Vue。不过自己的水平还不太够，也只写了这1个项目，我今后还需要再写几个项目，再把自己比较薄弱的知识点再回过头来回顾一下。总之，学习，还是要静下心来，脚踏实地的学习吧。某些知识一时不了解也没关系，不要急躁，温故而知新，随着时间的推移，慢慢的，眼前一定会变得逐渐清晰的。随着自己代码量的增加，一定会在某个时刻，自己的前端水平一定会有突飞猛进的提升的，做项目就跟玩一样，游刃有余，我期待着那一天的到来。以此自勉。)</p>
+<h1 id="项目总体思路"><a href="#项目总体思路" class="headerlink" title="项目总体思路"></a>项目总体思路</h1><p>现在是2020年12月8日，到现在才看到了7小节课程，不过自己也大概总结出来了一些值得记录的东西。</p>
+<ul>
+<li>以后每看一小节内容，就起一个大标题进行记录这个小节视频大体讲了什么</li>
+<li>每个小节写个知识点总结，列出这小节老师使用了哪些知识点，方便自己以后去查漏补缺</li>
+<li>每个小节都来个git三件套:<code>git add .</code>、<code>git commit-m&#39;每小节题目名称&#39;</code>、<code>git push</code>把它推送到自己的GithHub上，进行版本控制。</li>
+</ul>
+<h1 id="项目创建和Github托管"><a href="#项目创建和Github托管" class="headerlink" title="项目创建和Github托管"></a>项目创建和Github托管</h1><p>在创建新项目之前，我觉得有必要清理一下自己当前安装的Vue，Vue CLI，Webpack版本，自己可以先找到老师的项目，看看他当时都用的是什么版本，让自己的版本尽量和他的版本匹配上，否则到时候可能会遇到一些问题。</p>
+<p>从<code>package.json</code>里面查看的一些项目版本如下：</p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/62331583">package.json和package-lock.json区别</a></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;name&quot;</span>: <span class="string">&quot;supermall&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;version&quot;</span>: <span class="string">&quot;0.1.0&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;private&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;serve&quot;</span>: <span class="string">&quot;vue-cli-service serve&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;build&quot;</span>: <span class="string">&quot;vue-cli-service build&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">&quot;dependencies&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;axios&quot;</span>: <span class="string">&quot;^0.18.0&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;vue&quot;</span>: <span class="string">&quot;^2.5.21&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;vue-router&quot;</span>: <span class="string">&quot;^3.0.2&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">&quot;devDependencies&quot;</span>: &#123;</span><br><span class="line">    <span class="attr">&quot;@vue/cli-plugin-babel&quot;</span>: <span class="string">&quot;^3.2.0&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;@vue/cli-service&quot;</span>: <span class="string">&quot;^3.2.0&quot;</span>,</span><br><span class="line">    <span class="attr">&quot;vue-template-compiler&quot;</span>: <span class="string">&quot;^2.5.21&quot;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>我先把以前安装的Vue CLI版本全部卸载掉，然后全局安装特定的Vue CLI 3.x版本</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_39102819/article/details/99620256">vue-cli的卸载与安装</a></p>
+<ul>
+<li>全局卸载Vue CLI命令(1.x和2.x版)：<code>npm uninstall vue-cli -g </code></li>
+<li>全局卸载Vue CLI命令(3.x版)：<code>npm uninstall -g @vue/cli </code></li>
+<li>全局安装Vue CLI命令(3.x版)：<code>npm install -g @vue/cli</code></li>
+<li>唉，安装了Vue CLI 3.x版本后报错：<code>error: ~/.vuerc may be outdated. Please delete it and re-run vue-cli in manual mode</code>,那我还是安装新版本吧。</li>
+<li>最终我的项目的Vue CLI版本号为<code>V4.5.0</code></li>
+</ul>
+</li>
+<li><p>Vue版本也要删除以前版本，改成<code>V2.5.21</code>版本的，不要用Vue3.x版本。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/hejiaying68/article/details/87636239">如何查看vue版本号-看评论</a></li>
+<li>全局卸载Vue命令：<code>npm uninstall -g vue</code></li>
+</ul>
+</li>
+<li><p>输入<code>vue create supermall</code>创建新项目。</p>
+<ul>
+<li>我之前删除了一些东西，然后我现在必须重新装Vue和Vue CLI</li>
+</ul>
+</li>
+</ul>
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/01.png" class>
+
+<blockquote>
+<p>最终我的项目的Vue CLI版本号为<code>V4.5.0</code>，没有办法了，只能先这样了。</p>
+</blockquote>
+<ul>
+<li>项目建立好后，我们再登陆GitHub上创建一个仓库，其中不要勾选添加<code>README</code>文件，因为我们项目本身就有一个<code>README</code>了，再添加一个<code>README</code>文件，之后可能会冲突。</li>
+</ul>
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/02.png" class>
+
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/03.png" class>
+
+<ul>
+<li>接下来我们需要把我们本地新建的<code>supermall</code>这项目和新建的GitHub仓库联系起来。<ul>
+<li>我们先把项目名字改成<code>supermall01</code>,不然和仓库名字一样会冲突</li>
+</ul>
+</li>
+</ul>
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/04.png" class>
+
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/05.png" class>
+
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/06.png" class>
+
+<ul>
+<li>然后我们把<code>supermall01</code>文件夹里面的除了<code>.git</code>(仓库里有)和<code>node_modules</code>(被仓库忽略)的所有文件复制到<code>supermall里面</code>。</li>
+</ul>
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/07.png" class>
+
+<blockquote>
+<p>因为<code>node_modules</code>没有复制进来，所以后面我们还要cd到<code>supermall</code>文件夹下执行<code>npm install</code>再把<code>node_modules</code>给再创建出来。</p>
+</blockquote>
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/16.png" class>
+
+<ul>
+<li>然后我们到<code>supermall</code>文件夹里，发现新复制进来的文件是绿色，我们就<code>git add .</code>来把这些文件放入暂存区。</li>
+</ul>
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/08.png" class>
+
+<ul>
+<li>再用<code>git commit -m</code>命令生成一个版本</li>
+</ul>
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/09.png" class>
+
+<ul>
+<li>但是这次提交只是提交到本地，我们还要提交到服务器，所有用<code>git pull</code>命令”上传”本地文件到GitHub上去。</li>
+</ul>
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/10.png" class>
+
+<blockquote>
+<p>当初<code>git clone</code>GitHub仓库到本地的时候，最好使用<code>SSH</code>的方式，而不是<code>HTTPS</code>的方式，后者当你<code>git push</code>的时候还要你输入用户名和密码，非常麻烦。</p>
+</blockquote>
+<ul>
+<li>此时刷新我们的GitHub页面，可以看到文件已经顺利的<code>push(上传)</code>到GitHub上了。</li>
+</ul>
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/11.png" class>
+
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/12.png" class>
+
+<ul>
+<li>我以后只要在本地修改完代码后<code>git add .</code>、<code>git commit</code>、<code>git push</code>三板斧就可以把代码上传到”网盘”(GitHub)上去了。</li>
+<li>因为<code>supermall</code>里面当初是没有把<code>node_modules</code>也复制进去的(就算复制进去了也会被仓库所忽略)，所以我们还要通过<code>npm install</code>来重新生成<code>node_modules</code>文件夹。</li>
+<li>前面我们是采用”复制”的方式来做的，其实我们还可以采用<code>git remote add origin 地址</code>+<code>git push -u origin master</code>指令直接上传到远程仓库</li>
+</ul>
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/13.png" class>
+
+<ul>
+<li>注意：我们的<code>supermall(是当初克隆下来的仓库，后来把supermall01里面的东西复制到了里面)</code>已经弄好了，我们接下来要弄的是<code>supermall01(是我们当初新建的本地项目)</code>，不要搞混了啊！</li>
+</ul>
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/14.png" class>
+
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/15.png" class>
+
+<blockquote>
+<p>这种方法显得更加专业，用前面<strong>复制</strong>的方法就显得有点呆了。</p>
+</blockquote>
+<ul>
+<li>后来老师把<code>supermall01</code>这个文件夹给删除了，这只是起到了演示作用。我想了想还是先隐藏起来，以后可能自己还要再自己做一遍这个项目，到时候就用<code>supermall01</code>这个文件夹来做。</li>
+</ul>
+<h1 id="划分目录结构"><a href="#划分目录结构" class="headerlink" title="划分目录结构"></a>划分目录结构</h1><img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/17.png" class>
+
+<ul>
+<li>一般面对一个新项目时，要做的第一件事情就是划分目录结构了。不然等你以后把这些文件放的乱七八糟的时候再去划分，这个时候就有点晚了。</li>
+<li>先删除一些垃圾的东西，比如<code>Hello World.vue</code>以及<code>App.vue</code>里面有关这个组件的引用，<code>assets</code>文件夹里面的<code>logo.png</code>也删掉。</li>
+</ul>
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/18.png" class>
+
+<ul>
+<li><p>源码一般在<code>src</code>文件夹里面，我们划分目录结构也一般在这个文件夹里面划分，其他的地方一般也是不需要去动的。<code>src</code>文件夹里面已经默认有2个目录了，一个是<code>assets(资源)</code>文件夹，一个是<code>components(组件)</code>文件夹。</p>
+</li>
+<li><p><code>assets</code>文件夹主要放2个东西：一个是图片文件，另一个是<code>css</code>文件。</p>
+</li>
+<li><p><code>components</code>文件夹主要放组件相关的文件，但是如果把所有的组件都放到这一个文件夹里面，以后会不方便维护的，所以<code>components</code>里面我们一般只会放一些<strong>公共的组件</strong>。比如我们一个组件既在<code>home.vue</code>里面用，也在<code>categories.vue</code>里面用，我们就会把它抽离出来，放到<code>componets</code>组件里面。</p>
+</li>
+<li><p>而公共的组件我们一般也会分成2类，一类叫做<code>common</code>，一类叫<code>content</code>。</p>
+<ul>
+<li><code>common</code>文件夹里面会放一些不仅仅在当前项目要用的组件，而且可能我会到时候直接把这个文件夹放到下一个项目里面也使用。即<code>common</code>里面的组件是完全公共的，不仅这个项目可以用，其他的项目也可以拿过来就用。</li>
+<li><code>content</code>文件夹里面就会放一些和业务相关的公共组件。你也确实是公共的组件，但是你只针对于我当前的项目来说是公共的，如果我把这个东西放到下一个项目里面，这里面所有的东西应该是不能用的。</li>
+</ul>
+</li>
+<li><p>其他的组件我们会在<code>src</code>文件夹下面再新建一个<code>views</code>文件夹，里面存放一些大的视图(首页视图、分类视图、购物车视图等等。)</p>
+</li>
+<li><p><code>src</code>文件夹里面还会有<code>router</code>文件夹，用于存放路由相关的东西。</p>
+</li>
+<li><p><code>src</code>文件夹里面还会有<code>store</code>文件夹，用于存放Vuex,公共状态管理有关的文件夹。</p>
+</li>
+<li><p><code>src</code>文件夹里面还会有<code>network</code>文件夹，用于存放和网络相关的东西。</p>
+</li>
+<li><p><code>src</code>文件夹里面还会有<code>common</code>文件夹(注意和<code>components</code>下面的<code>common</code>文件夹进行区分)，里面放了更加公共的东西</p>
+<ul>
+<li><p>比如公共的<code>js</code>文件(当我们有一些公共的常量需要抽取的时候，到时候我们就会放到<code>common</code>文件夹下的<code>const.js</code>文件里面)</p>
+</li>
+<li><p>当我们开发的时候，我们会给它封装一些工具类，所以会生成一个<code>utils.js</code>文件</p>
+</li>
+<li><p>以后我们还会遇到混入，所以会生成一个<code>mixin.js</code>文件。</p>
+</li>
+<li><p>不过现在我们还都用不到，先不急着新建这3个文件了。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="CSS文件的引入"><a href="#CSS文件的引入" class="headerlink" title="CSS文件的引入"></a>CSS文件的引入</h1><blockquote>
+<p>整个项目里面尽可能是使用原生CSS，而没有过多的使用<code>SASS</code>和<code>LESS</code>。</p>
+</blockquote>
+<ul>
+<li><p>我们需要在GitHub上面引入一个<code>normalize.css</code>文件，来初始化我们的这个项目，对我们的浏览器上的标签做一个统一和重置(reset)，很多项目都使用过这个文件。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/necolas/normalize.css">necolas/normalize.css</a></p>
+<p><a target="_blank" rel="noopener" href="https://jerryzou.com/posts/aboutNormalizeCss/">来，让我们谈一谈 Normalize.css</a></p>
+</li>
+<li><p>除了第三方的<code>css</code>文件夹，我们还需要再建立一个属于自己的<code>base.css</code>，首先在<code>base.css</code>里面通过<code>@import</code>引用<code>normalize.css</code>文件，其次再放一些别的东西(老师复制的一堆东西。)</p>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000000369549">了解CSS中的@import</a></p>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Learn/CSS/Building_blocks/Selectors/Pseudo-classes_and_pseudo-elements">伪类和伪元素</a></p>
+</li>
+<li><p>然后在<code>App.vue</code>里面引入<code>base.css</code></p>
+</li>
+<li><p>总结：主要是引入了<code>normalize.css</code>和<code>base.css</code>这2个文件</p>
+</li>
+<li><p><code>base.css</code>文件如下：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 第一件事：引入normalize.css */</span></span><br><span class="line"><span class="keyword">@import</span> <span class="string">&quot;./normalize.css&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*:root -&gt; 获取根元素html*/</span></span><br><span class="line"><span class="comment">/* 元素前面的冒号表示伪类 */</span></span><br><span class="line"><span class="selector-pseudo">:root</span> &#123;</span><br><span class="line">  <span class="comment">/* 这里面定义的其实是变量，这个是CSS里面定义变量的方式 */</span></span><br><span class="line">  <span class="comment">/* 声明变量的时候，变量名前面要加两根连词线（--）*/</span></span><br><span class="line">  <span class="comment">/* 在这里提前定义了一些变量，后面要用的时候，使用var()即可使用 */</span></span><br><span class="line">  <span class="attribute">--color-text</span>: <span class="number">#666</span>;</span><br><span class="line">  <span class="comment">/* 文字颜色 */</span></span><br><span class="line">  <span class="attribute">--color-high-text</span>: <span class="number">#ff5777</span>;</span><br><span class="line">  <span class="comment">/* 文字高亮时的颜色 */</span></span><br><span class="line">  <span class="attribute">--color-tint</span>: <span class="number">#ff8198</span>;</span><br><span class="line">  <span class="comment">/* 设置类似导航时候的背景颜色的 */</span></span><br><span class="line">  <span class="attribute">--color-background</span>: <span class="number">#fff</span>;</span><br><span class="line">  <span class="comment">/* 这个是设置的白色背景 */</span></span><br><span class="line">  <span class="attribute">--font-size</span>: <span class="number">14px</span>;</span><br><span class="line">  <span class="comment">/* 整体上应用程序大小为14px */</span></span><br><span class="line">  <span class="attribute">--line-height</span>: <span class="number">1.5</span>;</span><br><span class="line">  <span class="comment">/* 整体上行高为1.5倍 */</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">*,</span><br><span class="line">*<span class="selector-pseudo">::before</span>,</span><br><span class="line">*<span class="selector-pseudo">::after</span> &#123;</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">padding</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">box-sizing</span>: border-box;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: <span class="string">&quot;Helvetica Neue&quot;</span>, Helvetica, <span class="string">&quot;PingFang SC&quot;</span>, <span class="string">&quot;Hiragino Sans GB&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Microsoft YaHei&quot;</span>, <span class="string">&quot;微软雅黑&quot;</span>, Arial, sans-serif;</span><br><span class="line">  <span class="attribute">user-select</span>: none; <span class="comment">/* 禁止用户鼠标在页面上选中文字/图片等 */</span></span><br><span class="line">  <span class="attribute">-webkit-tap-highlight-color</span>: transparent; <span class="comment">/* webkit是苹果浏览器引擎，tap点击，highlight背景高亮，color颜色，颜色用数值调节 */</span></span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">var</span>(--color-background);</span><br><span class="line">  <span class="attribute">color</span>: <span class="built_in">var</span>(--color-text);</span><br><span class="line">  <span class="comment">/* rem vw/vh */</span></span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100vw</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">a</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="built_in">var</span>(--color-text);</span><br><span class="line">  <span class="attribute">text-decoration</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.clear-fix</span><span class="selector-pseudo">::after</span> &#123;</span><br><span class="line">  <span class="attribute">clear</span>: both;</span><br><span class="line">  <span class="attribute">content</span>: <span class="string">&quot;&quot;</span>;</span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">visibility</span>: hidden;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.clear-fix</span> &#123;</span><br><span class="line">  <span class="attribute">zoom</span>: <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.left</span> &#123;</span><br><span class="line">  <span class="attribute">float</span>: left;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.right</span> &#123;</span><br><span class="line">  <span class="attribute">float</span>: right;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p><code>normalize.css</code>网上有，就不写了。</p>
+</li>
+</ul>
+<h1 id="vue-config和editorconfig配置"><a href="#vue-config和editorconfig配置" class="headerlink" title="vue.config和editorconfig配置"></a>vue.config和editorconfig配置</h1><ul>
+<li><p>在脚手架3里面配置一些相关文件夹的别名。不像脚手架2，脚手架3里面它将我们配置的东西隐藏起来了。我们不要在<code>node_modules</code>文件夹里面直接改，我们要创建<code>vue.config.js</code>文件(名字固定的，只能叫这个名字)，把我们要修改的东西全写到这里面，到时候<code>node_modules</code>里面的公共配置和我们新建的<code>vue.config.js</code>配置文件会进行合并的。</p>
+</li>
+<li><p><code>vue.config.js</code>文件如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">    <span class="comment">// 在这里我们配置别名</span></span><br><span class="line">    configureWebpack: &#123;</span><br><span class="line">        resolve: &#123;</span><br><span class="line">            <span class="comment">// resolve用于配置和路径相关的</span></span><br><span class="line">            <span class="comment">// extensions:[]</span></span><br><span class="line">            <span class="comment">// 这个可以省略.vue,.js等配置文件，我们这里不用配置，公共配置文件就已经配置好了</span></span><br><span class="line">            alias: &#123;</span><br><span class="line">                <span class="comment">// alias配置别名的</span></span><br><span class="line">                <span class="comment">// &#x27;@&#x27;:&#x27;src&#x27;</span></span><br><span class="line">                <span class="comment">// 它的内部已经配置了@等于src这个别名了</span></span><br><span class="line">                <span class="string">&#x27;assets&#x27;</span>: <span class="string">&#x27;@/assets&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;common&#x27;</span>: <span class="string">&#x27;@/common&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;components&#x27;</span>: <span class="string">&#x27;@/components&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;network&#x27;</span>: <span class="string">&#x27;@/network&#x27;</span>,</span><br><span class="line">                <span class="comment">// &#x27;router&#x27;: &#x27;@/router&#x27;,</span></span><br><span class="line">                <span class="comment">// router不用起别名的，因为只会在main.js里面引用一次的</span></span><br><span class="line">                <span class="comment">// 以后也可以通过this.$router拿到这个对象的，同理this.$store也不用起别名</span></span><br><span class="line">                <span class="string">&#x27;views&#x27;</span>:<span class="string">&#x27;@/views&#x27;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>在<code>supermall</code>文件夹下新建一个<code>.editorconfig</code>文件，主要作用是给项目进行一些统一，内容如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 表明这是最顶层的配置文件，这样才会停止继续向上查找 .editorconfig 文件；</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查找的 .editorconfig 文件是从顶层开始读取的，类似变量作用域的效果，内部</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 的 .editorconfig 文件属性优先级更高</span></span><br><span class="line">root = true</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 指定作用文件格式</span></span><br><span class="line">[*]</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 缩进的类型 [space | tab]</span></span><br><span class="line">indent_style = space</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 缩进的大小</span> </span><br><span class="line"><span class="meta">#</span><span class="bash"> tab_width: 设置整数用于指定替代tab的列数。默认值就是indent_size的值，一般无需指定。</span></span><br><span class="line">indent_size = 2</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 定义换行符 [lf | cr | crlf]</span></span><br><span class="line">end_of_line = lf</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 编码格式。支持latin1、utf-8、utf-8-bom、utf-16be和utf-16le，不建议使用uft-8-bom。</span></span><br><span class="line">charset = utf-8</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 是否除去换行行首的任意空白字符</span></span><br><span class="line">trim_trailing_whitespace = false</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 文件是否以一个空白行结尾 [<span class="literal">true</span> | <span class="literal">false</span>]</span></span><br><span class="line">insert_final_newline = true</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="tabbar引入和项目模块划分"><a href="#tabbar引入和项目模块划分" class="headerlink" title="tabbar引入和项目模块划分"></a>tabbar引入和项目模块划分</h1></li>
+</ul>
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/19.png" class>
+
+<ul>
+<li><p>因为下面的<code>tabbar</code>之前基础知识视频老师讲过，就不再写一遍代码了，直接拿过来使用了。</p>
+<ul>
+<li>把以前写的<code>tabbar</code>文件夹复制到<code>components</code>中的<code>common</code>文件夹(完全独立)里面。</li>
+<li>把以前写的<code>mainTabbar</code>文件夹复制到<code>components</code>中的<code>content</code>文件夹(跟业务有关系)里面。</li>
+<li>把以前的<code>img</code>文件夹也拿出来放到项目中。</li>
+<li><code>Vue Router</code>不熟啊，到时候还要再回过头来复习一下啊。</li>
+</ul>
+</li>
+<li><p>但是我是极其不熟啊，所以还要自己再看一遍，看一下当初是怎么写代码的。</p>
+</li>
+<li><p>因为MainTabBar还用于管理了路由相关的映射关系，所以接下来我们可以<code>npm install vue-router --save </code>把路由安装一下了。</p>
+</li>
+<li><p>现在的项目目录成了这个样子的了，变得复杂了很多了： </p>
+</li>
+</ul>
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/20.png" class>
+
+<h1 id="小图标的修改以及路径问题"><a href="#小图标的修改以及路径问题" class="headerlink" title="小图标的修改以及路径问题"></a>小图标的修改以及路径问题</h1><ul>
+<li>把<code>public</code>文件夹下的<code>favicon.ico</code>图标换成你想要的图标即可。</li>
+<li>使用<code>npm run build</code>进行代码打包时，<code>dist</code>文件夹下面的代码都是被丑化过的(被压缩了，注释什么的都没有了，我现在处于学习阶段，所以想把压缩/丑化插件给它禁用了。)</li>
+</ul>
+<h1 id="首页导航栏的封装和使用"><a href="#首页导航栏的封装和使用" class="headerlink" title="首页导航栏的封装和使用"></a>首页导航栏的封装和使用</h1><ul>
+<li><p>首页、分类、购物车、我的四个选项卡上面都有导航，而且上面的导航长得都不一样。所以我们需要封装一个导航组件，并且预留插槽：左边一个插槽，中间一个大插槽，右边一个插槽。之后你就可以根据我这个需求来决定插槽里面到底放什么东西了。</p>
+</li>
+<li><p>注意：我们在封装的时候一定要考虑扩展性啊。</p>
+</li>
+<li><p>接下来考虑这个组件封装到什么位置：因为这个组件在多个界面都会用到，所以放到<code>components</code>里面的<code>common</code>文件夹里面比较好(很有可能别的项目也会用到这个组件的，因为导航栏长得都差不多)。文件夹名字就叫做<code>navbar</code>。</p>
+</li>
+<li><p>文件夹名字一般小写，组件名字一般大写。(这是一种风格，也许别的公司不是这样的，但是老师说这样比较好。)</p>
+</li>
+<li><p>插槽我们就用flex布局了，然后左边给它一个固定的宽度(左边一般就是放个图标)</p>
+</li>
+<li><p>知识点总结</p>
+<ul>
+<li>flex布局</li>
+<li>slot插槽</li>
+<li>line-height和height的关系</li>
+<li><code>box-shadow</code>盒子阴影的使用</li>
+<li>CSS中通过<code>var(--)</code>使用变量(先不用SASS或LESS，这里用的是原生的CSS)</li>
+</ul>
+</li>
+</ul>
+<h1 id="请求首页的多个数据"><a href="#请求首页的多个数据" class="headerlink" title="请求首页的多个数据"></a>请求首页的多个数据</h1><ul>
+<li><p>接下来我们应该做轮播图了，但是做轮播图之前我们需要先做一件事情。</p>
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/21.png" class>
+</li>
+<li><p>但是我们首先要先将轮播图的数据请求过来，先拿到数据再说(这个时候就要加老师微信买那个接口数据了吧，我买了，花了10元，多给了老师1元，算是支持老师了，哈哈。)</p>
+</li>
+<li><p>但有时候这个项目的服务器还没有开发完，所以这里先拿不到数据也是可能的。这个时候我们也只能按照一些模拟数据把页面给做出来。</p>
+</li>
+<li><p>一般的开发流程是：从服务器拿到数据(第一步)，根据拿到的数据再创建对应的标签和元素，之后再来对数据做一个展示。</p>
+</li>
+<li><p>所以接下来我们要做的不是轮播图，而是网络模块的封装。</p>
+</li>
+<li><p>我们要先安装一下axios：<code>npm install axios --save</code></p>
+</li>
+<li><p><code>network</code>文件夹里面的<code>request.js</code>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&#x27;axios&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">request</span>(<span class="params">config</span>) </span>&#123; </span><br><span class="line">    <span class="comment">// 1.创建axios的实例</span></span><br><span class="line">    <span class="keyword">const</span> instance = axios.create(&#123;</span><br><span class="line">        baseURL: <span class="string">&#x27;http://152.136.185.210:7878/api/m5&#x27;</span>,</span><br><span class="line">        timeout:<span class="number">5000</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2.axios的拦截器</span></span><br><span class="line">    <span class="comment">// 2.1 请求拦截的作用</span></span><br><span class="line">    instance.interceptors.request.use(<span class="function"><span class="params">config</span> =&gt;</span> &#123; </span><br><span class="line">        <span class="keyword">return</span> config</span><br><span class="line">    &#125;, <span class="function"><span class="params">err</span> =&gt;</span> &#123; </span><br><span class="line">        <span class="comment">// console.log(err);</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2.2响应拦截</span></span><br><span class="line">    instance.interceptors.response.use(<span class="function"><span class="params">res</span> =&gt;</span> &#123; </span><br><span class="line">        <span class="keyword">return</span> res.data</span><br><span class="line">    &#125;, <span class="function"><span class="params">err</span> =&gt;</span> &#123; </span><br><span class="line">        <span class="built_in">console</span>.log(err);</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 3.发送真正的网络请求</span></span><br><span class="line">    <span class="keyword">return</span> instance(config)</span><br><span class="line">    <span class="comment">// 这个函数返回的是promise</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p><code>network</code>文件夹里面的<code>home.js</code>文件</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 我对首页数据的所有请求都放在这里面</span></span><br><span class="line"><span class="comment">// 以后Home.vue面向home.js开发，十分的合理</span></span><br><span class="line"><span class="keyword">import</span> &#123; request &#125; <span class="keyword">from</span> <span class="string">&#x27;./request&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">getHomeMutidata</span>(<span class="params"></span>) </span>&#123; </span><br><span class="line">    <span class="comment">// 函数名意思是获取首页的多个数据</span></span><br><span class="line">    <span class="keyword">return</span> request(&#123;</span><br><span class="line">        url:<span class="string">&#x27;/home/multidata&#x27;</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//补充知识:函数的调用 ——&gt;压入函数栈当中(保存函数调用过程中所有的变量)</span></span><br><span class="line"><span class="comment">// 函数调用结束，会弹出函数栈(释放函数中所有的变量)</span></span><br><span class="line"><span class="comment">// function test() &#123; </span></span><br><span class="line"><span class="comment">//     const names = [&#x27;why&#x27;, &#x27;aaa&#x27;]</span></span><br><span class="line"><span class="comment">//     // 函数里面的东西都是局部变量，一旦函数执行完，这里面的东西全部都会被内存回收掉</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// test()</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// test()</span></span><br><span class="line"><span class="comment">// 再调用一次的话函数会重新创建，调用完后再次消失</span></span><br></pre></td></tr></table></figure></li>
+<li><p>知识点总结：</p>
+<ul>
+<li>axios网络模块的封装</li>
+<li>axios请求拦截和响应拦截</li>
+</ul>
+</li>
+</ul>
+<h1 id="轮播图的展示"><a href="#轮播图的展示" class="headerlink" title="轮播图的展示"></a>轮播图的展示</h1><ul>
+<li>数据已经拿到了，我们现在要做的就是封装对应的组件对它进行展示。</li>
+<li>首先我们要展示的第一个东西，就是我们的轮播图了。老师把轮播图封装成了一个组件，独立的模块。可以随时随地的使用，别的项目里也可以使用。</li>
+<li>轮播图因为以前学过，所以老师就不写了。(但是我是很久以前学的，很多都忘了，还要复习一下啊。)</li>
+<li>遇到的一个问题是，vue使用v-for时vscode报错<code>Elements in iteration expect to have &#39;v-bind:key&#39; directives</code>，原因是Vue 2.2.0+的版本里，当在组件中使用v-for时，key是必须的，解决方法就是：在<code>v-for</code>后添加<code>:key=&#39;item&#39;</code>。</li>
+<li>但是<code>npm run serve</code>后在控制台还是会报错<code>Avoid using non-primitive value as key, use string/number value instead.</code>,我想了一下还是把eslint关掉吧，太尼玛费事了。</li>
+<li>我去了，关掉这个烦人的<code>eslint</code>我网上找了一圈居然没找到，于是我就自己跑到<code>package-lock.json</code>中搜到<code>eslint</code>把里面的dev由true改成false，之后好像不报错了。</li>
+<li>我去，又报错了，说明这个方法不行。</li>
+<li>我这个轮播图它只是显示一张图片啊，用不了啊，出了一些小问题了。</li>
+<li>也不知道怎么回事，后来它自己就好了。真的是很神奇啊。</li>
+<li>又显示不出来了，淦。</li>
+<li>又好了，真的很神奇。</li>
+<li>学习阶段老师不建议我们去使用UI库，这些UI库也是以类似<code>Swiper轮播图组件</code>这样的方式封装起来的，用肯定很简单，但是我们要自己设计，理解其中的原理，更加的重要。</li>
+<li>随着项目越做越多，你封装的库也越来越多，你就可以把这些库开源出去了。</li>
+<li>知识点总结：<ul>
+<li>轮播图之swiper组件的使用(老师直接引用的，没有带我们写。)</li>
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1jE411e7GC?from=search&seid=5696927823665358575">vue组件开发swiper老司机带你上车</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="推荐信息的展示"><a href="#推荐信息的展示" class="headerlink" title="推荐信息的展示"></a>推荐信息的展示</h1><ul>
+<li><p>这个也是一个用独立的组件进行展示</p>
+</li>
+<li><p><code>childComps</code>中的<code>RecommendView.vue</code>组件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;recommend&quot;&gt;</span><br><span class="line">        &lt;div v-for&#x3D;&quot;item in recommends&quot; class&#x3D;&quot;recommend-item&quot; :key&#x3D;item.index&gt;</span><br><span class="line">            &lt;a :href&#x3D;&quot;item.link&quot;&gt;</span><br><span class="line">                &lt;img :src&#x3D;&quot;item.image&quot; alt&#x3D;&quot;&quot;&gt;</span><br><span class="line">                &lt;div&gt;&#123;&#123;item.title&#125;&#125;&lt;&#x2F;div&gt;</span><br><span class="line">            &lt;&#x2F;a&gt;</span><br><span class="line">        &lt;&#x2F;div&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">    name:&#39;RecommendView&#39;,</span><br><span class="line">    props:&#123;</span><br><span class="line">        &#x2F;&#x2F; 定义props来获取数据</span><br><span class="line">        &#x2F;&#x2F; 数据在首页里面，我们从首页里获取</span><br><span class="line">        recommends:&#123;</span><br><span class="line">            type:Array,</span><br><span class="line">            default()&#123;</span><br><span class="line">                return []</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line">    &#x2F;* 接下来要写样式，老师都不想写了，后来还是写了*&#x2F;</span><br><span class="line">    &#x2F;* img图片太大了 *&#x2F;</span><br><span class="line">    .recommend&#123;</span><br><span class="line">        display:flex;</span><br><span class="line">        width:100%;</span><br><span class="line">        text-align: center;</span><br><span class="line">        font-size: 12px;</span><br><span class="line">        padding: 10px 0 20px;</span><br><span class="line">        border-bottom: 8px solid #eee;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .recommend-item&#123;</span><br><span class="line">        flex:1</span><br><span class="line">        &#x2F;* 这样可以均等分 *&#x2F;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    .recommend-item img&#123;</span><br><span class="line">        width: 70px;</span><br><span class="line">        height: 70px; </span><br><span class="line">        margin-bottom: 10px;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;&#x2F;style&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="FeatureView的封装"><a href="#FeatureView的封装" class="headerlink" title="FeatureView的封装"></a>FeatureView的封装</h1></li>
+<li><p>接下来的<strong>本周流行</strong>它就是一张图片(官网上也是一张图片)，但是它也属于一个独立功能的模块，所以不建议你直接在<code>Home.vue</code>里面直接放一张图片进去，建议也给它封装一个独立的组件。</p>
+</li>
+<li><p>注意1：我们封装的<strong>本周流行</strong>也是我们首页里的一个小组件。</p>
+</li>
+<li><p>注意2：虽然它整体上是一个图片，但是它是可以点击的，一点击就可以跳转到别的地方去了。所以要有一个a标签。</p>
+</li>
+<li><p>我们在<code>childComps</code>文件夹下新建一个<code>FeatureView.xue</code>组件</p>
+</li>
+<li><p>随着内容逐渐增多，必须要滚动才能看到全貌，但是上面的导航条和下面的菜单栏是不应该滚动的。</p>
+</li>
+<li><p>解决滚动的问题：<a target="_blank" rel="noopener" href="https://github.com/cubiq/iscroll">iscroll仓库</a>，但是它很久不更新了。</p>
+</li>
+<li><p>国人在<code>iscroll</code>核心的基础上弄了个<a target="_blank" rel="noopener" href="https://github.com/linYeeTracy/betterScroll">betterscroll</a>，这个以后老师会讲，现在就先用定位做了。</p>
+</li>
+<li><p><code>childComps</code>中的<code>FeatureView.vue</code>组件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;!-- 独立的组件都要有一个根，我们这里是div --&gt;</span><br><span class="line">    &lt;div class&#x3D;&quot;feature&quot;&gt;</span><br><span class="line">       &lt;a href&#x3D;&quot;https:&#x2F;&#x2F;act.mogujie.com&#x2F;zzlx67&quot;&gt;</span><br><span class="line">            &lt;img src&#x3D;&quot;~assets&#x2F;img&#x2F;home&#x2F;recommend_bg.jpg&quot; alt&#x3D;&quot;&quot;&gt;</span><br><span class="line">            &lt;!-- 我忘了assets前面的~代表什么了 --&gt;</span><br><span class="line">       &lt;&#x2F;a&gt;</span><br><span class="line">    &lt;&#x2F;div&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">    name:&#39;FeatureView&#39;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line">    .feature img&#123;</span><br><span class="line">        width: 100%;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;&#x2F;style&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="TabControl的封装"><a href="#TabControl的封装" class="headerlink" title="TabControl的封装"></a>TabControl的封装</h1></li>
+</ul>
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/22.png" class>
+
+<ul>
+<li>这个属于独立的组件里面的业务组件，所以在<code>components</code>文件夹里面的<code>content</code>文件夹下新建<code>tabControl</code>文件夹，文件夹下面新建一个<code>TabControl.vue</code>组件(上面是文字，下面是图片)。</li>
+<li>如果在首页里面就填充流行、新款、精选这3个文字。</li>
+<li>如果在分类里面就填充综合、新品、销量这3个文字。</li>
+<li>文字内容不能确定，填充几个其实也不确定。</li>
+<li>但是我们这里没有用插槽slot。</li>
+<li>因为我们发现它们长的样子在首页和分类里面完全一样(文字颜色都一样),下面也有横杠一样的东西。</li>
+<li>只是文字不一样，如果你搞一个插槽的话，你插入的是一个span标签，我插入的也是span标签，既然大家都插入的是span标签的话，就没有必要专门弄插槽了，会导致代码重复。</li>
+<li>我们选择这个文字，会变色，而且下面会有一个小横线。</li>
+<li>这个文字还有一个吸顶效果，怎么做呢？首先肯定要监听滚动，一旦滚到某个位置之后，我们就把文字改成绝对定位即可。一旦向下滚动到一定位置时再把fixed属性删除即可。(这个我们后面再说，还可以直接用CSS中的<code>position: sticky;</code>直接实现吸顶效果。)</li>
+<li>因为只有首页才需要吸顶功能，所以我们要在<code>Home.vue</code>文件中加这个功能。</li>
+<li>知识点总结：<ul>
+<li>要养成良好的编程习惯，对以后是很好帮助的，不好的编程习惯很有可能会成为你的瓶颈。</li>
+<li>导入的组件很多，希望按顺序导入比较好。</li>
+<li>相同的导入放到一块：独立组件放一块，公共组件放一块，方法放一块(中间用空格隔开)。</li>
+<li><code>export default</code>时，最好也和上面的import导入组件的顺序保持一致。</li>
+<li>CSS中的<code>position: sticky;</code>属性。<a target="_blank" rel="noopener" href="https://www.zhangxinxu.com/wordpress/2018/12/css-position-sticky/">杀了个回马枪，还是说说position:sticky吧</a></li>
+</ul>
+</li>
+</ul>
+<h1 id="保存商品的数据结构"><a href="#保存商品的数据结构" class="headerlink" title="保存商品的数据结构"></a>保存商品的数据结构</h1><ul>
+<li><p>接下来我们要做的就是商品列表页了。</p>
+</li>
+<li><p>第一件事就是请求数据了，你要先把数据请求过来之后才能进行接下来的展示。</p>
+</li>
+<li><p>我们这边的数据还是有点复杂的，而且数据分为3类，一类叫流行，一类叫新款，一类叫精选。它要根据我不同的点击展示不同的数据。但是我们在保存数据的时候，既要有流行数据，也要有新款数据，也要有精选的数据。我们数据得都有，至于它展示哪个，是根据用户点击来决定的。</p>
+</li>
+<li><p>我们需要弄一个变量，这个变量存储了”流行、新款、精选”的数据。点击谁，就从这个变量中找出对应的数据。</p>
+</li>
+<li><p>但是流行的数据有很多页的，你手机可以一直往下拉，它会一直显示很多页，但是我们不能一次请求这么多数据。</p>
+</li>
+<li><p>goods变量保存(流行/新款/精选)，其中每个数据都是一个数组。而且goods本身是一个对象。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">goods:&#123;</span><br><span class="line">  <span class="string">&#x27;pop&#x27;</span>:&#123;<span class="attr">page</span>:<span class="number">1</span>,<span class="attr">list</span>:[<span class="number">50</span>]&#125;,</span><br><span class="line">  <span class="string">&#x27;new&#x27;</span>:&#123;<span class="attr">page</span>:<span class="number">2</span>,<span class="attr">list</span>:[<span class="number">60</span>]&#125;, --&gt; &#123;<span class="attr">page</span>:<span class="number">3</span>,<span class="attr">list</span>:[<span class="number">90</span>]&#125;</span><br><span class="line">   <span class="string">&#x27;sell&#x27;</span>:&#123;<span class="attr">page</span>:<span class="number">1</span>,<span class="attr">list</span>:[<span class="number">30</span>]&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>用户可能点击流行后，往下滑动几页后又点击了新款(这个时候新款应该显示第一页的数据)，往下滑动几页后又点击了精选。</p>
+</li>
+<li><p>新款本身只显示了60条数据，当用户往下滑动(上拉加载更多)后，我们要显示更多数据，比如，又再显示30条数据。</p>
+</li>
+</ul>
+<h1 id="首页数据的请求和保存"><a href="#首页数据的请求和保存" class="headerlink" title="首页数据的请求和保存"></a>首页数据的请求和保存</h1><ul>
+<li>如何把一个数组放到另一个数组当中去。</li>
+</ul>
+<h1 id="首页商品数据的展示"><a href="#首页商品数据的展示" class="headerlink" title="首页商品数据的展示"></a>首页商品数据的展示</h1><ul>
+<li>首先封装一个大的组件，而且这个组件是会被复用的。所以在<code>components</code>文件夹中的<code>content</code>文件夹下新建一个<code>goods</code>文件夹。</li>
+<li>一会写good，一会写goods，就写错了，就报错，然后就找啊找哪里错了，花了好长时间。所以写代码的时候眼睛要看清楚了再写。</li>
+<li>照着视频抄代码把<code>goodsItem</code>写成了<code>goodsItme</code>，找了快半个小时错。。。。。。</li>
+</ul>
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/23.png" class>
+
+<h1 id="TabControl点击切换商品"><a href="#TabControl点击切换商品" class="headerlink" title="TabControl点击切换商品"></a>TabControl点击切换商品</h1><ul>
+<li>在组件内部发生的点击事件，你得传到外面的Home组件中去。这样Home组件知道你点击了谁，才会根据你的点击来这里替换数据。</li>
+<li>我发现随着代码的增多，逻辑关系慢慢的变得也复杂了，我现在在哪个位置写代码都要找一下了，这个项目等以后做完了，一定还要自己再重新做一遍！！！！写一遍肯定是不行的。</li>
+</ul>
+<h1 id="Better-Scroll的安装和使用"><a href="#Better-Scroll的安装和使用" class="headerlink" title="Better-Scroll的安装和使用"></a>Better-Scroll的安装和使用</h1><ul>
+<li><p>我们现在的滚动是非常的卡顿的。</p>
+</li>
+<li><p>所以我们会找一些滚动的框架 。</p>
+</li>
+<li><p>解决滚动的问题：<a target="_blank" rel="noopener" href="https://github.com/cubiq/iscroll">iscroll</a>，但是它很久不更新了,所以我们不用这个。</p>
+</li>
+<li><p>国人在<code>iscroll</code>核心的基础上弄了个<a target="_blank" rel="noopener" href="https://github.com/linYeeTracy/betterScroll">betterscroll</a>，我们用这个。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://better-scroll.github.io/docs/zh-CN/">BetterScroll 2.0官方文档</a>。</p>
+</li>
+<li><p>但是为了让它不干扰我们首页的代码，我们在category进行演示。</p>
+</li>
+<li><p>既然要用这个框架，我们就先来安装一下：<code>npm install better-scroll --save</code></p>
+</li>
+</ul>
+<h1 id="scroll的基本使用解析"><a href="#scroll的基本使用解析" class="headerlink" title="scroll的基本使用解析"></a>scroll的基本使用解析</h1><ul>
+<li><p>这里老师单独新建了一个文件来讲<code>Better-Scroll</code>这个插件如何使用</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">  &lt;meta name=<span class="string">&quot;viewport&quot;</span> content=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br><span class="line">  &lt;title&gt;Document&lt;/title&gt;</span><br><span class="line">  &lt;style&gt;</span><br><span class="line">    .content &#123;</span><br><span class="line">      height: 200px;</span><br><span class="line">      background-color: pink;</span><br><span class="line">      <span class="comment">/* overflow-y: scroll; */</span></span><br><span class="line">      <span class="comment">/* 但是我们不要用这种方式滚动，这种方式跑到移动端是有问题的 */</span></span><br><span class="line">      overflow: hidden;</span><br><span class="line">    &#125;</span><br><span class="line">  &lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;content&quot;</span>&gt;</span><br><span class="line">      &lt;ul&gt;</span><br><span class="line">        &lt;button <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;btn&quot;</span>&gt;按钮&lt;/button&gt;</span><br><span class="line">        &lt;!-- 这个按钮在滚利范围之内，依旧能够监听到 --&gt;</span><br><span class="line">        &lt;li&gt;列表数据<span class="number">1</span>&lt;/li&gt;</span><br><span class="line">        &lt;li&gt;列表数据<span class="number">2</span>&lt;/li&gt;</span><br><span class="line">        &lt;li&gt;列表数据<span class="number">3</span>&lt;/li&gt;</span><br><span class="line">        &lt;li&gt;列表数据<span class="number">4</span>&lt;/li&gt;</span><br><span class="line">        &lt;li&gt;列表数据<span class="number">5</span>&lt;/li&gt;</span><br><span class="line">        &lt;li&gt;列表数据<span class="number">6</span>&lt;/li&gt;</span><br><span class="line">        &lt;li&gt;列表数据<span class="number">7</span>&lt;/li&gt;</span><br><span class="line">        &lt;li&gt;列表数据<span class="number">8</span>&lt;/li&gt;</span><br><span class="line">        &lt;li&gt;列表数据<span class="number">9</span>&lt;/li&gt;</span><br><span class="line">        &lt;li&gt;列表数据<span class="number">10</span>&lt;/li&gt;</span><br><span class="line">        &lt;!-- 后面还有<span class="number">90</span>条数据，我就不写了 --&gt;</span><br><span class="line">      &lt;/ul&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  &lt;!-- 在wrapper里面只能有一个元素，有多个元素是不行的 --&gt;</span><br><span class="line">  &lt;!-- 这一个元素里面你可以放很多的元素 --&gt;</span><br><span class="line">  &lt;!-- 但是类名可以随便取，wrapper和content可以改成别的名字 --&gt;</span><br><span class="line">  &lt;!-- 主要强调的是结构 --&gt;</span><br><span class="line"></span><br><span class="line">  &lt;script src=<span class="string">&quot;./bscroll.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">  &lt;script&gt;</span><br><span class="line">    <span class="comment">// console.log(BScroll);</span></span><br><span class="line">    <span class="comment">// 默认情况下BScroll是不可以实时的监听滚动位置</span></span><br><span class="line">    <span class="comment">// probe:侦测</span></span><br><span class="line">    <span class="comment">// 0和1都是不侦测实时的位置</span></span><br><span class="line">    <span class="comment">// 2：在手指滚动的过程中侦测，手指离开后的惯性滚动过程中不侦测</span></span><br><span class="line">    <span class="comment">// 3：只要是滚动，都侦测</span></span><br><span class="line">    <span class="keyword">const</span> bscroll = <span class="keyword">new</span> BScroll(<span class="built_in">document</span>.querySelector(<span class="string">&#x27;.content&#x27;</span>), &#123;</span><br><span class="line">      probeType: <span class="number">3</span>,</span><br><span class="line">      click: <span class="literal">true</span>,</span><br><span class="line">      pullUpLoad: <span class="literal">true</span></span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="comment">// 不能直接传content,你在外面必须包装一个div，叫wrapper</span></span><br><span class="line"></span><br><span class="line">    bscroll.on(<span class="string">&#x27;scroll&#x27;</span>, <span class="function">(<span class="params">position</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// console.log(position);</span></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    bscroll.on(<span class="string">&#x27;pullingUp&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&#x27;上拉加载更多&#x27;</span>);</span><br><span class="line">      <span class="comment">// 但是它只能做一次上拉加载更多</span></span><br><span class="line">      <span class="comment">// 发送网络请求，请求更多页的数据</span></span><br><span class="line">      <span class="comment">// 等数据请求完成，并且将新的数据展示出来后</span></span><br><span class="line">      <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        bscroll.finishPullUp()</span><br><span class="line">      &#125;, <span class="number">1000</span>)</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">document</span>.querySelector(<span class="string">&#x27;.btn&#x27;</span>).addEventListener(<span class="string">&#x27;click&#x27;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&#x27;---------------&#x27;</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">  &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="Scroll在Vue项目中使用过程"><a href="#Scroll在Vue项目中使用过程" class="headerlink" title="Scroll在Vue项目中使用过程"></a>Scroll在Vue项目中使用过程</h1></li>
+<li><p>因为<code>Home.vue</code>、<code>Profile.vue</code>、<code>Category.vue</code>这3个组件都对<code>better-scroll</code>框架有依赖，如果每个组件都单独引入这个框架，那如果有一天这个框架不再维护了，到时候修改的话就很麻烦，所以我们最好再单独封装一层。</p>
+</li>
+<li><p>我们把可滚动这个东西封装到<code>components</code>文件夹下的<code>common</code>文件夹下(别的项目也能用)。</p>
+</li>
+<li><p>到时候我们封装的scroll组件，高度要进行单独设置的，因为每个视图需要滚动的高度都不是相同的。</p>
+</li>
+<li><p><code>ref</code>如果绑定在组件中的，那么通过<code>this.$refs.refname</code>获取到的是一个组件对象。</p>
+</li>
+<li><p><code>ref</code>如果绑定在普通的元素中，那么通过<code>this.$refs.refname</code>获取到的是一个元素对象。</p>
+</li>
+<li><p>报错：<code> [BScroll warn]: EventEmitter has used unknown event type: &quot;pullingUp&quot;, should be oneof[&quot;refresh&quot;,&quot;contentChanged&quot;,&quot;enable&quot;,&quot;disable&quot;,&quot;beforeScrollStart&quot;,&quot;scrollStart&quot;,&quot;scroll&quot;,&quot;scrollEnd&quot;,&quot;scrollCancel&quot;,&quot;touchEnd&quot;,&quot;flick&quot;,&quot;destroy&quot;]</code>，有点晚了，明天再来解决这个问题。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/QFREX/article/details/107895548">报错问题</a>——但是试了还是没有用啊。</p>
+</li>
+<li><p>弄了快一个小时没弄好，我他娘的先不弄了，先看后面的视频吧。淦！！</p>
+</li>
+</ul>
+<h1 id="BackTop组件的封装和使用"><a href="#BackTop组件的封装和使用" class="headerlink" title="BackTop组件的封装和使用"></a>BackTop组件的封装和使用</h1><ul>
+<li>让图片有一个往下拉到一定位置右下角有个向上的箭头，点击箭头就可以马上回到页面最上方。</li>
+<li>这个组件应该封装到<code>components</code>文件夹里面的<code>content文件夹</code>中，这个很明显和业务有关系。</li>
+<li>哈哈，前面的报错弄好了。</li>
+<li>但是又出现了一些新的报错，不过不算很严重，到时候我再看看吧。<code>TypeError: Cannot read property &#39;data&#39; of undefined ​    at eval </code>我也发现了，很多组件里都有data属性，我都不知道最初是在哪里定义的了，它这里直接显示找不到这个属性了。</li>
+<li>后面我知道了，这个<code>data</code>属性报错说明数据没有请求下来，是服务器接口的问题，不是我写的代码的问题，那我就放心了。</li>
+<li>backTop组件里面发生了一个点击事件，你要去操作Scroll组件里的代码，有点不好操作。</li>
+<li><code>.native</code>修饰符的使用：当我们需要监听一个组件的原生事件时，必须给对应的事件加上<code>.native</code>修饰符才能进行监听。</li>
+</ul>
+<h1 id="BackTop的显示和隐藏"><a href="#BackTop的显示和隐藏" class="headerlink" title="BackTop的显示和隐藏"></a>BackTop的显示和隐藏</h1><ul>
+<li>计算机中没有黑魔法，一旦出现问题，一定是你的代码出现了问题。</li>
+</ul>
+<h1 id="完成上拉加载更多"><a href="#完成上拉加载更多" class="headerlink" title="完成上拉加载更多"></a>完成上拉加载更多</h1><ul>
+<li><p>又出现了别的报错了<code> &quot;TypeError: Cannot read property &#39;scrollTo&#39; of undefined&quot;</code>，暂时还没弄好，很烦。</p>
+</li>
+<li><p>又报了一个错：<code>Error in nextTick: &quot;InvalidCharacterError: Failed to execute &#39;setAttribute&#39; on &#39;Element&#39;: &#39;,&#39; is not a valid attribute name.&quot;</code>。</p>
+</li>
+<li><p>这个报错主要是因为自己多写了一个逗号导致的，我把逗号删除之后发现上面的两个错都不报了，又好了，哈哈哈哈哈哈哈！！！</p>
+</li>
+<li><p>不知道自己装了什么插件，导致它自动自作聪明的给我添了一些代码，比如我明明写的是<code>$emit</code>，不一会儿它就不知道怎么就变成<code>$$emit</code>了，很烦。</p>
+</li>
+<li><p><code>流行</code>、<code>新款</code>、<code>精选</code>，选中谁，谁就加载更多。</p>
+</li>
+<li><p>这个<code>better-scroll</code>插件本身有一个bug，有时候滚不了。</p>
+</li>
+</ul>
+<h1 id="昨天内容的回顾"><a href="#昨天内容的回顾" class="headerlink" title="昨天内容的回顾"></a>昨天内容的回顾</h1><blockquote>
+<p>唉，讲真的，学到这里，我里面的逻辑关系已经搞的一团浆糊了，完全搞不清楚了，现在只能被动的边看老师视频边敲代码了，自己独立写的话是万万写不出来的。没关系，第一次做大型项目，就先跟着照猫画虎的做吧。</p>
+</blockquote>
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/24.png" class>
+
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/25.png" class>
+
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/26.png" class>
+
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/27.png" class>
+
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/28.png" class>
+
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/29.png" class>
+
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/30.png" class>
+
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/31.png" class>
+
+<blockquote>
+<p>学到这里，我感觉有点崩溃了，我不知道自己还要学多久？也许还需要500个小时？自己现在的水平明显达不到一去公司就能产出，就能正常开发的程度。我的Vue知识、原生JS知识、甚至CSS都并不熟练，我不知道我到底还要多久才能找到一个月薪10K的工作呢？</p>
+<p>没办法，只能硬着头皮继续学了。</p>
+<p>等我再学到500个小时，到时候再来看看自己说的这句话，看到时候自己能否找到月薪10K的工作了吧。</p>
+</blockquote>
+<h1 id="滚动区域的Bug分析和解决"><a href="#滚动区域的Bug分析和解决" class="headerlink" title="滚动区域的Bug分析和解决"></a>滚动区域的Bug分析和解决</h1><ul>
+<li>Better-Scroll在决定有多少区域可以滚动时，是根据scrollerHeight属性决定的<ul>
+<li>scrollerHeight属性是根据放Better-Scroll的content中的子组件的高度</li>
+<li>但是我们的首页中，刚开始在计算scrollerHeight属性时，是没有将图片计算在内的</li>
+<li>所以，计算出来的告诉是错误的</li>
+<li>后来图片加载进来之后有了新的高度，但是scrollerHeight属性并没有进行更新的</li>
+<li>所以滚动出现了问题</li>
+</ul>
+</li>
+<li>如何解决这个问题呢？<ul>
+<li>监听每一张图片是否加载完成，只要有一张图片加载完成了，执行一次refresh()</li>
+<li>如何监听图片加载完成呢？<ul>
+<li><code>原生的JS监听图片：img.onload = function()&#123;&#125;</code></li>
+<li>Vue中监听：<code>@load = &quot;方法&quot;</code></li>
+</ul>
+</li>
+<li>调用scroll的refresh()</li>
+</ul>
+</li>
+<li>如何将GoodsListitem.vue中的事件传入到Home.vue中<ul>
+<li>因为涉及到非父子组件的通信，所以这里我们选择了事件总线<ul>
+<li>bus：总线</li>
+<li><code>Vue.prototype.$bus = new Vue()</code></li>
+<li>this.$bus.$emit(‘事件名称’, 参数)</li>
+<li>this.$bus.$on(‘事件名称’，回调函数(参数))</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/32.png" class>
+
+<h1 id="refresh函数找不到的bug处理"><a href="#refresh函数找不到的bug处理" class="headerlink" title="refresh函数找不到的bug处理"></a>refresh函数找不到的bug处理</h1><img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/33.png" class>
+
+<h1 id="刷新频繁的防抖函数处理"><a href="#刷新频繁的防抖函数处理" class="headerlink" title="刷新频繁的防抖函数处理"></a>刷新频繁的防抖函数处理</h1><ul>
+<li><p>我们不希望refresh函数调用的这么频繁，我们只希望它一秒钟之内只调用一次就可以了。</p>
+</li>
+<li><p>一个场景：一个输入框，我们在上面输入一个字，下面会立刻向服务器发送请求，在下面进行对应的展示，我们输入一个字，下面会根据这个字进行相应的展示。</p>
+</li>
+<li><p>用户输入<code>yifu</code>，而你是一个一个监听的，先监听<code>y</code>，再监听<code>yi</code>，再监听<code>yif</code>，再监听<code>yifu</code>，每次监听都向服务器发送请求，服务器就会受不了而且没有必要。</p>
+</li>
+<li><p>所以我们会进行一个”防抖”的操作，它会有一个防抖函数。用户输入后我们等它一会儿，看它还继不继续输入了，然后他不输入了，我们就发送网络请求。如果他在等待的这段时间内继续输，我们就将继续输入的内容作为备选，再等一会儿，看他继不继续输入了，如此往复。</p>
+</li>
+<li><p>对于<code>refresh</code>非常频繁的问题，进行防抖操作。</p>
+<ul>
+<li>防抖(debounce)/节流(throttle)</li>
+<li>我们这里只用防抖就可以了，节流没有用了(课下研究一下)。</li>
+<li>防抖函数起作用的过程<ul>
+<li>如果我们直接执行refresh，那么refresh函数会被执行30次</li>
+<li>可以将refresh函数传入到debounce函数中，生成一个新的函数</li>
+<li>之后再调用非常频繁的时候，就使用新生成的函数</li>
+<li>而新生成的函数，并不会非常频繁的调用，如果下一次执行来的非常快，那么就会将上一次执行取消掉</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><pre><code class="javascript">debounce(func,delay)&#123;
+      // debounce(this.$refs.scroll.refresh,500)&#123;
+      // func表示给哪个函数进行防抖
+      // delay表示要等多久 
+      let timer = null
+      return function(...args)&#123;
+        if(timer) clearTimeout(timer)
+        timer = setTimeout(()=&gt;&#123;
+          func.apply(this,args)
+        &#125;,delay)
+      &#125;
+&#125;
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 像防抖这种功能性函数应该单独放到某一个位置，因为很多地方都可以用得到。</span><br><span class="line">* 在单独的&#96;common&#96;文件夹下新建一个&#96;utils.js&#96;文件。</span><br><span class="line">* 遇到一个报错：&#96; [Vue warn]: Error in mounted hook: &quot;TypeError: Cannot read property &#39;refresh&#39; of undefined&quot;&#96;，很烦。</span><br><span class="line"></span><br><span class="line"># 上拉加载更多的完成</span><br><span class="line"></span><br><span class="line">&gt; 这个报错是真的很烦，而且还暂时找不到解决方法。越学到后面越像听天书一样了，吸收的就很有限了，所以这个项目我以后可能要再做2遍，每间隔一段时间就再做一次。希望自己能有所收获吧。</span><br><span class="line"></span><br><span class="line">![](Vue实战项目1：商城-王红元&#x2F;34.png)</span><br><span class="line"></span><br><span class="line">* 监听什么时候滚动到底部。</span><br><span class="line">* 报错：&#96;Home.vue?76f2:267 Uncaught (in promise) TypeError: Cannot read property &#39;finishPullUp&#39; of undefined&#96;，很烦。</span><br><span class="line"></span><br><span class="line"># tabControl的吸顶效果</span><br><span class="line"></span><br><span class="line">## tabControl的offsetTop获取分析</span><br><span class="line"></span><br><span class="line">* 必须要知道滚动到多少时，才有吸顶效果，这个时候就需要获取tabControl的offsetTop</span><br><span class="line"></span><br><span class="line">* 但是如果直接在mounted中获取tabControl的offsetTop，那么值是不正确的。</span><br><span class="line"></span><br><span class="line">* 如何获取正确的值呢？</span><br><span class="line"></span><br><span class="line">  * 监听HomeSwipertimg的加载完成</span><br><span class="line">  * 加载完成后，发出事件，在&#96;Home.vue&#96;中，获取正确的值.</span><br><span class="line">  * 补充：</span><br><span class="line">    * 为了不让HomeSwiper多次发出事件</span><br><span class="line">    * 可以使用isLoad的变量进行状态的记录</span><br><span class="line"></span><br><span class="line">  * 注意：这里不进行多次调用和debounce的区别</span><br><span class="line"></span><br><span class="line">## 监听滚动，动态的改变tabControl的样式</span><br><span class="line"></span><br><span class="line">* 问题：动态的改变tabControl的样式时，会出现两个问题：</span><br><span class="line">  * 问题一：下面的商品内容，会突然上移。</span><br><span class="line">  * 问题二：tabControl虽然设置了fixed，但是也随着Better-Scroll一起滚出去了。</span><br><span class="line">* 其他方案来解决停留问题</span><br><span class="line">  * 在最上面，多复制了一份PlaceHolderTabControl组件对象，利用它来实现停留效果。</span><br><span class="line">  * 当用户滚动到一定位置时，PlaceHolderTabControl显示出来。</span><br><span class="line">  * 当用户滚动没有达到一定位置时，PlaceHolderTabControl隐藏起来。</span><br><span class="line"></span><br><span class="line">&gt; 现在是2020年12月24日，这个项目先停一停，再这样听下去收效甚微，我要先回去把组件通信、&#96;$emit&#96;、&#96;$refs&#96;等这些知识弄懂再说。</span><br><span class="line">&gt;</span><br><span class="line">&gt; 做项目，重要的不是说我必须要在一个月内做完，或者说我要在接下来的3个月来做7,8个项目，这有何意义，而是在项目实战中看出自己的不足，然后进行知识的弥补。还有就是锻炼自己独立解决问题的能力，使用搜索引擎快速解决问题的能力，而不是在各大微信群里面到处问。</span><br><span class="line">&gt;</span><br><span class="line">&gt; 现在是2020年12月28日，我把前面的组件通信，自定义事件$emit，\$refs这些终于搞懂了，现在想了想还是继续做这个项目吧。本来打算重新再做一遍的，但是想想这样太浪费时间了，我知道自己第一次做项目肯定有很多不足的地方，但是没关系，这个项目我以后还是会在做第二次，第三次的啊，第一次做就看视频敲吧，掌握个3,4成也是没有关系的啊，以后还有进步的空间的嘛。</span><br><span class="line"></span><br><span class="line">现在是2020年12月29日，我又快速的把之前报错的那段项目视频快速过了一遍，虽然依旧只能听懂3成，但是没关系，我就对着抄代码吧，可喜可贺啊！！！之前的报错终于消失了，这也意味着我可以继续接下来的学习了。</span><br><span class="line"></span><br><span class="line">接下来把吸顶这部分学完，然后代码不报错的话，就可以弄另一块了，唉，不容易啊，自己也从我的第一个项目中了解到了自己还是有着严重的不足啊，还需要继续努力钻研啊！不知不觉2021年就快来了，我也只剩下3个月了，我真的不想再推迟自己的转行时间了，太煎熬了。</span><br><span class="line"></span><br><span class="line"># Home离开时记录状态和位置</span><br><span class="line"></span><br><span class="line">## 让Home不要随意销毁</span><br><span class="line"></span><br><span class="line">* 你在首页界面往下滚，然后又点击 新款，再点回首页，发现页面又跑到最上面了。(有时候会出现这个问题)</span><br><span class="line">* 这个主要是通过路由进行管理的，比如从首页调到新款界面，首页就会被销毁。</span><br><span class="line">* 使用&#96;&lt;keep-alive&gt;&#96;可以让页面不会随意销毁。</span><br><span class="line"></span><br><span class="line">## 让Home中的内容保持原来的位置</span><br><span class="line"></span><br><span class="line">* 离开时，保存一个位置信息</span><br><span class="line">* 进来时，将位置设置为原来保存的位置saveY信息</span><br><span class="line">* 之前讲过两个函数：&#96;activated&#96;和&#96;deactivated&#96;。</span><br><span class="line">  * 注意：最好回来时，进行一次refresh()刷新。</span><br><span class="line"></span><br><span class="line"># 跳转到详情页并且携带iid</span><br><span class="line"></span><br><span class="line">* 前端做的事情比较多的一般就是从服务器请求数据，把数据拿过来之后进行展示。</span><br><span class="line">* 一个商品就是一个GoodsListItem，现在我们要做的就是监听它的点击。</span><br><span class="line">* 详情页如何跳转呢？我们也可以给详情页配置一个路由，之后到时候跳转的时候，就是路由之间的跳转了。</span><br><span class="line">* 在views文件夹下新建一个文件夹叫&#96;detail&#96;，新建一个组件叫&#96;Detail.vue&#96;</span><br><span class="line">* 然后再&#96;index.js&#96;文件中创建路由：&#96;const Detail &#x3D; () &#x3D;&gt; import(&#39;..&#x2F;views&#x2F;detail&#x2F;Detail&#39;)&#96;以及后面的建立path和component等。</span><br><span class="line">* 在&#96;GoodsListItem.vue&#96;里面进行路由设置。</span><br><span class="line">  * 这里最好用push，之前很多地方用的是replace</span><br><span class="line">  * 用push到时候方便返回(到时候调用push的back方法就可以返回了)</span><br><span class="line">  * 你在调到详情页的同时也需要传递过来一些参数</span><br><span class="line">  * 你需要把我们点击的商品的id给我们</span><br><span class="line"></span><br><span class="line"># 详情页-导航栏的封装</span><br><span class="line"></span><br><span class="line">* 因为导航栏比较复杂，所以我们新建一个&#96;detail&#96;文件夹下新建一个文件夹&#96;childComps&#96;文件夹，再在这个文件夹下新建一个&#96;DetailNavBar.vue&#96;文件来封装首页。</span><br><span class="line"></span><br><span class="line">  ~~~javascript</span><br><span class="line">  &lt;template&gt;</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">          &lt;nav-bar&gt;</span><br><span class="line">              &lt;div slot&#x3D;&quot;left&quot; class&#x3D;&quot;back&quot; @click&#x3D;&quot;backClick&quot;&gt;</span><br><span class="line">                  &lt;img src&#x3D;&quot;~assets&#x2F;img&#x2F;common&#x2F;back.svg&quot; alt&#x3D;&quot;&quot;&gt;</span><br><span class="line">                  &lt;!-- 这个图标也要监听点击，点击完之后会返回 --&gt;</span><br><span class="line">              &lt;&#x2F;div&gt;</span><br><span class="line">              &lt;div slot&#x3D;&quot;center&quot; class&#x3D;&quot;title&quot;&gt;</span><br><span class="line">                  &lt;div v-for&#x3D;&quot;(item,index) in titles&quot; </span><br><span class="line">                       class&#x3D;&quot;title-item&quot; </span><br><span class="line">                       :class&#x3D;&quot;&#123;active:index &#x3D;&#x3D;&#x3D; currentIndex&#125;&quot;</span><br><span class="line">                       @click&#x3D;&quot;titleClick(index)&quot;&gt;</span><br><span class="line">                      &#123;&#123;item&#125;&#125;</span><br><span class="line">                  &lt;&#x2F;div&gt;</span><br><span class="line">              &lt;&#x2F;div&gt;</span><br><span class="line">          &lt;&#x2F;nav-bar&gt;</span><br><span class="line">          &lt;!-- 它们是一些标题，我们最好把这些标题定义出来，等会做一个遍历就好了 --&gt;</span><br><span class="line">      &lt;&#x2F;div&gt;</span><br><span class="line">  &lt;&#x2F;template&gt;</span><br><span class="line">  </span><br><span class="line">  &lt;script&gt;</span><br><span class="line">  import NavBar from &#39;components&#x2F;common&#x2F;navbar&#x2F;NavBar&#39;</span><br><span class="line">  export default &#123;</span><br><span class="line">      name:&#39;DetailNavBar&#39;,</span><br><span class="line">      components:&#123;</span><br><span class="line">          NavBar</span><br><span class="line">      &#125;,</span><br><span class="line">      data()&#123;</span><br><span class="line">          return &#123;</span><br><span class="line">              titles:[&#39;商品&#39;,&#39;参数&#39;,&#39;评论&#39;,&#39;推荐&#39;],</span><br><span class="line">              &#x2F;&#x2F; 这些字也是可以点击的，而且点击谁，谁到时候也会变成这个颜色</span><br><span class="line">              currentIndex:0</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      methods:&#123;</span><br><span class="line">          titleClick(index)&#123;</span><br><span class="line">              this.currentIndex &#x3D; index</span><br><span class="line">          &#125;,</span><br><span class="line">          backClick()&#123;</span><br><span class="line">              &#x2F;&#x2F; this.$router.go(-1)</span><br><span class="line">              this.$router.back()</span><br><span class="line">          &#125;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  &lt;&#x2F;script&gt;</span><br><span class="line">  </span><br><span class="line">  &lt;style scoped&gt;</span><br><span class="line">      .title&#123;</span><br><span class="line">          display: flex;</span><br><span class="line">          font-size: 13px;</span><br><span class="line">      &#125;</span><br><span class="line">  </span><br><span class="line">      .title-item&#123;</span><br><span class="line">          flex: 1;</span><br><span class="line">      &#125;</span><br><span class="line">  </span><br><span class="line">      .active&#123;</span><br><span class="line">          color: var(--color-high-text)</span><br><span class="line">      &#125;</span><br><span class="line">  </span><br><span class="line">      .back img&#123;</span><br><span class="line">          margin-top: 12px;</span><br><span class="line">      &#125;</span><br><span class="line">  &lt;&#x2F;style&gt;</span><br></pre></td></tr></table></figure>
+# 数据请求以及轮播图展示</code></pre>
+</li>
+<li><p>接下来要做的东西，我们首先需要先把数据请求过来才行。</p>
+</li>
+<li><p>拿数据主要就是根据iid来拿。</p>
+</li>
+<li><p>数据请求我们单独新建文件夹来封装，在<code>network</code>文件夹下新建一个<code>detail.js</code>文件来请求数据。</p>
+</li>
+<li><p>我们首先将需要的数据进行抽离。</p>
+</li>
+</ul>
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/35.png" class>
+
+<blockquote>
+<p>实际开发中给的数据就是这么复杂，我们需要将这些复杂的数据进行抽离和提取，获取我们想要的数据。有一些公司有一些详细的接口文档，会告诉你每个参数是什么意思。但是有一些公司不会，只给你个大概。</p>
+</blockquote>
+<ul>
+<li>拿到数据后我们利用轮播图对数据进行展示，我们在<code>childComps</code>文件夹下建立一个<code>DetailSwiper.vue</code>，里面放详情页的轮播图。</li>
+<li>这个轮播图有一个问题，就是你无论点击哪个小图片，最终跳转的都是相同的轮播图图片。</li>
+<li>原因很简单，主要是因为数据没有变。你每次进入detail里面的时候，这个东西也keep-alive了(在<code>App.vue</code>里面包裹着<code>keep-alive</code>的)，而我们希望每次进入detail里面的时候，希望获取一个新的iid。</li>
+<li>所以我们detail这个东西不要让它<code>keep-alive</code>，在<code>App.vue</code>里面执行<code>exclude=&#39;Detail&#39;</code>即可。</li>
+</ul>
+<h1 id="商品基本信息的展示"><a href="#商品基本信息的展示" class="headerlink" title="商品基本信息的展示"></a>商品基本信息的展示</h1><img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/36.png" class>
+
+<ul>
+<li><p> 我们需要先封装一个组件，然后把我们需要的数据进行抽离。</p>
+</li>
+<li><p>这些数据总共在3个地方，但是我们不要弄3个变量，只弄一个变量就可以了。</p>
+</li>
+<li><p>我们需要把杂乱无章的数据整合为一个对象。然后在给我们组件传过去的时候，只把这一个对象传过去。</p>
+</li>
+<li><p><code>v-for</code>除了可以遍历数组以外，还可以遍历数字，比如<code>v-for=&quot;item in 10&quot;</code></p>
+</li>
+</ul>
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/37.png" class>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wangshengli520/p/10044952.html">object.keys()用法总结</a></li>
+<li>你先把数据整合好，到时候一起展示。而不是一边取数据，一边展示，这样很容易乱的。</li>
+</ul>
+<h1 id="店铺信息的解析和展示"><a href="#店铺信息的解析和展示" class="headerlink" title="店铺信息的解析和展示"></a>店铺信息的解析和展示</h1><ul>
+<li>如果<code>is-better</code>为true时，说明很好，文字展示为红色，否则为绿色。</li>
+<li>在这里我们要根据<code>is-better</code>动态绑定class。</li>
+<li>现在这里程序出现了一些问题了，导航跟着一起滚了。(因为当前相当于原生的滚动，导航没有fixed)</li>
+</ul>
+<h1 id="加入滚动的效果"><a href="#加入滚动的效果" class="headerlink" title="加入滚动的效果"></a>加入滚动的效果</h1><ul>
+<li><p>在详情页的时候，<code>首页、分类、购物车、我的</code>这4个东西就不要让它显示了。</p>
+</li>
+<li><p>我们可以使用相对定位加<code>z-index:9</code>和添加背景色来让它不显示。</p>
+</li>
+<li><p>我们这里还是用<code>better-scroll</code>来弄滚动。</p>
+</li>
+<li><p>因为有了<code>better-scroll</code>，那么导航就不用设置为脱离标准流了，因为<code>better-scroll</code>可以进行局部滚动。</p>
+</li>
+</ul>
+<h1 id="商品详情数据展示"><a href="#商品详情数据展示" class="headerlink" title="商品详情数据展示"></a>商品详情数据展示</h1><ul>
+<li>接下来就是下面的详情图片展示了。</li>
+<li>这些图片都是在一个List里面，所以我们就没有必要弄一个对象了。</li>
+<li>我们可以直接弄一个数组进行保存。</li>
+<li>不对，图片上面还有2行文字，也是需要保存的。</li>
+<li>我们还需要封装一个独立的组件来展示 detailInfo相关的数据</li>
+<li>这里老师都是把文件直接复制拿来用了，我也直接复制了，到时候自己再单独敲一遍啊。</li>
+<li>后端的API服务器不仅仅是为你前端服务的，它还要为安卓端、IOS端、浏览器端Web网页等服务。</li>
+<li>写项目代码的难点<ul>
+<li>代码如何组织</li>
+<li>业务逻辑(不要立即动手)</li>
+<li>自己留的bug(莫名bug)</li>
+</ul>
+</li>
+</ul>
+<h1 id="从首页跳转详情页-iid"><a href="#从首页跳转详情页-iid" class="headerlink" title="从首页跳转详情页-iid"></a>从首页跳转详情页-iid</h1><ul>
+<li>老师再这里又重新讲了一遍前面的内容。</li>
+<li>我发现后面有好多视频内容和前面的重复了，应该是老师带了2个班，然后录视频的时候重复了。</li>
+</ul>
+<h1 id="首页位置的保持"><a href="#首页位置的保持" class="headerlink" title="首页位置的保持"></a>首页位置的保持</h1><ul>
+<li>activated和deactivated这2个回调函数也叫做钩子函数</li>
+</ul>
+<h1 id="商品评论信息的展示"><a href="#商品评论信息的展示" class="headerlink" title="商品评论信息的展示"></a>商品评论信息的展示</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/badmoonc/article/details/81485803?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.control&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.control">vue基础之过滤器(filter)的使用</a></p>
+<ul>
+<li>前面有一大节都是重复的视频内容，一直到这里才开始讲新的东西。</li>
+<li>不是所有的商品都有评论信息的，有的有，有的没有。</li>
+<li>在真实开发中，只要服务器返回的事件，都只是一串数字，而不会是:<code>2021-01-02 19:53</code>这样的时间格式的，需要你自己进行转换。因为每个地方展示时间不一定是一样的，比如有些地方需要时分秒，有些地方不需要。服务器会以Unix时间元年为起点，返回对应的时间戳。</li>
+<li>如何将时间戳转为时间格式化？这个是非常常用的功能。因为太常用了，所以很多编程语言内置了函数。<ul>
+<li>首先将时间戳转为Date对象。</li>
+<li>将date进行格式化(需要使用到正则表达式)，转为对应的字符串。</li>
+<li>时间格式化很重要，以后在公司100%会遇到这个问题的。</li>
+</ul>
+</li>
+<li>正则表达式是一个字符串匹配<strong>利器</strong>，还是比较复杂的，它里面的规则太多了。</li>
+</ul>
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/38.png" class>
+
+<h1 id="首页和详情页监听全局事件和mixin的使用"><a href="#首页和详情页监听全局事件和mixin的使用" class="headerlink" title="首页和详情页监听全局事件和mixin的使用"></a>首页和详情页监听全局事件和mixin的使用</h1><ul>
+<li><code>Home.vue</code>和<code>Detail.vue</code>里面的mounted里面都有一模一样的代码，我们需要使用一个新的技术：<strong>混入</strong>来对它进行抽取。</li>
+<li>有重复的代码，这里是不能用继承的，虽然继承也可以减少一部分重复的代码。(继承是减少类里面重复的代码的。)</li>
+<li>但是我们这里是2个对象，对象是不能够继承的。</li>
+<li>最怕的就是代码不是预期的结果，还不报任何错误。</li>
+</ul>
+<h1 id="首页TabControl不一致的问题"><a href="#首页TabControl不一致的问题" class="headerlink" title="首页TabControl不一致的问题"></a>首页TabControl不一致的问题</h1><ul>
+<li>我们在开发中经常遇到一些hack的方式，就是比较巧妙的代码。</li>
+<li>你刚开始选择的是精选，往上滚的话，首页TabControl就贴上去了，但是它显示的是流行。</li>
+<li>我们代码里有2个TabControl，我点击一个的时候，另一个也要和我点击的保持一致才行。(它们2个的currentIndex应该一致才行。)</li>
+</ul>
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/39.png" class>
+
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/40.png" class>
+
+<ul>
+<li>我也只能把这2行注释掉，让这个bug留着，以后再来解决这个问题吧。我解决问题的能力还是不足，大体上知道，但是最终还是解决不了。</li>
+<li>哈哈，下一节视频老师就讲了这个问题了，是生命周期的问题，拿不到这个对象，所以才显示undefined。所以，添加一个<code>if(this.$refs.TabControl1 !== undefined)</code>条件判断即可。</li>
+<li>这个问题圆满解决了。不过这也反映出我对于生命周期掌握程度不够。比如created里面去拿元素(比如$refs)是拿不到的。</li>
+</ul>
+<h1 id="详情页不能滚动的bug处理"><a href="#详情页不能滚动的bug处理" class="headerlink" title="详情页不能滚动的bug处理"></a>详情页不能滚动的bug处理</h1><ul>
+<li>我们要监听图片加载完，每次监听到图片加载后我们做一次刷新就可以了。</li>
+<li>而图片都在<code>DetailGoodsInfo.vue</code>里面。</li>
+<li>这个bug也解决了，基本上这个项目就挺好了，我现在的项目也没什么bug 了。</li>
+</ul>
+<h1 id="点击标题滚到对应内容"><a href="#点击标题滚到对应内容" class="headerlink" title="点击标题滚到对应内容"></a>点击标题滚到对应内容</h1><ul>
+<li>首先要监听它的点击——在<code>DetailNavBar.vue</code>里面监听。</li>
+<li>在detail中监听标题的点击</li>
+<li>获取index滚动到对应的主题：<ul>
+<li>获取所有主题的offsetTop</li>
+<li>问题：在哪里才能获取到正确的offsetTop<ul>
+<li>1.created肯定不行，压根不能获取元素</li>
+<li>2.mounted也不行，数据还没有获取到</li>
+<li>3.获取到数据的回调中也不行，DOM还没渲染完</li>
+<li>4.$nextTick也不行，因为图片的高度没有被计算在内</li>
+<li>5.在图片加载完成后，获取的高度才是正确的</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="滚动内容显示对应标题"><a href="#滚动内容显示对应标题" class="headerlink" title="滚动内容显示对应标题"></a>滚动内容显示对应标题</h1><ul>
+<li><p>老师这里用了一个比较复杂的判断条件：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="built_in">this</span>.currentIndex !== i &amp;&amp;((i &lt; length - <span class="number">1</span>  &amp;&amp; positionY &gt;= <span class="built_in">this</span>.themeTopYs[i] &amp;&amp; positionY &lt; <span class="built_in">this</span>.themeTopYs[i+<span class="number">1</span>])||(i === length - <span class="number">1</span> &amp;&amp; positionY &gt; <span class="built_in">this</span>.themeTopYs[i])))&#123;</span><br><span class="line"> 	   <span class="built_in">this</span>.currentIndex = i;</span><br><span class="line">		 <span class="built_in">this</span>.$refs.nav.currentIndex = <span class="built_in">this</span>.currentIndex</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p> 老师又给了一个hack做法</p>
+</li>
+</ul>
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/41.png" class>
+
+<ul>
+<li>这个bug我一时不知道怎么解决</li>
+</ul>
+<h1 id="底部工具栏的封装"><a href="#底部工具栏的封装" class="headerlink" title="底部工具栏的封装"></a>底部工具栏的封装</h1><ul>
+<li>又有了一个bug，老师说最下面的图片没有显示全，但是他的代码和以前视频上的代码不一样，我也不能随便调，把样式调的乱七八糟，这个问题也只能以后再说了。</li>
+</ul>
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/42.png" class>
+
+<ul>
+<li>哈哈，问题解决了，<code>Detail.vue</code>里面<code>height: calc(100% - 44px - 49px);这样写不行</code>，应该这样<code> height: calc(100% - 93px);</code>写。</li>
+</ul>
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/43.png" class>
+
+<h1 id="BackTop的混入封装"><a href="#BackTop的混入封装" class="headerlink" title="BackTop的混入封装"></a>BackTop的混入封装</h1><ul>
+<li>右边的上拉箭头Home里面有，现在我们想要Detail里面也要有，于是把有关代码也复制一份到Detail里面，但是这样做的话代码就很冗余了。</li>
+<li>我们可以进行抽取，使用mixin来做，把2个组件里面的公共代码给它抽离出去，抽到<code>mixin.js</code>里面去。</li>
+<li>视频看到这里，突然信心大增，以前我认为这个项目我大概只掌握了2,3成，现在觉得自己以前是太没自信了，也是因为当初连组件通信都没怎么搞清楚导致的。现在，我对于这个项目的掌握程度，起码到了7成左右了，这个项目不知不觉也做了有40天了，一边做一边进行查漏补缺，遇到卡壳的地方也没有硬学，会停下来弥补自己的知识缺陷，所以还是有收获的。</li>
+</ul>
+<h1 id="将商品添加到购物车中"><a href="#将商品添加到购物车中" class="headerlink" title="将商品添加到购物车中"></a>将商品添加到购物车中</h1><ul>
+<li><p>我们需要监听<code>加入购物车</code>的点击。</p>
+</li>
+<li><p>我们是在子组件里面监听的，要传给父组件<code>Detail.vue</code>。</p>
+</li>
+<li><p>我们可以使用Vuex来管理购物车中的商品。</p>
+</li>
+<li><p>有时候商品的价格是一个区间，而我们给到购物车的价格应该是一个确定的，真实的价格。</p>
+</li>
+<li><p>我们之前没有安装Vuex，现在我们通过<code>npm install vuex --save</code>来安装它。</p>
+</li>
+</ul>
+<h1 id="将商品添加到store中"><a href="#将商品添加到store中" class="headerlink" title="将商品添加到store中"></a>将商品添加到store中</h1><ul>
+<li>在store文件夹下新建一个<code>index.js</code>文件。</li>
+<li>我的Vuex已经快忘光了，现在需要再去复习一下Vuex了。</li>
+<li>不要慌，还是继续跟着视频去做吧。Vuex这个东西到时候再回过头来补一下，这个基本使用的话不算难的，只需要看2个小时的视频，就可以补的回来的。</li>
+</ul>
+<h1 id="导航航栏实现-Vuex知识点"><a href="#导航航栏实现-Vuex知识点" class="headerlink" title="导航航栏实现-Vuex知识点"></a>导航航栏实现-Vuex知识点</h1><ul>
+<li>把Vuex给分拆了</li>
+</ul>
+<h1 id="购物车商品列表展示"><a href="#购物车商品列表展示" class="headerlink" title="购物车商品列表展示"></a>购物车商品列表展示</h1><ul>
+<li>写着写着又报错了，而且我发现后面很多代码老师都是直接拿过来就用了，没有自己写了，怪不得这个项目都快完成了呢，原来好多代码都没有手敲完成啊。</li>
+</ul>
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/44.png" class>
+
+<ul>
+<li>有些代码我没有完全按老师最终版的写，按老师刚开始的时候写的，然后问题解决了很多了。首先这个要跑起来，然后才考虑代码优化问题才比较好。</li>
+</ul>
+<h1 id="购物车列表的Item展示"><a href="#购物车列表的Item展示" class="headerlink" title="购物车列表的Item展示"></a>购物车列表的Item展示</h1><ul>
+<li>这个又有了一个bug，就是页面没有滚动。原因是我新添加了新的数据，但是<code>better-scroll</code>并不知道我添加了新的数据，所以它认为滚动区域<code>scrollerHeight</code>还是0。</li>
+<li>开心，现在的bug基本都解决了，不过是稀里糊涂的解决的，自己以后还需要再重新看一遍这个项目。</li>
+<li>购物车图片左边的按钮单独给它封装为一个组件。</li>
+<li>又有一个bug了，就是哪个对勾的图片没有显示出来，这个应该是个小问题，到时候我来看一下。——这个bug解决了，是自己的背景颜色写错了，所以没有显示出来。</li>
+</ul>
+<h1 id="Item选中和不选中的切换"><a href="#Item选中和不选中的切换" class="headerlink" title="Item选中和不选中的切换"></a>Item选中和不选中的切换</h1><ul>
+<li>一个商品选中还是不选中，必然要通过一个东西来记录它。</li>
+<li>记录这个东西的状态一定是在对象模型里面记录的。</li>
+<li>以后在开发中，这种选中不选中的状态一定是在模型里面记录的。</li>
+</ul>
+<h1 id="顶部工具的封装和应用"><a href="#顶部工具的封装和应用" class="headerlink" title="顶部工具的封装和应用"></a>顶部工具的封装和应用</h1><ul>
+<li>这个我又出现了一些问题，格式没弄好，下面的全选、合计什么的遮住了图片，弄了半天，最后还是参照老师的做好的项目弄好了。</li>
+<li>后来金额又多了一个￥，成了￥￥57.00,导致下面的合计金额错误，这个又搞了很长时间。</li>
+<li>上面2个错误差不多搞了有1个多小时才弄好，也说明了基础的不扎实啊。</li>
+</ul>
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/45.png" class>
+
+<h1 id="全选按钮的状态显示"><a href="#全选按钮的状态显示" class="headerlink" title="全选按钮的状态显示"></a>全选按钮的状态显示</h1><ul>
+<li>显示的状态<ul>
+<li>判断是否有一个不选中，全选就是不选中</li>
+</ul>
+</li>
+<li>点击全选按钮<ul>
+<li>如果原来都是选中，点击一次，全部不选中</li>
+<li>如果原来都是不选中（某些不选中），全部选中</li>
+</ul>
+</li>
+</ul>
+<h1 id="Vuex-actions返回Promise-mapActions"><a href="#Vuex-actions返回Promise-mapActions" class="headerlink" title="Vuex-actions返回Promise-mapActions"></a>Vuex-actions返回Promise-mapActions</h1><p><a target="_blank" rel="noopener" href="http://www.woshipm.com/pd/603334.html">APP 反馈的三种形式：toast、snackbar、dialog</a></p>
+<ul>
+<li>toast就是你点击某个按钮出来的弹窗</li>
+<li>我们来封装一个toast组件，在很多地方都可以使用它。</li>
+<li>我们要做：点击添加到购物车按钮后会有弹窗，显示：添加到购物车成功。</li>
+<li>那我们的第一件事就是监听点击按钮事件。</li>
+<li>2个知识点：Promise、mapActions</li>
+<li>查看官方文档是一个很重要的能力，你必须要掌握。IT行业的技术更迭是非常快的，不可能你所有想学的东西，每次你看视频都能找到。所以我们一定要多看官方文档。</li>
+</ul>
+<h1 id="Toast封装-普通方式的封装"><a href="#Toast封装-普通方式的封装" class="headerlink" title="Toast封装-普通方式的封装"></a>Toast封装-普通方式的封装</h1><ul>
+<li><p>我现在觉得做项目真的挺好的，做项目会不停的用到自己以前学过的单个知识点，它们通过各种各样的混合方式，各个知识点合作来完成一个项目。然后我在做项目的时候，就能很容易的就可以知道我哪些知识点不熟悉，还需要单独再学一下了。</p>
+</li>
+<li><p>反正这里是看的一脸懵逼，也和自己今天感觉有点神游有关，思想没有那么集中了。</p>
+</li>
+</ul>
+<h1 id="Toast封装-插件方式的封装"><a href="#Toast封装-插件方式的封装" class="headerlink" title="Toast封装-插件方式的封装"></a>Toast封装-插件方式的封装</h1><h1 id="解决移动端300ms延迟"><a href="#解决移动端300ms延迟" class="headerlink" title="解决移动端300ms延迟"></a>解决移动端300ms延迟</h1><ul>
+<li><p>老师的<code>分类</code>和<code>我的</code>这2个项目没有讲了，让我们自己写。</p>
+</li>
+<li><p>我以后第二次做项目的时候再写吧，现在也没时间了，而且感觉有点浮躁了，静不下心去写了。</p>
+</li>
+<li><p>首先使用<code>npm install fastclick --save</code>进行安装。</p>
+</li>
+<li><p>然后<code>main.js</code>里面进行导入</p>
+</li>
+<li><p>最后调用它的attach方法</p>
+</li>
+</ul>
+<h1 id="图片懒加载"><a href="#图片懒加载" class="headerlink" title="图片懒加载"></a>图片懒加载</h1><ul>
+<li><p>什么是图片懒加载？</p>
+<ul>
+<li>图片需要现在在屏幕上时，再加载这张图片.</li>
+</ul>
+</li>
+<li><p>首先使用<code> npm i vue-lazyload -S</code>进行安装</p>
+</li>
+<li><p>然后<code>main.js</code>里面进行导入</p>
+</li>
+<li><p>然后使用<code>Vue.use(VueLazyLoad)</code></p>
+</li>
+<li><p>然后修改<code>img:src</code>为<code>v-lazy</code>指令</p>
+</li>
+</ul>
+<h1 id="px2vw-css单位转化插件"><a href="#px2vw-css单位转化插件" class="headerlink" title="px2vw-css单位转化插件"></a>px2vw-css单位转化插件</h1><ul>
+<li><p>输入<code>npm install postcss-px-to-viewport --save-dev</code>来安装这个插件</p>
+</li>
+<li><p>在<code>supermall</code>文件夹下新建一个<code>postcss.config.js</code>文件，内容如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  plugins: &#123;</span><br><span class="line">    autoprefixer: &#123;&#125;,</span><br><span class="line">	  <span class="string">&quot;postcss-px-to-viewport&quot;</span>: &#123;</span><br><span class="line">		  viewportWidth: <span class="number">375</span>,  <span class="comment">// 视窗的宽度，对应的是我们设计稿的宽度.</span></span><br><span class="line">		  viewportHeight: <span class="number">667</span>, <span class="comment">// 视窗的高度，对应的是我们设计稿的高度.(也可以不配置)</span></span><br><span class="line">		  unitPrecision: <span class="number">5</span>, <span class="comment">// 保留几位小数，指定`px`转换为视窗单位值的小数位数（很多时候无法整除）</span></span><br><span class="line">		  viewportUnit: <span class="string">&#x27;vw&#x27;</span>, <span class="comment">// 指定需要转换成的视窗单位，建议使用vw</span></span><br><span class="line">		  selectorBlackList: [<span class="string">&#x27;tab-bar&#x27;</span>, <span class="string">&#x27;tab-bar-item&#x27;</span>,<span class="string">&#x27;shopping-cart-bottom-bar&#x27;</span>], <span class="comment">// 指定不需要转换的类</span></span><br><span class="line">		  minPixelValue: <span class="number">1</span>, <span class="comment">// 小于或等于`1px`不转换为视窗单位.</span></span><br><span class="line">		  mediaQuery: <span class="literal">false</span> <span class="comment">// 允许在媒体查询中转换`px`</span></span><br><span class="line">	  &#125;,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>retina：高清屏，一个点上有2个像素。</p>
+</li>
+<li><p>exclude中存放的元素必须是正则表达式</p>
+</li>
+</ul>
+<h1 id="nginx-项目在window下的部署"><a href="#nginx-项目在window下的部署" class="headerlink" title="nginx-项目在window下的部署"></a>nginx-项目在window下的部署</h1><ul>
+<li>当我们把项目开发完之后，对项目做的第一件事情，就是对项目进行打包了。</li>
+<li>我们通过<code>npm run build</code>进行打包。</li>
+<li>刚开始可能会将项目部署到测试服务器，让测试人员先对项目进行一个测试。</li>
+<li>部署的方式有很多，你可以通过Apache进行部署，也可以通过TomCat进行部署，等等。</li>
+<li>在这里我们选择Nginx服务器进行部署。</li>
+<li>服务器本质上也是一台电脑，只不过这台电脑可能没有显示器，就只有一个主机。而且这个电脑的特点是24小时开机的。它里面存了很多东西，可以给用户提供各种各样的东西。</li>
+<li>公司有没有自己的服务器主机？<ul>
+<li>大部分公司都没有自己的服务器主机，它要有一个机房，还要维护，成本挺高的。</li>
+<li>他们一般租借腾讯云/阿里云等云服务器。</li>
+<li>很多大公司都有自己的服务器集群，很多公司都会选择去租他们的服务器。</li>
+<li>老师的服务器接口是部署在腾讯云上面的。</li>
+<li>我自己买的腾讯云服务器已经吃灰好几个月了，一直没有时间去弄它，也不知道自己要怎么去利用这个云服务器干些事情。</li>
+</ul>
+</li>
+<li>第一：将自己的电脑作为服务器，装一个Nginx。</li>
+<li>第二：远程部署。</li>
+<li>我打开自己的腾讯云服务器，试着部署了一下，没有成功，我也没有试了。</li>
+</ul>
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/46.png" class>
+
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/47.png" class>
+
+<h1 id="项目在远程linux下的部署"><a href="#项目在远程linux下的部署" class="headerlink" title="项目在远程linux下的部署"></a>项目在远程linux下的部署</h1><h1 id="一道面试题"><a href="#一道面试题" class="headerlink" title="一道面试题"></a>一道面试题</h1><ul>
+<li>如何理解生命周期</li>
+<li>如何进行非父子组件通信</li>
+<li>Vue响应式原理<ul>
+<li>不要认为数据发生改变，界面跟着跟新，这个是理所当然的。</li>
+</ul>
+</li>
+</ul>
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/48.png" class>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">    &lt;meta name=<span class="string">&quot;viewport&quot;</span> content=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br><span class="line">    &lt;title&gt;Document&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;!-- </span><br><span class="line">        问题<span class="number">1</span>：app.message修改数据，Vue内部是如何监听message数据的改变的</span><br><span class="line">    ——通过<span class="built_in">Object</span>.defineProperty，用于监听对象属性的改变</span><br><span class="line"></span><br><span class="line">        问题<span class="number">2</span>：当数据发生改变，Vue是如何知道要通知哪些人，界面发生刷新</span><br><span class="line">    ——通过一种设计模式：发布订阅者模式</span><br><span class="line">     --&gt;</span><br><span class="line">    &lt;div id=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">        &#123;&#123;message&#125;&#125;</span><br><span class="line">        &#123;&#123;message&#125;&#125;</span><br><span class="line">        &#123;&#123;message&#125;&#125;</span><br><span class="line">        &#123;&#123;message&#125;&#125;</span><br><span class="line">        &#123;&#123;name&#125;&#125;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line"></span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        <span class="keyword">const</span> obj = &#123;</span><br><span class="line">            message: <span class="string">&#x27;哈哈哈哈哈&#x27;</span>,</span><br><span class="line">            name: <span class="string">&#x27;why&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">Object</span>.keys(obj).forEach(<span class="function"><span class="params">key</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">let</span> value = obj[key]</span><br><span class="line">            <span class="built_in">console</span>.log(value);</span><br><span class="line"></span><br><span class="line">            <span class="built_in">Object</span>.defineProperty(obj, key, &#123;</span><br><span class="line">                <span class="function"><span class="title">set</span>(<span class="params">newValue</span>)</span> &#123;</span><br><span class="line">                    <span class="built_in">console</span>.log(<span class="string">&#x27;监听&#x27;</span> + key + <span class="string">&#x27;的改变&#x27;</span>);</span><br><span class="line">                    <span class="comment">// ？监听到后要告诉谁？</span></span><br><span class="line">                    <span class="comment">// 谁用告诉谁</span></span><br><span class="line">                    <span class="comment">// 另一个问题：谁在用？</span></span><br><span class="line">                    <span class="comment">// 张三/李四/王五</span></span><br><span class="line">                    <span class="comment">// 根据解析HTML代码，获取到哪些人用了这个属性</span></span><br><span class="line">                    value = newValue</span><br><span class="line">                    dep.notify()</span><br><span class="line">                &#125;,</span><br><span class="line">                <span class="function"><span class="title">get</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">                    <span class="built_in">console</span>.log(<span class="string">&#x27;获取&#x27;</span> + key + <span class="string">&#x27;对应的值&#x27;</span>);</span><br><span class="line">                    <span class="comment">// 张三：get -&gt; update</span></span><br><span class="line">                    <span class="comment">// 李四：get -&gt; update</span></span><br><span class="line">                    <span class="comment">// 王五：get -&gt; update</span></span><br><span class="line">                    <span class="comment">// 让这3个人订阅我这个属性的改变</span></span><br><span class="line">                    <span class="comment">// const w1 = new Watcher(&#x27;张三&#x27;)</span></span><br><span class="line">                    <span class="keyword">return</span> value</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// obj.name = &#x27;Kobe&#x27;</span></span><br><span class="line">        <span class="comment">// 给obj对象的属性进行重新定义</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 发布者订阅者模式</span></span><br><span class="line">        <span class="comment">// 发布者</span></span><br><span class="line">        <span class="class"><span class="keyword">class</span> <span class="title">Dep</span> </span>&#123;</span><br><span class="line">            <span class="function"><span class="title">constructor</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">                <span class="built_in">this</span>.subs = []</span><br><span class="line">                <span class="comment">// 这个数组里面记录谁要订阅我</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="function"><span class="title">addSub</span>(<span class="params">watcher</span>)</span> &#123;</span><br><span class="line">                <span class="built_in">this</span>.subs.push(watcher)</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="function"><span class="title">notify</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">                <span class="built_in">this</span>.subs.forEach(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">                    item.update()</span><br><span class="line">                &#125;)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 这个Dep就是存储对我这个数据有依赖的东西</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 订阅者</span></span><br><span class="line">        <span class="class"><span class="keyword">class</span> <span class="title">Watcher</span> </span>&#123;</span><br><span class="line">            <span class="function"><span class="title">constructor</span>(<span class="params">name</span>)</span> &#123;</span><br><span class="line">                <span class="built_in">this</span>.name = name;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="function"><span class="title">update</span>(<span class="params"></span>)</span> &#123;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="built_in">this</span>.name + <span class="string">&#x27;发生了updated&#x27;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">const</span> dep = <span class="keyword">new</span> Dep()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> w1 = <span class="keyword">new</span> Watcher(<span class="string">&#x27;张三&#x27;</span>)</span><br><span class="line">        dep.addSub(w1)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> w2 = <span class="keyword">new</span> Watcher(<span class="string">&#x27;李四&#x27;</span>)</span><br><span class="line">        dep.addSub(w2)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> w3 = <span class="keyword">new</span> Watcher(<span class="string">&#x27;王五&#x27;</span>)</span><br><span class="line">        dep.addSub(w3)</span><br><span class="line"></span><br><span class="line">        dep.notify()</span><br><span class="line"></span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">    &lt;script src=<span class="string">&quot;js/vue.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        <span class="keyword">const</span> app = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">            el: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">            data: &#123;</span><br><span class="line">                message: <span class="string">&#x27;哈哈哈&#x27;</span>,</span><br><span class="line">                name: <span class="string">&#x27;why&#x27;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>问题1：Vue内部它是怎么知道我有几个地方是用到message的呢？</li>
+<li>它需要知道数据一旦发生改变，要通知别人做出改变。</li>
+</ul>
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/49.png" class>
+
+<h1 id="看完了"><a href="#看完了" class="headerlink" title="看完了"></a>看完了</h1><img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/50.png" class>
+
+<h1 id="部署项目到GitHub-Pages"><a href="#部署项目到GitHub-Pages" class="headerlink" title="部署项目到GitHub Pages"></a>部署项目到GitHub Pages</h1><p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/34042071?sort=created">GitHub Pages发布出去后显示的是Readme.md的内容而不是index.html？</a></p>
+<p><a target="_blank" rel="noopener" href="https://my.oschina.net/u/4365632/blog/3319697">Vue 项目部署到GitHub Pages并同步到Gitee Pages</a></p>
+<p>现在是2021年2月10日，放假已经9天了，我开始逐渐变得慢悠悠了起来，对于找工作一点也没有什么紧迫感。这9天慢悠悠的把后台商城弄完了，之后就一点也没有准备别的了。</p>
+<p>今天打算把自己的项目部署一下，找了半天资料，这才发现，其实最好的东西就是文档。</p>
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/51.png" class>
+
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/52.png" class>
+
+
+
+<ul>
+<li>我试了一下不行，又仔细看了一下文档，不好意思，是我眼瞎。</li>
+</ul>
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/53.png" class>
+
+<ul>
+<li>我先在项目根路径下新建一个<code>deploy.txt</code>的文件，然后把里面的内容复制一下，并进行了修改。</li>
+<li>最后把后缀名改成了<code>.sh</code>，它就自动开始运行了，之后我打开GitHub，发现我的仓库变成了这个样子，新多了一个分支。</li>
+</ul>
+<img data-src="/2020/11/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE1%EF%BC%9A%E5%95%86%E5%9F%8E-%E7%8E%8B%E7%BA%A2%E5%85%83/54.png" class>
+
+<ul>
+<li>我去，页面虽然显示了，但是请求不到数据，而且还把我原来的博客地址不显示了。。。。。。</li>
+<li>我还是用我自己的腾讯云服务器来部署吧，有效期还有大概半年吧，先用着吧。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%A1%B9%E7%9B%AE%E4%BD%9C%E5%93%81/" rel="tag"># 项目作品</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/11/19/HTML%E3%80%81CSS%E3%80%81JS%E9%9D%A2%E8%AF%95%E9%A2%9806/" rel="prev" title="HTML、CSS、JS面试题06">
+      <i class="fa fa-chevron-left"></i> HTML、CSS、JS面试题06
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/12/03/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BAVue.js/" rel="next" title="读书笔记：深入浅出Vue.js">
+      读书笔记：深入浅出Vue.js <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E6%80%BB%E4%BD%93%E6%80%9D%E8%B7%AF"><span class="nav-text">项目总体思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E5%88%9B%E5%BB%BA%E5%92%8CGithub%E6%89%98%E7%AE%A1"><span class="nav-text">项目创建和Github托管</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%92%E5%88%86%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="nav-text">划分目录结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CSS%E6%96%87%E4%BB%B6%E7%9A%84%E5%BC%95%E5%85%A5"><span class="nav-text">CSS文件的引入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#vue-config%E5%92%8Ceditorconfig%E9%85%8D%E7%BD%AE"><span class="nav-text">vue.config和editorconfig配置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#tabbar%E5%BC%95%E5%85%A5%E5%92%8C%E9%A1%B9%E7%9B%AE%E6%A8%A1%E5%9D%97%E5%88%92%E5%88%86"><span class="nav-text">tabbar引入和项目模块划分</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%8F%E5%9B%BE%E6%A0%87%E7%9A%84%E4%BF%AE%E6%94%B9%E4%BB%A5%E5%8F%8A%E8%B7%AF%E5%BE%84%E9%97%AE%E9%A2%98"><span class="nav-text">小图标的修改以及路径问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A6%96%E9%A1%B5%E5%AF%BC%E8%88%AA%E6%A0%8F%E7%9A%84%E5%B0%81%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8"><span class="nav-text">首页导航栏的封装和使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E9%A6%96%E9%A1%B5%E7%9A%84%E5%A4%9A%E4%B8%AA%E6%95%B0%E6%8D%AE"><span class="nav-text">请求首页的多个数据</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BD%AE%E6%92%AD%E5%9B%BE%E7%9A%84%E5%B1%95%E7%A4%BA"><span class="nav-text">轮播图的展示</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8E%A8%E8%8D%90%E4%BF%A1%E6%81%AF%E7%9A%84%E5%B1%95%E7%A4%BA"><span class="nav-text">推荐信息的展示</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#FeatureView%E7%9A%84%E5%B0%81%E8%A3%85"><span class="nav-text">FeatureView的封装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TabControl%E7%9A%84%E5%B0%81%E8%A3%85"><span class="nav-text">TabControl的封装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BF%9D%E5%AD%98%E5%95%86%E5%93%81%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="nav-text">保存商品的数据结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A6%96%E9%A1%B5%E6%95%B0%E6%8D%AE%E7%9A%84%E8%AF%B7%E6%B1%82%E5%92%8C%E4%BF%9D%E5%AD%98"><span class="nav-text">首页数据的请求和保存</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A6%96%E9%A1%B5%E5%95%86%E5%93%81%E6%95%B0%E6%8D%AE%E7%9A%84%E5%B1%95%E7%A4%BA"><span class="nav-text">首页商品数据的展示</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TabControl%E7%82%B9%E5%87%BB%E5%88%87%E6%8D%A2%E5%95%86%E5%93%81"><span class="nav-text">TabControl点击切换商品</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Better-Scroll%E7%9A%84%E5%AE%89%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8"><span class="nav-text">Better-Scroll的安装和使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#scroll%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8%E8%A7%A3%E6%9E%90"><span class="nav-text">scroll的基本使用解析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Scroll%E5%9C%A8Vue%E9%A1%B9%E7%9B%AE%E4%B8%AD%E4%BD%BF%E7%94%A8%E8%BF%87%E7%A8%8B"><span class="nav-text">Scroll在Vue项目中使用过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BackTop%E7%BB%84%E4%BB%B6%E7%9A%84%E5%B0%81%E8%A3%85%E5%92%8C%E4%BD%BF%E7%94%A8"><span class="nav-text">BackTop组件的封装和使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BackTop%E7%9A%84%E6%98%BE%E7%A4%BA%E5%92%8C%E9%9A%90%E8%97%8F"><span class="nav-text">BackTop的显示和隐藏</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%8C%E6%88%90%E4%B8%8A%E6%8B%89%E5%8A%A0%E8%BD%BD%E6%9B%B4%E5%A4%9A"><span class="nav-text">完成上拉加载更多</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%98%A8%E5%A4%A9%E5%86%85%E5%AE%B9%E7%9A%84%E5%9B%9E%E9%A1%BE"><span class="nav-text">昨天内容的回顾</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%BB%9A%E5%8A%A8%E5%8C%BA%E5%9F%9F%E7%9A%84Bug%E5%88%86%E6%9E%90%E5%92%8C%E8%A7%A3%E5%86%B3"><span class="nav-text">滚动区域的Bug分析和解决</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#refresh%E5%87%BD%E6%95%B0%E6%89%BE%E4%B8%8D%E5%88%B0%E7%9A%84bug%E5%A4%84%E7%90%86"><span class="nav-text">refresh函数找不到的bug处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%B7%E6%96%B0%E9%A2%91%E7%B9%81%E7%9A%84%E9%98%B2%E6%8A%96%E5%87%BD%E6%95%B0%E5%A4%84%E7%90%86"><span class="nav-text">刷新频繁的防抖函数处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%95%86%E5%93%81%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF%E7%9A%84%E5%B1%95%E7%A4%BA"><span class="nav-text">商品基本信息的展示</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BA%97%E9%93%BA%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A7%A3%E6%9E%90%E5%92%8C%E5%B1%95%E7%A4%BA"><span class="nav-text">店铺信息的解析和展示</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8A%A0%E5%85%A5%E6%BB%9A%E5%8A%A8%E7%9A%84%E6%95%88%E6%9E%9C"><span class="nav-text">加入滚动的效果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%95%86%E5%93%81%E8%AF%A6%E6%83%85%E6%95%B0%E6%8D%AE%E5%B1%95%E7%A4%BA"><span class="nav-text">商品详情数据展示</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8E%E9%A6%96%E9%A1%B5%E8%B7%B3%E8%BD%AC%E8%AF%A6%E6%83%85%E9%A1%B5-iid"><span class="nav-text">从首页跳转详情页-iid</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A6%96%E9%A1%B5%E4%BD%8D%E7%BD%AE%E7%9A%84%E4%BF%9D%E6%8C%81"><span class="nav-text">首页位置的保持</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%95%86%E5%93%81%E8%AF%84%E8%AE%BA%E4%BF%A1%E6%81%AF%E7%9A%84%E5%B1%95%E7%A4%BA"><span class="nav-text">商品评论信息的展示</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A6%96%E9%A1%B5%E5%92%8C%E8%AF%A6%E6%83%85%E9%A1%B5%E7%9B%91%E5%90%AC%E5%85%A8%E5%B1%80%E4%BA%8B%E4%BB%B6%E5%92%8Cmixin%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-text">首页和详情页监听全局事件和mixin的使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A6%96%E9%A1%B5TabControl%E4%B8%8D%E4%B8%80%E8%87%B4%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-text">首页TabControl不一致的问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AF%A6%E6%83%85%E9%A1%B5%E4%B8%8D%E8%83%BD%E6%BB%9A%E5%8A%A8%E7%9A%84bug%E5%A4%84%E7%90%86"><span class="nav-text">详情页不能滚动的bug处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%82%B9%E5%87%BB%E6%A0%87%E9%A2%98%E6%BB%9A%E5%88%B0%E5%AF%B9%E5%BA%94%E5%86%85%E5%AE%B9"><span class="nav-text">点击标题滚到对应内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%BB%9A%E5%8A%A8%E5%86%85%E5%AE%B9%E6%98%BE%E7%A4%BA%E5%AF%B9%E5%BA%94%E6%A0%87%E9%A2%98"><span class="nav-text">滚动内容显示对应标题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BA%95%E9%83%A8%E5%B7%A5%E5%85%B7%E6%A0%8F%E7%9A%84%E5%B0%81%E8%A3%85"><span class="nav-text">底部工具栏的封装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#BackTop%E7%9A%84%E6%B7%B7%E5%85%A5%E5%B0%81%E8%A3%85"><span class="nav-text">BackTop的混入封装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%86%E5%95%86%E5%93%81%E6%B7%BB%E5%8A%A0%E5%88%B0%E8%B4%AD%E7%89%A9%E8%BD%A6%E4%B8%AD"><span class="nav-text">将商品添加到购物车中</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%86%E5%95%86%E5%93%81%E6%B7%BB%E5%8A%A0%E5%88%B0store%E4%B8%AD"><span class="nav-text">将商品添加到store中</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AF%BC%E8%88%AA%E8%88%AA%E6%A0%8F%E5%AE%9E%E7%8E%B0-Vuex%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="nav-text">导航航栏实现-Vuex知识点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B4%AD%E7%89%A9%E8%BD%A6%E5%95%86%E5%93%81%E5%88%97%E8%A1%A8%E5%B1%95%E7%A4%BA"><span class="nav-text">购物车商品列表展示</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B4%AD%E7%89%A9%E8%BD%A6%E5%88%97%E8%A1%A8%E7%9A%84Item%E5%B1%95%E7%A4%BA"><span class="nav-text">购物车列表的Item展示</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Item%E9%80%89%E4%B8%AD%E5%92%8C%E4%B8%8D%E9%80%89%E4%B8%AD%E7%9A%84%E5%88%87%E6%8D%A2"><span class="nav-text">Item选中和不选中的切换</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B6%E9%83%A8%E5%B7%A5%E5%85%B7%E7%9A%84%E5%B0%81%E8%A3%85%E5%92%8C%E5%BA%94%E7%94%A8"><span class="nav-text">顶部工具的封装和应用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%A8%E9%80%89%E6%8C%89%E9%92%AE%E7%9A%84%E7%8A%B6%E6%80%81%E6%98%BE%E7%A4%BA"><span class="nav-text">全选按钮的状态显示</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Vuex-actions%E8%BF%94%E5%9B%9EPromise-mapActions"><span class="nav-text">Vuex-actions返回Promise-mapActions</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Toast%E5%B0%81%E8%A3%85-%E6%99%AE%E9%80%9A%E6%96%B9%E5%BC%8F%E7%9A%84%E5%B0%81%E8%A3%85"><span class="nav-text">Toast封装-普通方式的封装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Toast%E5%B0%81%E8%A3%85-%E6%8F%92%E4%BB%B6%E6%96%B9%E5%BC%8F%E7%9A%84%E5%B0%81%E8%A3%85"><span class="nav-text">Toast封装-插件方式的封装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E7%A7%BB%E5%8A%A8%E7%AB%AF300ms%E5%BB%B6%E8%BF%9F"><span class="nav-text">解决移动端300ms延迟</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%BE%E7%89%87%E6%87%92%E5%8A%A0%E8%BD%BD"><span class="nav-text">图片懒加载</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#px2vw-css%E5%8D%95%E4%BD%8D%E8%BD%AC%E5%8C%96%E6%8F%92%E4%BB%B6"><span class="nav-text">px2vw-css单位转化插件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#nginx-%E9%A1%B9%E7%9B%AE%E5%9C%A8window%E4%B8%8B%E7%9A%84%E9%83%A8%E7%BD%B2"><span class="nav-text">nginx-项目在window下的部署</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E5%9C%A8%E8%BF%9C%E7%A8%8Blinux%E4%B8%8B%E7%9A%84%E9%83%A8%E7%BD%B2"><span class="nav-text">项目在远程linux下的部署</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E9%81%93%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="nav-text">一道面试题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9C%8B%E5%AE%8C%E4%BA%86"><span class="nav-text">看完了</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0GitHub-Pages"><span class="nav-text">部署项目到GitHub Pages</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="筛滤淘"
+      src="/images/cat.jpg">
+  <p class="site-author-name" itemprop="name">筛滤淘</p>
+  <div class="site-description" itemprop="description">前端知识点总结</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">129</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lm101845" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lm101845" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1018457683@qq.com" title="E-Mail → mailto:1018457683@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.jianshu.com/u/6879af8ace24" title="简 书 → https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;6879af8ace24" rel="noopener" target="_blank"><i class="fa fa-jianshu fa-fw"></i>简 书</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/9002959" title="B  站 → https:&#x2F;&#x2F;space.bilibili.com&#x2F;9002959" rel="noopener" target="_blank"><i class="fa fa-bilibili fa-fw"></i>B  站</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">筛滤淘</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">3.7m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">56:03</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

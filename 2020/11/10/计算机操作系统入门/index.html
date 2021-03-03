@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="(注1：这是一个考完研的学生讲的计算机操作系统视频，讲的真的是挺好的，非常的通俗易懂。我之前断断续续的干听过7,8集，可是没有坚持听完。现在开始学Node了，我觉得很有必要把这10个多小时的视频给看完，我觉得对于后续的理解Node是很有帮助的。而且这次不能干听了，要边做笔记边听比较好。)  (注2：视频链接为计算机操作系统(启蒙+经验+套路解题))  总体篇 操作系统的一个宏观比喻 有一个房子，这">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机操作系统入门">
+<meta property="og:url" content="http://example.com/2020/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="木子小屋">
+<meta property="og:description" content="(注1：这是一个考完研的学生讲的计算机操作系统视频，讲的真的是挺好的，非常的通俗易懂。我之前断断续续的干听过7,8集，可是没有坚持听完。现在开始学Node了，我觉得很有必要把这10个多小时的视频给看完，我觉得对于后续的理解Node是很有帮助的。而且这次不能干听了，要边做笔记边听比较好。)  (注2：视频链接为计算机操作系统(启蒙+经验+套路解题))  总体篇 操作系统的一个宏观比喻 有一个房子，这">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2020/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%85%A5%E9%97%A8/01.png">
+<meta property="og:image" content="http://example.com/2020/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%85%A5%E9%97%A8/02.png">
+<meta property="og:image" content="http://example.com/2020/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%85%A5%E9%97%A8/03.png">
+<meta property="og:image" content="http://example.com/2020/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%85%A5%E9%97%A8/04.png">
+<meta property="article:published_time" content="2020-11-10T07:30:00.000Z">
+<meta property="article:modified_time" content="2020-11-10T07:30:00.000Z">
+<meta property="article:author" content="筛滤淘">
+<meta property="article:tag" content="操作系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2020/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%85%A5%E9%97%A8/01.png">
+
+<link rel="canonical" href="http://example.com/2020/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%85%A5%E9%97%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>计算机操作系统入门 | 木子小屋</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?79d7cb9c8fa9e57a2723fb8645f37638";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">木子小屋</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Talk is cheap. Show me the code.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%85%A5%E9%97%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cat.jpg">
+      <meta itemprop="name" content="筛滤淘">
+      <meta itemprop="description" content="前端知识点总结">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="木子小屋">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          计算机操作系统入门
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-11-10 15:30:00" itemprop="dateCreated datePublished" datetime="2020-11-10T15:30:00+08:00">2020-11-10</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">操作系统</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>(注1：这是一个考完研的学生讲的计算机操作系统视频，讲的真的是挺好的，非常的通俗易懂。我之前断断续续的干听过7,8集，可是没有坚持听完。现在开始学Node了，我觉得很有必要把这10个多小时的视频给看完，我觉得对于后续的理解Node是很有帮助的。而且这次不能干听了，要边做笔记边听比较好。)</p>
+<p>(注2：视频链接为<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1LW411q7Kk?p=1">计算机操作系统(启蒙+经验+套路解题)</a>)</p>
+<h1 id="总体篇"><a href="#总体篇" class="headerlink" title="总体篇"></a>总体篇</h1><h2 id="操作系统的一个宏观比喻"><a href="#操作系统的一个宏观比喻" class="headerlink" title="操作系统的一个宏观比喻"></a>操作系统的一个宏观比喻</h2><p>有一个房子，这个<strong>房子</strong>就是<strong>操作系统</strong>。这个房子有<strong>2个房间</strong>，中间有一道门，这个<strong>门</strong>叫做<strong>I/O子系统</strong>。</p>
+<p><strong>左边</strong>的房间里有4个人，它们的名字分别是：QQ、360、LOL、酷狗。它们4个人就叫<strong>四大进程</strong>。这4个人围在圆桌的四周，圆周被分为4个区域或者说是4块，每个人面前都有一块属于它们的桌子，这个<strong>圆桌</strong>就相当于<strong>内存卡</strong>。</p>
+<p><strong>右边</strong>的房间里面有一个<strong>冰箱</strong>，冰箱相当于电脑里面的<strong>磁盘</strong>，磁盘就和冰箱一样被分成了几个格子，每个格子都分别属于它们每个人，每个格子都分别放着它们自己的菜肴，在电脑里面就相当于它们自己的文件。</p>
+<p>这个时候它们想吃饭了，你在玩LOL的时候就代表LOL想吃饭了，当你点击LOL图标的时候，LOL就会穿过I/O子系统(这道门)跑到冰箱里去取自己格子里面的菜，取到之后通过这道门回来，把菜摆放在这个圆桌上面。</p>
+<p>有了人，有了桌子，桌子上面放好了菜，但是怎么吃饭呢？还差一双<strong>筷子</strong>，筷子就是电脑的<strong>CPU</strong>,而且筷子只有一双。</p>
+<p>它们4个人有个习惯，不会一直拿着筷子吃饭，它们每吃一口都要把筷子放回去，接着要吃下一口的话再去取筷子，吃完一口再放回去。LOL就是这样吃饭的，直到它吃完饭为止。</p>
+<p>你之后又分别点击了QQ，360和酷狗，它们和LOL一样的流程，去冰箱拿自己的菜放到盘子上，然后等别人吃一口饭把筷子放回原处它们再分别取筷子，吃一口饭后也将筷子放回原处。</p>
+<img data-src="/2020/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%85%A5%E9%97%A8/01.png" class>
+
+
+
+<h2 id="计算机怎么工作的？"><a href="#计算机怎么工作的？" class="headerlink" title="计算机怎么工作的？"></a>计算机怎么工作的？</h2><p><a target="_blank" rel="noopener" href="https://juejin.im/post/6844903505224826887">印象系列-磁盘和内存的基本认识</a></p>
+<blockquote>
+<p>磁盘可以理解为硬盘。</p>
+</blockquote>
+<ul>
+<li><p>时钟信号（心脏供血）</p>
+<ul>
+<li>有了时钟信号，就如同心脏供血提供了能量一样，CPU就可以根据源源不断的时钟信号处理由0、1构成的指令</li>
+</ul>
+</li>
+<li><p>指令从哪里来呢？从内存中来，但是内存是易失存储器RAM（想想文件没有ctrl+s），断电数据就丢失。</p>
+</li>
+<li><p>内存(眼睛)中的数据那里来呢？从磁盘(外部世界)中来（没有磁盘之前，就从纸带上来）</p>
+</li>
+</ul>
+<img data-src="/2020/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%85%A5%E9%97%A8/02.png" class>
+
+<p>内存和磁盘本质上可以抽象成一个东西，就跟围棋棋盘一样，每行有8个小格子，每个小格子里面放0或者1。</p>
+<p><strong>磁盘中</strong>假设有n行小格子定义为C盘，里面装win7(操作系统)。</p>
+<p>操作系统本质上也是一种程序，它里面装的也是0,1,0,1这样的数据。</p>
+<ul>
+<li>时钟振荡器是心脏</li>
+<li>CPU是大脑</li>
+<li>内存(RAM)是眼睛</li>
+<li>磁盘(ROM)是外部世界</li>
+</ul>
+<h2 id="操作系统怎么启动的？"><a href="#操作系统怎么启动的？" class="headerlink" title="操作系统怎么启动的？"></a>操作系统怎么启动的？</h2><p><strong>时钟供能–CPU激活–默认地址执行Boot程序–C盘拷贝OS到内存–CPU跳转到内存执行OS–OS启动完成–运行APP</strong></p>
+<p>当电脑开机后，CPU里面有一个小东西boot,它只做一件事情，把磁盘中的win7系统一个格子一个格子的复制到内存中去执行。</p>
+<p>开机后你点击QQ图标，你点击的瞬间CPU就在内存里搜索，发现没有QQ程序，就从磁盘中把QQ程序复制到内存中去执行。</p>
+<h2 id="操作系统的目的，功能"><a href="#操作系统的目的，功能" class="headerlink" title="操作系统的目的，功能"></a>操作系统的目的，功能</h2><img data-src="/2020/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%85%A5%E9%97%A8/03.png" class>
+
+<p>操作系统是管家，管理硬件，用户就是地主，不用自己亲自去管理，有什么事情给管家下达命令叫管家做就可以了。</p>
+<h2 id="操作系统的发展"><a href="#操作系统的发展" class="headerlink" title="操作系统的发展"></a>操作系统的发展</h2><img data-src="/2020/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%85%A5%E9%97%A8/04.png" class>
+
+<ul>
+<li>无操作系统（手工阶段）<ul>
+<li>在很久以前是没有软件这个东西的，加减乘除这些都是用硬件来实现的。有一门课叫《数字电路》里面讲的就是如何设计电路来完成加减乘除这些运算的。它的优点是专门用来实现加减乘除的硬件运算起来比软件快。缺点是功能做死了，没有灵活性。后来硬件设计出了最基本的指令集就构成了软件。</li>
+</ul>
+</li>
+<li>单道批处理系统</li>
+<li>多道批处理系统</li>
+<li>分时操作系统<ul>
+<li>富二代同时交了三个女朋友，这三个女朋友同时不知道对方的存在。情人节三个女朋友都要和富二代过，富二代在同一个酒店开了三间房，一个女朋友陪一个小时后就去陪下一个女朋友，如此循环往复。这样让他的三个女朋友分别都认为富二代陪了自己一晚上。</li>
+</ul>
+</li>
+<li>实时操作系统<ul>
+<li>女朋友让富二代什么时候过来就什么时候过来，比如太空发射什么时候做什么事情要求的时间非常精确。</li>
+</ul>
+</li>
+<li>网络操作系统</li>
+<li>分布式操作系统</li>
+<li>个人计算机操作系统</li>
+</ul>
+<blockquote>
+<p>操作系统历史见我的另一篇博文《操作系统之哲学原理》</p>
+</blockquote>
+<h2 id="操作系统的运行机制"><a href="#操作系统的运行机制" class="headerlink" title="操作系统的运行机制"></a>操作系统的运行机制</h2><h1 id="CPU"><a href="#CPU" class="headerlink" title="CPU"></a>CPU</h1><h2 id="进程管理"><a href="#进程管理" class="headerlink" title="进程管理"></a>进程管理</h2><p>进程管理对应的是叫做CPU的这双<strong>筷子</strong>，是怎么在这4个人(4大进程)之间进行分配的。筷子空闲，大家都要的时候应该谁先谁后使用呢？又根据什么样的顺序去取呢？4个人使用筷子产生了矛盾又是如何进行解决的呢？这都是有一个规则或者说有一个算法来管理的。</p>
+<h1 id="内存卡"><a href="#内存卡" class="headerlink" title="内存卡"></a>内存卡</h1><h2 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h2><p>内存管理讲的就是<strong>圆桌</strong>，这张桌子按照多少人分成多少份呢？每一份应该分多大呢？哪一份应该给谁？吃完饭后大家都要离开桌子，清理完桌子之后又应该给谁用呢？或者桌子空闲出一部分出来，又有人来吃应该怎么分配呢？</p>
+<p>当人太多的时候，桌子总是会挤满人的，这个桌子又怎么样最大限度的供人使用，让人吃饭呢？</p>
+<h1 id="磁盘"><a href="#磁盘" class="headerlink" title="磁盘"></a>磁盘</h1><h2 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a>文件管理</h2><p>说到磁盘管理的时候，其实就是说的是文件管理。它们本质上可以说是你中有我，我中有你的。在这里面就对应着冰箱，它和内存管理有一点是差不多的，就是一个磁盘被分成多少块，每块给谁，这是第一点。</p>
+<p>第二点是这里面的盘子是怎么摆放的，比如QQ文件在磁盘里是按照什么样的顺序进行摆放的，怎么样摆放更加合理，结构更加优化。</p>
+<p>第三点是目录的问题，目录就相当于一个表格，你在图书馆找书的时候不是也要查目录，查表格吗？书放在哪一个书架上面，书架上面第几层，大概就可以找到了。</p>
+<h1 id="外设"><a href="#外设" class="headerlink" title="外设"></a>外设</h1><h2 id="I-O管理"><a href="#I-O管理" class="headerlink" title="I/O管理"></a>I/O管理</h2><p>I/O管理讲的就是这道门，电脑里讲的就是外设，操作系统是如何设计这一道门的。键盘，鼠标，显示器，打印机，移动硬盘，U盘都属于外设。</p>
+<p>你玩LOL的时候，它也得通过I/O子系统这道门去检测，去识别你按了哪些按键，Q,W,E,R放了哪些技能，都要通过这道门给LOL识别到才能正常运行游戏。</p>
+<p>你拖动鼠标的时候，也要通过这道门被LOL所识别，才能知道你走到哪个位置去。</p>
+<p>显示器也是一样，LOL的图像通过门出来显示到显示器上显示出来。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="tag"># 操作系统</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/11/10/JavaScript%E6%A0%87%E5%87%86%E5%8F%82%E8%80%83%E6%95%99%E7%A8%8B%E4%B9%8BAJAX/" rel="prev" title="JavaScript标准参考教程之AJAX">
+      <i class="fa fa-chevron-left"></i> JavaScript标准参考教程之AJAX
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/11/11/Vue%E9%BB%91%E9%A9%AC%E8%A7%86%E9%A2%91(%E6%9D%8E%E9%B9%8F%E5%91%A8)/" rel="next" title="Vue黑马视频(李鹏周)">
+      Vue黑马视频(李鹏周) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E4%BD%93%E7%AF%87"><span class="nav-text">总体篇</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E4%B8%80%E4%B8%AA%E5%AE%8F%E8%A7%82%E6%AF%94%E5%96%BB"><span class="nav-text">操作系统的一个宏观比喻</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%80%8E%E4%B9%88%E5%B7%A5%E4%BD%9C%E7%9A%84%EF%BC%9F"><span class="nav-text">计算机怎么工作的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%80%8E%E4%B9%88%E5%90%AF%E5%8A%A8%E7%9A%84%EF%BC%9F"><span class="nav-text">操作系统怎么启动的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%9B%AE%E7%9A%84%EF%BC%8C%E5%8A%9F%E8%83%BD"><span class="nav-text">操作系统的目的，功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%8F%91%E5%B1%95"><span class="nav-text">操作系统的发展</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6"><span class="nav-text">操作系统的运行机制</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CPU"><span class="nav-text">CPU</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86"><span class="nav-text">进程管理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E5%8D%A1"><span class="nav-text">内存卡</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86"><span class="nav-text">内存管理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A3%81%E7%9B%98"><span class="nav-text">磁盘</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86"><span class="nav-text">文件管理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%96%E8%AE%BE"><span class="nav-text">外设</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#I-O%E7%AE%A1%E7%90%86"><span class="nav-text">I&#x2F;O管理</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="筛滤淘"
+      src="/images/cat.jpg">
+  <p class="site-author-name" itemprop="name">筛滤淘</p>
+  <div class="site-description" itemprop="description">前端知识点总结</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">129</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lm101845" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lm101845" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1018457683@qq.com" title="E-Mail → mailto:1018457683@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.jianshu.com/u/6879af8ace24" title="简 书 → https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;6879af8ace24" rel="noopener" target="_blank"><i class="fa fa-jianshu fa-fw"></i>简 书</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/9002959" title="B  站 → https:&#x2F;&#x2F;space.bilibili.com&#x2F;9002959" rel="noopener" target="_blank"><i class="fa fa-bilibili fa-fw"></i>B  站</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">筛滤淘</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">3.7m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">56:03</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

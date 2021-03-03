@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="(注1：反正这个迟早要学，我就先新建一篇博文，等以后有时间了再来补充。)  (注2：这个是尚硅谷李立超老师的视频，总共只有30节课，10个小时左右，并不算长。不知道为什么我开始对学新的东西感到恐惧了，其实想想大可不必啊，既然选择了前端，就势必要不停的去学习一些新的东西，学习能力这个是基本的素养，所以先去学习就完事了。)  (注3：摘录一下视频简介给自己共勉吧：本套视频教程对TypeScript进行">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TypeScript入门">
+<meta property="og:url" content="http://example.com/2020/09/07/TypeScript%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="木子小屋">
+<meta property="og:description" content="(注1：反正这个迟早要学，我就先新建一篇博文，等以后有时间了再来补充。)  (注2：这个是尚硅谷李立超老师的视频，总共只有30节课，10个小时左右，并不算长。不知道为什么我开始对学新的东西感到恐惧了，其实想想大可不必啊，既然选择了前端，就势必要不停的去学习一些新的东西，学习能力这个是基本的素养，所以先去学习就完事了。)  (注3：摘录一下视频简介给自己共勉吧：本套视频教程对TypeScript进行">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2020/09/07/TypeScript%E5%85%A5%E9%97%A8/01.png">
+<meta property="og:image" content="http://example.com/2020/09/07/TypeScript%E5%85%A5%E9%97%A8/02.png">
+<meta property="article:published_time" content="2020-09-07T15:28:59.000Z">
+<meta property="article:modified_time" content="2020-09-07T15:28:59.000Z">
+<meta property="article:author" content="筛滤淘">
+<meta property="article:tag" content="TypeScript">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2020/09/07/TypeScript%E5%85%A5%E9%97%A8/01.png">
+
+<link rel="canonical" href="http://example.com/2020/09/07/TypeScript%E5%85%A5%E9%97%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>TypeScript入门 | 木子小屋</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?79d7cb9c8fa9e57a2723fb8645f37638";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">木子小屋</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Talk is cheap. Show me the code.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/07/TypeScript%E5%85%A5%E9%97%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cat.jpg">
+      <meta itemprop="name" content="筛滤淘">
+      <meta itemprop="description" content="前端知识点总结">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="木子小屋">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          TypeScript入门
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-07 23:28:59" itemprop="dateCreated datePublished" datetime="2020-09-07T23:28:59+08:00">2020-09-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/TypeScript/" itemprop="url" rel="index"><span itemprop="name">TypeScript</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>11k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>10 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>(注1：反正这个迟早要学，我就先新建一篇博文，等以后有时间了再来补充。)</p>
+<p>(注2：这个是尚硅谷李立超老师的视频，总共只有30节课，10个小时左右，并不算长。不知道为什么我开始对学新的东西感到恐惧了，其实想想大可不必啊，既然选择了前端，就势必要不停的去学习一些新的东西，学习能力这个是基本的素养，所以先去学习就完事了。)</p>
+<p>(注3：摘录一下视频简介给自己共勉吧：本套视频教程对TypeScript进行了深入讲解，其中涵盖了环境搭建、TypeScript中的各种类型（基本类型、数组、对象、元组、枚举、unknown、any、void、never等）。TypeScript的编译选项，以及TypeScript中面向对象的相关知识（类、抽象类和接口），教程最后通过一个实战项目“贪食蛇”对知识进行了系统的串联。<br><strong>TS本身并非什么高深的技术，凡是有JavaScript基础的同学都可以轻松掌握</strong>。)</p>
+<p>(注4：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Xy4y1v7S2">视频链接如下</a>)</p>
+<p>(注5：现在是2020年12月19日，开始看视频了，开个头吧。)</p>
+<p>(注6：学了一点点，初步感觉就是这不就是Java吗，好像没有什么区别，也是要编译的，变量名前也要写类型。)</p>
+<p>(注7：老师也说了，学习一门语言就是学习它的语法，刚开始你觉得不习惯主要是因为它的语法和你以前学的不太一样，通过不断的写，不断的写，你也就慢慢熟悉它的语法和写法了，真的没什么难的。)</p>
+<h1 id="TypeScript是什么"><a href="#TypeScript是什么" class="headerlink" title="TypeScript是什么"></a>TypeScript是什么</h1><ul>
+<li><p>TypeScript是JavaScript的超集。</p>
+</li>
+<li><p>它对JS进行了扩展，向JS中引入了类型的概念，并添加了许多新的特性。</p>
+</li>
+<li><p>TS代码需要通过编译器编译为JS，然后再交由JS解析器执行。</p>
+</li>
+<li><p>TS完全兼容JS，换言之，任何的JS代码都可以直接当成JS使用。</p>
+</li>
+<li><p>相较于JS而言，TS拥有了静态类型，更加严格的语法，更强大的功能；TS可以在代码执行前就完成代码的检查，减小了运行时异常的出现的几率；TS代码可以编译为任意版本的JS代码，可有效解决不同JS运行环境的兼容问题；同样的功能，TS的代码量要大于JS，但由于TS的代码结构更加清晰，变量类型更加明确，在后期代码的维护中TS却远远胜于JS。</p>
+</li>
+</ul>
+<img data-src="/2020/09/07/TypeScript%E5%85%A5%E9%97%A8/01.png" class>
+
+<h1 id="TypeScript增加了什么"><a href="#TypeScript增加了什么" class="headerlink" title="TypeScript增加了什么"></a>TypeScript增加了什么</h1><img data-src="/2020/09/07/TypeScript%E5%85%A5%E9%97%A8/02.png" class>
+
+
+
+<h1 id="TypeScript-开发环境搭建"><a href="#TypeScript-开发环境搭建" class="headerlink" title="TypeScript 开发环境搭建"></a>TypeScript 开发环境搭建</h1><ol>
+<li>下载Node.js<ul>
+<li>64位：<a target="_blank" rel="noopener" href="https://nodejs.org/dist/v14.15.1/node-v14.15.1-x64.msi">https://nodejs.org/dist/v14.15.1/node-v14.15.1-x64.msi</a></li>
+<li>32位：<a target="_blank" rel="noopener" href="https://nodejs.org/dist/v14.15.1/node-v14.15.1-x86.msi">https://nodejs.org/dist/v14.15.1/node-v14.15.1-x86.msi</a></li>
+</ul>
+</li>
+<li>安装Node.js</li>
+<li>使用npm全局安装typescript<ul>
+<li>进入命令行</li>
+<li>输入：<code>npm i -g typescript</code></li>
+</ul>
+</li>
+<li>创建一个ts文件</li>
+<li>使用tsc对ts文件进行编译<ul>
+<li>进入命令行</li>
+<li>进入.<code>ts</code>文件所在目录</li>
+<li>执行命令：<code>tsc xxx.ts</code></li>
+</ul>
+</li>
+</ol>
+<h1 id="基本类型"><a href="#基本类型" class="headerlink" title="基本类型"></a>基本类型</h1><blockquote>
+<p>可以将TS编译为任意版本的JS，可以编译为ES5的，也可以编译为ES6的，等等，任何版本。</p>
+<p>好处是可以确保代码最好的兼容性，在不同的浏览器都可以正常的去执行。你想兼容哪个版本我就可以编译成哪个版本。</p>
+<p>默认情况下它是编译为ES3的，后面会讲到如何更改默认情况下的编译版本。</p>
+</blockquote>
+<ul>
+<li><p>类型声明</p>
+<ul>
+<li><p>类型声明是TS非常重要的一个特点</p>
+</li>
+<li><p>通过类型声明可以指定TS中变量（参数、形参）的类型</p>
+</li>
+<li><p>指定类型后，当为变量赋值时，TS编译器会自动检查值是否符合类型声明，符合则赋值，否则报错</p>
+</li>
+<li><p>简而言之，类型声明给变量设置了类型，使得变量只能存储某种类型的值</p>
+</li>
+<li><p>语法：</p>
+<ul>
+<li><p>```typescript<br>let 变量: 类型;</p>
+<p>let 变量: 类型 = 值;</p>
+<p>function fn(参数: 类型, 参数: 类型): 类型{</p>
+<pre><code>...</code></pre>
+<p>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 自动类型判断</span><br><span class="line"></span><br><span class="line">  * TS拥有自动的类型判断机制</span><br><span class="line">  * 当对变量的声明和赋值是同时进行的，TS编译器会自动判断变量的类型</span><br><span class="line">  * 所以如果你的变量的声明和赋值时同时进行的，可以省略掉类型声明</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">* 类型：</span><br><span class="line"></span><br><span class="line">  |  类型   |       例子        |              描述              |</span><br><span class="line">  | :-----: | :---------------: | :----------------------------: |</span><br><span class="line">  | number  |    1, -33, 2.5    |            任意数字            |</span><br><span class="line">  | string  | &#39;hi&#39;, &quot;hi&quot;, &#96;hi&#96;  |           任意字符串           |</span><br><span class="line">  | boolean |    true、false    |       布尔值true或false        |</span><br><span class="line">  | 字面量  |      其本身       |  限制变量的值就是该字面量的值  |</span><br><span class="line">  |   any   |         *         |            任意类型            |</span><br><span class="line">  | unknown |         *         |         类型安全的any          |</span><br><span class="line">  |  void   | 空值（undefined） |     没有值（或undefined）      |</span><br><span class="line">  |  never  |      没有值       |          不能是任何值          |</span><br><span class="line">  | object  |  &#123;name:&#39;孙悟空&#39;&#125;  |          任意的JS对象          |</span><br><span class="line">  |  array  |      [1,2,3]      |           任意JS数组           |</span><br><span class="line">  |  tuple  |       [4,5]       | 元素，TS新增类型，固定长度数组 |</span><br><span class="line">  |  enum   |    enum&#123;A, B&#125;     |       枚举，TS中新增类型       |</span><br><span class="line"></span><br><span class="line">* number</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;typescript</span><br><span class="line">    let decimal: number &#x3D; 6;</span><br><span class="line">    let hex: number &#x3D; 0xf00d;</span><br><span class="line">    let binary: number &#x3D; 0b1010;</span><br><span class="line">    let octal: number &#x3D; 0o744;</span><br><span class="line">    let big: bigint &#x3D; 100n;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; let a;</span><br><span class="line">    &#x2F;&#x2F; a &#x3D; 10;</span><br><span class="line">    &#x2F;&#x2F; a &#x3D; &#39;hello&#39;</span><br><span class="line">    &#x2F;&#x2F; 以前JS是这样写的</span><br><span class="line">    &#x2F;&#x2F; 因为JS是动态类型的语言，变量是没有类型的概念的</span><br><span class="line">    &#x2F;&#x2F; 你可以给变量赋任何类型的值</span><br><span class="line">    </span><br><span class="line">    let a: number;</span><br><span class="line">    &#x2F;&#x2F; TS写法：声明一个变量a,同时指定它的类型为number</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; a的类型设置为了number，在以后的使用过程中，a的值只能是数字</span><br><span class="line">    a &#x3D; 10;</span><br><span class="line">    a &#x3D; 33;</span><br><span class="line">    &#x2F;&#x2F; 这些都没有问题</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; a &#x3D; &#39;hello&#39;</span><br><span class="line">    &#x2F;&#x2F; 这样写会报错，出现红色的波浪线</span><br><span class="line">    &#x2F;&#x2F; 但是即使TS里面有这样的错误，而且编译会报错，但是还是会编译生成JS文件！！</span><br><span class="line">    &#x2F;&#x2F; 不会因为有一个错误而不让你生成JS了</span><br><span class="line">    &#x2F;&#x2F; 因为首先a &#x3D; &#39;hello&#39;;虽然不符合TS语法规范，但是它符合JS语法规范</span><br><span class="line">    &#x2F;&#x2F; 其次也是为了让刚开始接触TS的人更好的接受和使用TS</span><br><span class="line">    &#x2F;&#x2F; 如果我写了有错误你就不让我编译通过，那么那些习惯写JS的人就不会用TS了。</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; 后面会通过编译工具的配置，让它在有错的情况下编译不通过</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>boolean</p>
+<ul>
+<li><p>```typescript<br>let isDone: boolean = false;</p>
+<p>let b: string;<br>b = ‘hello’</p>
+<p>let c: boolean = true;<br>c = false</p>
+<p>// let d = true<br>// 编译器很操作，你没有写boolean,它看到赋值为true,就知道d为布尔值了<br>// d = 123<br>// 你就算没有写变量类型(声明变量时没有写boolean)<br>// 更改变量为123时还是会报错</p>
+<p>// 如果变量的声明和赋值是同时进行的，那么TS就可以自动对变量进行类型检测</p>
+<p>// 疑问：既然TS编译器可以自动判断变量类型，那我们手动写类型是否多此一举呢？<br>// 回答：类型给我们带来的困扰最大的往往不是变量，而是函数</p>
+<p>// JS中的函数是不考虑参数的类型和个数的<br>// 而TS如何给定了参数的类型，类型不会的话会报错<br>// 参数的个数不对的话也是会报错的</p>
+<p>// 这个函数很明显是求和的，那么两个参数a和b都是数字才有意义<br>function sum(a,b) { </p>
+<pre><code>return a + b;</code></pre>
+<p>}</p>
+<p>console.log(sum(123, 456));<br>// 579</p>
+<p>console.log(sum(123, “456”));<br>//123456<br>//没有给参数设定类型，这个不会报错</p>
+<p>function total(a:number,b:number) { </p>
+<pre><code>return a + b;</code></pre>
+<p>}</p>
+<p>// total(11,’123’);<br>// 给了变量类型，此时这个会报错</p>
+<p>// 函数返回值的类型也是可以指定的<br>function total2(a: number, b: number): number{ </p>
+<pre><code>// 括号外面的:number就表示函数返回值的类型
+// 虽然写上去有点麻烦，但是当你项目越来越大的时候
+// 你会喜欢上这种写法的,它会让代码越来越可控制
+return a + b;</code></pre>
+<p>}</p>
+<p>let result = total2(10, 20)<br>// 鼠标悬停到result上可以看到resulta的类型为number</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* string</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;typescript</span><br><span class="line">    let color: string &#x3D; &quot;blue&quot;;</span><br><span class="line">    color &#x3D; &#39;red&#39;;</span><br><span class="line">    </span><br><span class="line">    let fullName: string &#x3D; &#96;Bob Bobbington&#96;;</span><br><span class="line">    let age: number &#x3D; 37;</span><br><span class="line">    let sentence: string &#x3D; &#96;Hello, my name is $&#123;fullName&#125;.</span><br><span class="line">    </span><br><span class="line">    I&#39;ll be $&#123;age + 1&#125; years old next month.&#96;;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>字面量</p>
+<ul>
+<li><p>也可以使用字面量去指定变量的类型，通过字面量可以确定变量的取值范围</p>
+</li>
+<li><p>```typescript<br>let color: ‘red’ | ‘blue’ | ‘black’;<br>let num: 1 | 2 | 3 | 4 | 5;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  * 代码示例</span><br><span class="line"></span><br><span class="line">    ~~~javascript</span><br><span class="line">    &#x2F;&#x2F; 也可以直接使用字面量进行类型声明</span><br><span class="line">    let a: 10;</span><br><span class="line">    a &#x3D; 10;</span><br><span class="line">    &#x2F;&#x2F; a &#x3D; 11;</span><br><span class="line">    &#x2F;&#x2F; a已经赋值10了，你就不能再修改它了</span><br><span class="line">    &#x2F;&#x2F; 赋值一次就不能再修改了，感觉就像常量一样</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    let b: &quot;male&quot; | &quot;female&quot;;</span><br><span class="line">    &#x2F;&#x2F; 竖线|表示或者</span><br><span class="line">    &#x2F;&#x2F; b只能是male或female这2个选项</span><br><span class="line">    b &#x3D; &#39;male&#39;</span><br><span class="line">    b &#x3D; &#39;female&#39;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; 可以使用|来连接多个类型(联合类型)</span><br><span class="line">    let c: boolean | string</span><br><span class="line">    c &#x3D; true;</span><br><span class="line">    c&#x3D; &quot;hello&quot;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    ~~~</span><br><span class="line"></span><br><span class="line">* any</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;typescript</span><br><span class="line">    let d: any &#x3D; 4;</span><br><span class="line">    d &#x3D; &#39;hello&#39;;</span><br><span class="line">    d &#x3D; true;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; any表示的是任意类型</span><br><span class="line">    &#x2F;&#x2F; 你写了any以后就跟JS也没什么区别了</span><br><span class="line">    &#x2F;&#x2F; 一个变量设置类型为any后相当于对该变量关闭了TS的类型检测</span><br><span class="line">    &#x2F;&#x2F; 使用TS时，不建议使用any类型(你用了any还不如直接去用JS)</span><br><span class="line">    &#x2F;&#x2F; 听说有些公司不给写any，写一个扣10块钱</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; let d: any;</span><br><span class="line">    &#x2F;&#x2F; 这种写法是显式的any</span><br><span class="line">    let d;</span><br><span class="line">    &#x2F;&#x2F; 这种写法是隐式的any</span><br><span class="line">    &#x2F;&#x2F; 声明变量如果不指定类型，则TS解析器会自动判断变量的类型为any(隐式的any)</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; 显式的any我们要避免，隐式的any我们更要避免</span><br><span class="line">    &#x2F;&#x2F; any不到万不得已的时候尽量别用</span><br><span class="line">    d &#x3D; 10;</span><br><span class="line">    d &#x3D; &#39;hello&#39;;</span><br><span class="line">    d &#x3D; true;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>unknown</p>
+<ul>
+<li><pre><code class="typescript">let notSure: unknown = 4;
+notSure = &#39;hello&#39;;
+
+// 如果有一些变量你实在是不知道它的类型的话，你可以使用any
+// 不过你也可以使用unknown
+// unknown表示未知类型的值，那么它和any有什么区别呢？
+let e: unknown;
+e = 10;
+e = &#39;你好&#39;;
+e = true;
+// 这里可以看到设置any和设置unknown效果是一样的
+
+let s: string;
+s = d;
+// s是string，d是any
+// 把变量d的值赋值给了变量s
+// d的类型是any，它可以赋值给任意变量，不会报错
+// 说明any类型的变量不仅霍霍自己，还霍霍别人
+// s本来是字符串挺好的，你这一整，被any弄成了true布尔值了
+// any不仅把自己的类型检查给关了，也把别人的类型检查也给关了
+
+// 而unknown就不一样了
+let f: string;
+e = &#39;hello&#39;;
+// f = e;
+// 报错：Type &#39;unknown&#39; is not assignable to type &#39;string&#39;
+// 你把未知类型的变量(e)赋值给了f(类型为string)会报错
+// 这个就是any和unknown的区别
+// any的话你给别人赋值他也不查了，但是unknown只管自己，自己爱赋啥值赋啥值
+// 但是如果你想把自己(unknown类型)的变量值赋值给别的变量的时候，就会报错
+// 用TS的时候只要看到红色波浪线，一定要记得处理
+// 不然你用TS就没有意义了
+
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>// unknown实际上就是一个类型安全的any
+// unknown类型的变量不能直接赋值给其他变量
+// 如果你真的一定要赋值的话(f = e)
+// 你可以对它先进行类型检查
+
+// 方法1：
+// if (typeof e === &quot;string&quot;) &#123; 
+//   f = e
+//   // 这样就不报错了
+//   // 这个还要多个类型检查，看上去有点麻烦
+//   // 但是它可以避免后面出问题
+// &#125;
+
+// 方法2：使用类型断言
+// 有些时候一些变量的类型TS编译器它不知道，但是我们自己知道
+// 类型断言，可以用来告诉解析器变量的实际类型(不过你要确保你写的是对的)
+
+/*
+* 语法
+*   1.变量 as 类型
+*   2.&lt;类型&gt;变量
+*/
+// 2.1写法
+// f = e as string;
+
+// 2.2写法
+f = &lt;string&gt;e;
+
+// 2.1和2.2写法的效果是一样的，都是告诉变量e是字符串
+
+// 以后你遇到类型不确定的变量时，能用unknown尽量用unknown
+// 能不用any尽量不要用any
+// 不要嫌unknown麻烦
+// 如果嫌麻烦的话就不要用TS了
+// TS刚开始接触的时候感觉没那么好，但是随着时间久了，越用越好用
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* void</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;typescript</span><br><span class="line">    let unusable: void &#x3D; undefined;</span><br><span class="line">    </span><br><span class="line">    function fn(): number &#123; </span><br><span class="line">      &#x2F;&#x2F; 设置返回值的类型为number</span><br><span class="line">      return 123;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    function fn1() &#123; </span><br><span class="line">      &#x2F;&#x2F; 有些情况下函数没有返回值</span><br><span class="line">      &#x2F;&#x2F; 如果你在小括号后不写类型的话，默认的类型就是void</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    function fn2() &#123; </span><br><span class="line">      return true</span><br><span class="line">      &#x2F;&#x2F; 你写了返回值，而且返回的是true</span><br><span class="line">      &#x2F;&#x2F; 虽然你没有写返回值，它还是能自动判断出来类型为true的</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    function fn3(num) &#123; </span><br><span class="line">      if (num &gt; 0) &#123;</span><br><span class="line">        return true;</span><br><span class="line">      &#125; else &#123; </span><br><span class="line">        return 123;</span><br><span class="line">      &#125;</span><br><span class="line">      &#x2F;&#x2F; 这个时候返回类型就是true或者123了</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; void用来表示空，以函数为例子，就表示没有返回值的函数</span><br><span class="line">    function fn4(): void &#123; </span><br><span class="line">      &#x2F;&#x2F; return true;</span><br><span class="line">      &#x2F;&#x2F; 这时只要你有返回值，它就会报错</span><br><span class="line">      &#x2F;&#x2F; Type &#39;boolean&#39; is not assignable to type &#39;void&#39;</span><br><span class="line">      &#x2F;&#x2F; return null;</span><br><span class="line">      &#x2F;&#x2F; return undefined;</span><br><span class="line">      &#x2F;&#x2F; 你return null或undefined，void都认为是空，都不会报错</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></code></pre>
+<ul>
+<li><p>never</p>
+<ul>
+<li><p>```typescript<br>function error(message: string): never {<br>  throw new Error(message);<br>}</p>
+<p>function fn5() :never{<br>  // never表示永远不会返回结果<br>  // 和void的区别：<br>  // 从哲学的角度上来讲，你没有返回值(返回值为空)，一定意义上也是一种返回值<br>  // 而never是真的没有，连空都没有，什么都没有</p>
+<p>  // 在JS里面有一些函数，它不返回结果，连undefined都不返回<br>  // 它是用来报错的<br>  // 当程序运行出错误了，需要报一个错，就可以用这种函数来完成报错<br>  throw new Error(‘报错了！’)<br>  // 这个函数一旦调用，它就会报错<br>  // 不过这种一般用的比较少<br>}</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* object（没啥用）</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;typescript</span><br><span class="line">    let obj: object &#x3D; &#123;&#125;;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; object表示一个JS对象</span><br><span class="line">    &#x2F;&#x2F; 但是它并不实用</span><br><span class="line">    &#x2F;&#x2F; 因为在JS里面对象实在是太多了</span><br><span class="line">    &#x2F;&#x2F; &quot;一切都是对象&quot;</span><br><span class="line">    &#x2F;&#x2F; 所以你只写了一个object等于没有给它添加任何限制</span><br><span class="line">    &#x2F;&#x2F; 其实我们在限制对象的时候，其实是在限制对象中包含哪些属性，而非限制它是否是一个对象</span><br><span class="line">    let a: object;</span><br><span class="line">    a &#x3D; &#123;&#125;;</span><br><span class="line">    a &#x3D; function () &#123; &#125;;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    let b: &#123;name:string&#125;;</span><br><span class="line">    &#x2F;&#x2F; 这样写也表示变量b存储的是一个对象,同时这个对象有一个name属性，类型为string</span><br><span class="line">    &#x2F;&#x2F; 但是这个和上面是有很大区别的，这个可以指定属性</span><br><span class="line">    &#x2F;&#x2F; &#123;&#125;可以用来指定对象中可以包含哪些属性</span><br><span class="line">    &#x2F;&#x2F; b &#x3D; &#123;&#125;</span><br><span class="line">    b &#x3D; &#123; name: &#39;孙悟空&#39; &#125;;</span><br><span class="line">    &#x2F;&#x2F; 这样写就会报错，它里面需要一个name属性</span><br><span class="line">    &#x2F;&#x2F; b &#x3D; &#123; name: &#39;孙悟空&#39;, age: 18 &#125;;</span><br><span class="line">    &#x2F;&#x2F; 这样写也不行，会报错，只能有定义好的name属性，不能有其他的属性</span><br><span class="line">    &#x2F;&#x2F; 要求结构必须一模一样，不能多，也不能少</span><br><span class="line">    </span><br><span class="line">    let c:&#123; name: string, age: number &#125;;</span><br><span class="line">    &#x2F;&#x2F; c &#x3D; &#123;name:&#39;猪八戒&#39;&#125;</span><br><span class="line">    &#x2F;&#x2F; 这样也不行，必须要有age</span><br><span class="line">    </span><br><span class="line">    let d: &#123; name: string, age?: number &#125;;</span><br><span class="line">    &#x2F;&#x2F; 如果在属性名后面加一个问号，则表示这个属性是可选的，你可以写，也可以不写</span><br><span class="line">    d &#x3D; &#123; name: &#39;沙悟净&#39; &#125;</span><br><span class="line">    &#x2F;&#x2F; 这样写才不会报错</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; let e: &#123; name: string &#125;</span><br><span class="line">    &#x2F;&#x2F; 要求必须要有name属性，其他属性不做要求，有没有都行</span><br><span class="line">    &#x2F;&#x2F; let e: &#123; name: string, a?: number, b?: number &#125;</span><br><span class="line">    &#x2F;&#x2F; 这样写也行，但是很麻烦，如果我还想加一个属性叫c呢？你能穷举出全部的属性吗？</span><br><span class="line">    &#x2F;&#x2F; e &#x3D; &#123;name:&#39;唐僧&#39;,a:1,b:2&#125;</span><br><span class="line">    let e: &#123; name: string, [propName: string]: any &#125;</span><br><span class="line">    e &#x3D; &#123;name:&#39;唐僧&#39;,a:1,b:2,age:18,sex:&#39;男&#39;&#125;</span><br><span class="line">    &#x2F;&#x2F; 这个表明首先必须有name属性，其他属性随便你，加不加都行</span><br><span class="line">    &#x2F;&#x2F; 中括号里面的propName是你随便写的，写什么都行，它就是一个变量名</span><br><span class="line">    &#x2F;&#x2F; :string表示我这个属性名的类型是字符串</span><br><span class="line">    &#x2F;&#x2F; JS里面的属性名实际上就是一个字符串</span><br><span class="line">    &#x2F;&#x2F; [propName: string]就表示只要是字符串的属性名，都可以</span><br><span class="line">    &#x2F;&#x2F; : any 表示任意类型</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    &#x2F;*</span><br><span class="line">     * 设置函数结构的类型声明</span><br><span class="line">     *    语法(形参：类型,形参：类型,...)&#x3D;&gt;&#123;返回值&#125;</span><br><span class="line">     * </span><br><span class="line">     * *&#x2F;</span><br><span class="line">    let f: (a: number, b: number) &#x3D;&gt; number;</span><br><span class="line">    &#x2F;&#x2F; 希望限制这个函数有几个参数，返回值是什么类型的</span><br><span class="line">    &#x2F;&#x2F; 表示希望f是一个函数，并且有2个参数，都是number类型的</span><br><span class="line">    &#x2F;&#x2F; 而且返回值也是number类型的</span><br><span class="line">    &#x2F;&#x2F; 注意，名字无所谓，叫a,b也行，叫c,d也行</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; d &#x3D; function (n1: number, n2: number):number &#123; </span><br><span class="line">    &#x2F;&#x2F; 你这里小括号后写不写:number都行了</span><br><span class="line">    d &#x3D; function (n1: number, n2: number) &#123; </span><br><span class="line">      return n1 + n2</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>array</p>
+<ul>
+<li><p>```typescript<br>let list: number[] = [1, 2, 3];<br>let list: Array<number> = [1, 2, 3];</number></p>
+<p>/*<br> *数组的类型声明：</p>
+<ul>
+<li>   方法1：类型[]</li>
+<li>   方法2：Array&lt;类型&gt;</li>
+<li>/<br>let g: string[];<br>// 在原生JS里面数组中什么类型的值都可以存<br>// 但是数组里面存了乱七八糟的类型的话，处理起来就比较麻烦了<br>// 所以一般在开发中，数组都是存相同类型的值<br>// g表示字符串数组，数组里面存的都是字符串<br>g = [‘a’, ‘b’, ‘c’];</li>
+</ul>
+<p>// 写法1：表示数值类型的数组<br>let h: number[];<br>h = [1, 2, 5, 6, 8];</p>
+<p>// 写法2：也表示数值类型的数组<br>let i: Array<number>;</number></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* tuple(元祖)</span><br><span class="line"></span><br><span class="line">  * &#96;&#96;&#96;typescript</span><br><span class="line">    let x: [string, number];</span><br><span class="line">    x &#x3D; [&quot;hello&quot;, 10]; </span><br><span class="line">    </span><br><span class="line">    &#x2F;**</span><br><span class="line">     * 元祖：元祖就是固定长度的数组</span><br><span class="line">     * (一般的数组长度是可变的，动态的)</span><br><span class="line">     * 元祖的存储效率会比较好一点，因为它的长度固定，变化的机会会比较少一点</span><br><span class="line">     * 语法：[类型,类型,类型,...]</span><br><span class="line">     * 元祖长度一般不会特别长，特别长的话就用数组了</span><br><span class="line">     *&#x2F;</span><br><span class="line">    </span><br><span class="line">    let j: [string, string]</span><br><span class="line">    &#x2F;&#x2F;  这个表示我定义了一个元祖，这个元祖里面有2个值，都是string类型</span><br><span class="line">    j &#x3D; [&#39;hello&#39;,&#39;world&#39;]</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>enum</p>
+<ul>
+<li><pre><code class="typescript">enum Color &#123;
+  Red,
+  Green,
+  Blue,
+&#125;
+let c: Color = Color.Green;
+
+enum Color &#123;
+  Red = 1,
+  Green,
+  Blue,
+&#125;
+let c: Color = Color.Green;
+
+enum Color &#123;
+  Red = 1,
+  Green = 2,
+  Blue = 4,
+&#125;
+let c: Color = Color.Green;
+
+/**
+ * enum 枚举
+ */
+// let k: &#123; name: string, gender: string &#125;;
+// let k: &#123; name: string, gender: number &#125;;
+enum Gender &#123; 
+  // 枚举的类型叫Gender，里面有2个值，Male，Female
+  // Male = 0,
+  // Female = 1
+  Male,
+  Female
+&#125;
+let k: &#123; name: string, gender:Gender &#125;;
+// let k: &#123; name: string, gender: 0|1 &#125;;
+// 你可以写成number,0是男，1是女，等等。
+// 但是我这个程序可能要交给别人用，他不会知道0是男还是1是男
+// 于是我们就用到枚举了
+// 枚举就是把我们所有的可能的情况都详细列出来
+k = &#123;
+  name: &#39;孙悟空&#39;,
+  // gender: 1
+  gender: Gender.Male
+  // 这样写也行，挺好的，我一看就知道它是男的
+  //&#39;male&#39;
+  //gender的值在一定范围之内：男，女，不详，保密 
+&#125;
+
+// console.log(k.gender === 1);
+console.log(k.gender === Gender.Male);
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 补充知识</span><br><span class="line"></span><br><span class="line">  * ~~~javascript</span><br><span class="line">    &#x2F;&#x2F; &amp;表示同时</span><br><span class="line">    let l: &#123; name: string &#125; &amp; &#123; age: number &#125;;</span><br><span class="line">    &#x2F;&#x2F; l既要有name属性，也要有age属性</span><br><span class="line">    l &#x3D; &#123; name: &#39;孙悟空&#39;, age: 18 &#125;</span><br><span class="line">    </span><br><span class="line">    &#x2F;&#x2F; 类型的别名</span><br><span class="line">    type myType &#x3D; string;</span><br><span class="line">    let o: myType</span><br><span class="line">    &#x2F;&#x2F; 给string起了一个类型别名叫myType</span><br><span class="line">    &#x2F;&#x2F; 现在myType和string就是等价的了</span><br><span class="line">    type youType &#x3D; 1 | 2 | 3 | 4 | 5;</span><br><span class="line">    let m: youType;</span><br><span class="line">    let n: youType;</span><br><span class="line">    ~~~</span><br><span class="line"></span><br><span class="line">* 类型断言</span><br><span class="line"></span><br><span class="line">  * 有些情况下，变量的类型对于我们来说是很明确，但是TS编译器却并不清楚，此时，可以通过类型断言来告诉编译器变量的类型，断言有两种形式：</span><br><span class="line"></span><br><span class="line">    * 第一种</span><br><span class="line"></span><br><span class="line">      * &#96;&#96;&#96;typescript</span><br><span class="line">        let someValue: unknown &#x3D; &quot;this is a string&quot;;</span><br><span class="line">        let strLength: number &#x3D; (someValue as string).length;</span><br></pre></td></tr></table></figure>
+* 第二种
+
+  * ```typescript
+    let someValue: unknown = &quot;this is a string&quot;;
+    let strLength: number = (&lt;string&gt;someValue).length;
+    ```
+
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="编译选项"><a href="#编译选项" class="headerlink" title="编译选项"></a>编译选项</h1>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/TypeScript/" rel="tag"># TypeScript</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/09/07/ES6%E5%85%A5%E9%97%A8/" rel="prev" title="ES6入门">
+      <i class="fa fa-chevron-left"></i> ES6入门
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/09/10/%E6%8F%90%E9%AB%98%E8%87%AA%E5%B7%B1%E7%9A%84%E4%BB%A3%E7%A0%81%E9%87%8F/" rel="next" title="提高自己的代码量">
+      提高自己的代码量 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TypeScript%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-text">TypeScript是什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TypeScript%E5%A2%9E%E5%8A%A0%E4%BA%86%E4%BB%80%E4%B9%88"><span class="nav-text">TypeScript增加了什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TypeScript-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-text">TypeScript 开发环境搭建</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B"><span class="nav-text">基本类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E9%80%89%E9%A1%B9"><span class="nav-text">编译选项</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="筛滤淘"
+      src="/images/cat.jpg">
+  <p class="site-author-name" itemprop="name">筛滤淘</p>
+  <div class="site-description" itemprop="description">前端知识点总结</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">129</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lm101845" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lm101845" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1018457683@qq.com" title="E-Mail → mailto:1018457683@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.jianshu.com/u/6879af8ace24" title="简 书 → https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;6879af8ace24" rel="noopener" target="_blank"><i class="fa fa-jianshu fa-fw"></i>简 书</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/9002959" title="B  站 → https:&#x2F;&#x2F;space.bilibili.com&#x2F;9002959" rel="noopener" target="_blank"><i class="fa fa-bilibili fa-fw"></i>B  站</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">筛滤淘</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">3.7m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">56:03</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

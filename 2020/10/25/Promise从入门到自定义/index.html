@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="(注1：网上看到有个视频，单独讲Promise的，时长7个小时，感觉很不错，Promise也值得单独好好的学习一下，需要深刻的了解一下到底什么是异步编程。)  (注2：视频链接：尚硅谷Promise教程(promise前端进阶必学)，看弹幕老师好像叫张晓飞)  (注3：听了2节课，发现老师讲的课程质量是真的好，一下子有种茅塞顿开的感觉，很不错的一套课程。)  第1章：准备工作 现在去中大型企业面试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Promise从入门到自定义">
+<meta property="og:url" content="http://example.com/2020/10/25/Promise%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E8%87%AA%E5%AE%9A%E4%B9%89/index.html">
+<meta property="og:site_name" content="木子小屋">
+<meta property="og:description" content="(注1：网上看到有个视频，单独讲Promise的，时长7个小时，感觉很不错，Promise也值得单独好好的学习一下，需要深刻的了解一下到底什么是异步编程。)  (注2：视频链接：尚硅谷Promise教程(promise前端进阶必学)，看弹幕老师好像叫张晓飞)  (注3：听了2节课，发现老师讲的课程质量是真的好，一下子有种茅塞顿开的感觉，很不错的一套课程。)  第1章：准备工作 现在去中大型企业面试">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2020/10/25/Promise%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E8%87%AA%E5%AE%9A%E4%B9%89/01.png">
+<meta property="og:image" content="http://example.com/2020/10/25/Promise%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E8%87%AA%E5%AE%9A%E4%B9%89/02.png">
+<meta property="article:published_time" content="2020-10-25T07:55:10.000Z">
+<meta property="article:modified_time" content="2020-10-25T07:55:10.000Z">
+<meta property="article:author" content="筛滤淘">
+<meta property="article:tag" content="Promise">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2020/10/25/Promise%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E8%87%AA%E5%AE%9A%E4%B9%89/01.png">
+
+<link rel="canonical" href="http://example.com/2020/10/25/Promise%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E8%87%AA%E5%AE%9A%E4%B9%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Promise从入门到自定义 | 木子小屋</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?79d7cb9c8fa9e57a2723fb8645f37638";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">木子小屋</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Talk is cheap. Show me the code.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/10/25/Promise%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E8%87%AA%E5%AE%9A%E4%B9%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cat.jpg">
+      <meta itemprop="name" content="筛滤淘">
+      <meta itemprop="description" content="前端知识点总结">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="木子小屋">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Promise从入门到自定义
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-10-25 15:55:10" itemprop="dateCreated datePublished" datetime="2020-10-25T15:55:10+08:00">2020-10-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF%E7%90%86%E8%AE%BA/" itemprop="url" rel="index"><span itemprop="name">前端理论</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>11k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>10 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>(注1：网上看到有个视频，单独讲Promise的，时长7个小时，感觉很不错，Promise也值得单独好好的学习一下，需要深刻的了解一下到底什么是异步编程。)</p>
+<p>(注2：视频链接：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1MJ41197Eu/?spm_id_from=333.788.videocard.8">尚硅谷Promise教程(promise前端进阶必学)</a>，看弹幕老师好像叫张晓飞)</p>
+<p>(注3：听了2节课，发现老师讲的课程质量是真的好，一下子有种茅塞顿开的感觉，很不错的一套课程。)</p>
+<h1 id="第1章：准备工作"><a href="#第1章：准备工作" class="headerlink" title="第1章：准备工作"></a>第1章：准备工作</h1><blockquote>
+<p>现在去中大型企业面试前端工程师，问的最多的问题之一就是手写自定义Promise。</p>
+<p>第1章准备工作表面上和学习promise关系不大，但是后面是会用到的。</p>
+</blockquote>
+<h2 id="区分实例对象与函数对象"><a href="#区分实例对象与函数对象" class="headerlink" title="区分实例对象与函数对象"></a>区分实例对象与函数对象</h2><ul>
+<li>实例对象：new函数产生的对象，称为实例对象，简称为对象</li>
+<li>函数对象：将函数作为对象使用时，简称为函数对象</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">  &lt;meta name=<span class="string">&quot;viewport&quot;</span> content=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br><span class="line">  &lt;meta http-equiv=<span class="string">&quot;X-UA-Compatible&quot;</span> content=<span class="string">&quot;ie=edge&quot;</span>&gt;</span><br><span class="line">  &lt;title&gt;01_准备_函数对象与实例对象&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">  &lt;script&gt;</span><br><span class="line">    <span class="comment">/* </span></span><br><span class="line"><span class="comment">    1. 函数对象与实例对象</span></span><br><span class="line"><span class="comment">      函数对象: 将函数作为对象使用时, 简称为函数对象</span></span><br><span class="line"><span class="comment">      实例对象: new 函数产生的对象, 简称为对象(实例对象)</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">Fn</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="comment">// 第一步我先定义了一个函数</span></span><br><span class="line">      <span class="comment">// 现在我还不能说它是一个构造函数</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> fn = <span class="keyword">new</span> Fn()</span><br><span class="line">    <span class="comment">// 再写个这个才能说Fn是构造函数,而fn是实例对象</span></span><br><span class="line">    <span class="comment">// 大写只是起一个暗示作用</span></span><br><span class="line">    <span class="comment">// 主要看你在调用执行这个函数的时候，函数左边有没有加new</span></span><br><span class="line"></span><br><span class="line">    <span class="built_in">console</span>.log(Fn.prototype);</span><br><span class="line">    <span class="comment">// 你怎么知道你在使用一个函数？？——你的括号()左边肯定是一个函数</span></span><br><span class="line">    <span class="comment">// 比如a()[0]()表示：首先a是一个函数，它的返回值是一个数组，数组的第一个参数还是函数</span></span><br><span class="line">    <span class="comment">// 我们要先看懂语法，其次再看懂功能。</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 括号的左边必然是函数，而点的左边必然是对象</span></span><br><span class="line">    <span class="comment">// 则此时Fn不是函数了，它现在的角色是一个对象(但它本身是一个函数)</span></span><br><span class="line">    <span class="comment">// 那Fn就称为函数对象</span></span><br><span class="line">    <span class="comment">// 我们知道函数本身就是一个对象，但是我们加括号的时候不能体现出它对象的特点，加点的时候才能体现它对象的特点。</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// function Person(params) &#123;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// const p = new Person()</span></span><br><span class="line">    <span class="comment">// p是Person的实例对象</span></span><br><span class="line"></span><br><span class="line">    Fn.bind(&#123;&#125;)     <span class="comment">//Fn是函数对象</span></span><br><span class="line">    <span class="comment">// 我们调用Fn函数对象的bind方法</span></span><br><span class="line">    <span class="comment">// 此时这里的Fn不是函数的角色，而是对象的角色了</span></span><br><span class="line">    <span class="comment">// 注意：只有函数对象才有bind方法！！！用于改变函数的this指向。</span></span><br><span class="line">    <span class="comment">// 实例对象(如fn)是没有bind方法的！！！！</span></span><br><span class="line">    <span class="comment">// 为什么所有的函数对象都有bind方法呢？说明它在Function的原型上。</span></span><br><span class="line">    <span class="comment">// 我们所有的函数都是Function的实例，实例就会找原型对象的方法</span></span><br><span class="line"></span><br><span class="line">    Fn.call(&#123;&#125;)     <span class="comment">//Fn是函数对象</span></span><br><span class="line">    <span class="comment">// 从语法上我们执行的是Fn这个函数对象的call方法</span></span><br><span class="line">    <span class="comment">// 但是从功能上来说最终它是会执行Fn这个函数的 </span></span><br><span class="line">    <span class="comment">// 而且指定this作为第一个参数的值</span></span><br><span class="line"></span><br><span class="line">    $(<span class="string">&#x27;#test&#x27;</span>)    <span class="comment">//jQuery函数</span></span><br><span class="line">    <span class="comment">// 这个是jQuery语法</span></span><br><span class="line">    <span class="comment">// 括号的左边是函数，点的左边是对象，所以$是函数</span></span><br><span class="line">    <span class="comment">// 说白了jQuery从语法上是一个函数</span></span><br><span class="line"></span><br><span class="line">    $.get(<span class="string">&#x27;./test&#x27;</span>)     <span class="comment">// jQuery函数对象</span></span><br><span class="line">    <span class="comment">// 这个是调用$(jQuery函数对象)的方法</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 综上：我既可以将函数作为函数使用，也可以将函数作为对象使用</span></span><br><span class="line">  &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="两种类型的回调函数"><a href="#两种类型的回调函数" class="headerlink" title="两种类型的回调函数"></a>两种类型的回调函数</h2><blockquote>
+<p>不是所有的回调函数都是异步的，有的是同步的(<code>forEach</code>)，有的是异步的(<code>setTimeout</code>)</p>
+</blockquote>
+<p>有3个条件同时满足才能算是回调函数：</p>
+<ul>
+<li>你定义的</li>
+<li>你没有调用</li>
+<li>但是最终执行了 </li>
+</ul>
+<h3 id="同步回调"><a href="#同步回调" class="headerlink" title="同步回调"></a>同步回调</h3><ul>
+<li><p>理解：立即执行，完全执行完了才结束，不会放入回调队列中</p>
+</li>
+<li><p>例子：数组遍历相关的回调函数/Promise的excutor函数</p>
+</li>
+</ul>
+<h3 id="异步回调"><a href="#异步回调" class="headerlink" title="异步回调"></a>异步回调</h3><ul>
+<li>理解：不会立即执行，会放入回调队列中将来执行</li>
+<li>例子：<code>setTimeout</code>函数</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">  &lt;meta name=<span class="string">&quot;viewport&quot;</span> content=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br><span class="line">  &lt;meta http-equiv=<span class="string">&quot;X-UA-Compatible&quot;</span> content=<span class="string">&quot;ie=edge&quot;</span>&gt;</span><br><span class="line">  &lt;title&gt;02_准备_回调函数的分类&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;script&gt;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    1). 同步回调:</span></span><br><span class="line"><span class="comment">      理解: 立即执行, 完全执行完了才结束, 不会放入回调队列中</span></span><br><span class="line"><span class="comment">      例子: 数组遍历相关的回调函数 / Promise的excutor函数</span></span><br><span class="line"><span class="comment">    2). 异步回调:</span></span><br><span class="line"><span class="comment">      理解: 不会立即执行, 会放入回调队列中将来执行</span></span><br><span class="line"><span class="comment">      例子: 定时器回调 / ajax回调 / Promise的成功|失败的回调</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//  1.同步回调函数</span></span><br><span class="line">    <span class="comment">// const arr = [1, 3, 5]</span></span><br><span class="line">    <span class="comment">// arr.forEach(item =&gt; &#123;</span></span><br><span class="line">    <span class="comment">//  同步回调函数，不会放入队列执行，一上来就要执行完 </span></span><br><span class="line">    <span class="comment">//   // 遍历的回调函数：每取出一个元素就调用一次</span></span><br><span class="line">    <span class="comment">//   console.log(item);</span></span><br><span class="line">    <span class="comment">//   // 先执行这个</span></span><br><span class="line">    <span class="comment">//   // 这个foreach内部是要把里面所有的元素都编译并且调用这个回调函数，才开始后面的代码</span></span><br><span class="line">    <span class="comment">//   // 所以这个函数是同步回调函数</span></span><br><span class="line">    <span class="comment">// &#125;)</span></span><br><span class="line">    <span class="comment">// console.log(&#x27;forEach()之后&#x27;);</span></span><br><span class="line">    <span class="comment">// 再执行这个</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//  2. 异步回调函数</span></span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&#x27;timeout callback&#x27;</span>);</span><br><span class="line">      <span class="comment">// 这个后面才执行</span></span><br><span class="line">      <span class="comment">// 异步回调函数会放入队列中将来执行</span></span><br><span class="line">    &#125;, <span class="number">0</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;setTimeout()之后&#x27;</span>);</span><br><span class="line">    <span class="comment">// 这个时候下面的先执行</span></span><br><span class="line">  &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="JS的错误处理"><a href="#JS的错误处理" class="headerlink" title="JS的错误处理"></a>JS的错误处理</h2><p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a></p>
+<h3 id="错误的类型"><a href="#错误的类型" class="headerlink" title="错误的类型"></a>错误的类型</h3><ul>
+<li>Error：所有错误的父类型</li>
+<li>ReferenceError：引用的变量不存在</li>
+<li>TypeError：数据类型不正确的错误</li>
+<li>RangeError：数据值不在其所允许的范围内</li>
+<li>SyntaxError：语法错误</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">  &lt;meta name=<span class="string">&quot;viewport&quot;</span> content=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br><span class="line">  &lt;meta http-equiv=<span class="string">&quot;X-UA-Compatible&quot;</span> content=<span class="string">&quot;ie=edge&quot;</span>&gt;</span><br><span class="line">  &lt;title&gt;JS的error处理&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">  &lt;script&gt;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    目标: 进一步理解JS中的错误(Error)和错误处理</span></span><br><span class="line"><span class="comment">      1. 错误的类型</span></span><br><span class="line"><span class="comment">          Error: 所有错误的父类型</span></span><br><span class="line"><span class="comment">          ReferenceError: 引用的变量不存在</span></span><br><span class="line"><span class="comment">          TypeError: 数据类型不正确的错误</span></span><br><span class="line"><span class="comment">          RangeError: 数据值不在其所允许的范围内</span></span><br><span class="line"><span class="comment">          SyntaxError: 语法错误</span></span><br><span class="line"><span class="comment">      2. 错误处理</span></span><br><span class="line"><span class="comment">          捕获错误: try ... catch</span></span><br><span class="line"><span class="comment">          抛出错误: throw error</span></span><br><span class="line"><span class="comment">      3. 错误对象</span></span><br><span class="line"><span class="comment">          message属性: 错误相关信息</span></span><br><span class="line"><span class="comment">          stack属性: 函数调用栈记录信息</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 1.常见的内置错误</span></span><br><span class="line">    <span class="comment">//  1) ReferenceError: 引用的变量不存在</span></span><br><span class="line">    <span class="comment">// console.log(a);</span></span><br><span class="line">    <span class="comment">//Uncaught ReferenceError: a is not defined</span></span><br><span class="line">    <span class="comment">// Uncaught表示没有被处理，下面的输出-----不会被执行</span></span><br><span class="line">    <span class="comment">// 没有捕获error,下面的代码不会执行</span></span><br><span class="line">    <span class="comment">// console.log(&#x27;------&#x27;);</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2)TypeError: 数据类型不正确的错误</span></span><br><span class="line">    <span class="comment">// let b = null</span></span><br><span class="line">    <span class="comment">// console.log(b.xxx);</span></span><br><span class="line">    <span class="comment">// null是没有属性的</span></span><br><span class="line">    <span class="comment">// Uncaught TypeError: Cannot read property &#x27;xxx&#x27; of null</span></span><br><span class="line">    <span class="comment">// 意思说你想要读取属性，你得是个对象</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// let c = &#123;&#125;</span></span><br><span class="line">    <span class="comment">// c.xxx()</span></span><br><span class="line">    <span class="comment">//Uncaught TypeError: c.xxx is not a function</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 3)RangeError: 数据值不在其所允许的范围内</span></span><br><span class="line">    <span class="comment">// function fn() &#123;</span></span><br><span class="line">    <span class="comment">//   fn()</span></span><br><span class="line">    <span class="comment">//   // 函数内部调用自己——递归调用</span></span><br><span class="line">    <span class="comment">//   // 正常的递归调用是有一定的限制的</span></span><br><span class="line">    <span class="comment">//   // 你这样调就是个死循环</span></span><br><span class="line">    <span class="comment">// &#125;</span></span><br><span class="line">    <span class="comment">// fn()</span></span><br><span class="line">    <span class="comment">//Uncaught RangeError: Maximum call stack size exceeded</span></span><br><span class="line">    <span class="comment">// 函数里面调函数，嵌套层级是有一定的限制的(你只能调用多少次)</span></span><br><span class="line">    <span class="comment">// 因为你是死循环，无限次调用，所以就超出了这一限制</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 4)SyntaxError: 语法错误</span></span><br><span class="line">    <span class="comment">// const c = &quot;&quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment">// Uncaught SyntaxError: Unexpected string</span></span><br><span class="line">  &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h3><blockquote>
+<p>你写代码肯定会遇到错误的，遇到错误如果不进行处理的话，程序就会卡在这里，没有办法继续往下执行。</p>
+<p>讲的好啊！！我以前对抛出异常这块不太理解，现在算是彻彻底底的懂了，这老师讲的是真的好。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">  &lt;meta name=<span class="string">&quot;viewport&quot;</span> content=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br><span class="line">  &lt;meta http-equiv=<span class="string">&quot;X-UA-Compatible&quot;</span> content=<span class="string">&quot;ie=edge&quot;</span>&gt;</span><br><span class="line">  &lt;title&gt;JS的error处理&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line"></span><br><span class="line">  &lt;script&gt;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    目标: 进一步理解JS中的错误(Error)和错误处理</span></span><br><span class="line"><span class="comment">      mdn文档: https: //developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Error</span></span><br><span class="line"><span class="comment">  </span></span><br><span class="line"><span class="comment">      1. 错误的类型</span></span><br><span class="line"><span class="comment">          Error: 所有错误的父类型</span></span><br><span class="line"><span class="comment">          ReferenceError: 引用的变量不存在</span></span><br><span class="line"><span class="comment">          TypeError: 数据类型不正确的错误</span></span><br><span class="line"><span class="comment">          RangeError: 数据值不在其所允许的范围内</span></span><br><span class="line"><span class="comment">          SyntaxError: 语法错误</span></span><br><span class="line"><span class="comment">      2. 错误处理</span></span><br><span class="line"><span class="comment">          捕获错误: try ... catch</span></span><br><span class="line"><span class="comment">          抛出错误: throw error</span></span><br><span class="line"><span class="comment">      3. 错误对象</span></span><br><span class="line"><span class="comment">          message属性: 错误相关信息</span></span><br><span class="line"><span class="comment">          stack属性: 函数调用栈记录信息</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2.错误处理</span></span><br><span class="line">    <span class="comment">// 2.1捕获错误(系统自己抛出错误)：try...catch</span></span><br><span class="line">    <span class="comment">// 把有可能出问题的代码塞在这个try...catch中的try里面</span></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">let</span> d</span><br><span class="line">      <span class="built_in">console</span>.log(d.xxx);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">      <span class="comment">//具体catch到什么error我不用管，我就写个名字</span></span><br><span class="line">      <span class="comment">// 在JS里面也不用声明类型，可以这样写</span></span><br><span class="line">      <span class="comment">// console.log(error);</span></span><br><span class="line">      <span class="comment">// 这里error是一个对象(里面有一些属性)</span></span><br><span class="line">      <span class="comment">// TypeError: Cannot read property &#x27;xxx&#x27; of undefined</span></span><br><span class="line"></span><br><span class="line">      <span class="built_in">console</span>.log(error.message);</span><br><span class="line">      <span class="built_in">console</span>.log(error.stack);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;出错后还可以继续往下执行&#x27;</span>);</span><br><span class="line">    <span class="comment">// 因为错误已经被捕获处理了，所以出错后还可以继续往下执行</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2.2抛出错误: throw error</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">something</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="comment">// 我想做一件事情：</span></span><br><span class="line">      <span class="comment">// 如果当前时间是奇数，这个函数继续执行</span></span><br><span class="line">      <span class="comment">// 如果当前时间是偶数，则这个函数就停下来，不能做了</span></span><br><span class="line">      <span class="comment">// 但是不能做了需要外部进行一个提示，我自己不知道怎么提示</span></span><br><span class="line">      <span class="keyword">if</span> (<span class="built_in">Date</span>.now() % <span class="number">2</span> == <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;当前时间为奇数，可以继续执行任务&#x27;</span>)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// 时间为偶数，我处理不了，由调用者来处理</span></span><br><span class="line">        <span class="comment">// 如果我内部可以决定怎么提示的话，就没有必要抛出异常了</span></span><br><span class="line">        <span class="comment">// 但是我处理不了，怎么提示我不知道，得由外部调用者来去决定</span></span><br><span class="line">        <span class="comment">// 你是打印输出，还是alert，还是弹个框，你自己来决定</span></span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;当前时间为偶数，无法执行任务&#x27;</span>)</span><br><span class="line">        <span class="comment">// 我们在抛出异常的时候，一般都用Error笼统的类型，而不用ReferenceError等具体的类型</span></span><br><span class="line"></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      something()</span><br><span class="line">      <span class="comment">// 这个执行调用函数内部有可能抛出异常(时间为偶数时)</span></span><br><span class="line">      <span class="comment">// 所以我要捕获处理异常,要把这个可能出错的函数放到try...catch里</span></span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">      <span class="comment">// 这个参数error随便叫什么都行</span></span><br><span class="line">      alert(error.message)</span><br><span class="line">      <span class="comment">// 我可以选择打印输出，还可以选择alert等</span></span><br><span class="line">    &#125;</span><br><span class="line">  &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<img data-src="/2020/10/25/Promise%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E8%87%AA%E5%AE%9A%E4%B9%89/01.png" class>
+
+<h1 id="第2章：Pormise的理解和使用"><a href="#第2章：Pormise的理解和使用" class="headerlink" title="第2章：Pormise的理解和使用"></a>第2章：Pormise的理解和使用</h1><h2 id="Promise是什么-what"><a href="#Promise是什么-what" class="headerlink" title="Promise是什么(what)"></a>Promise是什么(what)</h2><h3 id="理解"><a href="#理解" class="headerlink" title="理解"></a>理解</h3><ul>
+<li>抽象表达<ul>
+<li>Promise是JS中进行异步编程的新的解决方案（旧的是谁？——纯回调形式[Promise里面也有回调形式]）</li>
+</ul>
+</li>
+<li>具体表达<ul>
+<li>从语法上来说：Promise是一个构造函数(将来可以创建它的实例，一旦是构造函数了，肯定是它的实例去做什么事情。而一般的函数，那就是具体的那个函数去做什么事情了。)</li>
+<li>从功能上来说：<strong>promise对象</strong>用来封装一个异步操作<strong>并</strong>可以获取其结果</li>
+</ul>
+</li>
+</ul>
+<h3 id="Promise的状态改变"><a href="#Promise的状态改变" class="headerlink" title="Promise的状态改变"></a>Promise的状态改变</h3><p><a target="_blank" rel="noopener" href="https://juejin.im/post/6844904063570542599">这一次，彻底弄懂 Promise 原理</a></p>
+<ul>
+<li>pending变为resolved</li>
+<li>pending变为rejected</li>
+</ul>
+<p>说明：resolve和reject是函数名，resolved和rejected是状态名，而且状态改变只有这2种，且一个promise对象<strong>只能改变一次状态</strong>，无论变为成功还是失败，都会有一个结果数据。成功的结果数据一般称为vlaue，失败的结果数据一般称为reason。</p>
+<h3 id="Promise的基本流程"><a href="#Promise的基本流程" class="headerlink" title="Promise的基本流程"></a>Promise的基本流程</h3><img data-src="/2020/10/25/Promise%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E8%87%AA%E5%AE%9A%E4%B9%89/02.png" class>
+
+<h3 id="Promise的基本使用"><a href="#Promise的基本使用" class="headerlink" title="Promise的基本使用"></a>Promise的基本使用</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">    &lt;meta name=<span class="string">&quot;viewport&quot;</span> content=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br><span class="line">    &lt;title&gt;<span class="built_in">Promise</span>的基本使用&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        <span class="comment">// 1. 创建一个新的Promise对象</span></span><br><span class="line">        <span class="keyword">const</span> p = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">         	 <span class="comment">// 执行器函数，同步回调</span></span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&#x27;执行 excutor&#x27;</span>);</span><br><span class="line">            <span class="comment">// 写变量时尽量先用const，后面发现有改变的话再改成let</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">// 这个回调函数传入的2个参数起的名字一般很固定：resolve和reject</span></span><br><span class="line">            <span class="comment">// 它们2个都是函数类型</span></span><br><span class="line">            <span class="comment">// 这个函数有一个统一的称谓，叫执行器函数：用来执行异步操作</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">// 2.执行异步操作任务(有可能成功，有可能失败)</span></span><br><span class="line">            <span class="comment">// 使用setTimeout来模拟异步任务</span></span><br><span class="line">            <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">const</span> time = <span class="built_in">Date</span>.now()</span><br><span class="line">                <span class="comment">// 设置：如果当前时间为偶数就代表成功，否则代表失败</span></span><br><span class="line"></span><br><span class="line">                <span class="comment">// 3.1如果成功了，调用resolve(value)函数</span></span><br><span class="line">                <span class="keyword">if</span> (time % <span class="number">2</span> == <span class="number">0</span>) &#123;</span><br><span class="line">                    resolve(<span class="string">&#x27;成功的数据,time=&#x27;</span> + time)</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="comment">// 3.2如果失败了，调用reject(reason)函数 </span></span><br><span class="line">                    reject(<span class="string">&#x27;失败的数据,time=&#x27;</span> + time)</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;, <span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line">        &#125;)</span><br><span class="line">				<span class="built_in">console</span>.log(<span class="string">&#x27;new Promise()之后&#x27;</span>);</span><br><span class="line">        p.then(</span><br><span class="line">            <span class="comment">// 不是我主动去取数据，而是它交给我</span></span><br><span class="line">            value =&gt; &#123;</span><br><span class="line">                <span class="comment">// 接收得到成功的value数据  onResolved</span></span><br><span class="line">                <span class="comment">// 英文on:当什么什么的时候</span></span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">&#x27;这是成功的回调&#x27;</span>, value);</span><br><span class="line">            &#125;,</span><br><span class="line">            reason =&gt; &#123;</span><br><span class="line">                <span class="comment">// 接收得到失败的reason数据 onRejected</span></span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">&#x27;这是失败的回调&#x27;</span>, reason);</span><br><span class="line">            &#125;</span><br><span class="line">        )</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="为什么要用Promise-why"><a href="#为什么要用Promise-why" class="headerlink" title="为什么要用Promise(why)"></a>为什么要用Promise(why)</h2><blockquote>
+<p>这节课没怎么听懂。</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000009391074">关于js的回调、同步回调、异步回调</a></p>
+<h3 id="指定回调函数的方式更加灵活"><a href="#指定回调函数的方式更加灵活" class="headerlink" title="指定回调函数的方式更加灵活"></a>指定回调函数的方式更加灵活</h3><ul>
+<li>旧的：必须在启动异步任务前指定</li>
+<li>promise：启动异步任务=&gt;返回promie对象=&gt;给promise对象绑定回调函<br>数（甚至可以在异步任务结束后指定/多个）</li>
+</ul>
+<h3 id="支持链式调用，可以解决回调地狱问题"><a href="#支持链式调用，可以解决回调地狱问题" class="headerlink" title="支持链式调用，可以解决回调地狱问题"></a>支持链式调用，可以解决回调地狱问题</h3><ul>
+<li>什么是回调地狱？<ul>
+<li>回调函数嵌套调用，外部回调函数异步执行的结果是嵌套的回调执行的条件</li>
+</ul>
+</li>
+<li>回调地狱的缺点？<ul>
+<li>不便于阅读，不便于异常处理</li>
+</ul>
+</li>
+<li>解决方案？<ul>
+<li>promise链式调用</li>
+</ul>
+</li>
+<li>终极解决方案？<ul>
+<li>async/await</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment">    1. 指定回调函数的方式更加灵活: </span></span><br><span class="line"><span class="comment">      旧的: 必须在启动异步任务前指定</span></span><br><span class="line"><span class="comment">      promise: 启动异步任务 =&gt; 返回promie对象 =&gt; 给promise对象绑定回调函数(甚至可以在异步任务结束后指定)</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">const</span> p = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;执行 executor同步函数&#x27;</span>) </span><br><span class="line">    <span class="keyword">let</span> time = <span class="built_in">Date</span>.now();</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (time % <span class="number">2</span> === <span class="number">0</span>) &#123;</span><br><span class="line">            resolve(time)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            reject(time)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;, <span class="number">1000</span>)</span><br><span class="line"></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    p.then(<span class="function"><span class="params">value</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;value&#x27;</span>, value)</span><br><span class="line">    &#125;, <span class="function"><span class="params">reason</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;reason&#x27;</span>, reason)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;, <span class="number">3000</span>)</span><br><span class="line"><span class="comment">/* 2. 支持链式调用, 可以解决回调地狱问题</span></span><br><span class="line"><span class="comment">    什么是回调地狱? 回调函数嵌套调用, 外部回调函数异步执行的结果是嵌套的回调函数执行的条件</span></span><br><span class="line"><span class="comment">    回调地狱的缺点?  不便于阅读 / 不便于异常处理</span></span><br><span class="line"><span class="comment">    解决方案? promise链式调用</span></span><br><span class="line"><span class="comment">    终极解决方案? async/await</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//1、查出当前用户信息</span></span><br><span class="line"><span class="comment">//2、按照当前用户的id查出他的课程</span></span><br><span class="line"><span class="comment">//3、按照当前课程id查出分数</span></span><br><span class="line"><span class="comment">// 回调地狱：</span></span><br><span class="line">$.ajax(&#123;</span><br><span class="line">    url: <span class="string">&quot;./mock/user.json&quot;</span>,</span><br><span class="line">    <span class="function"><span class="title">success</span>(<span class="params">data</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;查询用户：&quot;</span>, data);</span><br><span class="line">        $.ajax(&#123;</span><br><span class="line">            url: <span class="string">`./mock/user_corse_<span class="subst">$&#123;data.id&#125;</span>.json`</span>,</span><br><span class="line">            <span class="function"><span class="title">success</span>(<span class="params">data</span>)</span> &#123;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">&quot;查询到课程：&quot;</span>, data);</span><br><span class="line">                $.ajax(&#123;</span><br><span class="line">                    url: <span class="string">`./mock/corse_score_<span class="subst">$&#123;data.id&#125;</span>.json`</span>,</span><br><span class="line">                    <span class="function"><span class="title">success</span>(<span class="params">data</span>)</span> &#123;</span><br><span class="line">                        <span class="built_in">console</span>.log(<span class="string">&quot;查询到分数：&quot;</span>, data);</span><br><span class="line">                    &#125;,</span><br><span class="line">                    <span class="function"><span class="title">error</span>(<span class="params">error</span>)</span> &#123;</span><br><span class="line">                        <span class="built_in">console</span>.log(<span class="string">&quot;出现异常了：&quot;</span> + error);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="function"><span class="title">error</span>(<span class="params">error</span>)</span> &#123;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">&quot;出现异常了：&quot;</span> + error);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">error</span>(<span class="params">error</span>)</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;出现异常了：&quot;</span> + error);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// promise调用方式</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">get</span>(<span class="params">url, data</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        $.ajax(&#123;</span><br><span class="line">            url: url,</span><br><span class="line">            data: data,</span><br><span class="line">            success: <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span><br><span class="line">                resolve(data);</span><br><span class="line">            &#125;,</span><br><span class="line">            error: <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">                reject(err)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//调用封装后的方法</span></span><br><span class="line">get(<span class="string">&quot;./mock/user.json&quot;</span>)</span><br><span class="line">    .then(<span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;用户查询成功~~~:&quot;</span>, data)</span><br><span class="line">        <span class="keyword">return</span> get(<span class="string">`./mock/user_corse_<span class="subst">$&#123;data.id&#125;</span>.json`</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;课程查询成功~~~:&quot;</span>, data)</span><br><span class="line">        <span class="keyword">return</span> get(<span class="string">`./mock/corse_score_<span class="subst">$&#123;data.id&#125;</span>.json`</span>);</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function">(<span class="params">data</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;课程成绩查询成功~~~:&quot;</span>, data)</span><br><span class="line">    &#125;)</span><br><span class="line">    .catch(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&quot;出现异常&quot;</span>, err)</span><br><span class="line">    &#125;);</span><br><span class="line"><span class="comment">// Promise操作明显更加符合我们人类的习惯，类似于流水线式的操作,对于异常的处理更加友好</span></span><br></pre></td></tr></table></figure>
+<h2 id="如何使用Promise-how"><a href="#如何使用Promise-how" class="headerlink" title="如何使用Promise(how)"></a>如何使用Promise(how)</h2><h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><ul>
+<li>Promise构造函数：<code>Promise（excutor）&#123;&#125;</code></li>
+<li></li>
+</ul>
+<h1 id="第3章：自定义-手写-Promise"><a href="#第3章：自定义-手写-Promise" class="headerlink" title="第3章：自定义(手写)Promise"></a>第3章：自定义(手写)Promise</h1><h1 id="第4章：async与await"><a href="#第4章：async与await" class="headerlink" title="第4章：async与await"></a>第4章：async与await</h1><h1 id="第5章：JS异步之宏队列与微队列"><a href="#第5章：JS异步之宏队列与微队列" class="headerlink" title="第5章：JS异步之宏队列与微队列"></a>第5章：JS异步之宏队列与微队列</h1><h1 id="第6章：Promise相关面试题"><a href="#第6章：Promise相关面试题" class="headerlink" title="第6章：Promise相关面试题"></a>第6章：Promise相关面试题</h1>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Promise/" rel="tag"># Promise</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/10/25/%E6%B5%8F%E8%A7%88%E5%99%A8%E6%B8%B2%E6%9F%93%E5%8E%9F%E7%90%86/" rel="prev" title="浏览器渲染原理">
+      <i class="fa fa-chevron-left"></i> 浏览器渲染原理
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/10/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A101%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/" rel="next" title="读书笔记：JavaScript高级程序设计01(第4版)">
+      读书笔记：JavaScript高级程序设计01(第4版) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC1%E7%AB%A0%EF%BC%9A%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-text">第1章：准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%BA%E5%88%86%E5%AE%9E%E4%BE%8B%E5%AF%B9%E8%B1%A1%E4%B8%8E%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1"><span class="nav-text">区分实例对象与函数对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A4%E7%A7%8D%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0"><span class="nav-text">两种类型的回调函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E5%9B%9E%E8%B0%83"><span class="nav-text">同步回调</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5%E5%9B%9E%E8%B0%83"><span class="nav-text">异步回调</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JS%E7%9A%84%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="nav-text">JS的错误处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="nav-text">错误的类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="nav-text">错误处理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC2%E7%AB%A0%EF%BC%9APormise%E7%9A%84%E7%90%86%E8%A7%A3%E5%92%8C%E4%BD%BF%E7%94%A8"><span class="nav-text">第2章：Pormise的理解和使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Promise%E6%98%AF%E4%BB%80%E4%B9%88-what"><span class="nav-text">Promise是什么(what)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%90%86%E8%A7%A3"><span class="nav-text">理解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Promise%E7%9A%84%E7%8A%B6%E6%80%81%E6%94%B9%E5%8F%98"><span class="nav-text">Promise的状态改变</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Promise%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%B5%81%E7%A8%8B"><span class="nav-text">Promise的基本流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Promise%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-text">Promise的基本使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8Promise-why"><span class="nav-text">为什么要用Promise(why)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E5%AE%9A%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0%E7%9A%84%E6%96%B9%E5%BC%8F%E6%9B%B4%E5%8A%A0%E7%81%B5%E6%B4%BB"><span class="nav-text">指定回调函数的方式更加灵活</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%AF%E6%8C%81%E9%93%BE%E5%BC%8F%E8%B0%83%E7%94%A8%EF%BC%8C%E5%8F%AF%E4%BB%A5%E8%A7%A3%E5%86%B3%E5%9B%9E%E8%B0%83%E5%9C%B0%E7%8B%B1%E9%97%AE%E9%A2%98"><span class="nav-text">支持链式调用，可以解决回调地狱问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Promise-how"><span class="nav-text">如何使用Promise(how)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#API"><span class="nav-text">API</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC3%E7%AB%A0%EF%BC%9A%E8%87%AA%E5%AE%9A%E4%B9%89-%E6%89%8B%E5%86%99-Promise"><span class="nav-text">第3章：自定义(手写)Promise</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC4%E7%AB%A0%EF%BC%9Aasync%E4%B8%8Eawait"><span class="nav-text">第4章：async与await</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC5%E7%AB%A0%EF%BC%9AJS%E5%BC%82%E6%AD%A5%E4%B9%8B%E5%AE%8F%E9%98%9F%E5%88%97%E4%B8%8E%E5%BE%AE%E9%98%9F%E5%88%97"><span class="nav-text">第5章：JS异步之宏队列与微队列</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC6%E7%AB%A0%EF%BC%9APromise%E7%9B%B8%E5%85%B3%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="nav-text">第6章：Promise相关面试题</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="筛滤淘"
+      src="/images/cat.jpg">
+  <p class="site-author-name" itemprop="name">筛滤淘</p>
+  <div class="site-description" itemprop="description">前端知识点总结</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">129</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lm101845" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lm101845" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1018457683@qq.com" title="E-Mail → mailto:1018457683@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.jianshu.com/u/6879af8ace24" title="简 书 → https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;6879af8ace24" rel="noopener" target="_blank"><i class="fa fa-jianshu fa-fw"></i>简 书</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/9002959" title="B  站 → https:&#x2F;&#x2F;space.bilibili.com&#x2F;9002959" rel="noopener" target="_blank"><i class="fa fa-bilibili fa-fw"></i>B  站</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">筛滤淘</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">3.7m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">56:03</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

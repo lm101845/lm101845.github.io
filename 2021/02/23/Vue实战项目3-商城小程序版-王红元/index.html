@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="(注1：现在是2021年2月24日，这个项目内容和我之前做的Vue商城项目完全一样，只不过这次是用小程序来写的，感觉用小程序写简单很多，很多功能，比如轮播图什么的，小程序都内置了组件，直接拿来用就可以了。之前的那个Vue项目我用了1个多月才看完视频，写完代码，这个小程序项目我2天就可以看完视频写完代码了。)  (注2：现在是2021年2月25日，视频已经看完了，但是项目并没有完成。因为老师视频里只">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue实战项目3:商城小程序版(王红元)">
+<meta property="og:url" content="http://example.com/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/index.html">
+<meta property="og:site_name" content="木子小屋">
+<meta property="og:description" content="(注1：现在是2021年2月24日，这个项目内容和我之前做的Vue商城项目完全一样，只不过这次是用小程序来写的，感觉用小程序写简单很多，很多功能，比如轮播图什么的，小程序都内置了组件，直接拿来用就可以了。之前的那个Vue项目我用了1个多月才看完视频，写完代码，这个小程序项目我2天就可以看完视频写完代码了。)  (注2：现在是2021年2月25日，视频已经看完了，但是项目并没有完成。因为老师视频里只">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/01.png">
+<meta property="og:image" content="http://example.com/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/05.png">
+<meta property="og:image" content="http://example.com/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/02.png">
+<meta property="og:image" content="http://example.com/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/03.png">
+<meta property="og:image" content="http://example.com/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/04.png">
+<meta property="og:image" content="http://example.com/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/06.png">
+<meta property="og:image" content="http://example.com/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/07.png">
+<meta property="og:image" content="http://example.com/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/08.png">
+<meta property="og:image" content="http://example.com/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/09.png">
+<meta property="og:image" content="http://example.com/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/10.png">
+<meta property="og:image" content="http://example.com/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/11.png">
+<meta property="og:image" content="http://example.com/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/12.png">
+<meta property="og:image" content="http://example.com/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/13.png">
+<meta property="og:image" content="http://example.com/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/14.png">
+<meta property="og:image" content="http://example.com/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/15.png">
+<meta property="og:image" content="http://example.com/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/16.png">
+<meta property="og:image" content="http://example.com/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/17.png">
+<meta property="og:image" content="http://example.com/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/18.png">
+<meta property="og:image" content="http://example.com/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/19.png">
+<meta property="og:image" content="http://example.com/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/20.png">
+<meta property="og:image" content="http://example.com/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/21.png">
+<meta property="og:image" content="http://example.com/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/22.png">
+<meta property="og:image" content="http://example.com/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/23.png">
+<meta property="og:image" content="http://example.com/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/24.png">
+<meta property="og:image" content="http://example.com/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/25.png">
+<meta property="og:image" content="http://example.com/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/26.png">
+<meta property="og:image" content="http://example.com/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/27.png">
+<meta property="og:image" content="http://example.com/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/28.png">
+<meta property="og:image" content="http://example.com/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/29.png">
+<meta property="og:image" content="http://example.com/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/30.png">
+<meta property="og:image" content="http://example.com/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/31.png">
+<meta property="og:image" content="http://example.com/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/32.png">
+<meta property="article:published_time" content="2021-02-23T15:50:45.000Z">
+<meta property="article:modified_time" content="2021-02-23T15:50:45.000Z">
+<meta property="article:author" content="筛滤淘">
+<meta property="article:tag" content="项目作品">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/01.png">
+
+<link rel="canonical" href="http://example.com/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Vue实战项目3:商城小程序版(王红元) | 木子小屋</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?79d7cb9c8fa9e57a2723fb8645f37638";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">木子小屋</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Talk is cheap. Show me the code.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cat.jpg">
+      <meta itemprop="name" content="筛滤淘">
+      <meta itemprop="description" content="前端知识点总结">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="木子小屋">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vue实战项目3:商城小程序版(王红元)
+        </h1>
+
+        <div class="post-meta">
+          
+            <i class="fa fa-thumb-tack"></i>
+            <font color="green">置顶</font>
+            <span class="post-meta-divider">|</span>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-02-23 23:50:45" itemprop="dateCreated datePublished" datetime="2021-02-23T23:50:45+08:00">2021-02-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%A1%B9%E7%9B%AE%E4%BD%9C%E5%93%81/" itemprop="url" rel="index"><span itemprop="name">项目作品</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>(注1：现在是2021年2月24日，这个项目内容和我之前做的Vue商城项目完全一样，只不过这次是用小程序来写的，感觉用小程序写简单很多，很多功能，比如轮播图什么的，小程序都内置了组件，直接拿来用就可以了。之前的那个Vue项目我用了1个多月才看完视频，写完代码，这个小程序项目我2天就可以看完视频写完代码了。)</p>
+<p>(注2：现在是2021年2月25日，视频已经看完了，但是项目并没有完成。因为老师视频里只讲了首页，其他的<code>分类</code>、<code>购物车</code>、<code>我的</code>都没有讲了，我现在也暂时没有时间去写剩下的项目了，等我有时间的话再来写吧。怪不得就用2天就”写完”这个项目了，因为老师就讲了这一点啊，哈哈。)</p>
+<h1 id="项目的结构"><a href="#项目的结构" class="headerlink" title="项目的结构"></a>项目的结构</h1><h2 id="目录的结构"><a href="#目录的结构" class="headerlink" title="目录的结构"></a>目录的结构</h2><ul>
+<li><p>小程序基本的结构，如<code>pages</code>文件夹，<code>app.js</code>，<code>app.json</code>，<code>app.wxss</code>，<code>project.config.json</code>，<code>sitemap.json</code>这些文件。</p>
+</li>
+<li><p><code>components</code>文件夹放公共组件</p>
+</li>
+<li><p><code>assets</code>文件夹放一些资源</p>
+</li>
+<li><p><code>service</code>文件夹放一些网络请求相关的东西</p>
+</li>
+<li><p><code>utils</code>文件夹放一些工具相关的东西</p>
+<img data-src="/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/01.png" class>
+
+</li>
+</ul>
+<h2 id="划分项目的页面结构"><a href="#划分项目的页面结构" class="headerlink" title="划分项目的页面结构"></a>划分项目的页面结构</h2><ul>
+<li><p>底部主要有4个tabBar,分别是<code>首页</code>、<code>分类</code>、<code>购物车</code>、<code>我的</code>。</p>
+</li>
+<li><p>我们在<code>app.json</code>中使用<code>tabBar</code>来写。</p>
+<img data-src="/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/05.png" class>
+
+<img data-src="/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/02.png" class>
+
+</li>
+</ul>
+<h1 id="首页"><a href="#首页" class="headerlink" title="首页"></a>首页</h1><ul>
+<li><p>首先第一个是要有一个导航，每个页面的导航都差不多，颜色都是一样的，只是文字不一样。</p>
+</li>
+<li><p>所以我们可以整理对它们进行一些设置，再在具体的某一个页面中对文字进行单独的设置。</p>
+</li>
+<li><p>整理设置在<code>app.json</code>里面就可以进行设置了。有一个<code>window</code>的属性。</p>
+</li>
+<li><p>因为文字不同，所以<code>navigationBarTitleText</code>就不要设置了，要在每个页面中单独对它进行设置。</p>
+<img data-src="/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/03.png" class>
+
+<img data-src="/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/04.png" class>
+
+</li>
+</ul>
+<h2 id="请求轮播图和推荐数据"><a href="#请求轮播图和推荐数据" class="headerlink" title="请求轮播图和推荐数据"></a>请求轮播图和推荐数据</h2><ul>
+<li><p>在小程序里面做轮播图是非常简单的，因为它提供了对应的内置组件可以直接做轮播图。</p>
+</li>
+<li><p>但是真正开始做轮播图之前我们首先要有轮播图的数据。</p>
+</li>
+<li><p>所以我们要做的第一件事就是先请求数据。</p>
+</li>
+<li><p>老师服务器的轮播图的接口地址是<code>http://123.207.32.32:8000/home/multidata</code>，我试了一下，还是可以用的。</p>
+</li>
+<li><p>但是我在做后面的网络请求数据的时候，发现接口就用不了了。</p>
+</li>
+<li><p>在<code>service</code>文件夹下新建一个<code>network.js</code>文件，在里面给它封装一个函数。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span>(<span class="params">options</span>)</span>&#123;</span><br><span class="line"> <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>)=&gt;</span>&#123;</span><br><span class="line">  wx.request(&#123;</span><br><span class="line">    url:options.url,</span><br><span class="line">    method:options.method || <span class="string">&#x27;get&#x27;</span>,</span><br><span class="line">    data:options.data || &#123;&#125;,</span><br><span class="line">    success:resolve,</span><br><span class="line">    fail:reject</span><br><span class="line">  &#125;)</span><br><span class="line"> &#125;)</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure></li>
+<li><p>之后在<code>home.js</code>里面的<code>onLoad</code>生命周期函数中来进行网络请求。(注意：在发出网络请求之前要现将封装的<code>network.js</code>这个函数先进行导入才能够使用，而且这里只能写<strong>相对路径</strong>！！)</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// pages/home/home.js</span></span><br><span class="line"><span class="keyword">import</span> request <span class="keyword">from</span> <span class="string">&#x27;../../service/network.js&#x27;</span></span><br><span class="line"></span><br><span class="line">Page(&#123;</span><br><span class="line">  data: &#123;</span><br><span class="line">    title:<span class="string">&#x27;哈哈哈&#x27;</span></span><br><span class="line">  &#125;,  </span><br><span class="line">  onLoad:<span class="function"><span class="keyword">function</span>(<span class="params">options</span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 1.请求轮播图以及推荐数据</span></span><br><span class="line">    request(&#123;</span><br><span class="line">      url:<span class="string">&#x27;http://123.207.32.32:8000/home/multidata&#x27;</span></span><br><span class="line">    &#125;).then(<span class="function"><span class="params">res</span>=&gt;</span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(res);</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+<li><p>因为首页里面要发出很多的网络请求，请求轮播图的数据，请求下面的衣服图片的数据等，接下来我们需要对网络请求进行一次分层，如果你想请求的所有首页相关的数据的话，我打算再新建一个js文件。</p>
+</li>
+<li><p>总结一下，我们目前是对网络请求封装了三层。</p>
+<ul>
+<li>第一层<code>network.js</code>是对<code>wx.request()</code>网络请求进行了封装。</li>
+<li>第二层<code>home.js</code>是对<code>network.js</code>网络请求进行了封装。(注意：这个<code>home.js</code>是在service文件夹里面建的。)</li>
+<li>第三层是首页调用<code>home.js</code>来请求首页的所有数据。</li>
+</ul>
+</li>
+<li><p>这样的好处是，我首页在请求数据的时候并不需要关心对应的url，我准备把url这些数据全部抽取到<code>home.js</code>里面，另外我们还打算将<code>baseURL</code>也进行一个抽取。</p>
+</li>
+<li><p>分层处理后各个文件的代码如下：</p>
+<img data-src="/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/06.png" class>
+
+<img data-src="/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/07.png" class>
+
+<img data-src="/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/08.png" class>
+
+<img data-src="/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/09.png" class>
+</li>
+<li><p>在<code>home.js</code>里面拿到数据以后最后都要回到<code>home.wxml</code>里面进行数据的展示，但是当前拿到的<code>banners</code>和<code>recommends</code>都是局部变量，是无法直接在<code>home.wxml</code>里面使用的。你必须把我们这2个数据放到<code>home.js</code>的data里面，只有放到data里面之后才能<code>home.wxml</code>才能引用data里面的相关数据。</p>
+</li>
+</ul>
+<h2 id="轮播图的展示"><a href="#轮播图的展示" class="headerlink" title="轮播图的展示"></a>轮播图的展示</h2><ul>
+<li>小程序里面提供了<code>swiper</code>这个组件专门用来展示轮播图</li>
+<li><code>swiper</code>里面是放item的，具体放几个item，是跟我们的数据是有关系的。你到时候轮播的时候，有几个数据，就放几个item。因此我们需要进行遍历。</li>
+<li>遍历的话最好使用block。</li>
+<li><code>swiper-item</code>里面也是需要放一些东西的，因为我们做的是轮播图，相当于你整理是我们的swiper，swiper里面是<code>swiper-item</code>，而<code>swiper-item</code>里面需要放上一张图片。</li>
+</ul>
+<img data-src="/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/10.png" class>
+
+<img data-src="/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/11.png" class>
+
+<ul>
+<li>但是我们这里显示的图片稍微有些问题，是宽高的比例显示的有点问题。所以给它设置<code>mode=&quot;widthFix&quot;，</code>这个是可以根据图片的大小显示图片正确的比例的。</li>
+</ul>
+<img data-src="/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/12.png" class>
+
+<ul>
+<li><p>还有一个问题，你滚动到最后一张图片的时候，发现滚动不了了，没有轮播效果。而且它这里下面也没有小圆点：指示器。所以我们这里还是有挺多东西没有做的。</p>
+</li>
+<li><p><code>swiper</code>组件里面有个<code>circular</code>属性，可以设置采用衔接滑动。</p>
+</li>
+<li><p><code>autoplay</code>属性，可以设置自动切换。</p>
+</li>
+<li><p><code>interval</code>属性可以用来设置自动切换时间间隔，默认是5秒，嫌长的话可以设置短一点。</p>
+</li>
+<li><p><code>duration</code>属性可以设置滑动动画时间，你嫌它滚的慢可以设置短一点。</p>
+</li>
+<li><p><code>indicator-dots</code>属性可以显示面板指示点，设置为true就可以在图片下面添加小圆点了。</p>
+<ul>
+<li>小圆点的颜色有点不对，我们希望和主体颜色一样，而不是默认的灰色。有一个<code>indicator-color</code>和<code>indicator-active-color</code>属性可以解决这个问题。</li>
+</ul>
+</li>
+<li><p>轮播图就这样做完了。</p>
+</li>
+<li><p>接下来要进行代码优化了，像首页这里我是不希望见到这样一坨一坨代码的。</p>
+<img data-src="/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/13.png" class>
+</li>
+<li><p>我们可以把这些东西单独抽离成一个组件，到时候让别人给我们传入数据，我根据别人传入的数据直接给它展示一个轮播图。这样可以让首页里的代码不会特别特别多。</p>
+</li>
+<li><p>如果一个页面里面的代码多到一定程度的时候，你去维护里面的每一个代码功能的话，它都不是特别好维护。</p>
+</li>
+<li><p>抽离有2种抽离方法：</p>
+<ul>
+<li>你可以直接将<code>home.wxml</code>里面写的轮播图代码抽到<code>components</code>文件夹里面</li>
+<li>你也可以将<code>home.wxml</code>里面写的轮播图代码抽到<code>home</code>文件夹下的新建的<code>childCpns</code>文件夹下，这个目录就放首页里面的所有子组件。</li>
+</ul>
+</li>
+<li><p>我们一般按照什么样的原则来决定到底抽到哪里呢？</p>
+<ul>
+<li>如果我现在抽的组件只有首页自己会用，别的页面它都不用，这个时候我就抽到首页的子组件里面(<code>childCpns</code>文件夹里面)。</li>
+<li>如果我现在抽的组件不仅在首页里面用，还在其他的地方也都用，这个时候就可以把组件抽到<code>components</code>文件夹里面作为公共的组件使用了。</li>
+</ul>
+</li>
+<li><p>我们这里的轮播图好像只在首页里面才用，但是如果我们统筹整个项目的话，你会发现在其他地方它也是有路面波图的。</p>
+<img data-src="/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/14.png" class>
+</li>
+<li><p>所以抽取轮播图组件的话推荐抽到<code>components</code>文件夹里面去。</p>
+</li>
+<li><p>这样，不仅首页里面可以使用这个自定义组件，详情页这里也是可以使用自定义组件的。只不过到时候它们展示的数据不一样，或者说图片展示的高度不一样。如果哪些东西不一样的话，你可以把那些不一样的东西抽成一个独立的属性，让外界来决定这个东西的高度，让外界来决定我们的这些数据就可以了。</p>
+</li>
+<li><p>注意：在当前项目里面，我们习惯在所有自定义组件名前面加上一个<code>w-</code>的前缀。</p>
+</li>
+<li><p>注意：首页里面要用自定义组件记得在<code>home.json</code>里面对自定义组件先进行一个注册。</p>
+<img data-src="/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/15.png" class>
+
+<img data-src="/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/16.png" class>
+
+<img data-src="/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/17.png" class>
+
+<img data-src="/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/18.png" class>
+
+<h2 id="推荐数据的展示"><a href="#推荐数据的展示" class="headerlink" title="推荐数据的展示"></a>推荐数据的展示</h2></li>
+<li><p>首先1个大view，里面放4个小view。其中具体放几个小view是由数据决定的，这里是4个。</p>
+</li>
+<li><p>里面的4个小view上面是图片，下面是文字。</p>
+</li>
+<li><p>这个推荐数据最后也是写成了一坨wxml，我们也要进行抽离。</p>
+</li>
+<li><p>但是这个抽成自定义组件的话，这个在其他界面就用不到了，我们我们把它抽到<code>home</code>文件夹下的<code>childCpns</code>文件夹里面。</p>
+<img data-src="/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/19.png" class>
+
+<img data-src="/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/20.png" class>
+</li>
+<li><p>最终抽离结果如下：</p>
+<img data-src="/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/21.png" class>
+
+<img data-src="/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/22.png" class>
+
+<img data-src="/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/23.png" class>
+
+<img data-src="/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/24.png" class>
+
+<img data-src="/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/25.png" class>
+
+</li>
+</ul>
+<h2 id="本周流行的展示"><a href="#本周流行的展示" class="headerlink" title="本周流行的展示"></a>本周流行的展示</h2><img data-src="/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/26.png" class>
+
+<h2 id="一个bug"><a href="#一个bug" class="headerlink" title="一个bug"></a>一个bug</h2><p>我们是在iphone5中进行开发的，页面显示正常，可是如果跳到iphone6上，就显示成这样了</p>
+<img data-src="/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/27.png" class>
+
+<ul>
+<li>原因是图片有默认的宽高:<code>320*240</code>，你需要设置它的宽度为100%即可。</li>
+</ul>
+<img data-src="/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/28.png" class>
+
+<img data-src="/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/29.png" class>
+
+<h2 id="tab-control组件"><a href="#tab-control组件" class="headerlink" title="tab-control组件"></a>tab-control组件</h2><ul>
+<li><p>因为老师已经在之前的视频里讲过这个组件了，老师就直接用了。</p>
+</li>
+<li><p><code>tab-control</code>当我内部点击一个选项的时候，到时候它会发出一个事件。 </p>
+</li>
+</ul>
+<h2 id="首页商品数据的请求"><a href="#首页商品数据的请求" class="headerlink" title="首页商品数据的请求"></a>首页商品数据的请求</h2><ul>
+<li>首页里面的商品分成了3种类型：流行、新款和精选。</li>
+</ul>
+<p><strong>数据模型的设计</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">goods:&#123;</span><br><span class="line"><span class="string">&#x27;new&#x27;</span>:&#123;<span class="attr">page</span>:<span class="number">0</span>,1ist:[]&#125;,</span><br><span class="line"><span class="string">&#x27;pop&#x27;</span>:&#123;<span class="attr">page</span>:<span class="number">0</span>,1ist:[]&#125;,</span><br><span class="line"><span class="string">&#x27;se11&#x27;</span>:&#123;<span class="attr">page</span>:<span class="number">0</span>,1ist:[]&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>发送网络请求，将数据储存起来</strong></p>
+<p><strong>展示所有商品标题，并完成切换</strong></p>
+<p><strong>自定义w-goods-item组件，并且设置样式</strong></p>
+<p><strong>自定义w-goods组件，调整样式</strong></p>
+<h2 id="商品数据标题展示"><a href="#商品数据标题展示" class="headerlink" title="商品数据标题展示"></a>商品数据标题展示</h2><ul>
+<li>首先在<code>home.js</code>中先定义一个types的数组：<code>const types = [&#39;pop&#39;,&#39;new&#39;,&#39;sell&#39;]</code></li>
+<li>然后在事件监听函数<code>handleTabClick</code>中设置currentType</li>
+</ul>
+<h2 id="自定义goods-item"><a href="#自定义goods-item" class="headerlink" title="自定义goods-item"></a>自定义goods-item</h2><ul>
+<li>这个自定义组件要写到<code>components</code>文件夹里面，因为别的地方也是会用到的。</li>
+<li>这个组件分为几个部分，最上面是图片，下面是标题，最下面是价格和收藏数。</li>
+<li>老师样式直接就给我们了，没有带我们写，我也就先直接复制用吧，以后有时间再自己写。</li>
+<li>注意：在wxss中不能引用本地图片，只能引用网络图片。</li>
+<li>解决方法：我们可以在<code>w-goods-item.wxml</code>中使用本地图片。</li>
+</ul>
+<img data-src="/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/30.png" class>
+
+<img data-src="/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/31.png" class>
+
+<h2 id="自定义goods组件"><a href="#自定义goods组件" class="headerlink" title="自定义goods组件"></a>自定义goods组件</h2><ul>
+<li>一个个的item是自定义组件，实际上整个大的goods我也会给它封装为一个自定义组件的。</li>
+</ul>
+<h2 id="首页上拉加载更多"><a href="#首页上拉加载更多" class="headerlink" title="首页上拉加载更多"></a>首页上拉加载更多</h2><ul>
+<li>等用户把我们当前页面滚动到底部的时候我们就可以上拉加载更多了。</li>
+<li>这个上拉加载更多比在Vue里面做简单多了！！！！Vue里面还要单独用<code>better-scroll</code>，还很麻烦。</li>
+</ul>
+<h2 id="首页回到顶部功能"><a href="#首页回到顶部功能" class="headerlink" title="首页回到顶部功能"></a>首页回到顶部功能</h2><ul>
+<li>这个最好也给它做一个独立的组件。</li>
+<li>在<code>components</code>文件夹里面给它新建一个<code>w-back-top</code>组件。</li>
+<li><code>wx.pageScrollTo</code>可以用来回到顶部。</li>
+<li>这个按钮不是一开始就出现的，而是我滚动到一定的位置才出现的。</li>
+<li>注意：<code>hidden</code>属性对于自定义的组件是无效的，而<code>wx:if</code>对自定义组件是有效果的。</li>
+<li>监听页面滚动的函数叫做<code>onPageScroll</code>。</li>
+</ul>
+<h2 id="tab-control停留效果"><a href="#tab-control停留效果" class="headerlink" title="tab-control停留效果"></a>tab-control停留效果</h2><ul>
+<li><p>我们先监听滚动，一定滚动到一定位置的时候，我们就把<code>tab-control</code>脱离标准流。</p>
+</li>
+<li><p>页面显示是否意味着所有的图片都加载完成呢？不是的</p>
+</li>
+<li><p>因为图片的加载是异步的,所以我们最好等图片加载完的时候再去获取它的高度</p>
+</li>
+<li><p>我们这里影响高度的图片主要是它：</p>
+</li>
+</ul>
+<img data-src="/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/32.png" class>
+
+
+
+
+
+
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%A1%B9%E7%9B%AE%E4%BD%9C%E5%93%81/" rel="tag"># 项目作品</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/01/14/%E8%8B%A5%E4%BE%9D%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E5%85%A5%E9%97%A8/" rel="prev" title="若依后台管理系统入门">
+      <i class="fa fa-chevron-left"></i> 若依后台管理系统入门
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/02/26/CSS%E5%B8%83%E5%B1%80%E5%85%A5%E9%97%A8/" rel="next" title="CSS布局入门">
+      CSS布局入门 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E7%9A%84%E7%BB%93%E6%9E%84"><span class="nav-text">项目的结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E7%9A%84%E7%BB%93%E6%9E%84"><span class="nav-text">目录的结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%92%E5%88%86%E9%A1%B9%E7%9B%AE%E7%9A%84%E9%A1%B5%E9%9D%A2%E7%BB%93%E6%9E%84"><span class="nav-text">划分项目的页面结构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A6%96%E9%A1%B5"><span class="nav-text">首页</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E8%BD%AE%E6%92%AD%E5%9B%BE%E5%92%8C%E6%8E%A8%E8%8D%90%E6%95%B0%E6%8D%AE"><span class="nav-text">请求轮播图和推荐数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AE%E6%92%AD%E5%9B%BE%E7%9A%84%E5%B1%95%E7%A4%BA"><span class="nav-text">轮播图的展示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A8%E8%8D%90%E6%95%B0%E6%8D%AE%E7%9A%84%E5%B1%95%E7%A4%BA"><span class="nav-text">推荐数据的展示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%91%A8%E6%B5%81%E8%A1%8C%E7%9A%84%E5%B1%95%E7%A4%BA"><span class="nav-text">本周流行的展示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%B8%AAbug"><span class="nav-text">一个bug</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tab-control%E7%BB%84%E4%BB%B6"><span class="nav-text">tab-control组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A6%96%E9%A1%B5%E5%95%86%E5%93%81%E6%95%B0%E6%8D%AE%E7%9A%84%E8%AF%B7%E6%B1%82"><span class="nav-text">首页商品数据的请求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%95%86%E5%93%81%E6%95%B0%E6%8D%AE%E6%A0%87%E9%A2%98%E5%B1%95%E7%A4%BA"><span class="nav-text">商品数据标题展示</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89goods-item"><span class="nav-text">自定义goods-item</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89goods%E7%BB%84%E4%BB%B6"><span class="nav-text">自定义goods组件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A6%96%E9%A1%B5%E4%B8%8A%E6%8B%89%E5%8A%A0%E8%BD%BD%E6%9B%B4%E5%A4%9A"><span class="nav-text">首页上拉加载更多</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A6%96%E9%A1%B5%E5%9B%9E%E5%88%B0%E9%A1%B6%E9%83%A8%E5%8A%9F%E8%83%BD"><span class="nav-text">首页回到顶部功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tab-control%E5%81%9C%E7%95%99%E6%95%88%E6%9E%9C"><span class="nav-text">tab-control停留效果</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="筛滤淘"
+      src="/images/cat.jpg">
+  <p class="site-author-name" itemprop="name">筛滤淘</p>
+  <div class="site-description" itemprop="description">前端知识点总结</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">129</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lm101845" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lm101845" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1018457683@qq.com" title="E-Mail → mailto:1018457683@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.jianshu.com/u/6879af8ace24" title="简 书 → https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;6879af8ace24" rel="noopener" target="_blank"><i class="fa fa-jianshu fa-fw"></i>简 书</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/9002959" title="B  站 → https:&#x2F;&#x2F;space.bilibili.com&#x2F;9002959" rel="noopener" target="_blank"><i class="fa fa-bilibili fa-fw"></i>B  站</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">筛滤淘</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">3.7m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">56:03</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="(注1：网上搜了Vue源码有关内容，里面有个作者说到了这本书，于是我也把这本书下载下来看一下，希望能对以后的Vue源码学习有所帮助，读这本书的主要目的也是为了以后学习Vue源码打下一定的基础。)  (注2：这本书是国人写的，作者叫张容铭。还有一本外国人写的，听说很经典。我就先看国人写的这一本吧。)  (注3：第一章看完以后，我发现自己的JavaScript基础还是掌握的不够牢固啊，基础还要继续扎实">
+<meta property="og:type" content="article">
+<meta property="og:title" content="读书笔记：JavaScript设计模式(国内)">
+<meta property="og:url" content="http://example.com/2020/10/22/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F(%E5%9B%BD%E5%86%85)/index.html">
+<meta property="og:site_name" content="木子小屋">
+<meta property="og:description" content="(注1：网上搜了Vue源码有关内容，里面有个作者说到了这本书，于是我也把这本书下载下来看一下，希望能对以后的Vue源码学习有所帮助，读这本书的主要目的也是为了以后学习Vue源码打下一定的基础。)  (注2：这本书是国人写的，作者叫张容铭。还有一本外国人写的，听说很经典。我就先看国人写的这一本吧。)  (注3：第一章看完以后，我发现自己的JavaScript基础还是掌握的不够牢固啊，基础还要继续扎实">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2020/10/22/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F(%E5%9B%BD%E5%86%85)/01.png">
+<meta property="og:image" content="http://example.com/2020/10/22/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F(%E5%9B%BD%E5%86%85)/02.png">
+<meta property="article:published_time" content="2020-10-22T08:00:00.000Z">
+<meta property="article:modified_time" content="2020-10-22T08:00:00.000Z">
+<meta property="article:author" content="筛滤淘">
+<meta property="article:tag" content="读书笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2020/10/22/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F(%E5%9B%BD%E5%86%85)/01.png">
+
+<link rel="canonical" href="http://example.com/2020/10/22/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F(%E5%9B%BD%E5%86%85)/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>读书笔记：JavaScript设计模式(国内) | 木子小屋</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?79d7cb9c8fa9e57a2723fb8645f37638";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">木子小屋</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Talk is cheap. Show me the code.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/10/22/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F(%E5%9B%BD%E5%86%85)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cat.jpg">
+      <meta itemprop="name" content="筛滤淘">
+      <meta itemprop="description" content="前端知识点总结">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="木子小屋">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          读书笔记：JavaScript设计模式(国内)
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-10-22 16:00:00" itemprop="dateCreated datePublished" datetime="2020-10-22T16:00:00+08:00">2020-10-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF%E7%90%86%E8%AE%BA/" itemprop="url" rel="index"><span itemprop="name">前端理论</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>23k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>21 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>(注1：网上搜了Vue源码有关内容，里面有个作者说到了这本书，于是我也把这本书下载下来看一下，希望能对以后的Vue源码学习有所帮助，读这本书的主要目的也是<strong>为了以后学习Vue源码打下一定的基础</strong>。)</p>
+<p>(注2：这本书是国人写的，作者叫张容铭。还有一本外国人写的，听说很经典。我就先看国人写的这一本吧。)</p>
+<p>(注3：第一章看完以后，我发现自己的JavaScript基础还是掌握的不够牢固啊，基础还要继续扎实学习啊！！)</p>
+<p>(注4：这本书也还可以啊，还挺有代入感的，感觉自己就像是里面的职场小白小白同学一样。)</p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>一年前如果有人问我是否会写一本书的话，我会直接而坦诚地说我不会。不过随着团队开发中，对同事编写的代码的阅读中我发现，有的人写的代码难懂且臃肿，很难继续编写下去;有的人写的代码简明而灵活，即使再多的需求也很容易实现。我一直在思考，为何为同一需求编写的代码会有这么大的差别？</p>
+<p>随着团队项目的开发，我发现，当对类似的需求以类似的模板去解决时，开发成本会减少许多，而且他人也会轻松介入项目的开发。这样，按照同样的流程去解决问题，开发效率得以提高。而将这些解决问题的模板提炼出来，会发现复杂的问题也会简单许多，书写的代码思路清晰且结构简明，这些模板是一种解决问题的方式，或者说是一种模式。</p>
+<p>复杂的问题可以分解成一个个小的模块，然后像拼图一样将这些通过模式解决的模块拼凑成一个完整的需求。同时可将余下的精力用去研究其他烦琐问题的解决模式。积攒的模式越多，在工作中以这些模式来解决问题，工作效率就越高。</p>
+<p>于是我将这些模式总结出来，编写成一本JavaScript设计模式书。考虑到对技术的探讨有时是很枯燥的，为了降低读者的学习难度，不至于在阅读中出现倦意，我把工作实战中的角色引入书中，通过他们工作中的情境故事来表达每种模式的内涵与应用，也借此希望更多的人读懂，并领悟更多的设计模式，以便应用到自己的项目中。</p>
+<h2 id="目标读者"><a href="#目标读者" class="headerlink" title="目标读者"></a>目标读者</h2><p>本书不是一本入门级别的书，本书适用于希望将自身JavaScript经验技巧提升一个层次的读者，所以，本书对JavaScript基础知识点，如数据类型、运算符、语句等未进行讨论。本书将面向如下4类读者。</p>
+<p>第一类读者有点JavaScript基础，想要更深入地学习JavaScript，并成为一名标准Web开发人员或者前端工程师。想深入了解面向对象编程思想，并且提高自己模块化开发能力，写出可维护、高效率、可拓展的代码的程序员。</p>
+<p>第二类读者主要是以前从事Java或者C++等编程语言的程序员，现如今想转行从事前端开发，他们可能对于JavaScript这种语言比较陌生，但是对于面向对象思想以及设计模式了解较多，只是对于将这些思想运用于前端不是十分清楚，因此，通过阅读本书，对于他们实现前端编程开发很有意义。</p>
+<p>第三类读者主要是对设计模式感兴趣，并且想更多了解设计模式在JavaScript高效应用的研发人员。通过阅读本书，他们可以体会JavaScript中设计模式的实现，突破以往面向对象语言中的实现，用更具灵活的方式解决问题。</p>
+<p>第四类读者主要是那些从事前端开发的专业人员。他们能熟练应用JavaScript开发，但是还希望提升自己，使自己在团队开发中更具有价值。阅读本书后，他们可以更深入地了解面向对象编程，掌握各种设计模式，使自己的编程技术更灵活，他们会懂得在何种情况下使用那种设计模式解决问题效果会更佳。因此，他们可以自由而熟练地运用设计模式重构现有的代码，使其更灵活、高效、可拓展，即使出现复杂的问题也会编写出一目了然、结构清晰的代码。</p>
+<p>诚然会有一些不了解JavaScript以及设计模式的读者。他们可能很难看懂书中示例的代码。因此，本书用一种更通俗易懂的方法编写，力求深入浅出，尽可能让更多不同层面的读者理解。</p>
+<h2 id="本书特色"><a href="#本书特色" class="headerlink" title="本书特色"></a>本书特色</h2><p>本书突破以往填鸭式著书风格，以生动有趣的故事情节推出一个个精彩的设计模式实践。</p>
+<p>文中以大学刚毕业的小白同学的编程工作经历为主线，在阅读时可以跟着他的经历来学习这些设计模式的具体应用。对于每种模式我们首先提出该模式的定义，这也就声明了该模式的用途。随后交代应用背景，这往往就是该种设计模式的某种应用场境。随着故事的演进，小白所经历的往往是读者在项目中所经历的，因此，很有可能会遇到小白所遇到的问题，这也正是我们需要学习的地方。最后，通过项目经理、小铭等人的帮助使小白顺利地解决一道道难题，从而使小白从初学者一步步进入了工程师的角色。</p>
+<h2 id="本书内容"><a href="#本书内容" class="headerlink" title="本书内容"></a>本书内容</h2><p>本书分为6篇，共40章。第一篇主要讲述JavaScript面向对象编程基础知识，章节之间知识点连贯，因此，建议读者顺序阅读，并且该篇也是后续5篇的基础，因此，一定要按顺序阅读。后5篇则是讲述各个设计模式，因此，读者可以根据自己的兴趣选择性阅读。但5篇各自侧重点不同，第二篇主要讲述创建型模式，第三篇主要讲述结构型模式，第四篇主要讲述行为型模式，第五篇主要讲述技巧型模式，第六篇主要讲述架构型模式。</p>
+<p><strong>第一篇包括第1章和第2章。</strong></p>
+<p>第1章介绍JavaScript基础知识，讨论了几种函数编写方式，让读者体会JavaScript在编程中的灵活性。</p>
+<p>第2章介绍面向对象编程，讨论了类的创建、数据的封装以及类之间的继承。</p>
+<p><strong>第二篇包括第3章到第8章。</strong></p>
+<p>第3章介绍简单工厂模式，讨论了对象创建的几种方式。</p>
+<p>第4章介绍工厂方法模式，讨论了创建多类对象以及一种安全的创建方式。</p>
+<p>第5章介绍抽象工厂模式，讨论了抽象类以及如何定义一种类簇。</p>
+<p>第6章介绍建造者模式，讨论了如何更灵活地创建一种复杂的对象。</p>
+<p>第7章介绍原型模式，讨论了JavaScript的核心继承方式-原型式继承。</p>
+<p>第8章介绍单例模式，讨论了单例对象及其实现与用途。</p>
+<p><strong>第三篇包括第9章到第15章。</strong></p>
+<p>第9章介绍外观模式，讨论了如何通过外观模式简化接口的使用。</p>
+<p>第10章介绍适配器模式，讨论了几种用途的适配器。</p>
+<p>第11章介绍代理模式，讨论了代理思想对于跨域的解决方案。</p>
+<p>第12章介绍装饰者模式，讨论了装饰者模式更友好地对于已有功能的拓展。</p>
+<p>第13章介绍桥接模式，讨论了桥接模式解决对象之间的依赖。</p>
+<p>第14章介绍组合模式，讨论了组合模式如何优化系统的可拓展性。</p>
+<p>第15章介绍享元模式，讨论了享元模式如何优化系统、提高性能。</p>
+<p><strong>第四篇包括第16章到第26章。</strong></p>
+<p>第16章介绍模板方法模式，讨论了基于模板类的拓展与创建。</p>
+<p>第17章介绍观察者模式，讨论了观察者模式解决团队开发中的模块间通信的实践。</p>
+<p>第18章介绍状态模式，讨论了状态模式中状态在交互中的保存与执行。</p>
+<p>第19章介绍策略模式，讨论了策略模式如何丰富交互算法。</p>
+<p>第20章介绍职责链模式，讨论了如何实现一个需求链。</p>
+<p>第21章介绍命令模式，讨论了如何定义命令集合及运用。</p>
+<p>第22章介绍访问者模式，讨论了借助已有对象解决已有问题。</p>
+<p>第23章介绍中介者模式，讨论了中介者如何管理对象之间的通信交互。</p>
+<p>第24章介绍备忘录模式，讨论了如何更好地处理数据缓存问题。</p>
+<p>第25章介绍迭代器模式，讨论了迭代器的易用性及其对性能的优化。</p>
+<p>第26章介绍解释器模式，讨论了通过解释器解决规定的需求。</p>
+<p><strong>第五篇包括第27章到第34章。</strong></p>
+<p>第27章介绍链模式，讨论了一种高效的方法调用模式。</p>
+<p>第28章介绍委托模式，讨论了事件委托对性能的优化。</p>
+<p>第29章介绍数据访问对象模式，讨论了数据访问对象模式对数据库操作对象的封装。</p>
+<p>第30章介绍节流模式，讨论了如何优化页面中的高频事件以及交互动画。</p>
+<p>第31章介绍简单模板模式，讨论了一种新的生成页面视图的方法。</p>
+<p>第32章介绍惰性模式，讨论了对方法的加载以及执行的优化。</p>
+<p>第33章介绍参与者模式，讨论了一种宽松地为对象绑定方法的方式。</p>
+<p>第34章介绍等待者模式，讨论了对于异步执行方法回调函数的处理。</p>
+<p><strong>第六篇包括第35章到第40章。</strong></p>
+<p>第35章介绍同步模块模式，讨论了如何模块化封装代码。</p>
+<p>第36章介绍异步模块模式，讨论了一种更适合的前端模块化开发实践方式。</p>
+<p>第37章介绍Widget模式，讨论了当今流行的组件式开发，并实现了一个简单的模板引擎。</p>
+<p>第38章介绍MVC模式，讨论了如何实现对数据、视图、控制器的分离。</p>
+<p>第39章介绍MVP模式，讨论了如何解决数据与视图之间的耦合，并实现了一个模板生成器。</p>
+<p>第40章介绍MVVM模式，讨论了双向绑定对MVC的模式演化。</p>
+<h2 id="本书约定"><a href="#本书约定" class="headerlink" title="本书约定"></a>本书约定</h2><img data-src="/2020/10/22/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F(%E5%9B%BD%E5%86%85)/01.png" class>
+
+<h1 id="第一篇：面向对象编程"><a href="#第一篇：面向对象编程" class="headerlink" title="第一篇：面向对象编程"></a>第一篇：面向对象编程</h1><blockquote>
+<p>面向象编程(Object-oriented programming，OOP)是一种程序设计范型。它将对象作为程序的基本单元，将程序和数据封装其中，以提高程序的重用性、灵活性和扩展性。</p>
+</blockquote>
+<h1 id="第1章：灵活的语言——JavaScript"><a href="#第1章：灵活的语言——JavaScript" class="headerlink" title="第1章：灵活的语言——JavaScript"></a>第1章：灵活的语言——JavaScript</h1><h2 id="入职第一天"><a href="#入职第一天" class="headerlink" title="入职第一天"></a>入职第一天</h2><p>结束了4年的大学学习生活，小白信心满满地来到应聘的M公司。今天是入职的第一天，项目经理分下来一个<strong>验证表单功能</strong>的任务，内容不多，仅需要<strong>验证用户名、邮箱、密码等</strong>。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkName</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">//验证姓名</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkEmail</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">//验证邮箱</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">checkPassword</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">//验证密码</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>于是要把自己的代码提交到团队项目里。</p>
+<p>正在此时，一位工作多年的程序员小铭看到小白要提交的代码摇了摇头说：”小白，等一下，先不要提交。”</p>
+<p>“怎么了？”</p>
+<p>“你创建了很多全局变量呀。”</p>
+<p>“变量？我只是写了几个函数而已。”</p>
+<p>函数不是变量么？”小铭反问道。</p>
+<p>此时小白不知所措，心想：“难道函数是变量？”脸瞬间沉了下来。</p>
+<h2 id="函数的另一种表现形式"><a href="#函数的另一种表现形式" class="headerlink" title="函数的另一种表现形式"></a>函数的另一种表现形式</h2><p>小铭见此情形忙笑着说：“别着急，你看，如果我这么声明几个变量来实现你的功能你看可以么？”</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> checkName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">//验证姓名</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> checkEmail = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">//验证邮箱</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> checkPassword = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">     <span class="comment">//验证密码</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>“一样的，只不过……”</p>
+<p>“对，只不过这个在用的时候要提前声明，但是这么看你就会发现你创建了3个函数保存在变量里来实现你的功能，而你写的是将你的变量名放在function后面而已，它也代表了你的变量。所以说你也声明了3个全局变量。”</p>
+<p>“这有什么问题呢？”</p>
+<p>“从功能上讲当然没问题，但是今天你加入了我们的团队，在团队开发中你所写的代码就不能只考虑自己了，也要考虑不影响到他人，如果别人也定义了同样的方法就会覆盖掉原有的功能了。如果你定义了很多方法，这种相互覆盖的问题是很不容易察觉到的。”</p>
+<p>“那我应该如何避免呢？”小白问道。</p>
+<p>“你可以将它们放在一个变量里保存，这样就可减少覆盖或被覆盖的风险，当然一旦被覆盖，所有的功能都会失效，这种现象也是很明显的，你自然也会很轻易觉察到。”</p>
+<p>“可是我该如何做呢？”小白迫不及待地追问道。</p>
+<h2 id="用对象收编变量"><a href="#用对象收编变量" class="headerlink" title="用对象收编变量"></a>用对象收编变量</h2><p>“一猜你就会问。”</p>
+<p>“好吧，请你先简单地说一下。”</p>
+<p>“对象你知道吧，它有属性和方法，而如果我们要访问它的属性或者方法时，可通过点语法向下遍历查询得到。<strong>我们可以创建一个检测对象，然后把我们的方法放在里面</strong>。”</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> checkObject = &#123;</span><br><span class="line">    checkName:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="comment">//验证姓名</span></span><br><span class="line">    &#125;,</span><br><span class="line">    checkEmail:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">         <span class="comment">//验证邮箱</span></span><br><span class="line">    &#125;,</span><br><span class="line">    checkPassword:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">         <span class="comment">//验证密码</span></span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>“此时我们将所有的函数作为CheckObject对象的方法，这样我们就只有一个对象，而我们要想使用它们也很简单，比如检测姓名CheckObject.checkName()，只是在我们原来使用的函数式前面多了一个对象名称。”</p>
+<p>“哦，这样呀，但是我们既然可以通过点语法来使用方法，我们是不是也可以这么创建呢？</p>
+<h2 id="对象的另一种形式"><a href="#对象的另一种形式" class="headerlink" title="对象的另一种形式"></a>对象的另一种形式</h2><p>“当然，不过首先你要声明一个对象，然后给它添加方法，当然在JavaScript中函数也是对象，所以你可以这么做：”</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> checkObject =<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line"></span><br><span class="line">checkObject.checkName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">       <span class="comment">//验证姓名</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">checkObject.checkEmail = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">       <span class="comment">//验证邮箱</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">checkObject.checkPassword = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">       <span class="comment">//验证密码</span></span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<p>“使用和前面的方式是一样的，比如<code>CheckObject.checkName()</code>，”小铭接着说，“现在虽然能满足你的需求，但当别人想用你写的对象方法时就有些麻烦了，因为这个对象不能复制一份，或者说这个对象类在用new关键字创建新的对象时，新创建的对象是不能继承这些方法的。”</p>
+<p>“但是复制又有什么用呢？”小白不解地问道。</p>
+<p>“给你举个例子吧，假如你喜欢设计模式，你买了这本书，然后回去你的小伙伴看见了，感觉很有用，他们也想要怎么办？书就这一本。但如果你买的是一台打印机，那么好吧，即使你的小伙伴再多，你也有能力给他们每个人打印一本。”</p>
+<p>“哦，有些明白了，但是我该如何做到呢？”</p>
+<h2 id="真假对象"><a href="#真假对象" class="headerlink" title="真假对象"></a>真假对象</h2><p>小铭解释说：“如果你想简单地复制一下，你可以将这些方法放在一个函数对象中。”于是小铭将代码写下。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> checkObject =<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">       checkName:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        	<span class="comment">//验证姓名</span></span><br><span class="line">       &#125;,</span><br><span class="line">       checkEmail:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">         	<span class="comment">//验证邮箱</span></span><br><span class="line">       &#125;,</span><br><span class="line">       checkPassword:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">         	<span class="comment">//验证密码</span></span><br><span class="line">       &#125; </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>小白看了看代码，思考一下说：“哦，你写的看上去是，当每次调用这个函数的时候，把我们之前写的那个对象返回出来，当别人每次调用这个函数时都返回了一个新对象，这样执行过程中明面上是CheckObject对象，可实际上是返回的新对象。这样每个人在使用时就互不影响了。比如想检测邮箱可以像这样吧。”</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = Checkobject();</span><br><span class="line">a.checkEmail();</span><br></pre></td></tr></table></figure>
+<h2 id="类也可以"><a href="#类也可以" class="headerlink" title="类也可以"></a>类也可以</h2><p>“嗯，对”小铭接着说，“虽然通过创建了新对象完成了我们的需求，但是他不是一个真正意义上类的创建方式，并且创建的对象a和对象CheckObject没有任何关系(返回出来的对象本身就与CheckObject对象无关)，所以我们还要对其稍加改造一下。”</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> checkObject =<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.checkName:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        	<span class="comment">//验证姓名</span></span><br><span class="line">       &#125;,</span><br><span class="line">    <span class="built_in">this</span>.checkEmail:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">         	<span class="comment">//验证邮箱</span></span><br><span class="line">       &#125;,</span><br><span class="line">     <span class="built_in">this</span>.checkPassword:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">         	<span class="comment">//验证密码</span></span><br><span class="line">       &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>“像上面这样的对象就可以看成类了。”小铭继续说。</p>
+<p>“那么我们使用它还像之前那样创建对象的方法创建么？”小白追问道。</p>
+<p>“不，既然是一个类，你就要用关键字new来创建了。”</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> CheckObject();</span><br><span class="line">a.checkEmail();</span><br></pre></td></tr></table></figure>
+<p>“这样你就可以用CheckObject类创建出来的对象了。”</p>
+<p>“如果我和我的小伙伴们都对类实例化了(用类创建对象)，那么我们每个人都会有一套属于自己的方法吧。”小白不解地问道。</p>
+<h2 id="一个检测类"><a href="#一个检测类" class="headerlink" title="一个检测类"></a>一个检测类</h2><p>“当然，你看，我们是把所有的方法放在函数内部了，通过this定义的，所以每一次通过new关键字创建新对象的时候，新创建的对象都会对类的this上的属性进行复制。所以这些新创建的对象都会有自己的一套方法，然而有时候这么做造成的消耗是很奢侈的，我们需要处理一下。”</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> checkObject =<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line">checkObject.prototype.checkName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">//验证姓名</span></span><br><span class="line">&#125;</span><br><span class="line">checkObject.prototype.checkEmail = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">//验证邮箱</span></span><br><span class="line">&#125;</span><br><span class="line">checkObject.prototype.checkPassword = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">//验证密码</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>“这样创建对象实例的时候，创建出来的对象所拥有的方法就都是一个了，因为它们都要依赖prototype原型依次寻找，而找到的方法都是同一个，它们都绑定在CheckObject对象类的原型上，”小铭继续说，“这种方式我们要将prototype写很多遍，所以你也可以这样做。”</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> checkObject =<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line">checkObject.prototype = &#123;</span><br><span class="line">     checkName:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        	<span class="comment">//验证姓名</span></span><br><span class="line">       &#125;,</span><br><span class="line">       checkEmail:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">         	<span class="comment">//验证邮箱</span></span><br><span class="line">       &#125;,</span><br><span class="line">       checkPassword:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">         	<span class="comment">//验证密码</span></span><br><span class="line">       &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>“但有一点你要记住，这两种方式不能混着用，否则一旦混用，如在后面为对象的原型对象赋值新对象时，那么它将会覆盖掉之前对prototype对象赋值的方法。”小铭补充说。</p>
+<p>“知道了，不过我们要使用这种方式定义的类是不是要像下面这样呢？”小白问道。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> checkObject();</span><br><span class="line">a.checkName();</span><br><span class="line">a.checkEmail();</span><br><span class="line">a.checkPassword();</span><br></pre></td></tr></table></figure>
+<h2 id="方法还可以这样用"><a href="#方法还可以这样用" class="headerlink" title="方法还可以这样用"></a>方法还可以这样用</h2><p>“没错，但是你发现没，你调用了3个方法，但是你对对象a书写了3遍。这是可以避免的，那就要在你声明的每一个方法末尾处将当前对象返回，在JavaScript中this指向的就是当前对象，所以你可以将它返回。例如我们开始写的第一个对象还记得么？改动它很简单，像下面这样就可以。”</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> checkObject = &#123;</span><br><span class="line">     checkName:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        	<span class="comment">//验证姓名</span></span><br><span class="line">         	<span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">       &#125;,</span><br><span class="line">       checkEmail:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">         	<span class="comment">//验证邮箱</span></span><br><span class="line">           <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">       &#125;,</span><br><span class="line">       checkPassword:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">         	<span class="comment">//验证密码</span></span><br><span class="line">           <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">       &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>“此时我们要想使用他就可以这样：”</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CheckObject.checkName().checkEmail().checkPassword();</span><br></pre></td></tr></table></figure>
+<p>“当然同样的方式还可以放到类的原型对象中。”</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> checkObject =<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line">checkObject.prototype = &#123;</span><br><span class="line">     checkName:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        	<span class="comment">//验证姓名</span></span><br><span class="line">         	<span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">       &#125;,</span><br><span class="line">       checkEmail:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">         	<span class="comment">//验证邮箱</span></span><br><span class="line">           <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">       &#125;,</span><br><span class="line">       checkPassword:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">         	<span class="comment">//验证密码</span></span><br><span class="line">           <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">       &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>“但使用时候也要先创建一下：”</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> checkObject();</span><br><span class="line">a.checkName().checkEmail().checkPassword();</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这些代码我也从来没见过。</p>
+</blockquote>
+<h2 id="函数的祖先"><a href="#函数的祖先" class="headerlink" title="函数的祖先"></a>函数的祖先</h2><p>小白回顾着这些从未见过的代码方式内心很激动，小铭见小白对JavaScript如此着迷，于是补充了两句。</p>
+<p>“如果你看过<code>prototype.js</code>的代码，我想你会想到下面的书写方式。”</p>
+<p>“prototypejs是什么？”小白问道。<br>“一款Javascript框架，里面为我们方便地封装了很多方法，它最大的特点就是对源生对象(JavaScript语言为我们提供的对象类，如Function、Array、Object等等)的拓展，比如你想给每一个函数都添加一个检测邮箱的方法就可以这么做。”</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.checkEmail = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="comment">//验证邮箱</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>“这样你在使用这个方法的时候就比较方便了，如果你习惯函数形式，那么你可以这么做。”</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> f = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line">f.checkEmail();</span><br></pre></td></tr></table></figure>
+<p>“如果你习惯类的形式你也可以这么做。”</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> f = <span class="keyword">new</span> <span class="built_in">Function</span>();</span><br><span class="line">f.checkEmail();</span><br></pre></td></tr></table></figure>
+<p>“但是你这么做在我们这里是不允许的，因为你污染了原生对象Function，所以别人创建的函数也会被你创建的函数所污染，造成不必要的开销，但你可以抽象出一个统一添加方法的功能方法。”</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.addMethod = <span class="function"><span class="keyword">function</span>(<span class="params">name,fn</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>[name] = fn;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>“这样如果你想添加邮箱验证和姓名验证方法你可以这样做。”</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> methods = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> methods = <span class="keyword">new</span> <span class="built_in">Function</span>();</span><br><span class="line">methods.addMethod(<span class="string">&#x27;checkName&#x27;</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">//验证姓名</span></span><br><span class="line">&#125;);</span><br><span class="line">methods.addMethod(<span class="string">&#x27;checkEmail&#x27;</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">//验证邮箱</span></span><br><span class="line">&#125;);</span><br><span class="line">methods.checkName();</span><br><span class="line">methods.checkEmail();</span><br></pre></td></tr></table></figure>
+<h2 id="可以链式添加吗"><a href="#可以链式添加吗" class="headerlink" title="可以链式添加吗"></a>可以链式添加吗</h2><p>“呀，这种方式很奇特呀。不过我想链式添加方法，是不是在addMethod中将this返回就可以呀，这么做可以么？”</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.addMethod = <span class="function"><span class="keyword">function</span>(<span class="params">name,fn</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>[name] = fn;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>“当然，所以你再想添加方法就可以这样了：”</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> methods = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line">methods.addMethod(<span class="string">&#x27;checkName&#x27;</span>，<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="comment">//验证姓名</span></span><br><span class="line">&#125;).addMethod(<span class="string">&#x27;checkEmail&#x27;</span>，<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="comment">//验证邮箱</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>“那么，小白，我问你，我如果想链式使用你知道该如何做么？”</p>
+<p>小白想了想说：“既然添加方法的时候可以将this返回实现，那么添加的每个方法将this返回是不是可以实现呢？”</p>
+<p>于是小白这么写下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> methods = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line">methods.addMethod(<span class="string">&#x27;checkName&#x27;</span>，<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="comment">//验证姓名</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">&#125;).addMethod(<span class="string">&#x27;checkEmail&#x27;</span>，<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="comment">//验证邮箱</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">this</span>;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>然后测试一下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">methods.checkName().checkEmail();</span><br></pre></td></tr></table></figure>
+<p>“真的可以呀！”小白兴奋地说。</p>
+<h2 id="换一种方式使用方法"><a href="#换一种方式使用方法" class="headerlink" title="换一种方式使用方法"></a>换一种方式使用方法</h2><p>“可是在你测试的时候，你用的是函数式调用方式？对于习惯于类式调用方式的同学来说，他们可以这样简单更改一下。”</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.addMethod = <span class="function"><span class="keyword">function</span>(<span class="params">name,fn</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.prototype[name] = fn;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>“此时我们还按照上一种方式添加方法。”</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> methods = <span class="function"><span class="keyword">function</span> (<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line">methods.addMethod(<span class="string">&#x27;checkName&#x27;</span>，<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="comment">//验证姓名</span></span><br><span class="line">&#125;).addMethod(<span class="string">&#x27;checkEmail&#x27;</span>，<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="comment">//验证邮箱</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>“但是我们在使用的时候要注意了，不能直接使用，要通过new关键字来创建新对象了。”</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> m = <span class="keyword">new</span> Methods();</span><br><span class="line">m.checkEmail()</span><br></pre></td></tr></table></figure>
+<p>小白兴奋地看着这一行行的代码情不自禁地叫了一声“这正是一种艺术”。</p>
+<p>小铭笑着说：”Javascript是一种灵活的语言，当然函数在其中扮演着一等公民。所以使用JavaScript，你可以编写出更多优雅的艺术代码。</p>
+<h2 id="下章剧透"><a href="#下章剧透" class="headerlink" title="下章剧透"></a>下章剧透</h2><p>在欢乐的学习中小白的第一天工作结束了，兴奋、痴迷、感慨。明天小白将去看看同事们丰富的编程世界。在那时小白将领略封装、继承的魅力。</p>
+<h2 id="忆之获"><a href="#忆之获" class="headerlink" title="忆之获"></a>忆之获</h2><p>小白工作第一天的故事结束，通过对小白与小铭对函数的多样化创建与使用，我们对JavaScript这门语言有了新的认识，“灵活性”是这门语言特有的气质，不同的人可以写出不同风格的代码，这是JavaScript给予我们的财富，不过我们要在团队开发中慎重挥霍，尽量保证团队开发代码风格的一致性，这也是团队代码易开发、可维护以及代码规范的必然要求。</p>
+<h2 id="我问你答"><a href="#我问你答" class="headerlink" title="我问你答"></a>我问你答</h2><ul>
+<li>真假对象一节中如何实现方法的链式调用呢？</li>
+<li>试着定义一个可以为函数添加多个方法的addMethod方法。</li>
+<li>试着定义一个既可为函数原型添加方法又可为其自身添加方法的addMethod方法</li>
+</ul>
+<h1 id="第2章：写的都是看到的——面向对象编程"><a href="#第2章：写的都是看到的——面向对象编程" class="headerlink" title="第2章：写的都是看到的——面向对象编程"></a>第2章：写的都是看到的——面向对象编程</h1><p>第一天的经历使小白深深认识到校园学到的知识与实际工作中的偏差，所以想见识见识公司团队里大家都是如何书写代码并完成需求的。早晨走进公司的时候恰巧遇见了项目经理。</p>
+<h2 id="两种编程风格——面向过程与面向对象"><a href="#两种编程风格——面向过程与面向对象" class="headerlink" title="两种编程风格——面向过程与面向对象"></a>两种编程风格——面向过程与面向对象</h2><p>“早！小白，今天是你来的第二天，这一周你熟悉一下我们团队的项目吧。”项目经理对小白说。</p>
+<p>“好呀，项目经理，我也正想跟大家学习学习呢。”于是项目经理带着小白将项目中的代码下载下来。可小白打开一看傻眼了：“函数，昨天探讨的函数呢？”小白想了半天还是没找到自己以前熟悉的代码。于是走去问小铭：“为何大家在解决需求时都不按照需求规定的功能写函数呢？怎么都是一个一个对象呢？”</p>
+<p>“函数？对象？看来你还是习惯于按照传统流程编写一个一个函数来解决需求的方式。昨天跟你说过，那样做不利于团队开发，比如你昨天写的3个对输入框中输入的数据校验功能方法，用了3个函数，这是一种面向过程的实现方式，然而在这种方式中，你会发现无端地在页面中添加了很多全局变量，而且不利于别人重复使用。一旦别人使用以前提供的方法，你就不能轻易地去修改这些方法，这不利于团队代码维护。因此你现在要接受咱们团队这边的编程风格-面向对象编程。”</p>
+<p>“面向对象编程？我不太理解，你可以跟我说一说么？”小白问道。</p>
+<p>“面向对象编程就是将你的需求抽象成一个对象，然后针对这个对象分析其特征(属性)<br>与动作(方法)。这个对象我们称之为类。面向对象编程思想其中有一个特点就是封装，就是说把你需要的功能放在一个对象里。比如你大学毕业你来公司携带的行李物品没有一件一件拿过来，而是要将他们放在一个旅行箱里，这样不论携带还是管理都会更方便一些。遗憾的是对于JavaScript这种解释性的弱类型语言没有经典强类型语言中那种通过class等关键字实现的类的封装方式，Javascript中都是通过一些特性模仿实现的，但这也带来了极高的灵活性，让我们编写的代码更自由。”</p>
+<h2 id="包装明星——封装"><a href="#包装明星——封装" class="headerlink" title="包装明星——封装"></a>包装明星——封装</h2><h3 id="创建一个类"><a href="#创建一个类" class="headerlink" title="创建一个类"></a>创建一个类</h3><p>“在JavaScript中创建一个类很容易，首先声明一个函数保存在一个变量里。按编程习惯一般将这个代表类的变量名首字母大写。然后在这个函数(类)的内部通过对this(函数内部自带的一个变量，用于指向当前这个对象)变量添加属性或者方法来实现对类添加属性或者方法，例如：”</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Book = <span class="function"><span class="keyword">function</span>(<span class="params">id,bookname,price</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.id = id;</span><br><span class="line">    <span class="built_in">this</span>.bookname = bookname;</span><br><span class="line">    <span class="built_in">this</span>.price = price;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>“也可以通过在类的原型(类也是一个对象，所以也有原型prototype)上添加属性和方法，有两种方式，一种是一一为原型对象属性赋值，另一种则是将一个对象赋值给类的原型对象。但这两种不要混用。例如：”</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Book.prototype.display = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">//展示这本书</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Book.prototype&#123;</span><br><span class="line">    display:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>“这样我们将所需要的方法和属性都封装在我们抽象的Book类里面了，当使用功能方法时，我们不能直接使用这个Book类，需要用new关键字来实例化(创建)新的对象。使用实例化对象的属性或者方法时，可以通过点语法访问，例如：”</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> book =<span class="keyword">new</span> Book(<span class="number">10</span>，<span class="string">&#x27;Javascript设计模式&#x27;</span>，<span class="number">50</span>);</span><br><span class="line"><span class="built_in">console</span>.log(book.bookname)	<span class="comment">//JavaScript设计模式</span></span><br></pre></td></tr></table></figure>
+<p>小白看了看对类添加的属性和方法部分，感觉不是很理解，于是问：”通过this添加的属性和方法同在prototype中添加的属性和方法有什么区别呀？</p>
+<p>“通过this添加的属性、方法是在当前对象上添加的，然而JavaScript是一种基于原型prototype的语言，所以每创建一个对象时(当然在JavaScript中函数也是一种对象)，它都有一个原型prototype用于指向其继承的属性、方法。这样通过prototype继承的方法并不是对象自身的，所以在使用这些方法时，需要通过prototype一级一级查找来得到。这样你会发现通过this定义的属性或者方法是该对象自身拥有的，所以我们每次通过类创建一个新对象时，this指向的属性和方法都会得到相应的创建，而通过prototype继承的属性或者方法是每个对象通过prototype访问到，所以我们每次通过类创建一个新对象时这些属性和方法不会再次创建。(如图2-1所示)。”</p>
+<p>“哦，对了，解析图中的constructor又是指的什么呀。”</p>
+<p>“constructor是一个属性，当创建一个函数或者对象时都会为其创建一个原型对象prototype，在prototype对象中又会像函数中创建this一样创建一个constructor属性，那么constructor属性指向的就是拥有整个原型对象的函数或对象，例如在本例中Book prototype中的constructor属性指向的就是Book类对象。”</p>
+<img data-src="/2020/10/22/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F(%E5%9B%BD%E5%86%85)/02.png" class>
+
+<h3 id="这些都是我的——属性与方法封装"><a href="#这些都是我的——属性与方法封装" class="headerlink" title="这些都是我的——属性与方法封装"></a>这些都是我的——属性与方法封装</h3><p>“原来是这样，”小白似乎明白些，“面向对象思想在学校里也学过，说的就是对一些属性方法的隐藏与暴露，比如私有属性、私有方法、共有属性、共有方法、保护方法等等，那么JavaScript中也有这些么？”</p>
+<p>“你能想到这些很好。说明你有一定面向对象的基础了。不过你说的这些在JavaScript中没有显性的存在，但是我们可以通过一些灵活的技巧来实现它。”小铭继续解释说，“面向对象思想你可以想象成一个人，比如一位明星为了在社会中保持一个良好形象，她就会将一些隐私隐藏在心里，然而对于这位明星，她的家人认识她，所以会了解一些关于她的事情。外界的人不认识她，即使外界人通过某种途径认识她也仅仅了解一些她暴露出来的事情，不会了解她的隐私。如果想了解更多关于她的事情怎么办？对，还可以通过她的家人来了解，但是这位明星自己内心深处的隐私是永远不会被别人知道的。”</p>
+<p>“那么在JavaScript中又是如何实现的呢？”小白问。</p>
+<p>“由于JavaScript的函数级作用域，声明在函数内部的变量以及方法在外界是访问不到的，通过此特性即可创建类的私有变量以及私有方法。然而在函数内部通过this创建的属性和方法，在类创建对象时，每个对象自身都拥有一份并且可以在外部访问到。因此通过this创建的属性可看作是对象共有属性和对象共有方法，而通过this创建的方法，不但可以访问这些对象的共有属性与共有方法，而且还能访问到类(创建时)或对象自身的私有属性和私有方法，由于这些方法权利比较大，所以我们又将它看作特权方法。在对象创建时通过使用这些特权方法我们可以初始化实例对象的一些属性，因此这些在创建对象时调用的特权方法还可以看作是类的构造器。如下面的例子。”</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//私有属性与私有方法，特权方法，对象公有属性和对象共有方法，构造器</span></span><br><span class="line"><span class="keyword">var</span> Books = <span class="function"><span class="keyword">function</span>(<span class="params">id,name,price</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//私有属性</span></span><br><span class="line">    <span class="keyword">var</span> num = <span class="number">1</span>;</span><br><span class="line">    <span class="comment">//私有方法</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">checkId</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="comment">//特权方法</span></span><br><span class="line">    <span class="built_in">this</span>.getName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line">    <span class="built_in">this</span>.getPrice = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line">    <span class="built_in">this</span>.setName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line">    <span class="built_in">this</span>.setPrice = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//对象公有属性</span></span><br><span class="line">    <span class="built_in">this</span>.id = id;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//对象公有方法</span></span><br><span class="line">    <span class="built_in">this</span>.copy = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//构造器</span></span><br><span class="line">    <span class="built_in">this</span>.setName(name);</span><br><span class="line">    <span class="built_in">this</span>.setPrice(price)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>发现看不懂了。</p>
+</blockquote>
+<p>小白心中暗喜：“原来是这样呀，通过JavaScript函数级作用域的特征来实现在函数内部创建外界就访问不到的私有化变量和私有化方法。通过new关键字实例化对象时，由于对类执行一次，所以类的内部this上定义的属性和方法自然就可以复制到新创建的对象上，成为对象公有化的属性与方法，而其中的一些方法能访问到类的私有属性和方法，就像例子中家人对明星了解得比外界多，因此比外界权利大，因而得名特权方法。而我们在通过new关键字实例化对象时，执行了一遍类的函数，所以里面通过调用特权方法自然就可以初始化对象的一些属性了。可是在类的外部通过点语法定义的属性和方法以及在外部通过prototype定义的属性和方法又有什么作用呢？”</p>
+<p>“通过new关键字创建新对象时，由于类外面通过点语法添加的属性和方法没有执行到所以新创建的对象中无法获取他们，但是可以通过类来使用。因此在类外面通过点语法定义的属性以及方法被称为类的静态共有属性和类的静态共有方法。而类通过prototype创建的属性或者方法在类实例的对象中是可以通过this访问到的(如图2.1新创建的对象的<code>__proto__</code>指向了类的原型所指向的对象)，所以我们将prototype对象中的属性和方法称为共有属性和共有方法，如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">////类静态公有属性(对象不能访问)</span></span><br><span class="line">Book.isChinese = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//类静态公有方法(对象不能访问)</span></span><br><span class="line">Book.resetTime = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">&#x27;new Tiem&#x27;</span>)</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Book.prototype =&#123;</span><br><span class="line">	<span class="comment">//公有属性</span></span><br><span class="line">	isJSBook：<span class="literal">false</span>,</span><br><span class="line">	<span class="comment">//公有方法</span></span><br><span class="line">	display：<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>“通过new关键字创建的对象实质是对新对象this的不断赋值，并将prototype指向类的prototype所指向的对象，而类的构造函数外面通过点语法定义的属性方法是不会添加到新创建的对象上去的。因此要想在新创建的对象中使用isChinese就得通过Book类使用而不能通过this，如Book.isChinese，而类的原型prototype上定义的属性在新对象里就可以直接使用，这是因为新对象的prototype和类的prototype指向的是同一个对象。”</p>
+<blockquote>
+<p>发现看不懂了。</p>
+</blockquote>
+<p>于是小白半信半疑地写下了测试代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> b=<span class="keyword">new</span> Book(<span class="number">11</span>，<span class="string">&#x27;Javascript设计模式&#x27;</span>，<span class="number">50</span>);</span><br><span class="line"><span class="built_in">console</span>.log(b.num);			<span class="comment">//undefined</span></span><br><span class="line"><span class="built_in">console</span>.log(b.isJSBook);	<span class="comment">//false </span></span><br><span class="line"><span class="built_in">console</span>.log(b.id);			<span class="comment">//11</span></span><br><span class="line"><span class="built_in">console</span>.log(b.isChinese);	<span class="comment">//undefined</span></span><br></pre></td></tr></table></figure>
+<p>“真的是这样，类的私有属性num以及静态共有属性isChinese在新创建的b对象里是访问不到的。而类的共有属性isJSBook在b对象中却可以通过点语法访问到。”</p>
+<p>“但是类的静态公有属性isChinese可以通过类的自身访问。”</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log (Book.isChinese);	<span class="comment">//true</span></span><br><span class="line">Book.resetTime();				<span class="comment">//new Tiem</span></span><br></pre></td></tr></table></figure>
+<h3 id="你们看不到我——闭包实现"><a href="#你们看不到我——闭包实现" class="headerlink" title="你们看不到我——闭包实现"></a>你们看不到我——闭包实现</h3><p>“有时我们经常将类的静态变量通过闭包来实现。”</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//利用闭包实现</span></span><br><span class="line"><span class="keyword">var</span> Book = (<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="comment">//静态私有变量</span></span><br><span class="line">	<span class="keyword">var</span> bookNum = <span class="number">0</span>;</span><br><span class="line">	<span class="comment">//静态私有方法</span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">checkBook</span>(<span class="params">name</span>)</span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">	<span class="comment">//返回构造函数</span></span><br><span class="line">	<span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">newId，newName，newPrice</span>)</span>&#123;</span><br><span class="line">		<span class="comment">//私有变量</span></span><br><span class="line">		<span class="keyword">var</span> name，price;</span><br><span class="line">		<span class="comment">//私有方法</span></span><br><span class="line">		<span class="function"><span class="keyword">function</span> <span class="title">checkID</span>(<span class="params">id</span>)</span>&#123;&#125;</span><br><span class="line">      <span class="comment">//特权方法</span></span><br><span class="line">   	  	<span class="built_in">this</span>.getName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line">    	<span class="built_in">this</span>.getPrice = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line">    	<span class="built_in">this</span>.setName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line">    	<span class="built_in">this</span>.setPrice = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line">    </span><br><span class="line">    	<span class="comment">//公有属性</span></span><br><span class="line">   	 	<span class="built_in">this</span>.id = id;</span><br><span class="line">    </span><br><span class="line">    	<span class="comment">//公有方法</span></span><br><span class="line">    	<span class="built_in">this</span>.copy = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line">        bookNum++</span><br><span class="line">       <span class="keyword">if</span>(bookNum &gt; <span class="number">100</span>)</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;我们仅出版100本书.&#x27;</span>);</span><br><span class="line">		<span class="comment">//构造器</span></span><br><span class="line">		<span class="built_in">this</span>.setName(name);</span><br><span class="line">        <span class="built_in">this</span>.setPrice(price);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line">Book.prototype =&#123;</span><br><span class="line">	<span class="comment">//静态公有属性</span></span><br><span class="line">	isJSBook：<span class="literal">false</span>,</span><br><span class="line">	<span class="comment">//公有方法</span></span><br><span class="line">	display：<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>“小白，你知道闭包么？”</p>
+<p>“不太了解。你能说说么？”</p>
+<p>“闭包是有权访问另外一个函数作用域中变量的函数，即在一个函数内部创建另外一个函数。我们将这个闭包作为创建对象的构造函数，这样它既是闭包又是可实例对象的函数，即可访问到类函数作用域中的变量，如bookNum这个变量，此时这个变量叫静态私有变量，并且checkBooko)可称之为静态私有方法。当然闭包内部也有其自身的私有变量以及私有方法如price，checkIDO)，但是，在闭包外部添加原型属性和方法看上去像似脱离了闭包这个类，所以有时候在闭包内部实现一个完整的类然后将其返回，看下面的例子。”</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//利用闭包实现</span></span><br><span class="line"><span class="keyword">var</span> Book =(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="comment">//静态私有变量</span></span><br><span class="line">	<span class="keyword">var</span> bookNum =<span class="number">0</span>;</span><br><span class="line">	<span class="comment">//静态私有方法</span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">checkBook</span>(<span class="params">name</span>)(<span class="params"></span>)</span></span><br><span class="line"><span class="function">	//创建类</span></span><br><span class="line"><span class="function">	<span class="function"><span class="keyword">function</span> <span class="title">book</span>(<span class="params">newId，newName，newPrice</span>)</span>&#123;</span></span><br><span class="line"><span class="function">		//私有变量</span></span><br><span class="line"><span class="function">		<span class="title">var</span> <span class="title">name</span>，<span class="title">price</span></span>;</span><br><span class="line">		<span class="comment">//私有方法</span></span><br><span class="line">		<span class="function"><span class="keyword">function</span> <span class="title">checkID</span>(<span class="params">id</span>)(<span class="params">&#125;</span></span></span><br><span class="line"><span class="function"><span class="params">		<span class="comment">//特权方法</span></span></span></span><br><span class="line"><span class="function"><span class="params">		<span class="built_in">this</span>.getName = <span class="keyword">function</span>()&#123;&#125;;</span></span></span><br><span class="line"><span class="function"><span class="params">    	<span class="built_in">this</span>.getPrice = <span class="keyword">function</span>()&#123;&#125;;</span></span></span><br><span class="line"><span class="function"><span class="params">    	<span class="built_in">this</span>.setName = <span class="keyword">function</span>()&#123;&#125;;</span></span></span><br><span class="line"><span class="function"><span class="params">    	<span class="built_in">this</span>.setPrice = <span class="keyword">function</span>()&#123;&#125;;</span></span></span><br><span class="line"><span class="function"><span class="params">		<span class="comment">//公有属性</span></span></span></span><br><span class="line"><span class="function"><span class="params">		<span class="built_in">this</span>.id =newId;</span></span></span><br><span class="line"><span class="function"><span class="params">		<span class="comment">//公有方法</span></span></span></span><br><span class="line"><span class="function"><span class="params">		<span class="built_in">this</span>.copy = <span class="keyword">function</span>()&#123;&#125;;</span></span></span><br><span class="line"><span class="function"><span class="params">    	bookNum++</span></span></span><br><span class="line"><span class="function"><span class="params">		<span class="keyword">if</span>(bookNum &gt; <span class="number">100</span>)</span></span></span><br><span class="line"><span class="function"><span class="params">			<span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;我们仅出版100本书.&#x27;</span>);</span></span></span><br><span class="line"><span class="function"><span class="params">		<span class="comment">//构造器</span></span></span></span><br><span class="line"><span class="function"><span class="params">		<span class="built_in">this</span>.setName(name);</span></span></span><br><span class="line"><span class="function"><span class="params">    	<span class="built_in">this</span>.setPrice(price);</span></span></span><br><span class="line"><span class="function"><span class="params">&#125;</span></span></span><br><span class="line"><span class="function"><span class="params">           </span></span></span><br><span class="line"><span class="function"><span class="params"><span class="comment">//构建原型</span></span></span></span><br><span class="line"><span class="function"><span class="params">_book.prototype=&#123;</span></span></span><br><span class="line"><span class="function"><span class="params">	<span class="regexp">//</span>静态公有属性</span></span></span><br><span class="line"><span class="function"><span class="params">	isJSBook：<span class="literal">false</span>，</span></span></span><br><span class="line"><span class="function"><span class="params">	<span class="regexp">//</span>静态公有方法</span></span></span><br><span class="line"><span class="function"><span class="params">	display：<span class="keyword">function</span>()&#123;&#125;</span></span></span><br><span class="line"><span class="function"><span class="params">&#125;;</span></span></span><br><span class="line"><span class="function"><span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params"><span class="comment">//返回类</span></span></span></span><br><span class="line"><span class="function"><span class="params"><span class="keyword">return</span> _book;</span></span></span><br><span class="line"><span class="function"><span class="params">&#125;</span>)(<span class="params"></span>)</span>;</span><br></pre></td></tr></table></figure>
+<p>“哦，这样看上去更像一个整体。”</p>
+<h3 id="找位检察长——创建对象的安全模式"><a href="#找位检察长——创建对象的安全模式" class="headerlink" title="找位检察长——创建对象的安全模式"></a>找位检察长——创建对象的安全模式</h3><p>“对于你们初学者来说，在创建对象上由于不适应这种写法，所以经常容易忘记使用new而犯错误。”</p>
+<p>“可是对于我们来说，这种错误发生也是不可避免的，毕竟不像你们工作了这么多年。但是你有什么好办法么？”</p>
+<p>“哈哈，那是当然，如果你们犯错误有人实时监测不就解决了么，所以赶快找一位检察长吧。比如JavaScript在创建对象时有一种安全模式就完全可以解决你们这类问题。”</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//图书类</span></span><br><span class="line"><span class="keyword">var</span> Book = <span class="function"><span class="keyword">function</span>(<span class="params">title，time，type</span>)</span>&#123;</span><br><span class="line">	<span class="built_in">this</span>.title = title;</span><br><span class="line">    <span class="built_in">this</span>.time = time;</span><br><span class="line">    <span class="built_in">this</span>.type = type;</span><br><span class="line">    </span><br><span class="line"><span class="comment">//实例化一本书</span></span><br><span class="line"><span class="keyword">var</span> book = Book(<span class="string">&#x27;Javascript&#x27;</span>，<span class="string">&#x27;2014&#x27;</span>，<span class="string">&#x27;js&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<p>“小白，你猜book这个变量是个什么？”</p>
+<p>“Book类的一个实例吧。”为了验证自己的想法，小白写下测试代码。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log (book); <span class="comment">//undefined</span></span><br></pre></td></tr></table></figure>
+<p>“怎么会是这样？为什么是一个undefined(未定义)？”小白不解解。</p>
+<p>“别着急，你来看看我的测试代码。”</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="built_in">window</span>.title);  <span class="comment">//JavaScript</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">window</span>.time); 	<span class="comment">//2014</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">window</span>.type);	<span class="comment">//js</span></span><br></pre></td></tr></table></figure>
+<p>“怎么样发现问题了么”，小铭问道。</p>
+<p>“明明创建了一个Book对象，并且添加了<code>title，time，type</code>3个属性，怎么会添加到window上面去了，而且book这个变量还是undefined.”小白又看了看实例中的代码恍然大悟，“哦，<strong>原来是忘记了用new关键字来实例化了</strong>，可是为什么会出现这个结果呢？</p>
+<p>“别着急，首先你要明白一点，<strong>new关键字的作用可以看作是对当前对象的this不停地赋值</strong>，然而例子中没有用new，所以就会直接执行这个函数，而这个函数在全局作用域中执行了，所以在全局作用域中this指向的当前对象自然就是全局变量，在你的页面里全局变量就是window了，所以添加的属性自然就会被添加到window上面了，而我们这个book变量最终的作用是要得到Book这个类(函数)的执行结果，由于函数中没有return语句，这个Book类自然不会告诉book变量的执行结果了，所以就是undefined(未定义)。”</p>
+<p>“原来是这样，看来创建时真是不小心呀，可是该如何避免呢？”小白感叹道。</p>
+<p>“去找位检察长，呀，哈哈，使用安全模式吧。”</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//图书安全类</span></span><br><span class="line"><span class="keyword">var</span> Book = <span class="function"><span class="keyword">function</span>(<span class="params">title，time，type</span>)</span>&#123;</span><br><span class="line">	<span class="comment">//判断执行过程中this是否是当前这个对象(如果是说明是用new创建的)</span></span><br><span class="line">	<span class="keyword">if</span>(<span class="built_in">this</span> <span class="keyword">instanceof</span> Book)&#123;</span><br><span class="line">		<span class="built_in">this</span>.title = title;</span><br><span class="line">        <span class="built_in">this</span>.time = time;</span><br><span class="line">        <span class="built_in">this</span>.type = type;</span><br><span class="line">	<span class="comment">//否则重新创建这个对象</span></span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Book(title，time，type);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;  </span><br><span class="line"><span class="keyword">var</span> book = Book(<span class="string">&#x27;Javascript&#x27;</span>，<span class="string">&#x27;2014&#x27;</span>，<span class="string">&#x27;js&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<p>“好了小白，测试一下吧。”</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(book);				<span class="comment">//Book</span></span><br><span class="line"><span class="built_in">console</span>.log(book.title);   		<span class="comment">//JavaScript</span></span><br><span class="line"><span class="built_in">console</span>.log(book.time); 		<span class="comment">//2014</span></span><br><span class="line"><span class="built_in">console</span>.log(book.type);			<span class="comment">//js </span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">window</span>.title);		<span class="comment">//undefined</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">window</span>.time); 		<span class="comment">//undefined</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">window</span>.type);		<span class="comment">//undefined</span></span><br></pre></td></tr></table></figure>
+<p>“真的是这样呀，太好了，再也不用担心创建对象忘记使用new关键字的问题了。”</p>
+<p>“好了说了很多，你也休息一下，好好回顾一下，后面还有个更重要的面向对象等着你一一继承，这可是许多设计模式设计的灵魂。”</p>
+<h2 id="传宗接代——继承"><a href="#传宗接代——继承" class="headerlink" title="传宗接代——继承"></a>传宗接代——继承</h2><p>“小白，看继承呢？”小铭忙完自己的事情走过来。</p>
+<p>“是呀，刚才学习类，发现每个类都有3个部分，第一部分是构造函数内的，这是供实例化对象复制用的，第二部分是构造函数外的，直接通过点语法添加的，这是供类使用的，实例化对象是访问不到的，第三部分是类的原型中的，实例化对象可以通过其原型链间接地访问到，也是为供所有实例化对象所共用的。然而在继承中所涉及的不仅仅是一个对象。”</p>
+<p>“对呀，不过继承这种思想却很简单，如千年文明能够流传至今靠的就是传承，将这些有用的文化一年一年地流传下来，又如我们祖先一代一代地繁衍，才有了今天的我们。所以继承涉及的不仅仅是一个对象。如人类的传宗接代，父母会把自己的一些特点传给孩子，孩子具有了父母的一些特点，但又不完全一样，总会有自己的特点，所以父母与孩子又是不同的个体。”</p>
+<p>“可是JavaScript并没有继承这一现有的机制，它又是如何实现的呢？</p>
+<h3 id="子类的原型对象——类式继承"><a href="#子类的原型对象——类式继承" class="headerlink" title="子类的原型对象——类式继承"></a>子类的原型对象——类式继承</h3><p>“对呀，也正因为JavaScript少了这些显性的限制才使得其具有了一定的灵活性，所以我们可以根据不同的需求实现多样式的继承。比如常见的类式继承。”</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//类式继承</span></span><br><span class="line"><span class="comment">//声明父类</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SuperClass</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.superValue = <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//为父类添加共有方法</span></span><br><span class="line">Superclass.prototype.getSuperValue = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">this</span>.superValue;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//声明子类</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SubClass</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">this</span>.subvalue = <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//继承父类</span></span><br><span class="line">Subclass.prototype = <span class="keyword">new</span> SuperClass();</span><br><span class="line"></span><br><span class="line"><span class="comment">//为子类添加共有方法</span></span><br><span class="line">Subclass.prototype.getSubValue = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">this</span>.subValue;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>“很像，真的很像！”小白很惊讶。</p>
+<p>“像什么？”小铭不解地问。</p>
+<p>“刚才看过的封装呀，不同的是这里声明了2个类，而且第二个类的原型prototype被赋予了第一个类的实例。”小白解释道。</p>
+<p>“很对，继承很简单，就是声明2个类而已，不过类式继承需要将第一个类的实例赋值给第二个类的原型。但你知道为何要这么做么？”</p>
+<p>“类的原型对象的作用就是为类的原型添加共有方法，但类不能直接访问这些属性和方法，必须通过原型prototype来访问。而我们实例化一个父类的时候，新创建的对象复制了父类的构造函数内的属性与方法并且将原型<code>__proto__</code>指向了父类的原型对象，这样就拥有了父类的原型对象上的属性与方法，并且这个新创建的对象可直接访问到父类原型对象上的属性与方法。如果我们将这个新创建的对象赋值给子类的原型，那么子类的原型就可以访问到父类的原型属性和方法。”小白还有些不自信。</p>
+<p>“对，你分析得很准确。补充一点，你说的新创建的对象不仅仅可以访问父类原型上的属性和方法，同样也可访问从父类构造函数中复制的属性和方法。你将这个对象赋值给子类的原型，那么这个子类的原型同样可以访问父类原型上的属性和方法与从父类构造函数中复制的属性和方法。这正是类式继承原理。”</p>
+<p>“原来是这样，但是我们要如何使用子类呢？”小白问道。</p>
+<p>“使用很简单，像下面这样即可。”小铭说。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> instance = <span class="keyword">new</span> Subclass(); </span><br><span class="line"><span class="built_in">console</span>.log(instance.getSuperValue());  	<span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log (instance.getSubValue ());    <span class="comment">//false</span></span><br></pre></td></tr></table></figure>
+<p>“另外，我们还可以通过<code>instanceof</code>来检测某个对象是否是某个类的实例，或者说某个对象是否继承了某个类。这样就可以判断对象与类之间的继承关系了。”小铭补充说。</p>
+<p>“instanceof？它如何就知道对象与类之间的继承关系呢？”小白不解。</p>
+<p>“<strong>instanceof是通过判断对象的prototype链来确定这个对象是否是某个类的实例，而不关心对象与类的自身结构。</strong>”</p>
+<p>“原来是这样。”于是小白写下测试代码。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(instance <span class="keyword">instanceof</span> Superclass); 	<span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(instance <span class="keyword">instanceof</span> SubClass);		<span class="comment">//true </span></span><br><span class="line"><span class="built_in">console</span>.log(Subclass <span class="keyword">instanceof</span> SuperClass);	<span class="comment">//false</span></span><br></pre></td></tr></table></figure>
+<p>“我们说subClass继承superClass，可是为什么SubClass instanceof SuperClass得到的结果是false呢？”小白不解。</p>
+<p>“前面说了，instanceof是判断前面的对象是否是后面类（对象）的实例，它并不表示两者的继承，这一点你不要弄混，其次我们看看前面的代码，你看我们在实现subClass继承superClass 时是通过将superClass的实例赋值给subClass的原型prototype，所以说SubClass.prototype继承了superClass。”小铭解释说。</p>
+<p>于是小白半信半疑地写下测试代码。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log (SubClass.prototype <span class="keyword">instanceof</span> Superclass); <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<p>“真的是这样。”小白惊呼。</p>
+<p>“是呀。这也是类式继承的一个特点。问你一个问题，你所创建的所有对象都是谁的实例？”</p>
+<p>“Object吗？”小白回答说。</p>
+<p>“对，正是JavaScript为我们提供的原生对象Object，所以你看下面的检测代码返回的就是true。”</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>. log (instance <span class="keyword">instanceof</span> object);		<span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<p>“哦，这么说Object就是所有对象的祖先了。”小白笑着说。</p>
+<p>“哈哈，可是你知道吗，这种类式继承还有2个缺点。其一，由于子类通过其原型prototype对父类实例化，继承了父类。所以说父类中的共有属性要是引用类型，就会在子类中被所有实例共用，因此一个子类的实例更改子类原型从父类构造函数中继承来的共有属性就会直接影响到其他子类，比如你看下面的代码。”</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SuperClass</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">this</span>.books =[<span class="string">&#x27;Javascript&#x27;</span>，<span class="string">&#x27;html&#x27;</span>，<span class="string">&#x27;css&#x27;</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">SubClass</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">Subclass.prototype = <span class="keyword">new</span> Superclass();</span><br><span class="line"><span class="keyword">var</span> instancel = <span class="keyword">new</span> Subclass();</span><br><span class="line"><span class="keyword">var</span> instance2 = <span class="keyword">new</span> Subclass();</span><br><span class="line"><span class="built_in">console</span>.log(instance2.books);	<span class="comment">//[&quot;Javascript&quot;，&quot;html&quot;，&quot;css&quot;]</span></span><br><span class="line">instancel.books.push(<span class="string">&#x27;设计模式&#x27;</span>);</span><br><span class="line"><span class="built_in">console</span>.log（instance2.books）；<span class="comment">//[&quot;JavaScript&quot;，&quot;html&quot;，&quot;css&quot;，&quot;设计模式&quot;]</span></span><br></pre></td></tr></table></figure>
+<p>“instancel的一个无意的修改就会无情地伤害了instance2的book属性，这在编程中很容易埋藏陷阱。其二，由于子类实现的继承是靠其原型prototype对父类的实例化实现的，因此在创建父类的时候，是无法向父类传递参数的，因而在实例化父类的时候也无法对父类构造函数内的属性进行初始化。”</p>
+<p>“那我们要如何解决这些问题呢？”小白好奇地追问。</p>
+<h3 id="创建即继承——构造函数继承"><a href="#创建即继承——构造函数继承" class="headerlink" title="创建即继承——构造函数继承"></a>创建即继承——构造函数继承</h3><h1 id="第四篇：行为型设计模式"><a href="#第四篇：行为型设计模式" class="headerlink" title="第四篇：行为型设计模式"></a>第四篇：行为型设计模式</h1><blockquote>
+<p>行为型设计模式用于不同对象之间职责划分或算法抽象，行为型设计模式不仅仅涉及类和对象，还涉及类或对象之间的交流模式并加以实现。</p>
+</blockquote>
+<h1 id="第17章：观察者模式"><a href="#第17章：观察者模式" class="headerlink" title="第17章：观察者模式"></a>第17章：观察者模式</h1><p>观察者模式（Observer）：又被称作发布-订阅者模式或消息机制，定义了一种依赖关系，解决了主体对象与观察者之间功能的耦合。</p>
+<p>时间过得真快，转眼间小白开始了团队代码开发。这样，需求的研发中经常遇到一个人负责一个模块，可是每个人负责的模块之间该如何进行信息沟通呢？</p>
+<h2 id="团队开发的坎坷"><a href="#团队开发的坎坷" class="headerlink" title="团队开发的坎坷"></a>团队开发的坎坷</h2><p>“小铭，”小白急匆匆走过去，“今天写新闻评论模块，它的需求是这样的，当用户发布评论时，会在评论展示模块末尾处追加新的评论，与此同时用户的消息模块的消息数量也会递增。如果用户删除留言区的信息时，用户的消息模块消息数量也会递减，但是今天我浏览了一下这些模块的代码，发现他们是三位不同的工程师写的，都写在自己的独立闭包模块里，现在我要完成我的需求，又不想将他们的模块合并到一起，这样我改动量很大，可是我该如何解决呢？”</p>
+<p>“哦，听明白了，你是想实现你的需求而添加一些功能代码，但又不想新添加的代码影响到他人实现的功能。这也就是说，你不想让你自己的模块与他人开发的模块严重耦合在一起吧。对于这类问题，观察者模式是比较理想的解决方案。”</p>
+<p>“观察者模式？可以解开我与他们之间的功能耦合么？”小白半信半疑。</p>
+<h2 id="卫星的故事"><a href="#卫星的故事" class="headerlink" title="卫星的故事"></a>卫星的故事</h2><p>“嗯，观察者模式也被他人称之为消息机制或者发布-订阅者模式。为了解决主体对象与观察者之间功能的耦合。举个例子，目前每个国家都在研发并发射卫星，那么发射的卫星有什么用呢？”</p>
+<p>“是为了监控气象信息，监控城市信息等等吧。”小白回答说。</p>
+<p>“很对，为的就是监控。所以发射的卫星就可以看做是一个观察者或者说是一个消息系统。如果让这颗卫星为飞机导航，那么这架飞机就是一个被观察者或者说是一个主体对象。当然主体对象是可以变化的，比如飞机飞翔，就像你的需求中的消息一样，消息的内容每时每刻都可能变化。因此飞机经常会发出位置消息，比如从沈阳到香港，途中经过北京，那么当经过北京上空时会向卫星发射一则消息来指明自己所处位置。卫星接受这些消息后就能确认这架飞机的具体位置。”小铭接着说，“当然卫星仅仅处理这些事情是不够的，因为只有当前这架飞机和卫星知道该飞机的位置信息，而地面上的中转站目前还是不知道的。为了让地面上的中转站知道飞机的运行情况，并且各地的飞机中转站可以根据接收到的飞机信息而做相应的处理。于是卫星、飞机、中转站的问题模型可简化成这样，中转站与天空中的飞机要想知道某架飞机的运行情况，各地中转站都要在卫星上注册这架飞机的信息，以便接收到这架飞机的信息。于是每当飞机到达一个地方时，都会向卫星发出位置信息，然后卫星又将该信息广播到已经订阅过这架飞机的中转站。这样每个中转站便可以接收飞机的消息并做相应的处理来避免飞机事故发生。</p>
+<h2 id="创建一个观察者"><a href="#创建一个观察者" class="headerlink" title="创建一个观察者"></a>创建一个观察者</h2><p>“听你这么一说自己明白些。按你说的，把观察者或者消息系统看作一个对象，那么它应该包括两个方法吧，第一个是接收某架飞机发来的消息，第二个是向订阅过该飞机的中转站发送相应的消息吧。”</p>
+<p>“嗯，不过，小白别忘了，并不是每个中转站时时都要监控飞机的，比如飞机路过石家庄，那么它已经不再北京了，那么北京中转站就没有必要再继续监控飞机状态了，所以此时北京中转站就应该注销掉飞机之前注册的信息，因此我们还需要有一个取消注册的方法。当然不要忘记对于这些消息，我们还需要有一个保存消息的容器，所以我们还需要一个消息容器。我们分析到这里，观察者对象的雏形就出来了。”</p>
+<p>小铭接着说：“首先我们需要把观察者对象创建出来，他有一个消息容器，和三个方法，分别是订阅消息方法、取消订阅的消息方法、发送订阅的消息方法。”</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag"># 读书笔记</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/10/21/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A30%E5%A4%A9%E8%87%AA%E5%88%B6%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" rel="prev" title="读书笔记：30天自制操作系统">
+      <i class="fa fa-chevron-left"></i> 读书笔记：30天自制操作系统
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/10/22/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F(%E5%9B%BD%E5%A4%96)/" rel="next" title="读书笔记：JavaScript设计模式(国外)">
+      读书笔记：JavaScript设计模式(国外) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87%E8%AF%BB%E8%80%85"><span class="nav-text">目标读者</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E4%B9%A6%E7%89%B9%E8%89%B2"><span class="nav-text">本书特色</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E4%B9%A6%E5%86%85%E5%AE%B9"><span class="nav-text">本书内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E4%B9%A6%E7%BA%A6%E5%AE%9A"><span class="nav-text">本书约定</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%AF%87%EF%BC%9A%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B"><span class="nav-text">第一篇：面向对象编程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC1%E7%AB%A0%EF%BC%9A%E7%81%B5%E6%B4%BB%E7%9A%84%E8%AF%AD%E8%A8%80%E2%80%94%E2%80%94JavaScript"><span class="nav-text">第1章：灵活的语言——JavaScript</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A5%E8%81%8C%E7%AC%AC%E4%B8%80%E5%A4%A9"><span class="nav-text">入职第一天</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%A6%E4%B8%80%E7%A7%8D%E8%A1%A8%E7%8E%B0%E5%BD%A2%E5%BC%8F"><span class="nav-text">函数的另一种表现形式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%A8%E5%AF%B9%E8%B1%A1%E6%94%B6%E7%BC%96%E5%8F%98%E9%87%8F"><span class="nav-text">用对象收编变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%8F%A6%E4%B8%80%E7%A7%8D%E5%BD%A2%E5%BC%8F"><span class="nav-text">对象的另一种形式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9C%9F%E5%81%87%E5%AF%B9%E8%B1%A1"><span class="nav-text">真假对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E4%B9%9F%E5%8F%AF%E4%BB%A5"><span class="nav-text">类也可以</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E6%A3%80%E6%B5%8B%E7%B1%BB"><span class="nav-text">一个检测类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E8%BF%98%E5%8F%AF%E4%BB%A5%E8%BF%99%E6%A0%B7%E7%94%A8"><span class="nav-text">方法还可以这样用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E7%9A%84%E7%A5%96%E5%85%88"><span class="nav-text">函数的祖先</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E4%BB%A5%E9%93%BE%E5%BC%8F%E6%B7%BB%E5%8A%A0%E5%90%97"><span class="nav-text">可以链式添加吗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8D%A2%E4%B8%80%E7%A7%8D%E6%96%B9%E5%BC%8F%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-text">换一种方式使用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E7%AB%A0%E5%89%A7%E9%80%8F"><span class="nav-text">下章剧透</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%86%E4%B9%8B%E8%8E%B7"><span class="nav-text">忆之获</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E9%97%AE%E4%BD%A0%E7%AD%94"><span class="nav-text">我问你答</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC2%E7%AB%A0%EF%BC%9A%E5%86%99%E7%9A%84%E9%83%BD%E6%98%AF%E7%9C%8B%E5%88%B0%E7%9A%84%E2%80%94%E2%80%94%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B"><span class="nav-text">第2章：写的都是看到的——面向对象编程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%A4%E7%A7%8D%E7%BC%96%E7%A8%8B%E9%A3%8E%E6%A0%BC%E2%80%94%E2%80%94%E9%9D%A2%E5%90%91%E8%BF%87%E7%A8%8B%E4%B8%8E%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1"><span class="nav-text">两种编程风格——面向过程与面向对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%85%E8%A3%85%E6%98%8E%E6%98%9F%E2%80%94%E2%80%94%E5%B0%81%E8%A3%85"><span class="nav-text">包装明星——封装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%B1%BB"><span class="nav-text">创建一个类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%99%E4%BA%9B%E9%83%BD%E6%98%AF%E6%88%91%E7%9A%84%E2%80%94%E2%80%94%E5%B1%9E%E6%80%A7%E4%B8%8E%E6%96%B9%E6%B3%95%E5%B0%81%E8%A3%85"><span class="nav-text">这些都是我的——属性与方法封装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%A0%E4%BB%AC%E7%9C%8B%E4%B8%8D%E5%88%B0%E6%88%91%E2%80%94%E2%80%94%E9%97%AD%E5%8C%85%E5%AE%9E%E7%8E%B0"><span class="nav-text">你们看不到我——闭包实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%BE%E4%BD%8D%E6%A3%80%E5%AF%9F%E9%95%BF%E2%80%94%E2%80%94%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%AE%89%E5%85%A8%E6%A8%A1%E5%BC%8F"><span class="nav-text">找位检察长——创建对象的安全模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%A0%E5%AE%97%E6%8E%A5%E4%BB%A3%E2%80%94%E2%80%94%E7%BB%A7%E6%89%BF"><span class="nav-text">传宗接代——继承</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%90%E7%B1%BB%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%AF%B9%E8%B1%A1%E2%80%94%E2%80%94%E7%B1%BB%E5%BC%8F%E7%BB%A7%E6%89%BF"><span class="nav-text">子类的原型对象——类式继承</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%8D%B3%E7%BB%A7%E6%89%BF%E2%80%94%E2%80%94%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%BB%A7%E6%89%BF"><span class="nav-text">创建即继承——构造函数继承</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E7%AF%87%EF%BC%9A%E8%A1%8C%E4%B8%BA%E5%9E%8B%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-text">第四篇：行为型设计模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC17%E7%AB%A0%EF%BC%9A%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F"><span class="nav-text">第17章：观察者模式</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%A2%E9%98%9F%E5%BC%80%E5%8F%91%E7%9A%84%E5%9D%8E%E5%9D%B7"><span class="nav-text">团队开发的坎坷</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%AB%E6%98%9F%E7%9A%84%E6%95%85%E4%BA%8B"><span class="nav-text">卫星的故事</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E8%A7%82%E5%AF%9F%E8%80%85"><span class="nav-text">创建一个观察者</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="筛滤淘"
+      src="/images/cat.jpg">
+  <p class="site-author-name" itemprop="name">筛滤淘</p>
+  <div class="site-description" itemprop="description">前端知识点总结</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">129</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lm101845" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lm101845" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1018457683@qq.com" title="E-Mail → mailto:1018457683@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.jianshu.com/u/6879af8ace24" title="简 书 → https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;6879af8ace24" rel="noopener" target="_blank"><i class="fa fa-jianshu fa-fw"></i>简 书</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/9002959" title="B  站 → https:&#x2F;&#x2F;space.bilibili.com&#x2F;9002959" rel="noopener" target="_blank"><i class="fa fa-bilibili fa-fw"></i>B  站</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">筛滤淘</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">3.7m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">56:03</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

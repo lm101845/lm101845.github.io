@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="(注1：现在是2021年2月28日，离职后的第5天，时间过得太快了，我这几天也是在间歇性准备找工作，准备面试题了。)  (注2：截止到目前为止，我的简历还没有写好，因为GitHub Pages只能部署静态页面，所以我做的一些项目还没法直接部署到GitHub Pages上直接预览，想到自己的腾讯云服务器还有6个月才到期，就想着为什么不去利用起来呢？结果昨天搞了半天，没弄好，然后自己就心态炸裂了，今天">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端部署项目到腾讯云服务器入门">
+<meta property="og:url" content="http://example.com/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="木子小屋">
+<meta property="og:description" content="(注1：现在是2021年2月28日，离职后的第5天，时间过得太快了，我这几天也是在间歇性准备找工作，准备面试题了。)  (注2：截止到目前为止，我的简历还没有写好，因为GitHub Pages只能部署静态页面，所以我做的一些项目还没法直接部署到GitHub Pages上直接预览，想到自己的腾讯云服务器还有6个月才到期，就想着为什么不去利用起来呢？结果昨天搞了半天，没弄好，然后自己就心态炸裂了，今天">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/01.png">
+<meta property="og:image" content="http://example.com/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/02.png">
+<meta property="og:image" content="http://example.com/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/03.png">
+<meta property="og:image" content="http://example.com/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/04.png">
+<meta property="og:image" content="http://example.com/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/05.png">
+<meta property="og:image" content="http://example.com/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/06.png">
+<meta property="og:image" content="http://example.com/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/07.png">
+<meta property="og:image" content="http://example.com/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/09.png">
+<meta property="og:image" content="http://example.com/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/10.png">
+<meta property="og:image" content="http://example.com/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/12.png">
+<meta property="og:image" content="http://example.com/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/13.png">
+<meta property="og:image" content="http://example.com/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/14.png">
+<meta property="og:image" content="http://example.com/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/16.png">
+<meta property="og:image" content="http://example.com/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/17.png">
+<meta property="og:image" content="http://example.com/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/18.png">
+<meta property="og:image" content="http://example.com/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/19.png">
+<meta property="og:image" content="http://example.com/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/20.png">
+<meta property="article:published_time" content="2021-02-27T23:15:44.000Z">
+<meta property="article:modified_time" content="2021-02-27T23:15:44.000Z">
+<meta property="article:author" content="筛滤淘">
+<meta property="article:tag" content="服务器">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/01.png">
+
+<link rel="canonical" href="http://example.com/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>前端部署项目到腾讯云服务器入门 | 木子小屋</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?79d7cb9c8fa9e57a2723fb8645f37638";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">木子小屋</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Talk is cheap. Show me the code.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cat.jpg">
+      <meta itemprop="name" content="筛滤淘">
+      <meta itemprop="description" content="前端知识点总结">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="木子小屋">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          前端部署项目到腾讯云服务器入门
+        </h1>
+
+        <div class="post-meta">
+          
+            <i class="fa fa-thumb-tack"></i>
+            <font color="green">置顶</font>
+            <span class="post-meta-divider">|</span>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-02-28 07:15:44" itemprop="dateCreated datePublished" datetime="2021-02-28T07:15:44+08:00">2021-02-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%8D%E5%8A%A1%E5%99%A8/" itemprop="url" rel="index"><span itemprop="name">服务器</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>(注1：现在是2021年2月28日，离职后的第5天，时间过得太快了，我这几天也是在间歇性准备找工作，准备面试题了。)</p>
+<p>(注2：截止到目前为止，我的简历还没有写好，因为GitHub Pages只能部署静态页面，所以我做的一些项目还没法直接部署到GitHub Pages上直接预览，想到自己的腾讯云服务器还有6个月才到期，就想着为什么不去利用起来呢？结果昨天搞了半天，没弄好，然后自己就心态炸裂了，今天是2月28日，2月的最后一天，也是周日，我今天起了个大早，就打算什么也不干了，就把自己的项目给部署到腾讯云服务器上。今天一定要成功啊！)</p>
+<p>(注3：我昨天把自己的服务器给重装系统了，今天就从0开始吧。)</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1HT4y1774Y?from=search&seid=9864901227654323292">8分钟快速弄懂如何将自己做的网页部署到服务器</a></p>
+<h1 id="基本情况"><a href="#基本情况" class="headerlink" title="基本情况"></a>基本情况</h1><p>这个就是自己的腾讯云服务器了：</p>
+<img data-src="/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/01.png" class>
+
+<p>这里面干干净净，是什么也没有的。不过里面的安全组里面已经开过端口了，我看过相关的教程，第一步还是安装一下宝塔面板。宝塔面板的网址是：<a target="_blank" rel="noopener" href="https://www.bt.cn/">宝塔面板</a></p>
+<p>我的系统镜像是CentOS的，所以安装以下这个就可以了。</p>
+<img data-src="/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/02.png" class>
+
+<img data-src="/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/03.png" class>
+
+<img data-src="/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/04.png" class>
+
+<img data-src="/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/05.png" class>
+
+<img data-src="/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/06.png" class>
+
+<h1 id="注册免费域名"><a href="#注册免费域名" class="headerlink" title="注册免费域名"></a>注册免费域名</h1><p>打开域名注册网站：<a target="_blank" rel="noopener" href="https://www.freenom.com/">Freenom.com</a>，注册一个免费域名，并且将它绑定到服务器上。具体操作可以看我前面给的<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1HT4y1774Y?from=search&seid=9864901227654323292">8分钟快速弄懂如何将自己做的网页部署到服务器</a>链接。</p>
+<img data-src="/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/07.png" class>
+
+
+
+<p>接着ping一下自己的这个域名，发现ping不通，我又ping服务器，发现也ping不通。</p>
+<img data-src="/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/09.png" class>
+
+<p>去问了腾讯云客服，告诉我：在服务器中的安全组中添加一条ICMP协议放通的规则，然后再尝试ping一下。</p>
+<img data-src="/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/10.png" class>
+
+<img data-src="/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/12.png" class>
+
+<h1 id="WinSCR传输文件到服务器"><a href="#WinSCR传输文件到服务器" class="headerlink" title="WinSCR传输文件到服务器"></a>WinSCR传输文件到服务器</h1><p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/document/product/213/35699#.E4.BD.BF.E7.94.A8.E5.AF.86.E9.92.A5.E7.99.BB.E5.BD.95">使用远程登录软件登录 Linux 实例</a></p>
+<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/document/product/213/5436">使用标准登录方式登录 Linux 实例（推荐）</a></p>
+<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1158263?from=information.detail.winscp%E6%80%8E%E4%B9%88%E8%BF%9E%E6%8E%A5%E8%85%BE%E8%AE%AF%E4%BA%91">Winscp 密钥登录服务器配置过程 提高 SFTP 连接安全性</a></p>
+<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/document/product/213/6092">SSH 密钥</a></p>
+<p>因为我使用了密钥登陆，所以就无法使用密码登陆了，需要在WinSCR软件上设置一下使用密钥登陆。</p>
+<p>我真实服了，搞了半天终于搞好了。</p>
+<img data-src="/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/13.png" class>
+
+<img data-src="/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/14.png" class>
+
+<p>不行啊，它不显示。</p>
+<h1 id="部署项目"><a href="#部署项目" class="headerlink" title="部署项目"></a>部署项目</h1><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wesky/p/9053853.html">linux nginx配置多个网站</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903741678698510">nginx.conf 配置文件详解</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/69555541">如何用一台服务器，部署多个不同的 WEB 项目 (use nginx in docker)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/46630687">vuejs怎么在服务器部署？</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/isyoungboy/article/details/84350256">解决 vue-cli index.js dev 配置中 assetsPublicPath 的值不能填 “./“ 的问题</a></p>
+<p>我查了一大堆东西，然后试着自己去弄，成功了！！！！！哈哈哈哈哈哈哈哈！！！！！！！！</p>
+<h1 id="域名问题"><a href="#域名问题" class="headerlink" title="域名问题"></a>域名问题</h1><p>我这个域名:<code>lm1018.top</code>不知道怎么了一直打不开，我索性不然再买一个域名，一个用于服务器，一个用于自己的Hexo博客吧。花了7块钱买了一个一年的<code>lm1024.top</code>的域名，先用着吧。</p>
+<h1 id="子域名"><a href="#子域名" class="headerlink" title="子域名"></a>子域名</h1><p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/ask/231882?from=information.detail.%E5%8D%8F%E4%BD%9C%E5%AD%90%E5%9F%9F%E5%90%8D">已有域名 怎麼添加子网域名？</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bt.cn/bbs/thread-3992-1-1.html">请问一下宝塔新建多个网站可以一个用域名多个端口吗？</a></p>
+<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/document/product/302/7800">子域名分项目管理</a></p>
+<img data-src="/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/16.png" class>
+
+<img data-src="/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/17.png" class>
+
+<img data-src="/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/18.png" class>
+
+<img data-src="/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/19.png" class>
+
+<h1 id="带有数据库的Vue后台管理系统部署项目"><a href="#带有数据库的Vue后台管理系统部署项目" class="headerlink" title="带有数据库的Vue后台管理系统部署项目"></a>带有数据库的Vue后台管理系统部署项目</h1><p>也是直接把dist文件夹放到里面，数据库我没有放，但是发现也没有什么问题。神奇。</p>
+<h1 id="报错信息"><a href="#报错信息" class="headerlink" title="报错信息"></a>报错信息</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/haibo0668/article/details/82947917">Mixed Content: The page at ‘xxx’ was loaded over HTTPS, but requested an insecure resource ‘xxx’.</a></p>
+<img data-src="/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/20.png" class>
+
+<p>这个没办法，我只好把SSL证书关闭了，不适用<code>https</code>访问了，用<code>http</code>访问就没有问题，可以请求到数据了。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/" rel="tag"># 服务器</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/02/26/CSS%E5%B8%83%E5%B1%80%E5%85%A5%E9%97%A8/" rel="prev" title="CSS布局入门">
+      <i class="fa fa-chevron-left"></i> CSS布局入门
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/03/01/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE4%EF%BC%9A%E4%BB%BF%E9%A5%BF%E4%BA%86%E5%90%97%E5%A4%96%E5%8D%96App/" rel="next" title="Vue实战项目4：仿饿了吗外卖App">
+      Vue实战项目4：仿饿了吗外卖App <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%83%85%E5%86%B5"><span class="nav-text">基本情况</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B3%A8%E5%86%8C%E5%85%8D%E8%B4%B9%E5%9F%9F%E5%90%8D"><span class="nav-text">注册免费域名</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#WinSCR%E4%BC%A0%E8%BE%93%E6%96%87%E4%BB%B6%E5%88%B0%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-text">WinSCR传输文件到服务器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE"><span class="nav-text">部署项目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%9F%E5%90%8D%E9%97%AE%E9%A2%98"><span class="nav-text">域名问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%90%E5%9F%9F%E5%90%8D"><span class="nav-text">子域名</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%A6%E6%9C%89%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84Vue%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE"><span class="nav-text">带有数据库的Vue后台管理系统部署项目</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8A%A5%E9%94%99%E4%BF%A1%E6%81%AF"><span class="nav-text">报错信息</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="筛滤淘"
+      src="/images/cat.jpg">
+  <p class="site-author-name" itemprop="name">筛滤淘</p>
+  <div class="site-description" itemprop="description">前端知识点总结</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">129</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lm101845" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lm101845" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1018457683@qq.com" title="E-Mail → mailto:1018457683@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.jianshu.com/u/6879af8ace24" title="简 书 → https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;6879af8ace24" rel="noopener" target="_blank"><i class="fa fa-jianshu fa-fw"></i>简 书</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/9002959" title="B  站 → https:&#x2F;&#x2F;space.bilibili.com&#x2F;9002959" rel="noopener" target="_blank"><i class="fa fa-bilibili fa-fw"></i>B  站</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">筛滤淘</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">3.7m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">56:03</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

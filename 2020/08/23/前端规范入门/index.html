@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="(注1：应该是自己CSS代码写的还比较少的缘故，或者说写CSS时绝大多数时间都是抄视频上的代码，很少自己独立去写代码，所以感觉自己的CSS水平像是悬在天上一样，所以搜了一下有关问题，一个没有经验的前端工程师，写CSS的时候有什么常见通病？,里面一个回答讲到了前端规范，想起自己很久之前接触过这个，但是因为当时初学没有对此过于在意，而今，自己慢慢的要从一个杂牌军像正规军转变了，一个人也要称为一个军队，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端规范入门">
+<meta property="og:url" content="http://example.com/2020/08/23/%E5%89%8D%E7%AB%AF%E8%A7%84%E8%8C%83%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="木子小屋">
+<meta property="og:description" content="(注1：应该是自己CSS代码写的还比较少的缘故，或者说写CSS时绝大多数时间都是抄视频上的代码，很少自己独立去写代码，所以感觉自己的CSS水平像是悬在天上一样，所以搜了一下有关问题，一个没有经验的前端工程师，写CSS的时候有什么常见通病？,里面一个回答讲到了前端规范，想起自己很久之前接触过这个，但是因为当时初学没有对此过于在意，而今，自己慢慢的要从一个杂牌军像正规军转变了，一个人也要称为一个军队，">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-08-23T13:10:37.000Z">
+<meta property="article:modified_time" content="2020-08-23T13:10:37.000Z">
+<meta property="article:author" content="筛滤淘">
+<meta property="article:tag" content="前端规范">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2020/08/23/%E5%89%8D%E7%AB%AF%E8%A7%84%E8%8C%83%E5%85%A5%E9%97%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>前端规范入门 | 木子小屋</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?79d7cb9c8fa9e57a2723fb8645f37638";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">木子小屋</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Talk is cheap. Show me the code.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/08/23/%E5%89%8D%E7%AB%AF%E8%A7%84%E8%8C%83%E5%85%A5%E9%97%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cat.jpg">
+      <meta itemprop="name" content="筛滤淘">
+      <meta itemprop="description" content="前端知识点总结">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="木子小屋">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          前端规范入门
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-23 21:10:37" itemprop="dateCreated datePublished" datetime="2020-08-23T21:10:37+08:00">2020-08-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF%E8%A7%84%E8%8C%83/" itemprop="url" rel="index"><span itemprop="name">前端规范</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>19k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>17 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>(注1：应该是自己CSS代码写的还比较少的缘故，或者说写CSS时绝大多数时间都是抄视频上的代码，很少自己独立去写代码，所以感觉自己的CSS水平像是悬在天上一样，所以搜了一下有关问题，<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/322443498/answer/669000990">一个没有经验的前端工程师，写CSS的时候有什么常见通病？</a>,里面一个回答讲到了<strong>前端规范</strong>，想起自己很久之前接触过这个，但是因为当时初学没有对此过于在意，而今，自己慢慢的要从一个杂牌军像正规军转变了，一个人也要称为一个军队，现在是时候注意要让自己的代码结构整洁清晰流畅了，从今天起就要注意了，要慢慢养成一个良好的书写代码的习惯了。)</p>
+<p>(注2：一个比较好的有关前端规范的网站<a target="_blank" rel="noopener" href="http://alloyteam.github.io/CodeGuide/">腾讯前端团队AlloyTeam的编码规范</a>,决定就从这里开始系统学习前端规范吧，就从现在开始，一定要慢慢的养成书写代码的好习惯啊)</p>
+<p>(注3：现在是2020年10月31日，对于前端代码规范又有了一些认识。为了约定大家的代码风格，所以在社区中诞生了一些比较规范的代码风格规范，主要有2种：<a target="_blank" rel="noopener" href="https://standardjs.com/readme-zhcn.html">Javascript standard style</a>和<a href>Airbnb Javascript style</a>)</p>
+<p>(注4：等以后去公司工作写代码了，一个人是新手还是老手，通过你写代码的格式就能看出来。)</p>
+<p>(注5：哪怕你写不好，也没关系，多用一些代码格式化工具，给它格式化一下也是可以的，起到辅助的作用。)</p>
+<p>(注6：<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/20298345">JavaScript 语句后应该加分号么？</a>)</p>
+<h1 id="Javascript-standard-style"><a href="#Javascript-standard-style" class="headerlink" title="Javascript standard style"></a>Javascript standard style</h1><p><a target="_blank" rel="noopener" href="https://standardjs.com/readme-zhcn.html">JavaScript Standard Style</a></p>
+<h1 id="Airbnb-Javascript-style"><a href="#Airbnb-Javascript-style" class="headerlink" title="Airbnb Javascript style"></a>Airbnb Javascript style</h1><p><a target="_blank" rel="noopener" href="https://github.com/lin-123/javascript">Airbnb JavaScript 风格指南</a></p>
+<blockquote>
+<p>这个比JavaScript standard style更加严谨一些,所以用的人少一些。</p>
+</blockquote>
+<h1 id="腾讯前端团队规范"><a href="#腾讯前端团队规范" class="headerlink" title="腾讯前端团队规范"></a>腾讯前端团队规范</h1><h2 id="最佳原则"><a href="#最佳原则" class="headerlink" title="最佳原则"></a>最佳原则</h2><p>坚持制定好的代码规范。</p>
+<p>无论团队人数多少，代码应该同出一门。</p>
+<h2 id="命名规则"><a href="#命名规则" class="headerlink" title="命名规则"></a>命名规则</h2><h3 id="项目命名"><a href="#项目命名" class="headerlink" title="项目命名"></a>项目命名</h3><p><strong>全部</strong>采用<strong>小写方式</strong>， 以<strong>下划线</strong>分隔。</p>
+<p>例：<code>my_project_name</code></p>
+<h3 id="目录命名"><a href="#目录命名" class="headerlink" title="目录命名"></a>目录命名</h3><p>参照项目命名规则；</p>
+<p>有<strong>复数</strong>结构时，要采用<strong>复数命名法</strong>。</p>
+<p>例：<code>scripts, styles, images, data_models</code></p>
+<h3 id="JS文件命名"><a href="#JS文件命名" class="headerlink" title="JS文件命名"></a>JS文件命名</h3><p>参照项目命名规则。</p>
+<p>例：<code>account_model.js</code></p>
+<h3 id="CSS-SCSS文件命名"><a href="#CSS-SCSS文件命名" class="headerlink" title="CSS, SCSS文件命名"></a>CSS, SCSS文件命名</h3><p>参照项目命名规则。</p>
+<p>例：<code>retina_sprites.scss</code></p>
+<h3 id="HTML文件命名"><a href="#HTML文件命名" class="headerlink" title="HTML文件命名"></a>HTML文件命名</h3><p>参照项目命名规则。</p>
+<p>例：<code>error_report.html</code></p>
+<h2 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h2><h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><ul>
+<li><p>缩进使用soft tab（<strong>4个</strong>空格）；</p>
+<blockquote>
+<p>到底是缩进4个空格好还是2个空格好一直有争论，我看Vue视频的时候老师特定强调建议缩进2个空格，还说Vue的原码也是缩进2个空格的。我目前还是缩进4个空格的，到时候再看看吧，看要不要改回2个空格。</p>
+</blockquote>
+</li>
+<li><p>嵌套的节点应该缩进；</p>
+</li>
+<li><p>在属性上，使用双引号，不要使用单引号；</p>
+</li>
+<li><p>属性名全小写，用中划线做分隔符；</p>
+</li>
+<li><p>不要在自动闭合标签结尾处使用斜线（<a target="_blank" rel="noopener" href="http://dev.w3.org/html5/spec-author-view/syntax.html#syntax-start-tag">HTML5 规范</a> 指出他们是可选的）；</p>
+</li>
+<li><p>不要忽略可选的关闭标签，例：<code>&lt;/li&gt;</code> 和 <code>&lt;/body&gt;</code>。</p>
+</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span>Page title<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;images/company_logo.png&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;Company&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">h1</span> <span class="attr">class</span>=<span class="string">&quot;hello-world&quot;</span>&gt;</span>Hello, world!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="HTML5-doctype"><a href="#HTML5-doctype" class="headerlink" title="HTML5 doctype"></a>HTML5 doctype</h3><p>在页面开头使用这个简单地doctype来启用标准模式，使其在每个浏览器中尽可能一致的展现；</p>
+<p>虽然doctype不区分大小写，但是按照惯例，doctype大写 （<a target="_blank" rel="noopener" href="http://stackoverflow.com/questions/15594877/is-there-any-benefits-to-use-uppercase-or-lowercase-letters-with-html5-tagname">关于html属性，大写还是小写</a>）。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">	...</span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="lang属性"><a href="#lang属性" class="headerlink" title="lang属性"></a>lang属性</h3><p>根据HTML5规范：</p>
+<blockquote>
+<p>应在html标签上加上lang属性。这会给语音工具和翻译工具帮助，告诉它们应当怎么去发音和翻译。</p>
+</blockquote>
+<p>更多关于 <code>lang</code> 属性的说明<a target="_blank" rel="noopener" href="http://www.w3.org/html/wg/drafts/html/master/semantics.html#the-html-element">在这里</a>；</p>
+<p>在sitepoint上可以查到<a target="_blank" rel="noopener" href="http://reference.sitepoint.com/html/lang-codes">语言列表</a>；</p>
+<p>但sitepoint只是给出了语言的大类，例如中文只给出了zh，但是没有区分香港，台湾，大陆。而微软给出了一份更加<a target="_blank" rel="noopener" href="http://msdn.microsoft.com/en-us/library/ms533052(v=vs.85).aspx">详细的语言列表</a>，其中细分了zh-cn, zh-hk, zh-tw。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en-us&quot;</span>&gt;</span></span><br><span class="line">    ...</span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="字符编码"><a href="#字符编码" class="headerlink" title="字符编码"></a>字符编码</h3><p>通过声明一个明确的字符编码，让浏览器轻松、快速的确定适合网页内容的渲染方式，通常指定为’UTF-8’。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    ...</span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="IE兼容模式"><a href="#IE兼容模式" class="headerlink" title="IE兼容模式"></a>IE兼容模式</h3><p>用 <code>&lt;meta&gt;</code> 标签可以指定页面应该用什么版本的IE来渲染；</p>
+<p>如果你想要了解更多，请点击<a target="_blank" rel="noopener" href="http://stackoverflow.com/questions/6771258/whats-the-difference-if-meta-http-equiv-x-ua-compatible-content-ie-edge-e">这里</a>；</p>
+<p>不同doctype在不同浏览器下会触发不同的渲染模式（<a target="_blank" rel="noopener" href="https://hsivonen.fi/doctype/">这篇文章</a>总结的很到位）。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;X-UA-Compatible&quot;</span> <span class="attr">content</span>=<span class="string">&quot;IE=Edge&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    ...</span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="引入CSS-JS"><a href="#引入CSS-JS" class="headerlink" title="引入CSS, JS"></a>引入CSS, JS</h3><p>根据HTML5规范, 通常在引入CSS和JS时不需要指明 <code>type</code>，因为 <code>text/css</code> 和 <code>text/javascript</code> 分别是他们的默认值。</p>
+<h3 id="HTML5-规范链接"><a href="#HTML5-规范链接" class="headerlink" title="HTML5 规范链接"></a>HTML5 规范链接</h3><ul>
+<li><a target="_blank" rel="noopener" href="http://www.w3.org/TR/2011/WD-html5-20110525/semantics.html#the-link-element">使用link</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.w3.org/TR/2011/WD-html5-20110525/semantics.html#the-style-element">使用style</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.w3.org/TR/2011/WD-html5-20110525/scripting-1.html#the-script-element">使用script</a></li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- External CSS --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;code_guide.css&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- In-document CSS --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span></span><br><span class="line">    ...</span><br><span class="line"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- External JS --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;code_guide.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- In-document JS --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line">    ...</span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="属性顺序"><a href="#属性顺序" class="headerlink" title="属性顺序"></a>属性顺序</h3><ul>
+<li><code>class</code></li>
+<li><code>id</code></li>
+<li><code>name</code></li>
+<li><code>data-*</code></li>
+<li><code>src</code>, <code>for</code>, <code>type</code>, <code>href</code>, <code>value</code> , <code>max-length</code>, <code>max</code>, <code>min</code>, <code>pattern</code></li>
+<li><code>placeholder</code>, <code>title</code>, <code>alt</code></li>
+<li><code>aria-*</code>, <code>role</code></li>
+<li><code>required</code>, <code>readonly</code>, <code>disabled</code></li>
+</ul>
+<p>class是为高可复用组件设计的，所以应处在第一位；</p>
+<p>id更加具体且应该尽量少使用，所以将它放在第二位。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">class</span>=<span class="string">&quot;...&quot;</span> <span class="attr">id</span>=<span class="string">&quot;...&quot;</span> <span class="attr">data-modal</span>=<span class="string">&quot;toggle&quot;</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span>&gt;</span>Example link<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">class</span>=<span class="string">&quot;form-control&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;...&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;...&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="boolean属性"><a href="#boolean属性" class="headerlink" title="boolean属性"></a>boolean属性</h3><p>boolean属性指不需要声明取值的属性，XHTML需要每个属性声明取值，但是HTML5并不需要；</p>
+<p>更多内容可以参考 <a target="_blank" rel="noopener" href="http://www.whatwg.org/specs/web-apps/current-work/multipage/common-microsyntaxes.html#boolean-attributes">WhatWG section on boolean attributes</a>：</p>
+<blockquote>
+<p>boolean属性的存在表示取值为true，不存在则表示取值为false。</p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">disabled</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">value</span>=<span class="string">&quot;1&quot;</span> <span class="attr">checked</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">select</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">&quot;1&quot;</span> <span class="attr">selected</span>&gt;</span>1<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="JS生成标签"><a href="#JS生成标签" class="headerlink" title="JS生成标签"></a>JS生成标签</h3><p>在JS文件中生成标签让内容变得更难查找，更难编辑，性能更差。应该尽量避免这种情况的出现。</p>
+<h3 id="减少标签数量"><a href="#减少标签数量" class="headerlink" title="减少标签数量"></a>减少标签数量</h3><p>在编写HTML代码时，需要尽量避免多余的父节点；</p>
+<p>很多时候，需要通过迭代和重构来使HTML变得更少。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Not well --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">&quot;avatar&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;...&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- Better --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">class</span>=<span class="string">&quot;avatar&quot;</span> <span class="attr">src</span>=<span class="string">&quot;...&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="实用高于完美"><a href="#实用高于完美" class="headerlink" title="实用高于完美"></a>实用高于完美</h3><p>尽量遵循HTML标准和语义，但是不应该以浪费实用性作为代价；</p>
+<p>任何时候都要用尽量小的复杂度和尽量少的标签来解决问题。</p>
+<h2 id="CSS-SCSS"><a href="#CSS-SCSS" class="headerlink" title="CSS, SCSS"></a>CSS, SCSS</h2><h3 id="缩进"><a href="#缩进" class="headerlink" title="缩进"></a>缩进</h3><p>使用soft tab（4个空格）。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.element</span> &#123;</span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">10px</span>;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">10px</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">10px</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">50px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">50px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="分号"><a href="#分号" class="headerlink" title="分号"></a>分号</h3><p>每个属性声明末尾都要加分号。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.element</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">20px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">20px</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">background-color</span>: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="空格"><a href="#空格" class="headerlink" title="空格"></a>空格</h3><p>以下几种情况不需要空格：</p>
+<ul>
+<li>属性名后</li>
+<li>多个规则的分隔符<code>&#39;,&#39;</code>前</li>
+<li><code>!important</code> ‘!’后</li>
+<li>属性值中’(‘后和’)’前</li>
+<li>行末不要有多余的空格</li>
+</ul>
+<p>以下几种情况需要空格：</p>
+<ul>
+<li>属性值前</li>
+<li>选择器<code>&#39;&gt;&#39;, &#39;+&#39;, &#39;~&#39;</code>前后</li>
+<li>‘{‘前</li>
+<li><code>!important</code> ‘!’前</li>
+<li><code>@else</code> 前后</li>
+<li>属性值中的’,’后</li>
+<li>注释<code>&#39;/*&#39;</code>后和<code>&#39;*/&#39;</code>前</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* not good */</span></span><br><span class="line"><span class="selector-class">.element</span> &#123;</span><br><span class="line">    <span class="attribute">color </span>:red! important;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="built_in">rgba</span>(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,.<span class="number">5</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* good */</span></span><br><span class="line"><span class="selector-class">.element</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: red <span class="meta">!important</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="built_in">rgba</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, .<span class="number">5</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* not good */</span></span><br><span class="line"><span class="selector-class">.element</span> ,</span><br><span class="line"><span class="selector-class">.dialog</span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* good */</span></span><br><span class="line"><span class="selector-class">.element</span>,</span><br><span class="line"><span class="selector-class">.dialog</span> &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* not good */</span></span><br><span class="line"><span class="selector-class">.element</span>&gt;<span class="selector-class">.dialog</span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* good */</span></span><br><span class="line"><span class="selector-class">.element</span> &gt; <span class="selector-class">.dialog</span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* not good */</span></span><br><span class="line"><span class="selector-class">.element</span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* good */</span></span><br><span class="line"><span class="selector-class">.element</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* not good */</span></span><br><span class="line"><span class="keyword">@if</span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;<span class="keyword">@else</span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* good */</span></span><br><span class="line"><span class="keyword">@if</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125; <span class="keyword">@else</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="空行"><a href="#空行" class="headerlink" title="空行"></a>空行</h3><p>以下几种情况需要空行：</p>
+<ul>
+<li>文件最后保留一个空行</li>
+<li><code>&#39;&#125;&#39;</code>后最好跟一个空行，包括scss中嵌套的规则</li>
+<li>属性之间需要适当的空行，具体见<a target="_blank" rel="noopener" href="http://alloyteam.github.io/CodeGuide/#css-declaration-order">属性声明顺序</a></li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* not good */</span></span><br><span class="line"><span class="selector-class">.element</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.dialog</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: red;</span><br><span class="line">    &amp;:after &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* good */</span></span><br><span class="line"><span class="selector-class">.element</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.dialog</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: red;</span><br><span class="line"></span><br><span class="line">    &amp;:after &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="换行"><a href="#换行" class="headerlink" title="换行"></a>换行</h3><p>以下几种情况不需要换行：</p>
+<ul>
+<li><code>&#39;&#123;&#39;</code>前</li>
+</ul>
+<p>以下几种情况需要换行：</p>
+<ul>
+<li><code>&#39;&#123;&#39;</code>后和<code>&#39;&#125;&#39;</code>前</li>
+<li>每个属性独占一行</li>
+<li>多个规则的分隔符’,’后</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* not good */</span></span><br><span class="line"><span class="selector-class">.element</span></span><br><span class="line">&#123;<span class="attribute">color</span>: red; <span class="attribute">background-color</span>: black;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* good */</span></span><br><span class="line"><span class="selector-class">.element</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: red;</span><br><span class="line">    <span class="attribute">background-color</span>: black;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* not good */</span></span><br><span class="line"><span class="selector-class">.element</span>, <span class="selector-class">.dialog</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* good */</span></span><br><span class="line"><span class="selector-class">.element</span>,</span><br><span class="line"><span class="selector-class">.dialog</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><p>注释统一用<code>&#39;/* */&#39;</code>（scss中也不要用<code>&#39;//&#39;</code>），具体参照右边的写法；</p>
+<p>缩进与下一行代码保持一致；</p>
+<p>可位于一个代码行的末尾，与代码间隔一个空格。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Modal header */</span></span><br><span class="line"><span class="selector-class">.modal-header</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Modal header</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="selector-class">.modal-header</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.modal-header</span> &#123;</span><br><span class="line">    <span class="comment">/* 50px */</span></span><br><span class="line">    <span class="attribute">width</span>: <span class="number">50px</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">color</span>: red; <span class="comment">/* color red */</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="引号"><a href="#引号" class="headerlink" title="引号"></a>引号</h3><p>最外层统一使用双引号；</p>
+<p>url的内容要用引号；</p>
+<p>属性选择器中的属性值需要引号。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.element</span><span class="selector-pseudo">:after</span> &#123;</span><br><span class="line">    <span class="attribute">content</span>: <span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="attribute">background-image</span>: <span class="built_in">url</span>(<span class="string">&quot;logo.png&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">li</span><span class="selector-attr">[data-type=<span class="string">&quot;single&quot;</span>]</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h3><ul>
+<li>类名使用小写字母，以中划线分隔</li>
+<li>id采用驼峰式命名</li>
+<li>scss中的变量、函数、混合、placeholder采用驼峰式命名</li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* class */</span></span><br><span class="line"><span class="selector-class">.element-content</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* id */</span></span><br><span class="line"><span class="selector-id">#myDialog</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 变量 */</span></span><br><span class="line">$colorBlack: #000;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 函数 */</span></span><br><span class="line"><span class="keyword">@function</span> pxToRem($px) &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 混合 */</span></span><br><span class="line"><span class="keyword">@mixin</span> centerBlock &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* placeholder */</span></span><br><span class="line">%<span class="selector-tag">myDialog</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="属性声明顺序"><a href="#属性声明顺序" class="headerlink" title="属性声明顺序"></a>属性声明顺序</h3><p>相关的属性声明按右边的顺序做分组处理，组之间需要有一个空行。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.declaration-order</span> &#123;</span><br><span class="line">    <span class="attribute">display</span>: block;</span><br><span class="line">    <span class="attribute">float</span>: right;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">position</span>: absolute;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">right</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">bottom</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">z-index</span>: <span class="number">100</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">border</span>: <span class="number">1px</span> solid <span class="number">#e5e5e5</span>;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">3px</span>;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">100px</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">font</span>: normal <span class="number">13px</span> <span class="string">&quot;Helvetica Neue&quot;</span>, sans-serif;</span><br><span class="line">    <span class="attribute">line-height</span>: <span class="number">1.5</span>;</span><br><span class="line">    <span class="attribute">text-align</span>: center;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#333</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#f5f5f5</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">opacity</span>: <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line">// 下面是推荐的属性的顺序</span><br><span class="line">[</span><br><span class="line">    [</span><br><span class="line">        &quot;<span class="selector-tag">display</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">visibility</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">float</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">clear</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">overflow</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">overflow-x</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">overflow-y</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">clip</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">zoom</span>&quot;</span><br><span class="line">    ],</span><br><span class="line">    [</span><br><span class="line">        &quot;<span class="selector-tag">table-layout</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">empty-cells</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">caption-side</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">border-spacing</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">border-collapse</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">list-style</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">list-style-position</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">list-style-type</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">list-style-image</span>&quot;</span><br><span class="line">    ],</span><br><span class="line">    [</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-box-orient</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-box-direction</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-box-decoration-break</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-box-pack</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-box-align</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-box-flex</span>&quot;</span><br><span class="line">    ],</span><br><span class="line">    [</span><br><span class="line">        &quot;<span class="selector-tag">position</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">top</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">right</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">bottom</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">left</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">z-index</span>&quot;</span><br><span class="line">    ],</span><br><span class="line">    [</span><br><span class="line">        &quot;<span class="selector-tag">margin</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">margin-top</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">margin-right</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">margin-bottom</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">margin-left</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-box-sizing</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-moz-box-sizing</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">box-sizing</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">border</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">border-width</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">border-style</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">border-color</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">border-top</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">border-top-width</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">border-top-style</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">border-top-color</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">border-right</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">border-right-width</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">border-right-style</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">border-right-color</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">border-bottom</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">border-bottom-width</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">border-bottom-style</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">border-bottom-color</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">border-left</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">border-left-width</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">border-left-style</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">border-left-color</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-border-radius</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-moz-border-radius</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">border-radius</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-border-top-left-radius</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-moz-border-radius-topleft</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">border-top-left-radius</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-border-top-right-radius</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-moz-border-radius-topright</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">border-top-right-radius</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-border-bottom-right-radius</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-moz-border-radius-bottomright</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">border-bottom-right-radius</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-border-bottom-left-radius</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-moz-border-radius-bottomleft</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">border-bottom-left-radius</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-border-image</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-moz-border-image</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-o-border-image</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">border-image</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-border-image-source</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-moz-border-image-source</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-o-border-image-source</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">border-image-source</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-border-image-slice</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-moz-border-image-slice</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-o-border-image-slice</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">border-image-slice</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-border-image-width</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-moz-border-image-width</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-o-border-image-width</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">border-image-width</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-border-image-outset</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-moz-border-image-outset</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-o-border-image-outset</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">border-image-outset</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-border-image-repeat</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-moz-border-image-repeat</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-o-border-image-repeat</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">border-image-repeat</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">padding</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">padding-top</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">padding-right</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">padding-bottom</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">padding-left</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">width</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">min-width</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">max-width</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">height</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">min-height</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">max-height</span>&quot;</span><br><span class="line">    ],</span><br><span class="line">    [</span><br><span class="line">        &quot;<span class="selector-tag">font</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">font-family</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">font-size</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">font-weight</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">font-style</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">font-variant</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">font-size-adjust</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">font-stretch</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">font-effect</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">font-emphasize</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">font-emphasize-position</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">font-emphasize-style</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">font-smooth</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">line-height</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">text-align</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-text-align-last</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-moz-text-align-last</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-ms-text-align-last</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">text-align-last</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">vertical-align</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">white-space</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">text-decoration</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">text-emphasis</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">text-emphasis-color</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">text-emphasis-style</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">text-emphasis-position</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">text-indent</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-ms-text-justify</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">text-justify</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">letter-spacing</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">word-spacing</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-ms-writing-mode</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">text-outline</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">text-transform</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">text-wrap</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-ms-text-overflow</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">text-overflow</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">text-overflow-ellipsis</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">text-overflow-mode</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-ms-word-wrap</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">word-wrap</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-ms-word-break</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">word-break</span>&quot;</span><br><span class="line">    ],</span><br><span class="line">    [</span><br><span class="line">        &quot;<span class="selector-tag">color</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">background</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">filter</span><span class="selector-pseudo">:progid</span><span class="selector-pseudo">:DXImageTransform.Microsoft.AlphaImageLoader&quot;</span>,</span><br><span class="line">        &quot;<span class="selector-tag">background-color</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">background-image</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">background-repeat</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">background-attachment</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">background-position</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-ms-background-position-x</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">background-position-x</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-ms-background-position-y</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">background-position-y</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-background-clip</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-moz-background-clip</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">background-clip</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">background-origin</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-background-size</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-moz-background-size</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-o-background-size</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">background-size</span>&quot;</span><br><span class="line">    ],</span><br><span class="line">    [</span><br><span class="line">        &quot;<span class="selector-tag">outline</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">outline-width</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">outline-style</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">outline-color</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">outline-offset</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">opacity</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">filter</span><span class="selector-pseudo">:progid</span><span class="selector-pseudo">:DXImageTransform.Microsoft.Alpha(Opacity&quot;</span>,</span><br><span class="line">        &quot;-ms-filter:\\&#x27;progid:DXImageTransform.Microsoft.Alpha&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-ms-interpolation-mode</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-box-shadow</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-moz-box-shadow</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">box-shadow</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">filter</span><span class="selector-pseudo">:progid</span><span class="selector-pseudo">:DXImageTransform.Microsoft.gradient&quot;</span>,</span><br><span class="line">        &quot;-ms-filter:\\&#x27;progid:DXImageTransform.Microsoft.gradient&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">text-shadow</span>&quot;</span><br><span class="line">    ],</span><br><span class="line">    [</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-transition</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-moz-transition</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-ms-transition</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-o-transition</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">transition</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-transition-delay</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-moz-transition-delay</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-ms-transition-delay</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-o-transition-delay</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">transition-delay</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-transition-timing-function</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-moz-transition-timing-function</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-ms-transition-timing-function</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-o-transition-timing-function</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">transition-timing-function</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-transition-duration</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-moz-transition-duration</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-ms-transition-duration</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-o-transition-duration</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">transition-duration</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-transition-property</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-moz-transition-property</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-ms-transition-property</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-o-transition-property</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">transition-property</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-transform</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-moz-transform</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-ms-transform</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-o-transform</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">transform</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-transform-origin</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-moz-transform-origin</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-ms-transform-origin</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-o-transform-origin</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">transform-origin</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-animation</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-moz-animation</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-ms-animation</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-o-animation</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">animation</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-animation-name</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-moz-animation-name</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-ms-animation-name</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-o-animation-name</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">animation-name</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-animation-duration</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-moz-animation-duration</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-ms-animation-duration</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-o-animation-duration</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">animation-duration</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-animation-play-state</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-moz-animation-play-state</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-ms-animation-play-state</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-o-animation-play-state</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">animation-play-state</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-animation-timing-function</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-moz-animation-timing-function</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-ms-animation-timing-function</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-o-animation-timing-function</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">animation-timing-function</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-animation-delay</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-moz-animation-delay</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-ms-animation-delay</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-o-animation-delay</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">animation-delay</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-animation-iteration-count</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-moz-animation-iteration-count</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-ms-animation-iteration-count</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-o-animation-iteration-count</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">animation-iteration-count</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-animation-direction</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-moz-animation-direction</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-ms-animation-direction</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-o-animation-direction</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">animation-direction</span>&quot;</span><br><span class="line">    ],</span><br><span class="line">    [</span><br><span class="line">        &quot;<span class="selector-tag">content</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">quotes</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">counter-reset</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">counter-increment</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">resize</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">cursor</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-user-select</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-moz-user-select</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-ms-user-select</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">user-select</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">nav-index</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">nav-up</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">nav-right</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">nav-down</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">nav-left</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-moz-tab-size</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-o-tab-size</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">tab-size</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-webkit-hyphens</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">-moz-hyphens</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">hyphens</span>&quot;,</span><br><span class="line">        &quot;<span class="selector-tag">pointer-events</span>&quot;</span><br><span class="line">    ]</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<h3 id="颜色"><a href="#颜色" class="headerlink" title="颜色"></a>颜色</h3><p>颜色16进制用小写字母；</p>
+<p>颜色16进制尽量用简写。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* not good */</span></span><br><span class="line"><span class="selector-class">.element</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#ABCDEF</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#001122</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* good */</span></span><br><span class="line"><span class="selector-class">.element</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#abcdef</span>;</span><br><span class="line">    <span class="attribute">background-color</span>: <span class="number">#012</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="属性简写"><a href="#属性简写" class="headerlink" title="属性简写"></a>属性简写</h3><p>属性简写需要你非常清楚属性值的正确顺序，而且在大多数情况下并不需要设置属性简写中包含的所有值，所以建议尽量分开声明会更加清晰；</p>
+<p><code>margin</code> 和 <code>padding</code> 相反，需要使用简写；</p>
+<p>常见的属性简写包括：</p>
+<ul>
+<li><code>font</code></li>
+<li><code>background</code></li>
+<li><code>transition</code></li>
+<li><code>animation</code></li>
+</ul>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* not good */</span></span><br><span class="line"><span class="selector-class">.element</span> &#123;</span><br><span class="line">    <span class="attribute">transition</span>: opacity <span class="number">1s</span> linear <span class="number">2s</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* good */</span></span><br><span class="line"><span class="selector-class">.element</span> &#123;</span><br><span class="line">    <span class="attribute">transition-delay</span>: <span class="number">2s</span>;</span><br><span class="line">    <span class="attribute">transition-timing-function</span>: linear;</span><br><span class="line">    <span class="attribute">transition-duration</span>: <span class="number">1s</span>;</span><br><span class="line">    <span class="attribute">transition-property</span>: opacity;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="媒体查询"><a href="#媒体查询" class="headerlink" title="媒体查询"></a>媒体查询</h3><p>尽量将媒体查询的规则靠近与他们相关的规则，不要将他们一起放到一个独立的样式文件中，或者丢在文档的最底部，这样做只会让大家以后更容易忘记他们。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.element</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.element-avatar</span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@media</span> (<span class="attribute">min-width:</span> <span class="number">480px</span>) &#123;</span><br><span class="line">    <span class="selector-class">.element</span> &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="selector-class">.element-avatar</span> &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="SCSS相关"><a href="#SCSS相关" class="headerlink" title="SCSS相关"></a>SCSS相关</h2><p>提交的代码中不要有 <code>@debug</code>；</p>
+<p>声明顺序：</p>
+<ul>
+<li><code>@extend</code></li>
+<li>不包含 <code>@content</code> 的 <code>@include</code></li>
+<li>包含 <code>@content</code> 的 <code>@include</code></li>
+<li>自身属性</li>
+<li>嵌套规则</li>
+</ul>
+<p><code>@import</code> 引入的文件不需要开头的’_’和结尾的’.scss’；</p>
+<p>嵌套最多不能超过5层；</p>
+<p><code>@extend</code> 中使用placeholder选择器；</p>
+<p>去掉不必要的父级引用符号’&amp;’。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* not good */</span></span><br><span class="line"><span class="keyword">@import</span> <span class="string">&quot;_dialog.scss&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* good */</span></span><br><span class="line"><span class="keyword">@import</span> <span class="string">&quot;dialog&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* not good */</span></span><br><span class="line"><span class="selector-class">.fatal</span> &#123;</span><br><span class="line">    @extend .error;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* good */</span></span><br><span class="line"><span class="selector-class">.fatal</span> &#123;</span><br><span class="line">    @extend %error;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* not good */</span></span><br><span class="line"><span class="selector-class">.element</span> &#123;</span><br><span class="line">    &amp; &gt; .dialog &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* good */</span></span><br><span class="line"><span class="selector-class">.element</span> &#123;</span><br><span class="line">    &gt; .dialog &#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="杂项"><a href="#杂项" class="headerlink" title="杂项"></a>杂项</h2><p>不允许有空的规则；</p>
+<p>元素选择器用小写字母；</p>
+<p>去掉小数点前面的0；</p>
+<p>去掉数字中不必要的小数点和末尾的0；</p>
+<p>属性值’0’后面不要加单位；</p>
+<p>同个属性不同前缀的写法需要在垂直方向保持对齐，具体参照右边的写法；</p>
+<p>无前缀的标准属性应该写在有前缀的属性后面；</p>
+<p>不要在同个规则里出现重复的属性，如果重复的属性是连续的则没关系；</p>
+<p>不要在一个文件里出现两个相同的规则；</p>
+<p>用 <code>border: 0;</code> 代替 <code>border: none;</code>；</p>
+<p>选择器不要超过4层（在scss中如果超过4层应该考虑用嵌套的方式来写）；</p>
+<p>发布的代码中不要有 <code>@import</code>；</p>
+<p>尽量少用<code>&#39;*&#39;</code>选择器。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* not good */</span></span><br><span class="line"><span class="selector-class">.element</span> &#123;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* not good */</span></span><br><span class="line"><span class="selector-tag">LI</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* good */</span></span><br><span class="line"><span class="selector-tag">li</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* not good */</span></span><br><span class="line"><span class="selector-class">.element</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="built_in">rgba</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0.5</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* good */</span></span><br><span class="line"><span class="selector-class">.element</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="built_in">rgba</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, .<span class="number">5</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* not good */</span></span><br><span class="line"><span class="selector-class">.element</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">50.0px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* good */</span></span><br><span class="line"><span class="selector-class">.element</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">50px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* not good */</span></span><br><span class="line"><span class="selector-class">.element</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">0px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* good */</span></span><br><span class="line"><span class="selector-class">.element</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* not good */</span></span><br><span class="line"><span class="selector-class">.element</span> &#123;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">3px</span>;</span><br><span class="line">    <span class="attribute">-webkit-border-radius</span>: <span class="number">3px</span>;</span><br><span class="line">    <span class="attribute">-moz-border-radius</span>: <span class="number">3px</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">background</span>: <span class="built_in">linear-gradient</span>(to bottom, #fff <span class="number">0</span>, #eee <span class="number">100%</span>);</span><br><span class="line">    <span class="attribute">background</span>: <span class="built_in">-webkit-linear-gradient</span>(top, #fff <span class="number">0</span>, #eee <span class="number">100%</span>);</span><br><span class="line">    <span class="attribute">background</span>: <span class="built_in">-moz-linear-gradient</span>(top, #fff <span class="number">0</span>, #eee <span class="number">100%</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* good */</span></span><br><span class="line"><span class="selector-class">.element</span> &#123;</span><br><span class="line">    <span class="attribute">-webkit-border-radius</span>: <span class="number">3px</span>;</span><br><span class="line">       <span class="attribute">-moz-border-radius</span>: <span class="number">3px</span>;</span><br><span class="line">            <span class="attribute">border-radius</span>: <span class="number">3px</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">background</span>: <span class="built_in">-webkit-linear-gradient</span>(top, #fff <span class="number">0</span>, #eee <span class="number">100%</span>);</span><br><span class="line">    <span class="attribute">background</span>:    <span class="built_in">-moz-linear-gradient</span>(top, #fff <span class="number">0</span>, #eee <span class="number">100%</span>);</span><br><span class="line">    <span class="attribute">background</span>:         <span class="built_in">linear-gradient</span>(to bottom, #fff <span class="number">0</span>, #eee <span class="number">100%</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* not good */</span></span><br><span class="line"><span class="selector-class">.element</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="built_in">rgb</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">50px</span>;</span><br><span class="line">    <span class="attribute">color</span>: <span class="built_in">rgba</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, .<span class="number">5</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* good */</span></span><br><span class="line"><span class="selector-class">.element</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: <span class="built_in">rgb</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    <span class="attribute">color</span>: <span class="built_in">rgba</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, .<span class="number">5</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Javascript"><a href="#Javascript" class="headerlink" title="Javascript"></a>Javascript</h1>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%89%8D%E7%AB%AF%E8%A7%84%E8%8C%83/" rel="tag"># 前端规范</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/08/22/WordPress%E5%85%A5%E9%97%A8/" rel="prev" title="WordPress入门">
+      <i class="fa fa-chevron-left"></i> WordPress入门
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/08/25/HTML5%E3%80%81CSS3%E5%85%A5%E9%97%A8/" rel="next" title="HTML5、CSS3入门">
+      HTML5、CSS3入门 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Javascript-standard-style"><span class="nav-text">Javascript standard style</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Airbnb-Javascript-style"><span class="nav-text">Airbnb Javascript style</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%85%BE%E8%AE%AF%E5%89%8D%E7%AB%AF%E5%9B%A2%E9%98%9F%E8%A7%84%E8%8C%83"><span class="nav-text">腾讯前端团队规范</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E4%BD%B3%E5%8E%9F%E5%88%99"><span class="nav-text">最佳原则</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99"><span class="nav-text">命名规则</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E5%91%BD%E5%90%8D"><span class="nav-text">项目命名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95%E5%91%BD%E5%90%8D"><span class="nav-text">目录命名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JS%E6%96%87%E4%BB%B6%E5%91%BD%E5%90%8D"><span class="nav-text">JS文件命名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS-SCSS%E6%96%87%E4%BB%B6%E5%91%BD%E5%90%8D"><span class="nav-text">CSS, SCSS文件命名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTML%E6%96%87%E4%BB%B6%E5%91%BD%E5%90%8D"><span class="nav-text">HTML文件命名</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTML"><span class="nav-text">HTML</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95"><span class="nav-text">语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTML5-doctype"><span class="nav-text">HTML5 doctype</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#lang%E5%B1%9E%E6%80%A7"><span class="nav-text">lang属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81"><span class="nav-text">字符编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IE%E5%85%BC%E5%AE%B9%E6%A8%A1%E5%BC%8F"><span class="nav-text">IE兼容模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E5%85%A5CSS-JS"><span class="nav-text">引入CSS, JS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTML5-%E8%A7%84%E8%8C%83%E9%93%BE%E6%8E%A5"><span class="nav-text">HTML5 规范链接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7%E9%A1%BA%E5%BA%8F"><span class="nav-text">属性顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#boolean%E5%B1%9E%E6%80%A7"><span class="nav-text">boolean属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JS%E7%94%9F%E6%88%90%E6%A0%87%E7%AD%BE"><span class="nav-text">JS生成标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%8F%E5%B0%91%E6%A0%87%E7%AD%BE%E6%95%B0%E9%87%8F"><span class="nav-text">减少标签数量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E7%94%A8%E9%AB%98%E4%BA%8E%E5%AE%8C%E7%BE%8E"><span class="nav-text">实用高于完美</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS-SCSS"><span class="nav-text">CSS, SCSS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%A9%E8%BF%9B"><span class="nav-text">缩进</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E5%8F%B7"><span class="nav-text">分号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A9%BA%E6%A0%BC"><span class="nav-text">空格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A9%BA%E8%A1%8C"><span class="nav-text">空行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8D%A2%E8%A1%8C"><span class="nav-text">换行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E9%87%8A"><span class="nav-text">注释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%95%E5%8F%B7"><span class="nav-text">引号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BD%E5%90%8D"><span class="nav-text">命名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7%E5%A3%B0%E6%98%8E%E9%A1%BA%E5%BA%8F"><span class="nav-text">属性声明顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A2%9C%E8%89%B2"><span class="nav-text">颜色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7%E7%AE%80%E5%86%99"><span class="nav-text">属性简写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2"><span class="nav-text">媒体查询</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SCSS%E7%9B%B8%E5%85%B3"><span class="nav-text">SCSS相关</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9D%82%E9%A1%B9"><span class="nav-text">杂项</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Javascript"><span class="nav-text">Javascript</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="筛滤淘"
+      src="/images/cat.jpg">
+  <p class="site-author-name" itemprop="name">筛滤淘</p>
+  <div class="site-description" itemprop="description">前端知识点总结</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">129</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lm101845" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lm101845" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1018457683@qq.com" title="E-Mail → mailto:1018457683@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.jianshu.com/u/6879af8ace24" title="简 书 → https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;6879af8ace24" rel="noopener" target="_blank"><i class="fa fa-jianshu fa-fw"></i>简 书</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/9002959" title="B  站 → https:&#x2F;&#x2F;space.bilibili.com&#x2F;9002959" rel="noopener" target="_blank"><i class="fa fa-bilibili fa-fw"></i>B  站</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">筛滤淘</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">3.7m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">56:03</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

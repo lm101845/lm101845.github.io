@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="(注1：学到Vuex的时候发现自己组件部分学的很不好，想着先暂停一下王红元的视频再回去复习一下前面的Vue组件这些知识？想了一下准备快速再过一下Vue的基础知识吧，就选择李鹏周的4天Vue视频看一下吧，这个没办法，其实Vue的知识点已经快学完了，也是时候回过头来查漏补缺了。这次想换换口味，看看别的老师的视频。)  (注2：视频链接为18年4天vue.js教程，李鹏周老师版)  (注3：这个视频其实">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue黑马视频(李鹏周)">
+<meta property="og:url" content="http://example.com/2020/11/11/Vue%E9%BB%91%E9%A9%AC%E8%A7%86%E9%A2%91(%E6%9D%8E%E9%B9%8F%E5%91%A8)/index.html">
+<meta property="og:site_name" content="木子小屋">
+<meta property="og:description" content="(注1：学到Vuex的时候发现自己组件部分学的很不好，想着先暂停一下王红元的视频再回去复习一下前面的Vue组件这些知识？想了一下准备快速再过一下Vue的基础知识吧，就选择李鹏周的4天Vue视频看一下吧，这个没办法，其实Vue的知识点已经快学完了，也是时候回过头来查漏补缺了。这次想换换口味，看看别的老师的视频。)  (注2：视频链接为18年4天vue.js教程，李鹏周老师版)  (注3：这个视频其实">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2020/11/11/Vue%E9%BB%91%E9%A9%AC%E8%A7%86%E9%A2%91(%E6%9D%8E%E9%B9%8F%E5%91%A8)/01.png">
+<meta property="og:image" content="http://example.com/2020/11/11/Vue%E9%BB%91%E9%A9%AC%E8%A7%86%E9%A2%91(%E6%9D%8E%E9%B9%8F%E5%91%A8)/02.png">
+<meta property="og:image" content="http://example.com/2020/11/11/Vue%E9%BB%91%E9%A9%AC%E8%A7%86%E9%A2%91(%E6%9D%8E%E9%B9%8F%E5%91%A8)/03.png">
+<meta property="og:image" content="http://example.com/2020/11/11/Vue%E9%BB%91%E9%A9%AC%E8%A7%86%E9%A2%91(%E6%9D%8E%E9%B9%8F%E5%91%A8)/04.png">
+<meta property="og:image" content="http://example.com/2020/11/11/Vue%E9%BB%91%E9%A9%AC%E8%A7%86%E9%A2%91(%E6%9D%8E%E9%B9%8F%E5%91%A8)/05.png">
+<meta property="og:image" content="http://example.com/2020/11/11/Vue%E9%BB%91%E9%A9%AC%E8%A7%86%E9%A2%91(%E6%9D%8E%E9%B9%8F%E5%91%A8)/06.png">
+<meta property="og:image" content="http://example.com/2020/11/11/Vue%E9%BB%91%E9%A9%AC%E8%A7%86%E9%A2%91(%E6%9D%8E%E9%B9%8F%E5%91%A8)/07.png">
+<meta property="og:image" content="http://example.com/2020/11/11/Vue%E9%BB%91%E9%A9%AC%E8%A7%86%E9%A2%91(%E6%9D%8E%E9%B9%8F%E5%91%A8)/08.png">
+<meta property="og:image" content="http://example.com/2020/11/11/Vue%E9%BB%91%E9%A9%AC%E8%A7%86%E9%A2%91(%E6%9D%8E%E9%B9%8F%E5%91%A8)/09.png">
+<meta property="og:image" content="http://example.com/2020/11/11/Vue%E9%BB%91%E9%A9%AC%E8%A7%86%E9%A2%91(%E6%9D%8E%E9%B9%8F%E5%91%A8)/10.png">
+<meta property="og:image" content="http://example.com/2020/11/11/Vue%E9%BB%91%E9%A9%AC%E8%A7%86%E9%A2%91(%E6%9D%8E%E9%B9%8F%E5%91%A8)/11.png">
+<meta property="og:image" content="http://example.com/2020/11/11/Vue%E9%BB%91%E9%A9%AC%E8%A7%86%E9%A2%91(%E6%9D%8E%E9%B9%8F%E5%91%A8)/12.png">
+<meta property="article:published_time" content="2020-11-11T15:44:22.000Z">
+<meta property="article:modified_time" content="2020-11-11T15:44:22.000Z">
+<meta property="article:author" content="筛滤淘">
+<meta property="article:tag" content="Vue">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2020/11/11/Vue%E9%BB%91%E9%A9%AC%E8%A7%86%E9%A2%91(%E6%9D%8E%E9%B9%8F%E5%91%A8)/01.png">
+
+<link rel="canonical" href="http://example.com/2020/11/11/Vue%E9%BB%91%E9%A9%AC%E8%A7%86%E9%A2%91(%E6%9D%8E%E9%B9%8F%E5%91%A8)/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Vue黑马视频(李鹏周) | 木子小屋</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?79d7cb9c8fa9e57a2723fb8645f37638";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">木子小屋</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Talk is cheap. Show me the code.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/11/11/Vue%E9%BB%91%E9%A9%AC%E8%A7%86%E9%A2%91(%E6%9D%8E%E9%B9%8F%E5%91%A8)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cat.jpg">
+      <meta itemprop="name" content="筛滤淘">
+      <meta itemprop="description" content="前端知识点总结">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="木子小屋">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vue黑马视频(李鹏周)
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-11-11 23:44:22" itemprop="dateCreated datePublished" datetime="2020-11-11T23:44:22+08:00">2020-11-11</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>(注1：学到Vuex的时候发现自己组件部分学的很不好，想着先暂停一下王红元的视频再回去复习一下前面的Vue组件这些知识？想了一下准备快速再过一下Vue的基础知识吧，就选择李鹏周的4天Vue视频看一下吧，这个没办法，其实Vue的知识点已经快学完了，也是时候回过头来查漏补缺了。这次想换换口味，看看别的老师的视频。)</p>
+<p>(注2：视频链接为<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1R54y1i7u4?from=search&seid=15202497373420980607">18年4天vue.js教程，李鹏周老师版</a>)</p>
+<p>(注3：这个视频其实知识点不全，但是现在也没关系了，先快速过一遍吧。)</p>
+<p>(注4：这个视频还有一个好处是，老师经常打开官网，给我们讲官方文档，这也是熟悉官方文档的好机会。)</p>
+<h1 id="Vue课程讲义"><a href="#Vue课程讲义" class="headerlink" title="Vue课程讲义"></a>Vue课程讲义</h1><h2 id="网站交互及开发方式"><a href="#网站交互及开发方式" class="headerlink" title="网站交互及开发方式"></a>网站交互及开发方式</h2><h3 id="经典的多页面"><a href="#经典的多页面" class="headerlink" title="经典的多页面"></a>经典的多页面</h3><blockquote>
+<p>例如：京东商城，唯品会</p>
+</blockquote>
+<ul>
+<li>前后端糅合在一起，开发和维护效率低下</li>
+<li>用户体验一般，点击刷新跳转，等待时间过长</li>
+<li>每个页面都需要重新加载渲染，速度慢</li>
+<li>有利于SEO搜索引擎搜索(蜘蛛会爬链接)</li>
+</ul>
+<h3 id="现代式的单页面应用程序-SPA"><a href="#现代式的单页面应用程序-SPA" class="headerlink" title="现代式的单页面应用程序(SPA)"></a>现代式的单页面应用程序(SPA)</h3><blockquote>
+<p>例如：网易云音乐、coding</p>
+<p>单页面应用程序最重要的目的是为了让你的前后端开发能够分离，用户体验反而是其次的</p>
+</blockquote>
+<ul>
+<li><p>开发方式好，前后端分离，开发效率高，可维护性好(自此前后端二者只通过接口来交互，此外再无交集)</p>
+<ul>
+<li>服务端不关心页面，只关心数据</li>
+<li>客户端不关心数据库及数据操作，只关心通过接口拿数据和服务端交互，处理页面</li>
+</ul>
+</li>
+<li><p><strong>用户体验</strong>好，就像一个原生的客户端软件一样使用</p>
+</li>
+<li><p>只需要加载渲染<strong>局部视图</strong>即可，不需要整页刷新</p>
+<blockquote>
+<p>技术只是工具，谁给钱就用什么就得了。没有排名之分，也不要去排斥一个技术，任何技术都有它的价值。</p>
+<p>现在前端整个技术圈都很浮躁，连用个技术都要占阵营。后端藐视所有人，前端藐视UI，UI藐视……</p>
+</blockquote>
+</li>
+<li><p>单页面技术其实已经很成熟了，但是都无法兼顾低版本浏览器。(你要做SPA,肯定会用到框架，一旦用了，几乎就照顾不了低版本浏览器。)</p>
+</li>
+<li><p>但是现在除了一些电商网站，其实已经很少有系统去兼容低版本浏览器了</p>
+<ul>
+<li>技术不值钱，开发人员也不值钱，你给我兼容了低版本浏览器，那些使用低版本浏览器的用户可以顺利的买到东西，这才是价值。</li>
+</ul>
+</li>
+<li><p>大部分都是IE 9以上(IE 6,7,8已经很少去考虑了，Vue就不兼容IE9一下的浏览器。)</p>
+</li>
+<li><p>单页面由于数据都是异步加载过来的，所以不会被搜索引擎搜索到，不利于SEO</p>
+</li>
+<li><p>手机Web网页</p>
+</li>
+<li><p>服务端管理系统</p>
+</li>
+</ul>
+<h4 id="SPA详解"><a href="#SPA详解" class="headerlink" title="SPA详解"></a>SPA详解</h4><p>单页面应用程序(Single Page Application)，简称SPA。</p>
+<p>例如网易云音乐电脑端官网就是单页面应用程序，点击<code>发现音乐</code>、<code>我的音乐</code>等选项页面不刷新，整个页面都是被异步加载过来的，几乎所有的数据交互都是在一个页面中完成的。</p>
+<p>(我先点击播放音乐，音乐播放后再点击排行榜，如果页面刷新，就无法保持播放音乐的这个状态了。)</p>
+<p>说白了，SPA是对AJAX的极致应用。以前AJAX可能只是请求一个数据，渲染一个表格。</p>
+<p>一般网页，点击刷新，它会整理渲染，会点一下跳一下，点一下刷新一下。而SPA如果你网络足够好的情况下，就可以做到无缝体验，就像原生APP一样。</p>
+<p>交互方式的不同决定了你如何开发。</p>
+<img data-src="/2020/11/11/Vue%E9%BB%91%E9%A9%AC%E8%A7%86%E9%A2%91(%E6%9D%8E%E9%B9%8F%E5%91%A8)/01.png" class>
+
+<h3 id="多页面：以服务端为主导，前后端混合"><a href="#多页面：以服务端为主导，前后端混合" class="headerlink" title="多页面：以服务端为主导，前后端混合"></a>多页面：以服务端为主导，前后端混合</h3><ul>
+<li>PHP案例，<code>.php</code>文件</li>
+</ul>
+<h3 id="单页面：前后端分离，各司其职"><a href="#单页面：前后端分离，各司其职" class="headerlink" title="单页面：前后端分离，各司其职"></a>单页面：前后端分离，各司其职</h3><ul>
+<li>服务端只处理数据</li>
+<li>前端只处理页面</li>
+<li>两者通过接口来进行交互</li>
+</ul>
+<img data-src="/2020/11/11/Vue%E9%BB%91%E9%A9%AC%E8%A7%86%E9%A2%91(%E6%9D%8E%E9%B9%8F%E5%91%A8)/02.png" class>
+
+<h3 id="模拟前后端分离开发模式"><a href="#模拟前后端分离开发模式" class="headerlink" title="模拟前后端分离开发模式"></a>模拟前后端分离开发模式</h3><ul>
+<li>项目立项</li>
+<li>需求分析</li>
+<li>服务端的工作<ul>
+<li>需求分析</li>
+<li>设计数据库</li>
+<li>接口设计(有时候也需要前端参与其中——前端是接口的使用方)</li>
+<li>接口(处理数据)开发</li>
+</ul>
+</li>
+<li>前端的工作<ul>
+<li>需求分析</li>
+<li>写页面</li>
+<li>页面写好写功能</li>
+<li>通过接口和服务端进行交互</li>
+</ul>
+</li>
+</ul>
+<h4 id="前后端分离：多页-不多"><a href="#前后端分离：多页-不多" class="headerlink" title="前后端分离：多页(不多)"></a>前后端分离：多页(不多)</h4><h5 id="具体步骤"><a href="#具体步骤" class="headerlink" title="具体步骤"></a>具体步骤</h5><ul>
+<li><p>首先建立2个文件夹：<code>be-project(后端)</code>和<code>fe-project(前端)</code></p>
+</li>
+<li><p>这个时候前端可以写页面了，后端开始设计接口</p>
+</li>
+<li><p>在<code>be-project</code>文件夹下打开Node，输入<code>npm init-y</code>来设计一个接口，会在<code>be-project</code>文件夹下自动生成一个<code>package.json</code>文件。</p>
+<img data-src="/2020/11/11/Vue%E9%BB%91%E9%A9%AC%E8%A7%86%E9%A2%91(%E6%9D%8E%E9%B9%8F%E5%91%A8)/03.png" class>
+</li>
+<li><p>再在<code>be-project</code>文件夹下输入<code>npm install express</code>下载Node中的express框架。</p>
+</li>
+</ul>
+<img data-src="/2020/11/11/Vue%E9%BB%91%E9%A9%AC%E8%A7%86%E9%A2%91(%E6%9D%8E%E9%B9%8F%E5%91%A8)/04.png" class>
+
+<ul>
+<li><p>此时<code>be-project</code>文件夹下面的文件有这些：</p>
+<img data-src="/2020/11/11/Vue%E9%BB%91%E9%A9%AC%E8%A7%86%E9%A2%91(%E6%9D%8E%E9%B9%8F%E5%91%A8)/05.png" class>
+</li>
+<li><p>再在<code>be-project</code>文件夹下新建一个<code>app.js</code>文件，内容如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 服务于POST</span></span><br><span class="line"><span class="keyword">const</span> bodyParser = <span class="built_in">require</span>(<span class="string">&#x27;body-parser&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = express()</span><br><span class="line"></span><br><span class="line">app.use(bodyParser.urlencoded(&#123; <span class="attr">extended</span>: <span class="literal">false</span> &#125;))</span><br><span class="line"><span class="comment">// parse application/json</span></span><br><span class="line">app.use(bodyParser.json())</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> todos = [</span><br><span class="line">    &#123;</span><br><span class="line">        id: <span class="number">1</span>,</span><br><span class="line">        title:<span class="string">&#x27;吃饭&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">     &#123;</span><br><span class="line">        id: <span class="number">2</span>,</span><br><span class="line">        title:<span class="string">&#x27;睡觉&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        id: <span class="number">3</span>,</span><br><span class="line">        title:<span class="string">&#x27;打豆豆&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment">// 对todos进行增删改查</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 很好的方法：</span></span><br><span class="line"><span class="comment">//  GET/todos               获取所有的todos(查)</span></span><br><span class="line"><span class="comment">//  POST/todos              添加一个todo(增)</span></span><br><span class="line"><span class="comment">//  PATCH/todos/:todoId     更新指定的todo(改)</span></span><br><span class="line"><span class="comment">//  DELETE/todos/:todoId    删除指定的todo(删)</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 其实也可以只用一个关键字来增删改查</span></span><br><span class="line"><span class="comment">// 不好的方法：没有表意性</span></span><br><span class="line"><span class="comment">// POST/todos/:todoId/          更新指定的todo(改)</span></span><br><span class="line"><span class="comment">// POST/todos/:todoId/delete    删除指定的todo(删)</span></span><br><span class="line"><span class="comment">// 但是这样做没有表意性，不省事</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 写接口其实挺好写的，只关心数据，不关心页面</span></span><br><span class="line">app</span><br><span class="line">    .get(<span class="string">&#x27;/todos&#x27;</span>,<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">        res.json(todos)</span><br><span class="line">    &#125;)</span><br><span class="line">    .post(<span class="string">&#x27;/todos&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> todo = &#123;</span><br><span class="line">             title: req.body.title,</span><br><span class="line">             id:todos[todos.length - <span class="number">1</span>].id + <span class="number">1</span></span><br><span class="line">        &#125;</span><br><span class="line">        todos.push(todo)</span><br><span class="line">        res.json(todo)</span><br><span class="line">    &#125;)</span><br><span class="line">    .patch(<span class="string">&#x27;/todos/:todoId&#x27;</span>,<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line">        <span class="comment">// 后面的这2个老师不写了，就是给我们个印象</span></span><br><span class="line">    &#125;)</span><br><span class="line">    .delete(<span class="string">&#x27;/todos/:todoId&#x27;</span>,<span class="function">(<span class="params">req,res</span>)=&gt;</span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">3000</span>, <span class="function">() =&gt;</span> &#123; </span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;api server running 3000.&#x27;</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+<li><p>在<code>de-project</code>文件夹下输入<code>nodemon app.js</code></p>
+<img data-src="/2020/11/11/Vue%E9%BB%91%E9%A9%AC%E8%A7%86%E9%A2%91(%E6%9D%8E%E9%B9%8F%E5%91%A8)/06.png" class>
+</li>
+<li><p>然后在浏览器中输入：<code>127.0.0.1:3000/todos</code>就可以看到数据了。</p>
+<img data-src="/2020/11/11/Vue%E9%BB%91%E9%A9%AC%E8%A7%86%E9%A2%91(%E6%9D%8E%E9%B9%8F%E5%91%A8)/07.png" class>
+</li>
+<li><p>在<code>de-project</code>文件夹下输入<code>npm install body-parser</code>来添加数据。</p>
+</li>
+<li><p>使用<code>Postman</code>软件进行接口测试</p>
+<img data-src="/2020/11/11/Vue%E9%BB%91%E9%A9%AC%E8%A7%86%E9%A2%91(%E6%9D%8E%E9%B9%8F%E5%91%A8)/08.png" class>
+
+<blockquote>
+<p>这软件以前用过几次，但是一直不知道怎么用，就只是照着视频操作。计算机网络，Http知识也要好好学一下啊。</p>
+</blockquote>
+</li>
+<li><p>在<code>fe-project</code>文件夹下输入<code>npm init -y</code>，生成<code>package.json</code>文件</p>
+</li>
+<li><p>在<code>fe-project</code>文件夹下输入<code>npm install jquery</code>，安装jquery。</p>
+</li>
+<li><p>在<code>fe-project</code>文件夹下输入<code>npm install http-server -g</code>，安装http服务器</p>
+</li>
+<li><p>在<code>fe-project</code>文件夹下输入<code>hs -c-l-o</code>，启动服务器</p>
+</li>
+<li><p>在<code>fe-project</code>文件夹下输入<code>npm install art-template</code>，安装模版引擎</p>
+</li>
+<li><p><code>fe-project</code>和<code>be-project</code>文件夹下的文件最终如下：</p>
+<img data-src="/2020/11/11/Vue%E9%BB%91%E9%A9%AC%E8%A7%86%E9%A2%91(%E6%9D%8E%E9%B9%8F%E5%91%A8)/09.png" class>
+</li>
+<li><p><code>index.html</code>文件内容如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;header&quot;</span>&gt;</span></span><br><span class="line">        公共的头部</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;aside&quot;</span>&gt;</span></span><br><span class="line">        侧边栏</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;todo/add.html&quot;</span>&gt;</span>添加todo<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">&quot;container&quot;</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- &lt;li&gt;吃饭&lt;/li&gt;</span></span><br><span class="line"><span class="comment">        &lt;li&gt;睡觉&lt;/li&gt;</span></span><br><span class="line"><span class="comment">        &lt;li&gt;打豆豆&lt;/li&gt; --&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">id</span>=<span class="string">&quot;tpl&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text/template&quot;</span>&gt;</span></span><br><span class="line"><span class="handlebars"><span class="xml">        </span><span class="template-variable">&#123;&#123;<span class="name"><span class="builtin-name">each</span></span> todos&#125;&#125;</span></span></span><br><span class="line"><span class="handlebars"><span class="xml">            <span class="comment">&lt;!-- &lt;li&gt;</span></span><span class="template-variable">&#123;&#123;<span class="name">$value</span>&#125;&#125;</span><span class="xml"><span class="comment">&lt;/li&gt; --&gt;</span></span></span></span><br><span class="line"><span class="handlebars"><span class="xml">            <span class="tag">&lt;<span class="name">li</span>&gt;</span></span><span class="template-variable">&#123;&#123;<span class="name">$value.title</span>&#125;&#125;</span><span class="xml"><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span></span><br><span class="line"><span class="handlebars"><span class="xml">        </span><span class="template-tag">&#123;&#123;/<span class="name"><span class="builtin-name">each</span></span>&#125;&#125;</span></span></span><br><span class="line"><span class="handlebars"><span class="xml">        <span class="comment">&lt;!-- 这个模版引擎渲染也是在前端做的 --&gt;</span></span></span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;node_modules/jquery/dist/jquery.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;node_modules/art-template/lib/template-web.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">        $.get(<span class="string">&#x27;http://127.0.0.1:3000/todos&#x27;</span>, <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="comment">// console.log(data);</span></span></span><br><span class="line"><span class="javascript">            <span class="keyword">var</span> htmlStr = template(<span class="string">&#x27;tpl&#x27;</span>, &#123;</span></span><br><span class="line">                todos: data</span><br><span class="line">            &#125;)</span><br><span class="line"><span class="javascript">            $(<span class="string">&#x27;#container&#x27;</span>).html(htmlStr)</span></span><br><span class="line"><span class="javascript">            <span class="built_in">console</span>.log(htmlStr);</span></span><br><span class="line">        &#125;)</span><br><span class="line"><span class="javascript">        <span class="comment">// ajax要想发起请求，必须运行在http服务器里面(不能脱离服务器去运行)</span></span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p><code>add.html</code>文件内容如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">form</span> <span class="attr">id</span>=<span class="string">&quot;add_form&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;title&quot;</span>&gt;</span>标题<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">name</span>=<span class="string">&quot;title&quot;</span> <span class="attr">id</span>=<span class="string">&quot;title&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;submit&quot;</span> <span class="attr">value</span>=<span class="string">&quot;保存&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;../node_modules/jquery/dist/jquery.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">        $(<span class="string">&#x27;#add_form&#x27;</span>).on(<span class="string">&#x27;submit&#x27;</span>, handleAddSubmit)</span></span><br><span class="line"></span><br><span class="line"><span class="javascript">        <span class="function"><span class="keyword">function</span> <span class="title">handleAddSubmit</span>(<span class="params">e</span>) </span>&#123;</span></span><br><span class="line">            e.preventDefault();</span><br><span class="line"><span class="javascript">            $.post(<span class="string">&#x27;http://127.0.0.1:3000/todos&#x27;</span>, $(<span class="built_in">this</span>).serialize(), <span class="function"><span class="keyword">function</span> (<span class="params">data</span>) </span>&#123;</span></span><br><span class="line"><span class="javascript">                <span class="comment">// console.log(data);</span></span></span><br><span class="line"><span class="javascript">                <span class="built_in">window</span>.location.href = <span class="string">&#x27;../index.html&#x27;</span></span></span><br><span class="line"><span class="javascript">                <span class="comment">// window.location.href = &#x27;/&#x27;</span></span></span><br><span class="line"><span class="javascript">                <span class="comment">// 直接写/也行</span></span></span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="前后端分离：单页"><a href="#前后端分离：单页" class="headerlink" title="前后端分离：单页"></a>前后端分离：单页</h4></li>
+</ul>
+<h5 id="具体步骤-1"><a href="#具体步骤-1" class="headerlink" title="具体步骤"></a>具体步骤</h5><h2 id="前端开发三大框架"><a href="#前端开发三大框架" class="headerlink" title="前端开发三大框架"></a>前端开发三大框架</h2><p>单页面应用开发技术复杂，有一定的技术支撑，所以就有了我们现在需要学习的三大框架。</p>
+<ul>
+<li>Angular<ul>
+<li>09年诞生</li>
+<li>Google</li>
+<li>它的目的就是为了让我们开发单页应用程序更加方便</li>
+<li>但是它最主要的就是为前端带来了MVVM开发模式</li>
+<li>MVVM一句话：数据驱动视图，不操作DOM</li>
+<li>Angular后来步子迈得太大，太超前把自己玩死了，Angular2.0版本相当于出来了一个新框架，相对来说比较复杂。</li>
+</ul>
+</li>
+<li>React<ul>
+<li>13年诞生</li>
+<li>Facebook</li>
+<li>最主要的东西：组件化(组件有自己的HTML,CSS,JS)</li>
+</ul>
+</li>
+<li>Vue<ul>
+<li>14年诞生，作者：尤雨溪</li>
+<li>早期由个人开发</li>
+<li>Vue借鉴了Angular和React之所长，自己做了一个前端框架，后起之秀。</li>
+</ul>
+</li>
+</ul>
+<h2 id="上午总结"><a href="#上午总结" class="headerlink" title="上午总结"></a>上午总结</h2><img data-src="/2020/11/11/Vue%E9%BB%91%E9%A9%AC%E8%A7%86%E9%A2%91(%E6%9D%8E%E9%B9%8F%E5%91%A8)/10.png" class>
+
+<img data-src="/2020/11/11/Vue%E9%BB%91%E9%A9%AC%E8%A7%86%E9%A2%91(%E6%9D%8E%E9%B9%8F%E5%91%A8)/11.png" class>
+
+<img data-src="/2020/11/11/Vue%E9%BB%91%E9%A9%AC%E8%A7%86%E9%A2%91(%E6%9D%8E%E9%B9%8F%E5%91%A8)/12.png" class>
+
+<h2 id="Vue介绍"><a href="#Vue介绍" class="headerlink" title="Vue介绍"></a>Vue介绍</h2><ul>
+<li>作者：尤雨溪</li>
+<li>Vue.js（读音 /vjuː/，类似于<strong>view</strong>）是一套构建用户界面的<strong>渐进式框架</strong>(就是JavaScript框架)<ul>
+<li>什么叫渐进式：你可以把它当成<strong>库</strong>来简单的用一下，也可以当成<strong>框架</strong>，并使用它的配套解决方案，也就是说，它什么都能做。</li>
+</ul>
+</li>
+<li>发展历史</li>
+</ul>
+<p>​    </p>
+<h3 id="MVVM"><a href="#MVVM" class="headerlink" title="MVVM"></a>MVVM</h3>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Vue/" rel="tag"># Vue</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%85%A5%E9%97%A8/" rel="prev" title="计算机操作系统入门">
+      <i class="fa fa-chevron-left"></i> 计算机操作系统入门
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/11/13/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9ACSS%E8%AE%BE%E8%AE%A1%E6%8C%87%E5%8D%97(%E7%AC%AC3%E7%89%88)/" rel="next" title="读书笔记：CSS设计指南(第3版)">
+      读书笔记：CSS设计指南(第3版) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Vue%E8%AF%BE%E7%A8%8B%E8%AE%B2%E4%B9%89"><span class="nav-text">Vue课程讲义</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%AB%99%E4%BA%A4%E4%BA%92%E5%8F%8A%E5%BC%80%E5%8F%91%E6%96%B9%E5%BC%8F"><span class="nav-text">网站交互及开发方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%8F%E5%85%B8%E7%9A%84%E5%A4%9A%E9%A1%B5%E9%9D%A2"><span class="nav-text">经典的多页面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%B0%E4%BB%A3%E5%BC%8F%E7%9A%84%E5%8D%95%E9%A1%B5%E9%9D%A2%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F-SPA"><span class="nav-text">现代式的单页面应用程序(SPA)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SPA%E8%AF%A6%E8%A7%A3"><span class="nav-text">SPA详解</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E9%A1%B5%E9%9D%A2%EF%BC%9A%E4%BB%A5%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%B8%BA%E4%B8%BB%E5%AF%BC%EF%BC%8C%E5%89%8D%E5%90%8E%E7%AB%AF%E6%B7%B7%E5%90%88"><span class="nav-text">多页面：以服务端为主导，前后端混合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E9%A1%B5%E9%9D%A2%EF%BC%9A%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB%EF%BC%8C%E5%90%84%E5%8F%B8%E5%85%B6%E8%81%8C"><span class="nav-text">单页面：前后端分离，各司其职</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E6%8B%9F%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F"><span class="nav-text">模拟前后端分离开发模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB%EF%BC%9A%E5%A4%9A%E9%A1%B5-%E4%B8%8D%E5%A4%9A"><span class="nav-text">前后端分离：多页(不多)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E6%AD%A5%E9%AA%A4"><span class="nav-text">具体步骤</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB%EF%BC%9A%E5%8D%95%E9%A1%B5"><span class="nav-text">前后端分离：单页</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E6%AD%A5%E9%AA%A4-1"><span class="nav-text">具体步骤</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E4%B8%89%E5%A4%A7%E6%A1%86%E6%9E%B6"><span class="nav-text">前端开发三大框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8A%E5%8D%88%E6%80%BB%E7%BB%93"><span class="nav-text">上午总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue%E4%BB%8B%E7%BB%8D"><span class="nav-text">Vue介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MVVM"><span class="nav-text">MVVM</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="筛滤淘"
+      src="/images/cat.jpg">
+  <p class="site-author-name" itemprop="name">筛滤淘</p>
+  <div class="site-description" itemprop="description">前端知识点总结</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">129</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lm101845" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lm101845" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1018457683@qq.com" title="E-Mail → mailto:1018457683@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.jianshu.com/u/6879af8ace24" title="简 书 → https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;6879af8ace24" rel="noopener" target="_blank"><i class="fa fa-jianshu fa-fw"></i>简 书</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/9002959" title="B  站 → https:&#x2F;&#x2F;space.bilibili.com&#x2F;9002959" rel="noopener" target="_blank"><i class="fa fa-bilibili fa-fw"></i>B  站</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">筛滤淘</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">3.7m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">56:03</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

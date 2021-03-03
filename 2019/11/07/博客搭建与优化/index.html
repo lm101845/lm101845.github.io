@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="(注1:2019年10月末开始弄这个Hexo博客，一直搞了有一个多星期才搞好)  (注2:博客平稳运行一年后误删文件，后来我就重新装了一次，因为版本的更迭，发生了很多小问题，一年后的我又差不多搞了一个多星期才把它搞好。)  (注3：我以后是再也不想动它了，不折腾了，博客建好后好好写文章，做项目才是王道啊。)  博客搭建各种坑 使用git分支保存hexo博客源码到github  本文并不是介绍如何一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="博客搭建与优化">
+<meta property="og:url" content="http://example.com/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/index.html">
+<meta property="og:site_name" content="木子小屋">
+<meta property="og:description" content="(注1:2019年10月末开始弄这个Hexo博客，一直搞了有一个多星期才搞好)  (注2:博客平稳运行一年后误删文件，后来我就重新装了一次，因为版本的更迭，发生了很多小问题，一年后的我又差不多搞了一个多星期才把它搞好。)  (注3：我以后是再也不想动它了，不折腾了，博客建好后好好写文章，做项目才是王道啊。)  博客搭建各种坑 使用git分支保存hexo博客源码到github  本文并不是介绍如何一">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/01.jpg">
+<meta property="og:image" content="http://example.com/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/02.jpg">
+<meta property="og:image" content="http://example.com/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/03.jpg">
+<meta property="og:image" content="http://example.com/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/04.png">
+<meta property="og:image" content="http://example.com/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/05.png">
+<meta property="og:image" content="http://example.com/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/06.png">
+<meta property="og:image" content="http://example.com/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/07.png">
+<meta property="og:image" content="http://example.com/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/08.png">
+<meta property="og:image" content="http://example.com/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/09.png">
+<meta property="og:image" content="http://example.com/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/11.png">
+<meta property="og:image" content="http://example.com/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/10.png">
+<meta property="og:image" content="http://example.com/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/15.png">
+<meta property="og:image" content="http://example.com/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/16.png">
+<meta property="og:image" content="http://example.com/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/17.png">
+<meta property="og:image" content="http://example.com/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/12.png">
+<meta property="og:image" content="http://example.com/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/13.png">
+<meta property="og:image" content="http://example.com/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/14.png">
+<meta property="article:published_time" content="2019-11-07T15:08:42.000Z">
+<meta property="article:modified_time" content="2019-11-07T15:08:42.000Z">
+<meta property="article:author" content="筛滤淘">
+<meta property="article:tag" content="博客优化">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/01.jpg">
+
+<link rel="canonical" href="http://example.com/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>博客搭建与优化 | 木子小屋</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?79d7cb9c8fa9e57a2723fb8645f37638";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">木子小屋</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Talk is cheap. Show me the code.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cat.jpg">
+      <meta itemprop="name" content="筛滤淘">
+      <meta itemprop="description" content="前端知识点总结">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="木子小屋">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          博客搭建与优化
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-11-07 23:08:42" itemprop="dateCreated datePublished" datetime="2019-11-07T23:08:42+08:00">2019-11-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/" itemprop="url" rel="index"><span itemprop="name">博客搭建与优化</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>(注1:2019年10月末开始弄这个Hexo博客，一直搞了有一个多星期才搞好)</p>
+<p>(注2:博客平稳运行一年后误删文件，后来我就重新装了一次，因为版本的更迭，发生了很多小问题，一年后的我又差不多搞了一个多星期才把它搞好。)</p>
+<p>(注3：我以后是再也不想动它了，不折腾了，博客建好后好好写文章，做项目才是王道啊。)</p>
+<h1 id="博客搭建各种坑"><a href="#博客搭建各种坑" class="headerlink" title="博客搭建各种坑"></a>博客搭建各种坑</h1><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/8814ce1da7a4">使用git分支保存hexo博客源码到github</a></p>
+<p>本文并不是介绍如何一步一步搭建博客的经验贴，只是纯记录自己搭建博客时的经历。如果想学习如何通过GithubPage + Hexo + NexT搭建属于自己的博客，推荐几个链接，我当初主要就是看下面的链接一步一步来的，当然途中遇到了非常多的坑。</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/26625249">知乎：GitHub+Hexo 搭建个人网站详细教程</a></p>
+<p><a target="_blank" rel="noopener" href="https://xuanwo.io/2015/03/26/hexo-intor/">史上最详细的Hexo博客搭建图文教程</a></p>
+<p><a target="_blank" rel="noopener" href="https://godweiyang.com/2018/04/13/hexo-blog/">超详细Hexo+Github博客搭建小白教程</a></p>
+<p>博客搭建完后的美化：</p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/f054333ac9e6">hexo的next主题个性化教程:打造炫酷网站</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.im/post/5a71ab9f518825735300ee6c">NexT主题的配置和优化指南</a></p>
+<hr>
+<p>好了，链接介绍完了，接下来开始讲述自己的历程了。</p>
+<p>我从上上周的周六开始（2019年10月26日）冒出了这个想法，弄一个自己的博客，目的是为了以后找工作面试的时候可能会有用，还可以对自己学的东西做一个知识点的总结。（本人毕业三年，金融专业，三年至今都从事财务工作，打算学前端，等自己学得差不多了，明年如果顺利的话希望可以转行成功）</p>
+<p>刚开始在网上搜，了解了以下信息：</p>
+<p>Github Page上可以写博客,也不用买服务器什么的，也方便。后来我就根据搜的信息建立了一个静态页面，后来我看这个页面就是类似下面的一张图，点按钮也点不动，还以为自己是不是弄错了（这个是Jekyll框架，后来我才选了Hexo框架），删除了仓库又重新建，来来回回了几次。</p>
+<img data-src="/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/01.jpg" class>
+
+<p>自己又接着搜，最终选择了Hexo框架，安装Hexo的准备工作：Github,Git,Nodejs已经弄好了，还算顺利，于是开始装Hexo,装这个Hexo（命令：npm i hexo-cli -g）还行，但是要等很久，初始化文件夹（hexo init）等的时间更加，还出错了很多次，自己搜了要用淘宝镜像源可以加快速度，安装组件（npm install）又卡了几次，后来终于出现了这个：</p>
+<img data-src="/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/02.jpg" class>
+
+<p>感觉已经成功了一半了，心想再把主题换成NexT就好了。</p>
+<p>第二天(星期天)弄博客的时候发现有个文件删掉后开机又出现，搜了很多方法都不行，搞的自己很烦。于是自己索性重装了一下系统，花了很久时间备份文件到移动硬盘上，接着恢复出厂设置，格式化，得到了一个干干净净的电脑，接着重头开始弄博客，又注册了一个新的github账号，又出现了一些错误，比如SSL密钥的问题，又到处查，接着下载NexT主题，下载的很慢，期间经历了全部文件删除，重头再来两三次，终于nexT主题下载好了，最终弄出来了一个轮廓。</p>
+<img data-src="/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/03.jpg" class>
+
+<p>自己感觉弄的差不多了，周一的时候自己又在阿里云上花了38块买了一个top域名，有效期2年，又开始解析域名，搜如何绑定域名，又出现了一些问题（这个问题现在还没弄好，这个域名暂时先没用了），而且发现<a target="_blank" rel="noopener" href="http://localhost:4000/%E5%87%BA%E7%8E%B0%E6%8B%92%E7%BB%9D%E8%AE%BF%E9%97%AE%E7%9A%84%E6%83%85%E5%86%B5%EF%BC%8C%E5%8F%88%E6%98%AF%E4%B8%80%E9%A1%BF%E5%BC%84%E3%80%82">http://localhost:4000/出现拒绝访问的情况，又是一顿弄。</a></p>
+<p>接着开始配置主题，又开始在网上搜，发现配置的有问题，又开始解决问题，就这样出现问题，搜索问题，解决问题，一直到第二个周六(2019年11月2日)，自己的博客才慢慢的有点样子了，自己也慢慢的了解了如何搭建博客了。</p>
+<p>接着学习如何利用markdown写博客，又花了一些时间，加上介绍到目前为止（2019年11月08日）一共写了3篇博客了（其中两篇还未完成），总之，终于慢慢的走上了正轨了，自己的博客搭建之路就是这样了。</p>
+<hr>
+<h1 id="希望进行的博客优化"><a href="#希望进行的博客优化" class="headerlink" title="希望进行的博客优化"></a>希望进行的博客优化</h1><ol>
+<li><p>有一个搜索选项，我那个搜索选项不行</p>
+<blockquote>
+<p>已经根据网上教程弄了一个搜索选项了</p>
+</blockquote>
+</li>
+<li><p>未完待续</p>
+</li>
+</ol>
+<h1 id="遇到的一些问题"><a href="#遇到的一些问题" class="headerlink" title="遇到的一些问题"></a>遇到的一些问题</h1><ol>
+<li>我那个域名按照教程也解析了，也新建了CNAME文件了，不知道为什么每次一刷新就没有了，要重新进行绑定。<img data-src="/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/04.png" class></li>
+</ol>
+<blockquote>
+<p>现在是2020年1月13号，已经过去了2个多月了，域名一直没弄过。今天心血来潮的在GitHub Page上重新填写了一下域名，其他都没动，也没刷新，突然就好了。</p>
+<p>我稍后再试一下刷新之后还行不行。</p>
+<p>额，刷新后还是不行</p>
+</blockquote>
+<blockquote>
+<p>现在是2020年7月13号，看了上面的文字，发现正好过去了半年了，一部署Hexo博客域名就失效这个问题也是一直搁置着，今天偶然又开始查了一下，发现问题很可能是自己CNAME文件名有后缀(.txt)造成的，我把source里的CNAME文件夹里的后缀删除，再重新部署，问题解决！！！！！！激动，我终于可以用自己的域名了！！！</p>
+</blockquote>
+<p>2.今天是2020年7月20日，突然发现一个问题：我的博客里的文字设置了高亮但是不显示，显示了原始的==，查了一会只查到如何设置代码高亮，没查到如何设置文字如何高亮显示，不知道要不要下载什么插件还是可以直接修改配置文件就可以了。明天再查一下吧。</p>
+<p>3.在写一篇博文的时候，因为每个章节字都很多，通常都要占2,3行，显得很拥挤，而左边又有这么大的空隙，有没有什么方法可以让文章目录宽度变宽些。</p>
+<img data-src="/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/05.png" class>
+
+<img data-src="/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/06.png" class>
+
+<p>4.现在是2020年9月23日，这段时间在学Vue,博文里面也出现了大量的双大括号,然后就发现出现了一些问题，报错信息如下：</p>
+<img data-src="/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/07.png" class>
+
+<blockquote>
+<p>这个错误信息特意截的图而不是手写，如果是手写的话这篇博文会报错！！</p>
+</blockquote>
+<p>大体查了一下，原因应该是：我的markdown文件中有标签与<code>nunjucks</code>模板引擎的标签冲突了，如果markdown文件中有这些标签，那么在解析的是就会把Markdown中的标签动态解析了。通常情况下是不允许的。</p>
+<p><a target="_blank" rel="noopener" href="http://xcoding.tech/2020/01/18/hexo/%E5%A6%82%E4%BD%95%E4%BB%8E%E6%A0%B9%E6%9C%AC%E8%A7%A3%E5%86%B3hexo%E4%B8%8D%E5%85%BC%E5%AE%B9%7B%7B%7D%7D%E6%A0%87%E7%AD%BE%E9%97%AE%E9%A2%98/">如何从根本解决hexo不兼容双大括号标签问题</a></p>
+<p>试着照上面的方法做了，但是还是没能成功解决掉这个问题。我现在也没有太多精力去搞这个Hexo博客了，以后有时间再看看吧。</p>
+<p>5.现在是2020年9月26日，现在的解决方法是我把有问题的那一篇博文《Vue框架入门》单独剔除了出来，剩下的<code>hexo g</code>、<code>hexo d</code>这样就没有问题了，文章可以正确解析了，现在也只能这样了，如何彻底解决掉这个问题等以后再说了。(后来不知道怎么回事它自动就好了)</p>
+<p>6.现在是2020年11月29日，这几天心态崩了，博客正常运行了一年了，也没什么问题。谁知道前几天因为自己打算做项目，准备把之前下载的Vue CLI版本给先卸载掉，安装低版本，结果不小心把Hexo里面的东西误删了，然后就乱了，回收站恢复了后来也不行，最大的问题是图片显示不出来了。后来我索性把博客文件删除了，重新安装Hexo博客，结果还是不行，后来我索性又把GitHub上的仓库删除了重新建一个,我之前不知道仓库删除了所有有关的Commits都没有了啊，有点后悔。重装后所有的问题都解决了，就是后面图片再也显示不出来了，我搜了一圈没找到实用的方法，然后心态崩了，又删除文件重装了4,5次，还是不行，唉！！！</p>
+<img data-src="/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/08.png" class>
+
+<p>这个是个硬伤啊，这个问题必须要解决掉啊。</p>
+<p>但是我也要开始做项目了，这个问题不要把自己心态搞崩了，慢慢去解决吧。</p>
+<p>我都有5,6天没有学习了啊。</p>
+<p>哈哈哈哈哈哈哈！！！我又整理了一下思路，发现终于可以成功显示了！！！！！！！！我先下载了<code>hexo-asset-image</code>插件，网上找了一下说是这个插件对于新版本Hexo有Bug，于是复制了一下网上的代码<code>index.js</code>，把这个插件里面的<code>index.js</code>文件给替换了，然后就可以了。</p>
+<p>奇怪的是，我之前也是这样做的，但是就是图片死活显示不出来，应该是我又一次下载了Hexo的缘故吧，没有完全把<code>config.yml</code>文件给替换了。</p>
+<p>总之开心啊，明天周一，我是真的要开始进入到学习状态了啊！明天就是11月最后一天了，2020年也就只剩下1个月了啊！！！</p>
+<p>7.现在是2020年11月30日，博客还有一些小瑕疵如下：</p>
+<ul>
+<li><p>搜索功能用不了，应该是要安装插件没有安装</p>
+</li>
+<li><p>点击文章的小节发现不跳转，应该也是没有设置好或者没装插件</p>
+</li>
+<li><p>给自己的博客弄个网站地图</p>
+</li>
+</ul>
+<p>8.现在是2020年12月2日，搜索功能弄好了，现在的问题主要有</p>
+<ul>
+<li><p>文章目录点击发现不跳转,死活弄不好。看到一个报错信息：<code>Uncaught TypeError: Cannot read property &#39;getBoundingClientRect&#39; of null ​    at HTMLAnchorElement.&lt;anonymous&gt; (utils.js:239)</code>，我根据这个找到了next主题下的<code>utils.js</code>这个文件，看了一下第239行。</p>
+<img data-src="/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/09.png" class>
+
+<img data-src="/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/11.png" class>
+
+<img data-src="/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/10.png" class>
+
+<p>我在GitHub上输入<code>getBoundingClientRect</code>发现一个包，我用npm安装了一下这个包，发现还是不行。</p>
+<img data-src="/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/15.png" class>
+
+<p>后来我又在GitHub上搜了最新版的NexT主题，找到了<code>utils.js</code>，把它复制下来替换掉原来的，发现变得更糟糕了，网页都不显示了，哈哈，我还是再改回来吧。</p>
+<img data-src="/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/16.png" class>
+</li>
+<li><p>我冒出来个想法：要不然我就下载一下最新版的NexT主题吧，之前就是图方便直接把以前博客里的next文件夹放进去了。</p>
+<p>登陆<a target="_blank" rel="noopener" href="https://www.diffchecker.com/diff%E8%BF%99%E4%B8%AA%E7%BD%91%E7%AB%99%E6%9D%A5%E6%AF%94%E8%BE%83NexT%E4%B8%BB%E9%A2%98%E5%89%8D%E5%90%8E%E7%9A%84%60config.yml%60%E8%AE%BE%E7%BD%AE%E3%80%82%E7%85%A7%E7%9D%80%E6%97%A7%E7%9A%84%E9%87%8D%E6%96%B0%E5%A1%AB%E5%86%99%60config.yml%60%E3%80%82">https://www.diffchecker.com/diff这个网站来比较NexT主题前后的`config.yml`设置。照着旧的重新填写`config.yml`。</a></p>
+<img data-src="/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/17.png" class>
+</li>
+<li><p>网站文章不显示前120字，显示的是整个页面，死活弄不好</p>
+<img data-src="/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/12.png" class>
+
+<img data-src="/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/13.png" class>
+
+<p>那我就下载第三方插件吧。</p>
+<p>哈哈，安装插件后就可以了！！！(我选择的是这个<code>https://github.com/ashisherc/hexo-auto-excerpt</code>)</p>
+<img data-src="/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/14.png" class>
+</li>
+<li><p>我重新下载了最新版的NexT主题后，配置也按照旧主题抄了一下，其他问题都没有了，点击文章目录也跳转了，就是尼玛图片又显示不出来了，淦。</p>
+</li>
+<li><p>经过自己不懈的努力，现在是2020年12月2日晚上7点40，我终于把所有的问题都解决了！！图片正常显示了，目录也可以正常点击了！！！</p>
+</li>
+<li><p>希望以后我可以不再写这篇博文了。</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%8D%9A%E5%AE%A2%E4%BC%98%E5%8C%96/" rel="tag"># 博客优化</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/11/07/%E6%88%91%E7%9A%84%E7%AE%80%E5%8E%86/" rel="prev" title="我的简历">
+      <i class="fa fa-chevron-left"></i> 我的简历
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/11/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A102%EF%BC%88%E7%AC%AC3%E7%89%88%EF%BC%89/" rel="next" title="读书笔记：JavaScript高级程序设计02（第3版）">
+      读书笔记：JavaScript高级程序设计02（第3版） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E5%90%84%E7%A7%8D%E5%9D%91"><span class="nav-text">博客搭建各种坑</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%8C%E6%9C%9B%E8%BF%9B%E8%A1%8C%E7%9A%84%E5%8D%9A%E5%AE%A2%E4%BC%98%E5%8C%96"><span class="nav-text">希望进行的博客优化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98"><span class="nav-text">遇到的一些问题</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="筛滤淘"
+      src="/images/cat.jpg">
+  <p class="site-author-name" itemprop="name">筛滤淘</p>
+  <div class="site-description" itemprop="description">前端知识点总结</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">129</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lm101845" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lm101845" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1018457683@qq.com" title="E-Mail → mailto:1018457683@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.jianshu.com/u/6879af8ace24" title="简 书 → https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;6879af8ace24" rel="noopener" target="_blank"><i class="fa fa-jianshu fa-fw"></i>简 书</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/9002959" title="B  站 → https:&#x2F;&#x2F;space.bilibili.com&#x2F;9002959" rel="noopener" target="_blank"><i class="fa fa-bilibili fa-fw"></i>B  站</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">筛滤淘</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">3.7m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">56:03</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

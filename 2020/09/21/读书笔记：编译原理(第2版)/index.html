@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="第1章：引论 程序设计语言是向人以及计算机描述计算过程的记号。如我们所知，这个世界依赖于程序设计语言，因为在所有计算机上运行的所有软件都是用某种程序设计语言编写的。但是，在一个程序可以运行之前，它首先需要被翻译成一种能够被计算机执行的形式。  完成这项翻译工作的软件系统称为编译器(compiler)。  本书介绍的是设计和实现编译器的方法。我们将介绍用于构建面向多种语言和机器的翻译器的一些基本思想">
+<meta property="og:type" content="article">
+<meta property="og:title" content="读书笔记：编译原理(第2版)">
+<meta property="og:url" content="http://example.com/2020/09/21/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86(%E7%AC%AC2%E7%89%88)/index.html">
+<meta property="og:site_name" content="木子小屋">
+<meta property="og:description" content="第1章：引论 程序设计语言是向人以及计算机描述计算过程的记号。如我们所知，这个世界依赖于程序设计语言，因为在所有计算机上运行的所有软件都是用某种程序设计语言编写的。但是，在一个程序可以运行之前，它首先需要被翻译成一种能够被计算机执行的形式。  完成这项翻译工作的软件系统称为编译器(compiler)。  本书介绍的是设计和实现编译器的方法。我们将介绍用于构建面向多种语言和机器的翻译器的一些基本思想">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2020/09/21/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86(%E7%AC%AC2%E7%89%88)/01.png">
+<meta property="og:image" content="http://example.com/2020/09/21/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86(%E7%AC%AC2%E7%89%88)/02.png">
+<meta property="og:image" content="http://example.com/2020/09/21/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86(%E7%AC%AC2%E7%89%88)/03.png">
+<meta property="og:image" content="http://example.com/2020/09/21/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86(%E7%AC%AC2%E7%89%88)/04.png">
+<meta property="og:image" content="http://example.com/2020/09/21/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86(%E7%AC%AC2%E7%89%88)/05.png">
+<meta property="og:image" content="http://example.com/2020/09/21/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86(%E7%AC%AC2%E7%89%88)/06.png">
+<meta property="og:image" content="http://example.com/2020/09/21/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86(%E7%AC%AC2%E7%89%88)/07.png">
+<meta property="og:image" content="http://example.com/2020/09/21/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86(%E7%AC%AC2%E7%89%88)/08.png">
+<meta property="og:image" content="http://example.com/2020/09/21/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86(%E7%AC%AC2%E7%89%88)/09.png">
+<meta property="article:published_time" content="2020-09-21T08:00:00.000Z">
+<meta property="article:modified_time" content="2020-09-21T08:00:00.000Z">
+<meta property="article:author" content="筛滤淘">
+<meta property="article:tag" content="计算机底层">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2020/09/21/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86(%E7%AC%AC2%E7%89%88)/01.png">
+
+<link rel="canonical" href="http://example.com/2020/09/21/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86(%E7%AC%AC2%E7%89%88)/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>读书笔记：编译原理(第2版) | 木子小屋</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?79d7cb9c8fa9e57a2723fb8645f37638";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">木子小屋</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Talk is cheap. Show me the code.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/21/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86(%E7%AC%AC2%E7%89%88)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cat.jpg">
+      <meta itemprop="name" content="筛滤淘">
+      <meta itemprop="description" content="前端知识点总结">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="木子小屋">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          读书笔记：编译原理(第2版)
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-21 16:00:00" itemprop="dateCreated datePublished" datetime="2020-09-21T16:00:00+08:00">2020-09-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%BA%95%E5%B1%82/" itemprop="url" rel="index"><span itemprop="name">计算机底层</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="第1章：引论"><a href="#第1章：引论" class="headerlink" title="第1章：引论"></a>第1章：引论</h1><p>程序设计语言是向人以及计算机描述计算过程的记号。如我们所知，这个世界依赖于程序设计语言，因为在<strong>所有计算机上运行的所有软件都是用某种程序设计语言编写的</strong>。但是，在一个程序可以运行<strong>之前</strong>，它首先需要被<strong>翻译</strong>成一种能够被计算机执行的形式。</p>
+<p>完成这项翻译工作的软件系统称为<strong>编译器</strong>(compiler)。</p>
+<p>本书介绍的是<strong>设计和实现编译器的方法</strong>。我们将介绍用于构建面向多种语言和机器的翻译器的一些基本思想。<strong>编译器设计的原理和技术还可以用于编译器设计之外的众多领域</strong>。因此，这些原理和技术通常会在一个计算机科学家的职业生涯中多次被用到。研究编译器的编写将沙及程序设计语言、计算机体系结构、形式语言理论、算法和软件工程。</p>
+<p>在本章中，我们将介绍<strong>语言翻译器的不同形式</strong>，在高层次上概述一个典型编译器的结构，并讨论了程序设计语言和硬件体系结构的发展趋势。这些趋势将影响编译器的形式。我们还将介绍关于编译器设计和计算机科学理论的关系的一些事实，并给出编译技术在编译领域之外的一些应用。最后，我们将简单论述在我们研究编译器时需要用到的重要的程序设计语言概念。</p>
+<h2 id="语言处理器"><a href="#语言处理器" class="headerlink" title="语言处理器"></a>语言处理器</h2><p>简单地说，一个编译器就是一个<strong>程序</strong>，它可以<strong>阅读以某一种语言(源语言)编写的程序</strong>，并把该程序<strong>翻译成为一个等价的、用另一种语言(目标语言)编写的程序</strong>，参见图1-1。编译器的重要<strong>任务</strong>之一是报告<strong>它在翻译过程中发现的源程序中的错误</strong>。</p>
+<img data-src="/2020/09/21/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86(%E7%AC%AC2%E7%89%88)/01.png" class>
+
+<p>如果目标程序是一个<strong>可执行的机器语言程序</strong>，那么它就可以被用户调用，处理输入并产生输出。参见图1-2。</p>
+<img data-src="/2020/09/21/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86(%E7%AC%AC2%E7%89%88)/02.png" class>
+
+<p><strong>解释器</strong>(interpreter)是另一种常见的语言处理器。<strong>它并不通过翻译的方式生成目标程序</strong>。从用户的角度看，解释器直接利用用户提供的输入执行源程序中指定的操作。参见图1-3。</p>
+<img data-src="/2020/09/21/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86(%E7%AC%AC2%E7%89%88)/03.png" class>
+
+<p>在把用户输入映射成为输出的过程中，<strong>由一个编译器产生的机器语言目标程序通常比一个解释器快很多</strong>。然而，<strong>解释器的错误诊断效果通常比编译器更好，因为它逐个语句地执行源程序</strong>。</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/26838993">编译器和解释器之间有什么区别</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.im/post/6844903853805027335">编译器和解释器</a></p>
+<p><strong>例1.1</strong></p>
+<p>Java语言处理器<strong>结合了编译和解释过程</strong>，如图1-4所示。一个<strong>Java源程序</strong>首先被<strong>编译</strong>成一个称为<strong>字节码</strong>(bytecode)的中间表示形式。然后由一个<strong>虚拟机</strong>对得到的字节码加以解释执行。这样安排的好处之一是在一台机器上编译得到的字节码可以在另一台机器上<strong>解释执行</strong>。通过网络就可以完成机器之间的迁移。</p>
+<img data-src="/2020/09/21/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86(%E7%AC%AC2%E7%89%88)/04.png" class>
+
+<p>为了更快地完成输入到输出的处理，有些被称为即时(just in time)编译器的Java编译器在运行中间程序处理输入的前一刻首先把字节码翻译成为机器语言，然后再执行程序。</p>
+<p>如图1-5所示，除了编译器之外，创建一个可执行的目标程序还需要一些其他程序。一个源程序可能被分割成为多个模块，并存放于独立的文件中。把源程序聚合在一起的任务有时会由一个被称为预处理器(preprocessor)的程序独立完成。预处理器还负责把那些称为宏的缩写形式转换为源语言的语句。</p>
+<p>然后，将<strong>经过预处理的源程序作为输入传递给一个编译器</strong>。编译器可能产生一个<strong>汇编语言</strong>程序作为其输出，因为汇编语言比较容易输出和调试。接着，这个汇编语言程序由称为**汇编器(assembler)**的程序进行处理，并生成可重定位的机器代码。</p>
+<p>大型程序经常被<strong>分成多个部分进行编译</strong>，因此，可重定位的机器代码有必要和其他可重定位的目标文件以及库文件<strong>连接到一起</strong>，形成真正在机器上运行的代码。一个文件中的代码可能指向另一个文件中的位置，而<strong>链接器(linker)**能够解决外部内存地址的问题。最后，</strong>加载器(loader)<strong>把</strong>所有的可执行目标文件放到内存中执行**。</p>
+<img data-src="/2020/09/21/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86(%E7%AC%AC2%E7%89%88)/05.png" class>
+
+<p><strong>1.1节的练习</strong></p>
+<img data-src="/2020/09/21/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86(%E7%AC%AC2%E7%89%88)/06.png" class>
+
+<h2 id="一个编译器的结构"><a href="#一个编译器的结构" class="headerlink" title="一个编译器的结构"></a>一个编译器的结构</h2><p>到现在为止，我们把编译器看作一个黑盒子，它能够把源程序映射为在语义上等价的目标程序。如果把这个盒子稍微打开一点，我们就会看到这个映射过程由两个部分组成：<strong>分析部分和综合部分</strong>。</p>
+<p>分析(analysis)部分<strong>把源程序分解成为多个组成要素</strong>，并在这些要素之上加上<strong>语法结构</strong>。然后，它使用这个结构来创建该源程序的一个中间表示。如果分析部分检查出源程序没有按照正确的语法构成，或者语义上不一致，它就必须提供有用的信息，使得用户可以按此进行改正。分析部分还会收集有关源程序的信息，并把信息存放在一个称为**符号表(symbol table)**的数据结构中。符号表将和中间表示形式一起传送给综合部分。</p>
+<p>综合(synthesis)部分根据中间表示和符号表中的信息来构造用户期待的目标程序。分析部分经常被称为编译器的前端(front end)，而综合部分称为后端(back end)</p>
+<p>如果我们更加详细地研究编译过程，会发现它顺序执行了一组步骤(phase)。每个步骤把源程序的一种表示方式转换成另一种表示方式。一个典型的把编译程序分解成为多个步骤的方式如图1-6所示。在实践中，多个步骤可能被组合在一起，而这些组合在一起的步骤之间的中间表示不需要被明确地构造出来。存放整个源程序的信息的符号表可由编译器的各个步骤使用。</p>
+<p>有些编译器在<strong>前端和后端之间</strong>有一个与机器无关的<strong>优化步骤</strong>。这个优化步骤的目的是在中间表示之上进行转换，以便后端程序能够生成更好的目标程序。如果基于未经过此优化步骤的中间表示来生成代码，则代码的质量会受到影响。因为优化是可选的，所以图1-6中所示的两个优化步骤之一可以被省略。</p>
+<img data-src="/2020/09/21/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86(%E7%AC%AC2%E7%89%88)/07.png" class>
+
+<h3 id="词法分析"><a href="#词法分析" class="headerlink" title="词法分析"></a>词法分析</h3><p>编译器的第一个步骤称为词法分析（lexical analysis）或扫描（scanning），。词法分析器读入组成源程序的字符流，并且将它们组织成为有意义的词素（lexeme）的序列。对于每个词素，词法分析器产生如下形式的词法单元（token）作为输出：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;token-name, attribute-value&gt;</span><br></pre></td></tr></table></figure>
+<p>这个词法单元被传送给下一个步骤，即语法分析。在这个词法单元中，第一个分量token-name是一个由语法分析步骤使用的抽象符号，而第二个分量attribute-value向号表中关于这个词法单元的条目。符号表条目的信息会被语义分析和代码生成步骤使用。</p>
+<p>比如，假设一个源程序包含如下的赋值语句</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">position = initial + rate * <span class="number">60</span>  (<span class="number">1.1</span>)</span><br></pre></td></tr></table></figure>
+<p>这个赋值语句中的字符可以组合成如下词素，并映射成为如下词法单元。这些词法单元将被传递给语法分析阶段。</p>
+<img data-src="/2020/09/21/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86(%E7%AC%AC2%E7%89%88)/08.png" class>
+
+<p>分隔词素的空格会被词法分析器忽略掉。</p>
+<p>图1-7给出经过词法分析之后，赋值语句1.1被表示成如下的词法单元序列：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;id,<span class="number">1</span>&gt; &lt;=&gt; &lt;id,2&gt; &lt;+&gt; &lt;id,3&gt; &lt;*&gt; &lt;60&gt;</span><br></pre></td></tr></table></figure>
+<p>在这个表示中，词法单元名<code>=</code>、<code>+</code>和<code>*</code>分别是表示赋值、加法运算符、乘法运算符的抽象符号。</p>
+<blockquote>
+<p>从技术上讲，我们应该为语法单元60建立一个形如&lt;number,4&gt;的词法单元，其中4指向符号表中对应于整数60的条目。但是我们要到第2章中才讨论数字的词法单元。第3章将讨论建立词法分析器的技术。</p>
+</blockquote>
+<img data-src="/2020/09/21/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86(%E7%AC%AC2%E7%89%88)/09.png" class>
+
+<h3 id="语法分析"><a href="#语法分析" class="headerlink" title="语法分析"></a>语法分析</h3><p>编译器的第2个步骤称为语法分析（syntax analysis）或解析（parsing）。语法分析器使用由词法分析器生成的各个词法单元的第一个分量来创建树形的中间表示。该中间表示给出了词法分析产生的词法单元流的语法结构。一个常用的表示方法是语法树（syntax tree），树中的每个内部结点表示一个运算，而该结点的子结点表示该运算的分量。在图1-7中，词法单元流（1.2）对应的语法树被显示为语法分析器的输出。</p>
+<p>这棵树显示了赋值语句</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">position = initial + rate * <span class="number">60</span> </span><br></pre></td></tr></table></figure>
+<p>中各个运算的执行顺序。这棵树有一个标号为<code>*</code>的内部结点，&lt;id，3&gt;是它的左子结点，整数60是它的右子结点。结点&lt;id，3&gt;表示标识符rate。标号为<code>*</code>的结点指明了我们必须首先把rate的值与60相乘。标号为<code>+</code>的结点表明我们必须把相乘的结果和initial的值相加。这棵树的根结点的标号为<code>=</code>，它表明我们必须把相加的结果存储到标识符position对应的位置上去。这个运算顺序和通常的算术规则相同，即<strong>乘法的优先级高于加法</strong>，因此乘法应该在加法之前计算。</p>
+<p>编译器的后续步骤使用这个<strong>语法结构</strong>来帮助分析源程序，并<strong>生成目标程序</strong>。在第4章，我们将使用上下文无关文法来描述程序设计语言的语法结构，并讨论为某些类型的语法自动构造高效语法分析器的算法。在第2章和第5章，我们将看到，语法制导的定义将有助于描述对程序设计语言结构的翻译。</p>
+<h3 id="语义分析"><a href="#语义分析" class="headerlink" title="语义分析"></a>语义分析</h3><p>语义分析器（semantic analyzer）使用语法树和符号表中的信息来检查源程序是否和语言定义的语义一致。它同时也收集类型信息，并把这些信息存放在语法树或符号表中，以便在随后的中间代码生成过程中使用。</p>
+<p>语义分析的一个重要部分是类型检查（type checking）。编译器检查每个运算符是否具有匹配的运算分量。比如，很多程序设计语言的定义中要求一个数组的下标必须是整数。如果用一个浮点数作为数组下标，编译器就必须报告错误。</p>
+<p>程序设计语言可能允许某些类型转换，这被称为自动类型转换（coercion）。比如，一个二元算术运算符可以应用于一对整数或者一对浮点数。如果这个运算符应用于一个浮点数和一个整数，那么编译器可以把该整数转换（或者说自动类型转换）成为一个浮点数。</p>
+<p>图1-7中显示了一个这样的自动类型转换。假设position，initial和rate已被声明为浮点数类型，而词素60本身形成一个整数。图1-7中的语义分析器的类型检查程序发现运算符*被用于一个浮点数rate和一个整数60，在这种情况下，这个整数可以被转换成为一个浮点数。请注意，在图1-7中，语义分析器输出中有一个关于运算符inttofloat的额外结点。inttofloat明确地把它的整数参数转换为一个浮点数。类型检查和语义分析将在第6章中讨论。</p>
+<h3 id="中间代码生成"><a href="#中间代码生成" class="headerlink" title="中间代码生成"></a>中间代码生成</h3><p>在把一个源程序翻译成目标代码的过程中，一个编译器可能构造出一个或多个中间表示。这些中间表示可以有多种形式。语法树是一种中间表示形式，它们通常在语法分析和语义分析中使用。</p>
+<p>在源程序的语法分析和语义分析完成之后，很多编译器生成一个明确的低级的或类机器语言的中间表示。我们可以把这个表示看作是某个抽象机器的程序。该中间表示应该具有两个重要的性质：它应该易于生成，且能够被轻松地翻译为目标机器上的语言。</p>
+<p>在第6章，我们将考虑一种称为三地址代码（three-address code）的中间表示形式。这种中间表示由一组类似于汇编语言的指令组成，每个指令具有三个运算分量。每个运算分量都像一个寄存器。图1-7中的中间代码生成器的输出是如下的三地址代码序列：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">t1 = inttofloat (<span class="number">60</span>)</span><br><span class="line">t2= id3 * t1</span><br><span class="line">t3= id2 + t2</span><br><span class="line">id1 = t3</span><br></pre></td></tr></table></figure>
+<p>关于三地址指令，有几点是值得专门指出的。首先，每个三地址赋值指令的右部最多只有一个运算符。因此这些指令确定了运算完成的顺序。在源程序1.1中，乘法应该在加法之前完成。第二，编译器应该生成一个临时名字以存放一个三地址指令计算得到的值。第三，有些三地址指令的运算分量的少于三个（比如上面的序列1.3中的第一个和最后一个指令）。</p>
+<p>在第6章，我们将讨论在不同编译器中用到的主要中间表示形式。第5章将介绍语法制导翻译技术。这些技术在第6章中被用于处理典型程序设计语言构造进行类型检查和中间代码生成。这些程序设计语言构造包括：表达式、控制流构造和过程调用。</p>
+<h3 id="代码优化"><a href="#代码优化" class="headerlink" title="代码优化"></a>代码优化</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%BA%95%E5%B1%82/" rel="tag"># 计算机底层</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/09/16/Vue%E5%B0%8F%E6%A1%88%E4%BE%8B/" rel="prev" title="Vue小案例">
+      <i class="fa fa-chevron-left"></i> Vue小案例
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/09/21/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E5%BF%8D%E8%80%85%E7%A7%98%E7%B1%8D(%E7%AC%AC2%E7%89%88)/" rel="next" title="读书笔记：JavaScript忍者秘籍(第2版)">
+      读书笔记：JavaScript忍者秘籍(第2版) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC1%E7%AB%A0%EF%BC%9A%E5%BC%95%E8%AE%BA"><span class="nav-text">第1章：引论</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E5%99%A8"><span class="nav-text">语言处理器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%B8%AA%E7%BC%96%E8%AF%91%E5%99%A8%E7%9A%84%E7%BB%93%E6%9E%84"><span class="nav-text">一个编译器的结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">词法分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90"><span class="nav-text">语法分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90"><span class="nav-text">语义分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90"><span class="nav-text">中间代码生成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96"><span class="nav-text">代码优化</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="筛滤淘"
+      src="/images/cat.jpg">
+  <p class="site-author-name" itemprop="name">筛滤淘</p>
+  <div class="site-description" itemprop="description">前端知识点总结</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">129</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lm101845" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lm101845" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1018457683@qq.com" title="E-Mail → mailto:1018457683@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.jianshu.com/u/6879af8ace24" title="简 书 → https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;6879af8ace24" rel="noopener" target="_blank"><i class="fa fa-jianshu fa-fw"></i>简 书</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/9002959" title="B  站 → https:&#x2F;&#x2F;space.bilibili.com&#x2F;9002959" rel="noopener" target="_blank"><i class="fa fa-bilibili fa-fw"></i>B  站</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">筛滤淘</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">3.7m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">56:03</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

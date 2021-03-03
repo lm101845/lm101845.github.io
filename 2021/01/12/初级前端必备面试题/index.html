@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="(注1：现在是2021年1月12日了，我真的是必须要开始做找工作的准备了。接下来要做的事情真的是挺多的，首先梳理一下自己这一年半以来的学习过程，把自己以前写的博文系统复习一下，进行查漏补缺和知识点的深入理解。其次要开始尽可能的多做项目了，通过项目将所学的这些知识点融会贯通。最后还要进行新知识的学习：小程序一定要学完，并且做一个项目；uni-app框架、Element-UI框架；TypeScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初级前端必备面试题">
+<meta property="og:url" content="http://example.com/2021/01/12/%E5%88%9D%E7%BA%A7%E5%89%8D%E7%AB%AF%E5%BF%85%E5%A4%87%E9%9D%A2%E8%AF%95%E9%A2%98/index.html">
+<meta property="og:site_name" content="木子小屋">
+<meta property="og:description" content="(注1：现在是2021年1月12日了，我真的是必须要开始做找工作的准备了。接下来要做的事情真的是挺多的，首先梳理一下自己这一年半以来的学习过程，把自己以前写的博文系统复习一下，进行查漏补缺和知识点的深入理解。其次要开始尽可能的多做项目了，通过项目将所学的这些知识点融会贯通。最后还要进行新知识的学习：小程序一定要学完，并且做一个项目；uni-app框架、Element-UI框架；TypeScript">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2021/01/12/%E5%88%9D%E7%BA%A7%E5%89%8D%E7%AB%AF%E5%BF%85%E5%A4%87%E9%9D%A2%E8%AF%95%E9%A2%98/01.png">
+<meta property="og:image" content="http://example.com/2021/01/12/%E5%88%9D%E7%BA%A7%E5%89%8D%E7%AB%AF%E5%BF%85%E5%A4%87%E9%9D%A2%E8%AF%95%E9%A2%98/02.png">
+<meta property="og:image" content="http://example.com/2021/01/12/%E5%88%9D%E7%BA%A7%E5%89%8D%E7%AB%AF%E5%BF%85%E5%A4%87%E9%9D%A2%E8%AF%95%E9%A2%98/03.png">
+<meta property="og:image" content="http://example.com/2021/01/12/%E5%88%9D%E7%BA%A7%E5%89%8D%E7%AB%AF%E5%BF%85%E5%A4%87%E9%9D%A2%E8%AF%95%E9%A2%98/04.png">
+<meta property="og:image" content="http://example.com/2021/01/12/%E5%88%9D%E7%BA%A7%E5%89%8D%E7%AB%AF%E5%BF%85%E5%A4%87%E9%9D%A2%E8%AF%95%E9%A2%98/05.png">
+<meta property="og:image" content="http://example.com/2021/01/12/%E5%88%9D%E7%BA%A7%E5%89%8D%E7%AB%AF%E5%BF%85%E5%A4%87%E9%9D%A2%E8%AF%95%E9%A2%98/07.png">
+<meta property="og:image" content="http://example.com/2021/01/12/%E5%88%9D%E7%BA%A7%E5%89%8D%E7%AB%AF%E5%BF%85%E5%A4%87%E9%9D%A2%E8%AF%95%E9%A2%98/08.png">
+<meta property="og:image" content="http://example.com/2021/01/12/%E5%88%9D%E7%BA%A7%E5%89%8D%E7%AB%AF%E5%BF%85%E5%A4%87%E9%9D%A2%E8%AF%95%E9%A2%98/09.png">
+<meta property="og:image" content="http://example.com/2021/01/12/%E5%88%9D%E7%BA%A7%E5%89%8D%E7%AB%AF%E5%BF%85%E5%A4%87%E9%9D%A2%E8%AF%95%E9%A2%98/10.png">
+<meta property="og:image" content="http://example.com/2021/01/12/%E5%88%9D%E7%BA%A7%E5%89%8D%E7%AB%AF%E5%BF%85%E5%A4%87%E9%9D%A2%E8%AF%95%E9%A2%98/11.png">
+<meta property="og:image" content="http://example.com/2021/01/12/%E5%88%9D%E7%BA%A7%E5%89%8D%E7%AB%AF%E5%BF%85%E5%A4%87%E9%9D%A2%E8%AF%95%E9%A2%98/12.png">
+<meta property="og:image" content="http://example.com/2021/01/12/%E5%88%9D%E7%BA%A7%E5%89%8D%E7%AB%AF%E5%BF%85%E5%A4%87%E9%9D%A2%E8%AF%95%E9%A2%98/06.png">
+<meta property="article:published_time" content="2021-01-12T02:30:00.000Z">
+<meta property="article:modified_time" content="2021-01-12T02:30:00.000Z">
+<meta property="article:author" content="筛滤淘">
+<meta property="article:tag" content="面试">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/01/12/%E5%88%9D%E7%BA%A7%E5%89%8D%E7%AB%AF%E5%BF%85%E5%A4%87%E9%9D%A2%E8%AF%95%E9%A2%98/01.png">
+
+<link rel="canonical" href="http://example.com/2021/01/12/%E5%88%9D%E7%BA%A7%E5%89%8D%E7%AB%AF%E5%BF%85%E5%A4%87%E9%9D%A2%E8%AF%95%E9%A2%98/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>初级前端必备面试题 | 木子小屋</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?79d7cb9c8fa9e57a2723fb8645f37638";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">木子小屋</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Talk is cheap. Show me the code.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/01/12/%E5%88%9D%E7%BA%A7%E5%89%8D%E7%AB%AF%E5%BF%85%E5%A4%87%E9%9D%A2%E8%AF%95%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cat.jpg">
+      <meta itemprop="name" content="筛滤淘">
+      <meta itemprop="description" content="前端知识点总结">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="木子小屋">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          初级前端必备面试题
+        </h1>
+
+        <div class="post-meta">
+          
+            <i class="fa fa-thumb-tack"></i>
+            <font color="green">置顶</font>
+            <span class="post-meta-divider">|</span>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-12 10:30:00" itemprop="dateCreated datePublished" datetime="2021-01-12T10:30:00+08:00">2021-01-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%9D%A2%E8%AF%95/" itemprop="url" rel="index"><span itemprop="name">面试</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>26k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>24 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>(注1：现在是2021年1月12日了，我真的是必须要开始做找工作的准备了。接下来要做的事情真的是挺多的，首先梳理一下自己这一年半以来的学习过程，把自己以前写的博文系统复习一下，进行查漏补缺和知识点的深入理解。其次要开始尽可能的多做项目了，通过项目将所学的这些知识点融会贯通。最后还要进行新知识的学习：小程序一定要学完，并且做一个项目；uni-app框架、Element-UI框架；TypeScript和Vue3.0起码要有点印象，快速过一遍，我学了一点TypeScript，感觉真的挺好的，语言更加的规范了，比较适合大型项目使用；React入门；大体就这些了。)</p>
+<p>(注2：这些面试题是自己搜集整理汇总的，是自己感觉属于初级前端必备的知识点，里面不弄偏难怪题，主要考察基本功。所以这些题自己每一道都要会，这个就属于精华题集了。)</p>
+<p>(注3：现在是2021年2月23日，我自己注册了个喜马拉雅FM的主播，刚开始是想着锻炼一下自己的口语表达能力，平时播一下有声小说什么的，现在可以也把前端面试题给播一下了，<strong>从明天开始，每天播10道题，然后睡觉听</strong>，就算背不下来也起码有个印象吧。今天正式辞职了，加油吧！！！)</p>
+<p>(注4：<a target="_blank" rel="noopener" href="https://www.ximalaya.com/jiaoyupeixun/46744064/">我准备的面试题有声版-我自己录的音</a>)</p>
+<h1 id="题目来源："><a href="#题目来源：" class="headerlink" title="题目来源："></a>题目来源：</h1><p><a target="_blank" rel="noopener" href="https://juejin.cn/collection/6933357886261166094">我掘金上的收藏集：自学前端面试题</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904151369908232">霖呆呆的近期面试128题汇总(含超详细答案)</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903797848981512">写给初级前端的面试经验</a></p>
+<p>还有一部分是群里面人的面试经历，我记下来了。</p>
+<h1 id="HTML、CSS"><a href="#HTML、CSS" class="headerlink" title="HTML、CSS"></a>HTML、CSS</h1><h2 id="介绍一下你对浏览器内核的理解？常见的浏览器内核有哪些？"><a href="#介绍一下你对浏览器内核的理解？常见的浏览器内核有哪些？" class="headerlink" title="介绍一下你对浏览器内核的理解？常见的浏览器内核有哪些？"></a>介绍一下你对浏览器内核的理解？常见的浏览器内核有哪些？</h2><h2 id="lt-image-gt-标签上title属性与alt属性的区别是什么？"><a href="#lt-image-gt-标签上title属性与alt属性的区别是什么？" class="headerlink" title="&lt;image&gt;标签上title属性与alt属性的区别是什么？"></a><code>&lt;image&gt;</code>标签上title属性与alt属性的区别是什么？</h2><ul>
+<li>title表示<strong>鼠标悬停时</strong>显示的内容。</li>
+<li>alt表示<strong>图像不能显示时</strong>的替换文本。</li>
+</ul>
+<h2 id="简述一下src与href的区别？"><a href="#简述一下src与href的区别？" class="headerlink" title="简述一下src与href的区别？"></a>简述一下src与href的区别？</h2><ul>
+<li><p>src用于替换当前元素；href用于在当前文档和引用资源之间确立联系。</p>
+</li>
+<li><p>src是source的缩写，指向外部资源的位置，指向的内容将会嵌入到文档中当前标签所在位置。</p>
+</li>
+<li><p>href是Hypertext Reference的缩写，指向网络资源所在位置，建立和当前元素（锚点）或当前文档（链接）之间的链接。</p>
+</li>
+</ul>
+<h2 id="为何img、input等内联元素可以设置宽、高？"><a href="#为何img、input等内联元素可以设置宽、高？" class="headerlink" title="为何img、input等内联元素可以设置宽、高？"></a>为何img、input等内联元素可以设置宽、高？</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/lzijian/p/5817069.html">为何img、input等内联元素可以设置宽、高</a></p>
+<p>从元素本身的特点来讲，可以分为替换和不可替换元素。</p>
+<p><strong>替换元素一般有内在尺寸，所以具有width和height</strong>，可以设定。例如你不指定img的width和height时，就按其内在尺寸显示，也就是图片被保存的时候的宽度和高度。</p>
+<h2 id="常见的块级元素与行内元素有哪些？"><a href="#常见的块级元素与行内元素有哪些？" class="headerlink" title="常见的块级元素与行内元素有哪些？"></a>常见的块级元素与行内元素有哪些？</h2><ul>
+<li>常见的块级元素(block-level)有<code>&lt;h1&gt;~&lt;h6&gt;、&lt;p&gt;、&lt;div&gt;、&lt;ul&gt;、&lt;ol&gt;、&lt;li&gt;</code>等，其中<code>&lt;div&gt;</code>标签是最典型的块元素。</li>
+<li>常见的行内元素(inline-level)有<code>&lt;a&gt;、&lt;strong&gt;、&lt;b&gt;、&lt;em&gt;、&lt;i&gt;、&lt;del&gt;、&lt;s&gt;、&lt;ins&gt;、&lt;u&gt;、&lt;span&gt;</code>等，其中<code>&lt;span&gt;</code>标签最典型的行内元素。</li>
+</ul>
+<h2 id="ul-li-dl-dt-dd是块级元素还是行内元素还是行内块元素？"><a href="#ul-li-dl-dt-dd是块级元素还是行内元素还是行内块元素？" class="headerlink" title="ul,li,dl,dt,dd是块级元素还是行内元素还是行内块元素？"></a>ul,li,dl,dt,dd是块级元素还是行内元素还是行内块元素？</h2><h2 id="块级元素、行内元素、行内块元素的区别？"><a href="#块级元素、行内元素、行内块元素的区别？" class="headerlink" title="块级元素、行内元素、行内块元素的区别？"></a>块级元素、行内元素、行内块元素的区别？</h2><p><strong>块级元素的特点</strong>：</p>
+<ul>
+<li><p>总是从新行开始</p>
+</li>
+<li><p>高度，行高、外边距以及内边距都可以控制。</p>
+</li>
+<li><p>宽度默认是容器的100%</p>
+</li>
+<li><p>可以容纳内联元素和其他块元素。</p>
+</li>
+</ul>
+<p><strong>行内元素的特点</strong>：</p>
+<ul>
+<li><p>和相邻行内元素<strong>在一行上</strong>。</p>
+</li>
+<li><p><strong>高、宽</strong>无效，但<strong>水平方向的padding和margin可以设置，垂直方向的无效</strong>。</p>
+</li>
+<li><p><strong>默认宽度就是它本身内容的宽度。</strong></p>
+</li>
+<li><p><strong>行内元素只能容纳文本或则其他行内元素</strong>。（a特殊，a里面可以放块级元素 ）</p>
+</li>
+</ul>
+<p>​       注意：</p>
+<ul>
+<li>只有文字才能组成段落，因此<strong>p里面不能放块级元素</strong>，同理还有这些标签<code>h1-h6</code>，<code>dt</code>，<strong>他们都是文字类块级标签，里面不能放其他块级元素</strong>。</li>
+<li>链接里面不能再放链接。</li>
+<li>a里面可以放块级元素。</li>
+</ul>
+<p><strong>行内块元素的特点</strong>：</p>
+<ul>
+<li>和相邻行内元素（行内块）在一行上,但是<strong>之间会有空白缝隙</strong>。</li>
+<li><strong>默认宽度就是它本身内容的宽度</strong>。</li>
+<li>高度，行高、外边距以及内边距都可以控制。</li>
+<li>行内块元素一行可以放多个，<strong>行内块的宽度和高度与内容有关系</strong>。</li>
+</ul>
+<h2 id="DIV-CSS布局的好处"><a href="#DIV-CSS布局的好处" class="headerlink" title="DIV+CSS布局的好处"></a>DIV+CSS布局的好处</h2><ul>
+<li><p>代码精简，且<strong>结构与样式分离</strong>，<strong>易于维护</strong></p>
+</li>
+<li><p>代码量减少了，减少了大量的带宽，<strong>页面加载的也更快</strong>，提升了用户的体验</p>
+</li>
+<li><p>对<strong>SEO</strong>搜索引擎更加友好，且H5又新增了许多语义化标签更是如此</p>
+</li>
+<li><p>允许更多炫酷的页面效果，<strong>丰富了页面</strong></p>
+</li>
+<li><p><strong>符合W3C标准</strong>，保证网站不会因为网络应用的升级而被淘汰</p>
+</li>
+</ul>
+<blockquote>
+<p>缺点: 不同浏览器对web标准默认值不同，所以更容易出现对浏览器的兼容性问题。</p>
+</blockquote>
+<h2 id="如何居中div？如何居中一个浮动元素？如何让绝对定位的div居中？"><a href="#如何居中div？如何居中一个浮动元素？如何让绝对定位的div居中？" class="headerlink" title="如何居中div？如何居中一个浮动元素？如何让绝对定位的div居中？"></a>如何居中div？如何居中一个浮动元素？如何让绝对定位的div居中？</h2><h2 id="谈谈你对CSS布局的理解？"><a href="#谈谈你对CSS布局的理解？" class="headerlink" title="谈谈你对CSS布局的理解？"></a>谈谈你对CSS布局的理解？</h2><h2 id="为什么要清除浮动？清除浮动的方式有哪些？"><a href="#为什么要清除浮动？清除浮动的方式有哪些？" class="headerlink" title="为什么要清除浮动？清除浮动的方式有哪些？"></a>为什么要清除浮动？清除浮动的方式有哪些？</h2><p>由于浮动元素不再占用原文档流的位置，所以它会对后面的元素排版产生影响，为了解决这些问题，此时就需要在该元素中清除浮动。</p>
+<p>准确地说，并不是清除浮动，而是<strong>清除浮动后造成的影响。</strong></p>
+<p><strong>清除浮动主要为了解决父级元素因为子级元素浮动引起内部高度为0的问题。</strong></p>
+<h2 id="import和link的区别？-★●"><a href="#import和link的区别？-★●" class="headerlink" title="@import和link的区别？(★●)"></a>@import和link的区别？(★●)</h2><p><a target="_blank" rel="noopener" href="http://www.cnblogs.com/KilerMino/p/6115803.html">由link和@import的区别引发的CSS渲染杂谈</a></p>
+<p>首先，我们来说一下CSS的引入方式，主要有以下4种：</p>
+<ul>
+<li><p><strong>内联</strong>：<code>style</code> 属性（<code>style=&quot;color: red&quot;</code>）</p>
+</li>
+<li><p><strong>内嵌</strong>：<code>style</code> 标签（<code>&lt;style&gt;&lt;/style&gt;</code>） </p>
+</li>
+<li><p><strong>导入</strong>：<code>@import</code>（<code>@import url(&#39;index.css&#39;)</code> 或者 <code>@import &#39;index.css&#39;</code>）</p>
+</li>
+<li><p><strong>外链</strong>：<code>link</code> 标签（<code>&lt;link href=&quot;index.css&quot;&gt;</code>）</p>
+<p><code>@import</code> 和<code>link</code>区别：</p>
+</li>
+<li><p><strong>从属关系区别</strong>：<code>@import</code>是 CSS 提供的语法规则，只有<strong>导入样式表</strong>的作用；<code>link</code>是HTML提供的标签，不仅可以加载 CSS 文件，还可以定义 RSS、rel 连接属性等。</p>
+</li>
+<li><p><strong>加载顺序区别</strong>：加载页面时，<code>@import</code>引入的 CSS 将在<strong>页面加载完毕后</strong>被加载，而<code>link</code>标签引入的 CSS 则被同时加载。</p>
+<blockquote>
+<p><code>@import</code>一定要写在除<code>@charset</code>外的其他任何 CSS 规则之前，如果置于其它位置将会被浏览器忽略，而且，在<code>@import</code>之后如果存在其它样式，则<code>@import</code>之后的<strong>分号</strong>是必须书写，不可省略的。</p>
+</blockquote>
+</li>
+<li><p><strong>兼容性区别</strong>：<code>@import</code>是 CSS2.1 才有的语法，故只可在 <strong>IE5+</strong> 才能识别；<code>link</code>标签作为 HTML 元素，<strong>不存在兼容性问题</strong>。</p>
+</li>
+<li><p><strong>DOM可控性区别</strong>：可以通过 JS 操作 DOM ，插入<code>link</code>标签来改变样式；由于DOM方法是<strong>基于文档</strong>的，无法使用<code>@import</code>的方式插入样式。</p>
+</li>
+</ul>
+<p>就结论而言，强烈建议使用<code>link</code>标签，慎用<code>@import</code>方式。这样可以避免考虑<code>@import</code>的语法规则和注意事项，避免产生<strong>资源文件下载顺序混乱</strong>和<strong>http请求过多</strong>的烦恼。</p>
+<h2 id="CSS选择器及样式优先级？"><a href="#CSS选择器及样式优先级？" class="headerlink" title="CSS选择器及样式优先级？"></a>CSS选择器及样式优先级？</h2><p>CSS 选择器及样式优先级：</p>
+<ul>
+<li>在属性后面使用 <code>!important</code> 会覆盖页面任意位置定义的元素样式</li>
+<li>作为 <code>style</code> 属性写在元素内的样式（行内样式）</li>
+<li><code>id</code> 选择器</li>
+<li>类选择器 | 伪类选择器 | 属性选择器（后面样式覆盖前面样式）</li>
+<li>标签选择器</li>
+<li>通配符选择器</li>
+<li>浏览器自定义样式</li>
+</ul>
+<h2 id="什么是外边距塌陷-★"><a href="#什么是外边距塌陷-★" class="headerlink" title="什么是外边距塌陷(★)"></a>什么是外边距塌陷(★)</h2><p>当上下相邻的两个<strong>块级元素</strong>相遇时，如果上面的元素有下外边距<code>margin-bottom</code>，下面的元素有上外边距<code>margin-top</code>，则他们之间的垂直间距不是<code>margin-bottom</code>与<code>margin-top</code><strong>之和</strong>，<strong>而是两者中的较大者</strong>。这种现象被称为<strong>相邻块元素垂直外边距的合并</strong>(也称<strong>外边距塌陷</strong>)。</p>
+<h2 id="overflow-hidden几种使用方法？-★"><a href="#overflow-hidden几种使用方法？-★" class="headerlink" title="overflow:hidden几种使用方法？(★)"></a><code>overflow:hidden</code>几种使用方法？(★)</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41638795/article/details/83304388">关于overflow:hidden的作用（溢出隐藏、清除浮动、解决外边距塌陷等等）</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zjxin000/article/details/46369867/">神奇的overflow:hidden及其背后的原理</a></p>
+<h3 id="溢出隐藏"><a href="#溢出隐藏" class="headerlink" title="溢出隐藏"></a>溢出隐藏</h3><p>给一个元素中设置<code>overflow:hidden</code>，那么<strong>该元素的内容若超出了给定的宽度和高度属性</strong>，<strong>那么超出的部分将会被隐藏，不占位</strong>。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*css样式*/</span></span><br><span class="line">&lt;<span class="selector-tag">style</span>&gt;</span><br><span class="line">    <span class="selector-tag">div</span>&#123; </span><br><span class="line">        <span class="attribute">width</span>: <span class="number">150px</span>; </span><br><span class="line">        <span class="attribute">height</span>: <span class="number">60px</span>; </span><br><span class="line">        <span class="attribute">background</span>: skyblue;</span><br><span class="line">	 	<span class="attribute">overflow</span>: hidden;  </span><br><span class="line">        <span class="comment">/*溢出隐藏*/</span></span><br><span class="line">       &#125;</span><br><span class="line">&lt;/<span class="selector-tag">style</span>&gt;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/*html*/</span></span><br><span class="line">&lt;div style=&quot;&quot;&gt;</span><br><span class="line">    今天天气很好！&lt;<span class="selector-tag">br</span>&gt;今天天气很好！&lt;<span class="selector-tag">br</span>&gt;</span><br><span class="line">    今天天气很好！&lt;<span class="selector-tag">br</span>&gt;今天天气很好！&lt;<span class="selector-tag">br</span>&gt;</span><br><span class="line">&lt;/<span class="selector-tag">div</span>&gt;</span><br></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<img data-src="/2021/01/12/%E5%88%9D%E7%BA%A7%E5%89%8D%E7%AB%AF%E5%BF%85%E5%A4%87%E9%9D%A2%E8%AF%95%E9%A2%98/01.png" class>
+
+<p>一般情况下，在页面中，一般溢出后会显示省略号，比如，当一行文本超出固定宽度就隐藏超出的内容显示省略号。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*只适用于单行文本*/</span></span><br><span class="line"><span class="selector-tag">div</span>&#123; </span><br><span class="line">    <span class="attribute">width</span>: <span class="number">150px</span>;</span><br><span class="line">    <span class="attribute">background</span>: skyblue;</span><br><span class="line">    <span class="attribute">overflow</span>: hidden;      <span class="comment">/*溢出隐藏*/</span></span><br><span class="line">    <span class="attribute">white-space</span>: nowrap;	<span class="comment">/*规定文本不进行换行*/</span></span><br><span class="line">    <span class="attribute">text-overflow</span>: ellipsis;	<span class="comment">/*当对象内文本溢出时显示省略标记（...）*/</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>效果如下：</p>
+<img data-src="/2021/01/12/%E5%88%9D%E7%BA%A7%E5%89%8D%E7%AB%AF%E5%BF%85%E5%A4%87%E9%9D%A2%E8%AF%95%E9%A2%98/02.png" class>
+
+<h3 id="清除浮动"><a href="#清除浮动" class="headerlink" title="清除浮动"></a>清除浮动</h3><p>一般而言，<strong>父级元素不设置高度时，高度由随内容增加自适应高度</strong>。当父级元素内部的子元素全部都设置浮动float之后，<strong>子元素会脱离标准流，不占位</strong>，<strong>父级元素检测不到子元素的高度，父级元素高度为0</strong>。那么问题来了，如下：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*css样式*/</span></span><br><span class="line">&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">    <span class="selector-class">.box</span>&#123; <span class="attribute">background</span>:skyblue; &#125;</span><br><span class="line">    <span class="selector-class">.kid</span>&#123; <span class="attribute">width</span>: <span class="number">100px</span>;<span class="attribute">height</span>: <span class="number">100px</span>; <span class="attribute">float</span>:left;&#125;</span><br><span class="line">    <span class="selector-class">.kid1</span>&#123; <span class="attribute">background</span>: yellow; &#125;</span><br><span class="line">    <span class="selector-class">.kid2</span>&#123; <span class="attribute">background</span>: orange; &#125;</span><br><span class="line">    <span class="selector-class">.wrap</span>&#123; <span class="attribute">width</span>: <span class="number">300px</span>; <span class="attribute">height</span>: <span class="number">150px</span>; <span class="attribute">background</span>: blue; <span class="attribute">color</span>: white; &#125;</span><br><span class="line">&lt;/<span class="selector-tag">style</span>&gt;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/*html*/</span></span><br><span class="line">&lt;<span class="selector-tag">body</span>&gt;</span><br><span class="line">    &lt;div class=&quot;box&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;kid kid1&quot;&gt;子元素1&lt;/div&gt;</span><br><span class="line">		&lt;div class=&quot;kid kid2&quot;&gt;子元素2&lt;/div&gt;</span><br><span class="line">    &lt;/<span class="selector-tag">div</span>&gt;</span><br><span class="line"></span><br><span class="line">    &lt;div class=&quot;wrap&quot;&gt;其他部分&lt;/div&gt;</span><br><span class="line">&lt;/<span class="selector-tag">body</span>&gt;</span><br></pre></td></tr></table></figure>
+<img data-src="/2021/01/12/%E5%88%9D%E7%BA%A7%E5%89%8D%E7%AB%AF%E5%BF%85%E5%A4%87%E9%9D%A2%E8%AF%95%E9%A2%98/03.png" class>
+
+<p>如上，由于父级元素没有高度，下面的元素会顶上去，造成页面的塌陷。因此，需要给父级加个<code>overflow:hidden</code>属性，这样<strong>父级的高度就随子级容器及子级内容的高度而自适应</strong>。(讲的不好，只讲了解决方法，没讲为什么要这样做，它是如何起效果的。)</p>
+<p>由于在IE比较低版本的浏览器中使用<code>overflow：hidden;</code>是不能达到这样的效果，因此需要再加上<code>zoom:1;</code></p>
+<p>所以为了让兼容性更好的话，如果需要使用<code>overflow:hidden</code>来清除浮动，那么最好加上<code>zoom:1;</code></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*css样式*/</span></span><br><span class="line">&lt;style type=&quot;text/css&quot;&gt;</span><br><span class="line">    <span class="selector-class">.box</span>&#123; </span><br><span class="line">        <span class="attribute">background</span>:skyblue; </span><br><span class="line">	  	<span class="attribute">overflow</span>: hidden;  <span class="comment">/*清除浮动*/</span></span><br><span class="line">	  	<span class="attribute">zoom</span>:<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="selector-class">.kid</span>&#123;  <span class="attribute">width</span>: <span class="number">100px</span>;<span class="attribute">height</span>: <span class="number">100px</span>; <span class="attribute">float</span>:left;&#125;</span><br><span class="line">    <span class="selector-class">.kid1</span>&#123; <span class="attribute">background</span>: yellow; &#125;</span><br><span class="line">    <span class="selector-class">.kid2</span>&#123; <span class="attribute">background</span>: orange; &#125;</span><br><span class="line">    <span class="selector-class">.wrap</span>&#123; <span class="attribute">width</span>: <span class="number">300px</span>; <span class="attribute">height</span>: <span class="number">150px</span>; <span class="attribute">background</span>: blue; <span class="attribute">color</span>: white; &#125;</span><br><span class="line">&lt;/<span class="selector-tag">style</span>&gt;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/*html*/</span></span><br><span class="line">&lt;<span class="selector-tag">body</span>&gt;</span><br><span class="line">    &lt;div class=&quot;box&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;kid kid1&quot;&gt;子元素1&lt;/div&gt;</span><br><span class="line">		&lt;div class=&quot;kid kid2&quot;&gt;子元素2&lt;/div&gt;</span><br><span class="line">    &lt;/<span class="selector-tag">div</span>&gt;</span><br><span class="line">    &lt;div class=&quot;wrap&quot;&gt;其他部分&lt;/div&gt;</span><br><span class="line">&lt;/<span class="selector-tag">body</span>&gt;</span><br></pre></td></tr></table></figure>
+<img data-src="/2021/01/12/%E5%88%9D%E7%BA%A7%E5%89%8D%E7%AB%AF%E5%BF%85%E5%A4%87%E9%9D%A2%E8%AF%95%E9%A2%98/04.png" class>
+
+<h3 id="解决外边距塌陷"><a href="#解决外边距塌陷" class="headerlink" title="解决外边距塌陷"></a>解决外边距塌陷</h3><img data-src="/2021/01/12/%E5%88%9D%E7%BA%A7%E5%89%8D%E7%AB%AF%E5%BF%85%E5%A4%87%E9%9D%A2%E8%AF%95%E9%A2%98/05.png" class>
+
+<h2 id="模态框拖拽思路-★"><a href="#模态框拖拽思路-★" class="headerlink" title="模态框拖拽思路(★)"></a>模态框拖拽思路(★)</h2><h2 id="0-5边框-★"><a href="#0-5边框-★" class="headerlink" title="0.5边框(★)"></a>0.5边框(★)</h2><h2 id="请介绍一下BFC-块级格式化上下文-？"><a href="#请介绍一下BFC-块级格式化上下文-？" class="headerlink" title="请介绍一下BFC(块级格式化上下文)？"></a>请介绍一下BFC(块级格式化上下文)？</h2><p><a target="_blank" rel="noopener" href="http://obkoro1.com/web_accumulate/accumulate/CSS/CSS%E6%A6%82%E5%BF%B5-BFC%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA.html#bfc-%E6%98%AF%E4%BB%80%E4%B9%88%E9%AC%BC%EF%BC%9F">CSS 概念-BFC 深入浅出</a></p>
+<h2 id="怎么实现三列布局（左侧和右侧宽度固定，中间自适应）"><a href="#怎么实现三列布局（左侧和右侧宽度固定，中间自适应）" class="headerlink" title="怎么实现三列布局（左侧和右侧宽度固定，中间自适应）"></a>怎么实现三列布局（左侧和右侧宽度固定，中间自适应）</h2><ul>
+<li>绝对定位 + 中间版块不给宽度</li>
+<li>两侧浮动 + 中间自动撑开（使用 calc 动态计算宽度，设置对应宽度的 margin）</li>
+<li>flex，左右设置 flex-basis，中间设置 flex-grow</li>
+</ul>
+<h2 id="移动端开发-rem-布局的原理（rem-单位换算）"><a href="#移动端开发-rem-布局的原理（rem-单位换算）" class="headerlink" title="移动端开发 rem 布局的原理（rem 单位换算）"></a>移动端开发 rem 布局的原理（rem 单位换算）</h2><h2 id="什么是媒体查询-★"><a href="#什么是媒体查询-★" class="headerlink" title="什么是媒体查询(★)"></a>什么是媒体查询(★)</h2><h2 id="如何在页面上画一个椭圆"><a href="#如何在页面上画一个椭圆" class="headerlink" title="如何在页面上画一个椭圆"></a>如何在页面上画一个椭圆</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="selector-tag">style</span>&gt;</span><br><span class="line">  <span class="selector-class">.sector</span> &#123;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">height</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">border-width</span>: <span class="number">50px</span>;</span><br><span class="line">    <span class="attribute">border-style</span>: solid;</span><br><span class="line">    <span class="attribute">border-color</span>: <span class="number">#f00</span> transparent transparent;</span><br><span class="line">    <span class="attribute">border-radius</span>: <span class="number">50px</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&lt;/<span class="selector-tag">style</span>&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="HTML5、CSS3"><a href="#HTML5、CSS3" class="headerlink" title="HTML5、CSS3"></a>HTML5、CSS3</h1><h2 id="请写出至少5个HTML5新增的标签，并说明其语义和应用场景？"><a href="#请写出至少5个HTML5新增的标签，并说明其语义和应用场景？" class="headerlink" title="请写出至少5个HTML5新增的标签，并说明其语义和应用场景？"></a>请写出至少5个HTML5新增的标签，并说明其语义和应用场景？</h2><h2 id="请说说你对标签语义化的理解？"><a href="#请说说你对标签语义化的理解？" class="headerlink" title="请说说你对标签语义化的理解？"></a>请说说你对标签语义化的理解？</h2><h1 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h1><h2 id="null和undefined的区别？"><a href="#null和undefined的区别？" class="headerlink" title="null和undefined的区别？"></a>null和undefined的区别？</h2><ul>
+<li><code>null</code>表示一个<code>&quot;无&quot;</code>的对象，也就是该处不应该有值；而<code>undefined</code>表示<strong>未定义</strong>。</li>
+<li>在转换为数字时结果不同，<code>Number(null)</code>为<code>0</code>，而<code>undefined</code>为<code>NaN</code>。</li>
+</ul>
+<p>使用场景上：</p>
+<p><code>null</code>：</p>
+<ul>
+<li>作为函数的参数，表示该函数的参数不是对象</li>
+<li>作为对象原型链的终点</li>
+</ul>
+<p><code>undefined</code>:</p>
+<ul>
+<li>变量被声明了，但没有赋值时，就等于undefined</li>
+<li>调用函数时，应该提供的参数没有提供，该参数等于undefined</li>
+<li>对象没有赋值属性，该属性的值为undefined</li>
+<li>函数没有返回值时，默认返回undefined</li>
+</ul>
+<h2 id="script-标签的属性有哪些"><a href="#script-标签的属性有哪些" class="headerlink" title="script 标签的属性有哪些"></a>script 标签的属性有哪些</h2><h2 id="script-标签的-defer-和-async-标签的作用与区别"><a href="#script-标签的-defer-和-async-标签的作用与区别" class="headerlink" title="script 标签的 defer 和 async 标签的作用与区别"></a>script 标签的 defer 和 async 标签的作用与区别</h2><h2 id="JS数据类型有哪些，如何对它们进行检测？"><a href="#JS数据类型有哪些，如何对它们进行检测？" class="headerlink" title="JS数据类型有哪些，如何对它们进行检测？"></a>JS数据类型有哪些，如何对它们进行检测？</h2><ul>
+<li>基本数据类型<ul>
+<li><strong>String</strong>：字符串型</li>
+<li><strong>Number</strong>：数值型</li>
+<li><strong>Boolean</strong>：布尔型</li>
+<li><strong>Null</strong>：空值型</li>
+<li><strong>Undefined</strong>：未定义型</li>
+<li>**Symbol(ES6)**：Symbol型</li>
+<li>**BigInit(ES10)**：大数型</li>
+</ul>
+</li>
+<li>引用数据类型<ul>
+<li>Object：对象型</li>
+</ul>
+</li>
+<li>检测方法<ul>
+<li>typeof</li>
+<li>instanceof</li>
+</ul>
+</li>
+</ul>
+<h2 id="请说出10个数组的常用方法"><a href="#请说出10个数组的常用方法" class="headerlink" title="请说出10个数组的常用方法"></a>请说出10个数组的常用方法</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/echolun/p/7646025.html">substring和substr以及slice和splice的用法和区别。</a></p>
+<ul>
+<li>push：可向数组的末尾添加一个或多个元素，并返回新的长度。</li>
+<li>pop：用于删除并返回数组的最后一个元素。</li>
+<li>shift：用于把数组的第一个元素从其中删除，并返回第一个元素的值。</li>
+<li>unshift：可向数组的<strong>开头</strong>添加一个或更多元素，并返回新的长度。</li>
+<li>sort：用于对数组的元素进行排序。</li>
+<li>reverse：用于颠倒数组中元素的顺序。</li>
+<li>join：使用不同的分隔符来构建字符串。</li>
+<li>substring：可以用来截取一个字符串，和slice()类似。</li>
+<li>substr：用来截取字符串(截取开始位置的索引,截取的长度)</li>
+<li>slice：可以从字符串中截取指定的内容。</li>
+<li><strong>splice</strong>：向/从数组中添加/删除项目，然后返回被删除的项目。</li>
+<li>split：可以将一个字符串拆分为一个数组。</li>
+<li>charAt：可以返回字符串指定位置的字符。</li>
+<li>concat：可以用来连接2个或多个字符串，作用和<code>+</code>一样。</li>
+<li>indexOf：该方法可以检索一个字符串中是否含有指定内容,如果字符串中含有该内容，则会返回其第一次出现的索引（第二次出现不管）,如果没有找到指定的内容，则返回-1。</li>
+</ul>
+<h2 id="请列举字符串操作的方法？"><a href="#请列举字符串操作的方法？" class="headerlink" title="请列举字符串操作的方法？"></a>请列举字符串操作的方法？</h2><h2 id="说说你对-this的理解"><a href="#说说你对-this的理解" class="headerlink" title="说说你对 this的理解"></a>说说你对 this的理解</h2><h2 id="介绍一下JS有哪些内置对象？"><a href="#介绍一下JS有哪些内置对象？" class="headerlink" title="介绍一下JS有哪些内置对象？"></a>介绍一下JS有哪些内置对象？</h2><h2 id="什么是闭包？"><a href="#什么是闭包？" class="headerlink" title="什么是闭包？"></a>什么是闭包？</h2><h2 id="什么是promise？它解决了哪些问题"><a href="#什么是promise？它解决了哪些问题" class="headerlink" title="什么是promise？它解决了哪些问题"></a>什么是promise？它解决了哪些问题</h2><h2 id="在没有-promise-之前，怎么解决异步回调"><a href="#在没有-promise-之前，怎么解决异步回调" class="headerlink" title="在没有 promise 之前，怎么解决异步回调"></a>在没有 promise 之前，怎么解决异步回调</h2><p><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2012/12/asynchronous%EF%BC%BFjavascript.html">Javascript异步编程的4种方法</a></p>
+<h2 id="原型和原型链？-★★★★★●"><a href="#原型和原型链？-★★★★★●" class="headerlink" title="原型和原型链？(★★★★★●)"></a>原型和原型链？(★★★★★●)</h2><p><a target="_blank" rel="noopener" href="https://lm1018.top/2020/08/22/JavaScript%E9%AB%98%E7%BA%A7/">我自己的博客-构造函数和原型章节-黑马程序员视频</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904093828251662#heading-1">2020面试收获 - js原型及原型链-感觉也是抄的黑马视频</a></p>
+<p>原型是什么？它是一个对象，我们也称prototype为<strong>原型对象</strong>；原型的作用是什么？<strong>共享方法</strong></p>
+<p><strong>ES6之前</strong>，我们面向对象是通过<strong>构造函数</strong>来实现的，但是<strong>构造函数有一个缺点</strong>，<strong>我们以前把我们的方法放到构造函数里面</strong>，这样就会有一个问题，当我们创建<strong>实例</strong>的时候，每创建一个实例，都会为我们这个方法<strong>单独开辟一个内存空间</strong>，来存放同一个函数，这样就比较<strong>浪费内存</strong>，这个时候我们想到了一个<strong>解决方案</strong>，我们<strong>把这些公共的方法定义到了构造函数的原型对象身上，这样就可以实现了我们这个方法的共享，所有的实例都可以使用这个方法了</strong>。</p>
+<p><strong>原型是一个对象，每一个构造函数系统都为我们定义好了这一个对象，那么原型对象的主要作用就是实现了我们方法的共享，不必再开辟内存空间，所有的实例都可以使用这个方法，这就是原型最伟大的地方了</strong>。</p>
+<h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>在典型的面向对象的语言中（如Java），都存在类的概念，<strong>类就是对象的模板，对象就是类的实例</strong>，但在<strong>ES6之前</strong>JS中并没用引入类的概念。</p>
+<p>在ES6之前，<strong>对象不是基于类创建的</strong>，而是用一种称为<strong>构造函数</strong>的<strong>特殊函数</strong>来定义对象和它们的特征。</p>
+<p>创建对象可以通过以下三种方式：</p>
+<p><strong>1.new Object()</strong></p>
+<p><strong>2.对象字面量</strong></p>
+<p><strong>3.自定义构造函数</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">    &lt;meta name=<span class="string">&quot;viewport&quot;</span> content=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br><span class="line">    &lt;meta http-equiv=<span class="string">&quot;X-UA-Compatible&quot;</span> content=<span class="string">&quot;ie=edge&quot;</span>&gt;</span><br><span class="line">    &lt;title&gt;Document&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        <span class="comment">// 1. 利用 new Object() 创建对象</span></span><br><span class="line">        <span class="keyword">var</span> obj1 = <span class="keyword">new</span> <span class="built_in">Object</span>();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 2. 利用 对象字面量创建对象</span></span><br><span class="line">        <span class="keyword">var</span> obj2 = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 3. 利用构造函数创建对象</span></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">Star</span>(<span class="params">uname, age</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">this</span>.uname = uname;</span><br><span class="line">            <span class="built_in">this</span>.age = age;</span><br><span class="line">            <span class="built_in">this</span>.sing = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">&#x27;我会唱歌&#x27;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> ldh = <span class="keyword">new</span> Star(<span class="string">&#x27;刘德华&#x27;</span>, <span class="number">18</span>);</span><br><span class="line">        <span class="keyword">var</span> zxy = <span class="keyword">new</span> Star(<span class="string">&#x27;张学友&#x27;</span>, <span class="number">19</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(ldh);</span><br><span class="line"></span><br><span class="line">        ldh.sing();</span><br><span class="line">        zxy.sing();</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h3><p>讲原型则离不开<strong>构造函数</strong>，让我们先来认识下构造函数。</p>
+<p><strong>构造函数</strong>是一种特殊的函数，主要用来<strong>初始化对象</strong>，即为对象<strong>成员变量</strong>赋<strong>初始值</strong>，<strong>它总与new一起使用</strong>。我们可以把对象中一些<strong>公共的属性和方法</strong>抽取出来，然后封装到这个函数里面。</p>
+<p>在JS中，使用构造函数时要注意以下两点：</p>
+<ul>
+<li>构造函数用于创建<strong>某一类对象</strong>，其<strong>首字母要大写(约定速成，利于辨认)</strong></li>
+<li>构造函数要<strong>和new一起使用</strong>才有意义(<strong>new让普通函数升华为构造函数</strong>)</li>
+</ul>
+<p><strong>new在执行时会做五件事情</strong>：</p>
+<p>①在内存中<strong>创建一个新的空对象</strong>，如<code>ldh&#123;&#125;</code>。</p>
+<p>②为<code>ldh</code>准备<strong>原型链连接</strong>：<code>ldh.__proto__ = Star.prototype</code></p>
+<p>③<strong>重新绑定this，使构造函数的this指向新对象</strong>。</p>
+<p>④<strong>执行构造函数里面的代码</strong>，给这个<strong>新对象</strong>添加属性和方法。</p>
+<p>⑤<strong>返回这个新对象</strong>，此时的新对象就拥有了构造函数的方法和属性了（所以<strong>构造函数里面不需要return</strong>）。</p>
+<h4 id="静态成员和实例成员"><a href="#静态成员和实例成员" class="headerlink" title="静态成员和实例成员"></a>静态成员和实例成员</h4><p>Javascript的构造函数中的<strong>属性和方法</strong>我们称为<strong>成员</strong>, 成员可以<strong>添加</strong>。可以在<strong>构造函数本身</strong>上添加，也可以在<strong>构造函数内部的this</strong>上添加。通过这两种方式添加的成员，就分别称为<strong>静态成员</strong>和<strong>实例成员</strong>。</p>
+<ul>
+<li><strong>静态成员</strong>：在<strong>构造函数本身</strong>上添加的成员称为<strong>静态成员</strong>，<strong>只能由构造函数本身来访问</strong></li>
+<li><strong>实例成员</strong>：在<strong>构造函数内部</strong>通过<strong>this</strong>添加的成员称为<strong>实例成员</strong>，<strong>只能由实例化的对象来访问</strong></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">    &lt;meta name=<span class="string">&quot;viewport&quot;</span> content=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br><span class="line">    &lt;meta http-equiv=<span class="string">&quot;X-UA-Compatible&quot;</span> content=<span class="string">&quot;ie=edge&quot;</span>&gt;</span><br><span class="line">    &lt;title&gt;Document&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        <span class="comment">// 构造函数中的属性和方法我们称为成员, 成员可以添加</span></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">Star</span>(<span class="params">uname, age</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">this</span>.uname = uname;</span><br><span class="line">            <span class="built_in">this</span>.age = age;</span><br><span class="line">            <span class="built_in">this</span>.sing = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">&#x27;我会唱歌&#x27;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> ldh = <span class="keyword">new</span> Star(<span class="string">&#x27;刘德华&#x27;</span>, <span class="number">18</span>);</span><br><span class="line">        <span class="comment">// 1.实例成员就是构造函数内部通过this添加的成员 uname age sing 就是实例成员</span></span><br><span class="line">        <span class="comment">// 实例成员只能通过实例化的对象来访问</span></span><br><span class="line">        <span class="built_in">console</span>.log(ldh.uname);</span><br><span class="line">        ldh.sing();</span><br><span class="line">        <span class="comment">// console.log(Star.uname); // 不可以通过构造函数来访问实例成员</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 2. 静态成员 在构造函数本身上添加的成员  sex 就是静态成员</span></span><br><span class="line">        Star.sex = <span class="string">&#x27;男&#x27;</span>;</span><br><span class="line">        <span class="comment">// 静态成员只能通过构造函数来访问</span></span><br><span class="line">        <span class="built_in">console</span>.log(Star.sex);</span><br><span class="line">        <span class="built_in">console</span>.log(ldh.sex); <span class="comment">// 不能通过对象来访问 undefined</span></span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="构造函数的问题"><a href="#构造函数的问题" class="headerlink" title="构造函数的问题"></a>构造函数的问题</h3><p>构造函数方法很好用，但是存在<strong>浪费内存</strong>的问题。你创建2个对象，就开辟了2个内存空间来存放同一个函数；如果有100个对象，那就要开辟100个内存空间来存放同一个函数，所以比较浪费内存空间。</p>
+<img data-src="/2021/01/12/%E5%88%9D%E7%BA%A7%E5%89%8D%E7%AB%AF%E5%BF%85%E5%A4%87%E9%9D%A2%E8%AF%95%E9%A2%98/07.png" class>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">    &lt;meta name=<span class="string">&quot;viewport&quot;</span> content=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br><span class="line">    &lt;meta http-equiv=<span class="string">&quot;X-UA-Compatible&quot;</span> content=<span class="string">&quot;ie=edge&quot;</span>&gt;</span><br><span class="line">    &lt;title&gt;Document&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        <span class="comment">//构造函数的问题</span></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">Star</span>(<span class="params">uname, age</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">this</span>.uname = uname;</span><br><span class="line">            <span class="built_in">this</span>.age = age;</span><br><span class="line">            <span class="built_in">this</span>.sing = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">&#x27;我会唱歌&#x27;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> ldh = <span class="keyword">new</span> Star(<span class="string">&#x27;刘德华&#x27;</span>, <span class="number">18</span>);</span><br><span class="line">        <span class="keyword">var</span> zxy = <span class="keyword">new</span> Star(<span class="string">&#x27;张学友&#x27;</span>, <span class="number">19</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//false(表明2个函数存放的地址不一样)</span></span><br><span class="line">        <span class="comment">//刘德华的sing和张学友的sing是不一样的，同一个函数，但是开辟了2个不同的内存空间</span></span><br><span class="line">		<span class="comment">//在构造函数上直接定义方法（不共享）</span></span><br><span class="line">        <span class="built_in">console</span>.log(ldh.sing === zxy.sing);</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="构造函数原型prototype"><a href="#构造函数原型prototype" class="headerlink" title="构造函数原型prototype"></a>构造函数原型prototype</h3><p>在构造函数上<strong>直接定义</strong>的方法(函数)是<strong>不共享</strong>的，而构造函数<strong>通过原型分配</strong>的函数是所有对象所<strong>共享</strong>的。</p>
+<p>JavaScript规定，<strong>每一个构造函数都有一个prototype属性(这个属性也是一个对象)**，</strong>指向另一个对象<strong>。注意</strong>这个prototype就是一个对象**(<strong>prototype既是属性，也是对象</strong>)，这个对象(指prototype)的<strong>所有属性和方法</strong>，都会<strong>被构造函数所拥有</strong>。</p>
+<blockquote>
+<p>其实不止构造函数有prototype属性(这个属性也是对象)，普通函数也有，更进一步的说，对象也有prototype属性。(我按F12输入<code>console.log(Object.prototype)会有东西显示出来。</code>)</p>
+</blockquote>
+<p><strong>我们可以把那些不变的方法，直接定义在prototype对象(属性)上，这样所有对象的实例就可以共享这些方法。</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">    &lt;meta name=<span class="string">&quot;viewport&quot;</span> content=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br><span class="line">    &lt;meta http-equiv=<span class="string">&quot;X-UA-Compatible&quot;</span> content=<span class="string">&quot;ie=edge&quot;</span>&gt;</span><br><span class="line">    &lt;title&gt;Document&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        <span class="comment">//使用原型</span></span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">Star</span>(<span class="params">uname, age</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">this</span>.uname = uname;</span><br><span class="line">            <span class="built_in">this</span>.age = age;</span><br><span class="line">            <span class="comment">//我们不应该把sing方法放到构造函数的里面</span></span><br><span class="line">            <span class="comment">// this.sing = function () &#123;</span></span><br><span class="line">            <span class="comment">//     console.log(&#x27;我会唱歌&#x27;);</span></span><br><span class="line"></span><br><span class="line">            <span class="comment">// &#125;</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//我们应该把sing方法放到构造函数的原型对象身上</span></span><br><span class="line">		<span class="comment">//Star是变量名，是一个指针，指向的是这个构造函数</span></span><br><span class="line">        Star.prototype.sing = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&quot;我会唱歌&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> ldh = <span class="keyword">new</span> Star(<span class="string">&#x27;刘德华&#x27;</span>, <span class="number">18</span>);</span><br><span class="line">        <span class="keyword">var</span> zxy = <span class="keyword">new</span> Star(<span class="string">&#x27;张学友&#x27;</span>, <span class="number">19</span>);</span><br><span class="line">        <span class="built_in">console</span>.dir(Star);</span><br><span class="line">        <span class="comment">// 这个sing方法放在了构造函数的原型对象上面，它是共享的，</span></span><br><span class="line">        <span class="comment">// 所以用构造函数产生的ldh和zxy这2个实例也可以使用sing这个方法，</span></span><br><span class="line">		<span class="comment">// 而且sing方法只在内存中开辟一块空间保存即可</span></span><br><span class="line">        <span class="comment">// 不管你用构造函数产生多少实例，调用的都是内存中同一个位置的sing方法</span></span><br><span class="line">        ldh.sing();</span><br><span class="line">        zxy.sing();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//这下就输出为true了，sing方法只保留在内存中的一块位置</span></span><br><span class="line">        <span class="built_in">console</span>.log(ldh.sing === zxy.sing);</span><br><span class="line"></span><br><span class="line">		<span class="comment">//一般情况下，我们的公共属性定义到构造函数里面，</span></span><br><span class="line">		<span class="comment">//而公共的方法我们则放到原型对象身上，这样就可以实现方法的共享了</span></span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<img data-src="/2021/01/12/%E5%88%9D%E7%BA%A7%E5%89%8D%E7%AB%AF%E5%BF%85%E5%A4%87%E9%9D%A2%E8%AF%95%E9%A2%98/08.png" class>
+
+<h3 id="对象原型-proto"><a href="#对象原型-proto" class="headerlink" title="对象原型    __proto__"></a>对象原型    <code>__proto__</code></h3><p>可能有些同学还会有一些疑惑：老师呀，<strong>我们sing这个方法是定义给了Star这个构造函数的原型对象身上，为什么我刘德华(ldh)这个对象就可以使用这个方法呢？那刘德华身上也没有sing这个方法呀！</strong>要想解决这个问题，就是接下来我要给你们讲的：在我们<strong>实例对象</strong>身上，<strong>也有一个原型</strong>，叫做<code>__proto__</code>,那么<strong>这个属性指向了构造函数的prototype原型对象</strong>。</p>
+<p><strong>对象</strong>都会有一个属性<code>__proto__</code><strong>指向构造函数的prototype原型对象</strong>，之所以我们对象可以使用构造函数prototype原型对象的属性和方法，就是因为对象有<code>__proto__</code>原型的存在。</p>
+<ul>
+<li><code>__proto__</code><strong>对象原型</strong>和<strong>原型对象</strong>prototype是等价的</li>
+<li><code>__proto__</code><strong>对象原型</strong>的意义就在于为<strong>对象的查找机制提供一个方向</strong>，或者说一条路线，但是它是一个<strong>非标准属性</strong>，因此<strong>实际开发</strong>中，不可以使用这个属性，它只是<strong>内部指向原型对象prototype</strong>。</li>
+</ul>
+<img data-src="/2021/01/12/%E5%88%9D%E7%BA%A7%E5%89%8D%E7%AB%AF%E5%BF%85%E5%A4%87%E9%9D%A2%E8%AF%95%E9%A2%98/09.png" class>
+
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">    &lt;meta name=<span class="string">&quot;viewport&quot;</span> content=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br><span class="line">    &lt;meta http-equiv=<span class="string">&quot;X-UA-Compatible&quot;</span> content=<span class="string">&quot;ie=edge&quot;</span>&gt;</span><br><span class="line">    &lt;title&gt;Document&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">Star</span>(<span class="params">uname, age</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">this</span>.uname = uname;</span><br><span class="line">            <span class="built_in">this</span>.age = age;</span><br><span class="line">        &#125;</span><br><span class="line">        Star.prototype.sing = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&#x27;我会唱歌&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> ldh = <span class="keyword">new</span> Star(<span class="string">&#x27;刘德华&#x27;</span>, <span class="number">18</span>);</span><br><span class="line">        <span class="keyword">var</span> zxy = <span class="keyword">new</span> Star(<span class="string">&#x27;张学友&#x27;</span>, <span class="number">19</span>);</span><br><span class="line">        ldh.sing();</span><br><span class="line"></span><br><span class="line">        <span class="built_in">console</span>.log(ldh); </span><br><span class="line">		<span class="comment">//实例对象身上自己添加一个 __proto__ 指向我们构造函数的原型对象 prototype</span></span><br><span class="line"></span><br><span class="line">        <span class="built_in">console</span>.log(ldh.__proto__ === Star.prototype);</span><br><span class="line">		<span class="comment">//true</span></span><br><span class="line">        <span class="comment">// 方法的查找规则: 首先先看ldh对象身上是否有 sing 方法,如果有就执行这个对象上的sing</span></span><br><span class="line">        <span class="comment">// 如果没有sing 这个方法,因为有__proto__ 的存在,就去构造函数原型对象prototype身上去查找			//sing这个方法</span></span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<img data-src="/2021/01/12/%E5%88%9D%E7%BA%A7%E5%89%8D%E7%AB%AF%E5%BF%85%E5%A4%87%E9%9D%A2%E8%AF%95%E9%A2%98/10.png" class>
+
+<blockquote>
+<p>为了方便区分，我们把<strong>prototype称为原型对象</strong>，<code>__proto__</code>称为<strong>对象原型</strong>，不要搞晕了啊。</p>
+</blockquote>
+<h3 id="constructor构造函数"><a href="#constructor构造函数" class="headerlink" title="constructor构造函数"></a>constructor构造函数</h3><p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000013245739">JavaScript中constructor属性</a></p>
+<p>对象原型（<code>__proto__</code>）和构造函数（prototype）<strong>原型对象</strong>里面<strong>都有</strong>一个属性<strong>constructor属性</strong>，<strong>constructor我们称为构造函数</strong>，因为它<strong>指回构造函数本身</strong>。</p>
+<p>constructor主要用于<strong>记录该对象引用于哪个构造函数</strong>，<strong>它可以让原型对象重新指向原来的构造函数</strong>。</p>
+<blockquote>
+<p>作用1：记录该对象引用于哪个构造函数(找谁是它的妈)。</p>
+<p>作用2：让原型对象<strong>重新指向</strong>原来的构造函数。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">    &lt;meta name=<span class="string">&quot;viewport&quot;</span> content=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br><span class="line">    &lt;meta http-equiv=<span class="string">&quot;X-UA-Compatible&quot;</span> content=<span class="string">&quot;ie=edge&quot;</span>&gt;</span><br><span class="line">    &lt;title&gt;Document&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">Star</span>(<span class="params">uname, age</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">this</span>.uname = uname;</span><br><span class="line">            <span class="built_in">this</span>.age = age;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 很多情况下,我们需要手动的利用constructor 这个属性指回 原来的构造函数</span></span><br><span class="line">        <span class="comment">// Star.prototype.sing = function() &#123;</span></span><br><span class="line">        <span class="comment">//     console.log(&#x27;我会唱歌&#x27;);</span></span><br><span class="line">        <span class="comment">// &#125;;</span></span><br><span class="line">        <span class="comment">// Star.prototype.movie = function() &#123;</span></span><br><span class="line">        <span class="comment">//     console.log(&#x27;我会演电影&#x27;);</span></span><br><span class="line">        <span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">//像上面一个一个往原型对象里添加方法太麻烦，我们可以采取对象的形式来存储</span></span><br><span class="line">        Star.prototype = &#123;</span><br><span class="line">       <span class="comment">// 如果我们修改了原来的原型对象,并且以对象的形式给原型对象进行赋值，</span></span><br><span class="line">       <span class="comment">// 则必须手动的利用constructor指回原来的构造函数</span></span><br><span class="line">       <span class="comment">// 如果这里不写constructor: Star,则指向的构造函数就变成了ƒ Object() &#123; [native code] &#125;</span></span><br><span class="line">       <span class="comment">// 这个也很好理解：新添加的对象把原来的构造函数的原型对象给覆盖掉了，所以就没有constructor了</span></span><br><span class="line">       <span class="comment">// 没有constructor就没有办法指回我们原来的构造函数了</span></span><br><span class="line">       <span class="comment">// 我们手动给它添加一个constructor属性即可</span></span><br><span class="line">            <span class="title">constructor</span>: <span class="title">Star</span>,</span><br><span class="line">            <span class="title">sing</span>: <span class="title">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">&#x27;我会唱歌&#x27;</span>);</span><br><span class="line">            &#125;,</span><br><span class="line">            movie: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">&#x27;我会演电影&#x27;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> ldh = <span class="keyword">new</span> Star(<span class="string">&#x27;刘德华&#x27;</span>, <span class="number">18</span>);</span><br><span class="line">        <span class="keyword">var</span> zxy = <span class="keyword">new</span> Star(<span class="string">&#x27;张学友&#x27;</span>, <span class="number">19</span>);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">console</span>.log(Star.prototype);</span><br><span class="line">        <span class="built_in">console</span>.log(ldh.__proto__);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">console</span>.log(Star.prototype.constructor);</span><br><span class="line">        <span class="built_in">console</span>.log(ldh.__proto__.constructor);</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="构造函数、实例、原型对象三者之间的关系"><a href="#构造函数、实例、原型对象三者之间的关系" class="headerlink" title="构造函数、实例、原型对象三者之间的关系"></a>构造函数、实例、原型对象三者之间的关系</h3><img data-src="/2021/01/12/%E5%88%9D%E7%BA%A7%E5%89%8D%E7%AB%AF%E5%BF%85%E5%A4%87%E9%9D%A2%E8%AF%95%E9%A2%98/11.png" class>
+
+<h3 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h3><p><strong>原型对象</strong>也是对象，<strong>只要是对象，就有原型</strong>(<code>__proto__</code>,这个原型指向的是<strong>它的构造函数的prototype原型对象</strong>)。<strong>原型与原型层层相链接的过程即为原型链</strong>。对象可以使用构造函数prototype原型对象的属性和方法，就是因为对象有<code>__proto__</code>原型的存在，并且每个对象都有<code>__proto__</code>原型的存在。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">    &lt;meta name=<span class="string">&quot;viewport&quot;</span> content=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br><span class="line">    &lt;meta http-equiv=<span class="string">&quot;X-UA-Compatible&quot;</span> content=<span class="string">&quot;ie=edge&quot;</span>&gt;</span><br><span class="line">    &lt;title&gt;Document&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">Star</span>(<span class="params">uname, age</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">this</span>.uname = uname;</span><br><span class="line">            <span class="built_in">this</span>.age = age;</span><br><span class="line">        &#125;</span><br><span class="line">        Star.prototype.sing = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&#x27;我会唱歌&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> ldh = <span class="keyword">new</span> Star(<span class="string">&#x27;刘德华&#x27;</span>, <span class="number">18</span>);</span><br><span class="line">        <span class="comment">// 1. 只要是对象就有__proto__ 原型, 指向原型对象</span></span><br><span class="line">        <span class="built_in">console</span>.log(Star.prototype);</span><br><span class="line">        <span class="built_in">console</span>.log(Star.prototype.__proto__ === <span class="built_in">Object</span>.prototype);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 2.我们Star原型对象里面的__proto__原型指向的是 Object.prototype</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype.__proto__);</span><br><span class="line">        <span class="comment">// 3. 我们Object.prototype原型对象里面的__proto__原型  指向为 null</span></span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<img data-src="/2021/01/12/%E5%88%9D%E7%BA%A7%E5%89%8D%E7%AB%AF%E5%BF%85%E5%A4%87%E9%9D%A2%E8%AF%95%E9%A2%98/12.png" class>
+
+<h3 id="JavaScript的成员查找机制（规则）"><a href="#JavaScript的成员查找机制（规则）" class="headerlink" title="JavaScript的成员查找机制（规则）"></a>JavaScript的成员查找机制（规则）</h3><p>①当<strong>访问一个对象的属性（包括方法）时</strong>，首先查找这个<strong>对象自身</strong>有没有该属性。</p>
+<p>②如果没有就查找它的原型（也就是<code>__proto__</code>指向的<strong>prototype原型对象</strong>）。</p>
+<p>③如果还没有就查找<strong>原型对象</strong>的原型（<strong>Object的原型对象</strong>）。</p>
+<p>④依此类推一直找到Object为止（null）。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">    &lt;meta name=<span class="string">&quot;viewport&quot;</span> content=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br><span class="line">    &lt;meta http-equiv=<span class="string">&quot;X-UA-Compatible&quot;</span> content=<span class="string">&quot;ie=edge&quot;</span>&gt;</span><br><span class="line">    &lt;title&gt;Document&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">Star</span>(<span class="params">uname, age</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">this</span>.uname = uname;</span><br><span class="line">            <span class="built_in">this</span>.age = age;</span><br><span class="line">        &#125;</span><br><span class="line">        Star.prototype.sing = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&#x27;我会唱歌&#x27;</span>);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        Star.prototype.sex = <span class="string">&#x27;女&#x27;</span>;</span><br><span class="line">        <span class="comment">// Object.prototype.sex = &#x27;男&#x27;;</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> ldh = <span class="keyword">new</span> Star(<span class="string">&#x27;刘德华&#x27;</span>, <span class="number">18</span>);</span><br><span class="line">        ldh.sex = <span class="string">&#x27;男&#x27;</span>;</span><br><span class="line">        <span class="built_in">console</span>.log(ldh.sex);</span><br><span class="line"></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype);</span><br><span class="line">        <span class="built_in">console</span>.log(ldh);</span><br><span class="line">        <span class="built_in">console</span>.log(Star.prototype);</span><br><span class="line">		<span class="comment">//ldh和Star.prototype都没有toString()方法，但是Object有，所以ldh就能直接用这个方法</span></span><br><span class="line">        <span class="built_in">console</span>.log(ldh.toString());</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="原型对象this指向"><a href="#原型对象this指向" class="headerlink" title="原型对象this指向"></a>原型对象this指向</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">    &lt;meta name=<span class="string">&quot;viewport&quot;</span> content=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br><span class="line">    &lt;meta http-equiv=<span class="string">&quot;X-UA-Compatible&quot;</span> content=<span class="string">&quot;ie=edge&quot;</span>&gt;</span><br><span class="line">    &lt;title&gt;Document&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        <span class="function"><span class="keyword">function</span> <span class="title">Star</span>(<span class="params">uname, age</span>) </span>&#123;</span><br><span class="line">            <span class="built_in">this</span>.uname = uname;</span><br><span class="line">            <span class="built_in">this</span>.age = age;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> that;</span><br><span class="line">        Star.prototype.sing = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">&#x27;我会唱歌&#x27;</span>);</span><br><span class="line">            that = <span class="built_in">this</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> ldh = <span class="keyword">new</span> Star(<span class="string">&#x27;刘德华&#x27;</span>, <span class="number">18</span>);</span><br><span class="line">        <span class="comment">//1.在构造函数中,里面this指向的是对象实例 ldh</span></span><br><span class="line">        ldh.sing();</span><br><span class="line">        <span class="built_in">console</span>.log(that === ldh);  <span class="comment">//true</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//2.原型对象函数里面的this 指向的是 实例对象 ldh</span></span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="扩展内置对象"><a href="#扩展内置对象" class="headerlink" title="扩展内置对象"></a>扩展内置对象</h3><p>可以通过原型对象，对原来的内置对象进行扩展自定义的方法。比如给数组增加自定义求偶数和的功能。</p>
+<p>注意：数组和字符串内置对象不能给原型对象覆盖操作<code>Array.prototype = &#123;&#125;</code>，只能是<code>Array.prototype.xxx= function()&#123;&#125;</code>的方式。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">    &lt;meta name=<span class="string">&quot;viewport&quot;</span> content=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br><span class="line">    &lt;meta http-equiv=<span class="string">&quot;X-UA-Compatible&quot;</span> content=<span class="string">&quot;ie=edge&quot;</span>&gt;</span><br><span class="line">    &lt;title&gt;Document&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">        <span class="comment">// 原型对象的应用 扩展内置对象方法</span></span><br><span class="line">        <span class="built_in">Array</span>.prototype.sum = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> sum = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="built_in">this</span>.length; i++) &#123;</span><br><span class="line">                sum += <span class="built_in">this</span>[i];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> sum;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">		<span class="comment">//用对象的方式扩建内置对象，会把以前的对象全部覆盖掉</span></span><br><span class="line">        <span class="comment">// Array.prototype = &#123;</span></span><br><span class="line">        <span class="comment">//     sum: function() &#123;</span></span><br><span class="line">        <span class="comment">//         var sum = 0;</span></span><br><span class="line">        <span class="comment">//         for (var i = 0; i &lt; this.length; i++) &#123;</span></span><br><span class="line">        <span class="comment">//             sum += this[i];</span></span><br><span class="line">        <span class="comment">//         &#125;</span></span><br><span class="line">        <span class="comment">//         return sum;</span></span><br><span class="line">        <span class="comment">//     &#125;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">// &#125;</span></span><br><span class="line">        <span class="keyword">var</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line">        <span class="built_in">console</span>.log(arr.sum());</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">Array</span>.prototype);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> arr1 = <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">11</span>, <span class="number">22</span>, <span class="number">33</span>);</span><br><span class="line">        <span class="built_in">console</span>.log(arr1.sum());</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="什么是事件循环-eventloop-？-★"><a href="#什么是事件循环-eventloop-？-★" class="headerlink" title="什么是事件循环(eventloop)？(★)"></a>什么是事件循环(eventloop)？(★)</h2><h2 id="原始数据类型和引用类型的区别"><a href="#原始数据类型和引用类型的区别" class="headerlink" title="原始数据类型和引用类型的区别"></a>原始数据类型和引用类型的区别</h2><p>在内存中的存储方式不同，原始数据类型在内存中是栈存储，引用类型是堆存储 栈（stack）为自动分配的内存空间，它由系统自动释放；而堆（heap）则是动态分配的内存，大小不定也不会自动释放。</p>
+<p>在内存中存储方式的不同导致了原始数据类型不可变 原始数据类型和引用数据类型做赋值操作一个是传值一个是传址。</p>
+<h2 id="深拷贝和浅拷贝的区别及其实现"><a href="#深拷贝和浅拷贝的区别及其实现" class="headerlink" title="深拷贝和浅拷贝的区别及其实现"></a>深拷贝和浅拷贝的区别及其实现</h2><h3 id="浅拷贝"><a href="#浅拷贝" class="headerlink" title="浅拷贝"></a>浅拷贝</h3><ul>
+<li>ES6：object.assign()</li>
+<li>展开运算符…</li>
+<li>自己封装函数实现</li>
+</ul>
+<h3 id="深拷贝"><a href="#深拷贝" class="headerlink" title="深拷贝"></a>深拷贝</h3><ul>
+<li>JSON.parse() (但是如果里面有 function 和 undefined 不可用)</li>
+<li>lodash</li>
+<li>自己封装函数实现</li>
+</ul>
+<h2 id="面向对象和面向过程的区别"><a href="#面向对象和面向过程的区别" class="headerlink" title="面向对象和面向过程的区别"></a>面向对象和面向过程的区别</h2><h1 id="ES6"><a href="#ES6" class="headerlink" title="ES6"></a>ES6</h1><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903588817289224">前端笔试题面试题记录（下）</a></p>
+<h2 id="了解ES6的let和const变量声明吗？跟ES5的var有哪些区别？"><a href="#了解ES6的let和const变量声明吗？跟ES5的var有哪些区别？" class="headerlink" title="了解ES6的let和const变量声明吗？跟ES5的var有哪些区别？"></a><strong>了解ES6的let和const变量声明吗？跟ES5的var有哪些区别？</strong></h2><p><strong>let</strong></p>
+<ul>
+<li><p>在同一个作用域里面：var可以<strong>重复声明变量</strong>，<strong>let不能重复声明同一个变量</strong>。</p>
+<p>ES5是<strong>函数作用域</strong>，即<strong>一个函数里面才是一个作用域</strong>，ES6是<strong>块级作用域</strong>（花括号’{这里面是一个作用域}’），如：if、for花括号里面都是一个作用域。</p>
+</li>
+<li><p>var有<strong>变量提升</strong>，可以在变量声明之前使用，<strong>let不存在变量提升，在变量之前使用会报错</strong>。</p>
+</li>
+<li><p><strong>let有暂时性死区</strong>，<a target="_blank" rel="noopener" href="http://es6.ruanyifeng.com/#docs/let">阮一峰大佬ES6入门文档</a>解释如下：</p>
+<img data-src="/2021/01/12/%E5%88%9D%E7%BA%A7%E5%89%8D%E7%AB%AF%E5%BF%85%E5%A4%87%E9%9D%A2%E8%AF%95%E9%A2%98/06.png" class>
+
+</li>
+</ul>
+<p><strong>const</strong></p>
+<ul>
+<li><p>const的很多特性跟let的特性一样，都有：<strong>不可重复声明</strong>，<strong>不存在变量提升</strong>，有<strong>暂时性死区</strong>，都是<strong>块级作用域</strong>。</p>
+</li>
+<li><p>还有一些跟let命令不一样的地方：<strong>const必须在声明的时候同时赋值</strong>，不然就会报错。const声明的是变量是常量，不能更改。</p>
+<p>这里的常量指的是：数值、字符串、布尔值，对于引用类型（数组和对象），const只能保证指针是固定的，至于数组和对象内部有没有改变就是const不能控制的地方</p>
+</li>
+</ul>
+<h2 id="filter的用法-★"><a href="#filter的用法-★" class="headerlink" title="filter的用法(★)"></a>filter的用法(★)</h2><h1 id="计算机网络及数据交互"><a href="#计算机网络及数据交互" class="headerlink" title="计算机网络及数据交互"></a>计算机网络及数据交互</h1><h2 id="sessionStorage、localStorage和cookie的区别-★●"><a href="#sessionStorage、localStorage和cookie的区别-★●" class="headerlink" title="sessionStorage、localStorage和cookie的区别(★●)"></a>sessionStorage、localStorage和cookie的区别(★●)</h2><p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Window/sessionStorage">Window.sessionStorage</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903631091662855">localStorage和sessionStorage区别</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/kidney/p/9058352.html">localStorage 存满了怎么办？</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/MonkeyKingK/p/5499831.html">如何获得浏览器localStorage的剩余容量</a></p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903587764502536">细说localStorage, sessionStorage, Cookie, Session-这个好</a></p>
+<h3 id="sessionStorage和localStorage"><a href="#sessionStorage和localStorage" class="headerlink" title="sessionStorage和localStorage"></a>sessionStorage和localStorage</h3><p><strong>两者的共同点在于：</strong></p>
+<ul>
+<li>语法相同：都是<code>setItem(&#39;key&#39;,&#39;value&#39;)</code>来保存数据，<code>getItem(&#39;key&#39;)</code>来获取数据，<code>removeItem(&#39;key&#39;)</code>删除保存的数据，<code>clear()</code>删除所有保存的数据。</li>
+<li>存储大小均为5M左右</li>
+<li>都有同源策略限制</li>
+<li>仅在客户端中保存，<strong>不参与和服务器的通信</strong></li>
+</ul>
+<p><strong>两者的不同点在于：</strong></p>
+<ul>
+<li>生命周期—数据可以存储多长时间<ul>
+<li><code>localStorage</code>: 存储的数据是永久性的，除非用户人为删除，否则会一直存在。</li>
+<li><code>sessionStorage</code>: 与<strong>存储数据的脚本</strong>所在的标签页的有效期是相同的。一旦窗口或者标签页被关闭，那么所有通过 sessionStorage 存储的数据也会被删除。</li>
+</ul>
+</li>
+<li>作用域—谁拥有数据的访问权<ul>
+<li><code>localStorage</code>: 在<strong>同一个浏览器内</strong>，<strong>同源文档</strong>之间共享 localStorage 数据，可以互相读取、覆盖。(<strong>同一浏览器+同源文档</strong>)</li>
+<li><code>sessionStorage</code>: 与 localStorage 一样需要<strong>同一浏览器，同源文档</strong>这一条件。不仅如此，sessionStorage 的作用域还被限定在了<strong>窗口</strong>中，也就是说，只有同一浏览器、同一窗口的同源文档才能共享数据。(<strong>同一浏览器+同源文档+同一窗口</strong>)</li>
+</ul>
+</li>
+</ul>
+<h3 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h3><p>Cookie是小甜饼的意思，主要有以下特点：</p>
+<ul>
+<li>顾名思义，Cookie 确实非常小，它的大小限制为4KB左右</li>
+<li>一般由<strong>服务器生成</strong>，可<strong>设置失效时间</strong>。如果<strong>在浏览器端生成</strong>Cookie，默认是<strong>关闭浏览器</strong>后失效</li>
+<li>每次都会<strong>携带在HTTP头中</strong>，如果使用cookie保存过多数据会带来性能问题</li>
+<li><strong>原生API</strong>不如storage友好，需要自己封装函数。</li>
+<li>主要用途是<strong>保存登录信息</strong>和<strong>标记用户</strong>(比如购物车)等，不过随着<code>localStorage</code>的出现，现在购物车的工作Cookie承担的较少了。</li>
+</ul>
+<h2 id="WebSocket的请求-★"><a href="#WebSocket的请求-★" class="headerlink" title="WebSocket的请求(★)"></a>WebSocket的请求(★)</h2><h2 id="简述三次握手和四次挥手？"><a href="#简述三次握手和四次挥手？" class="headerlink" title="简述三次握手和四次挥手？"></a>简述三次握手和四次挥手？</h2><h2 id="GET和POST的区别？"><a href="#GET和POST的区别？" class="headerlink" title="GET和POST的区别？"></a>GET和POST的区别？</h2><h2 id="AJAX请求的步骤是什么？"><a href="#AJAX请求的步骤是什么？" class="headerlink" title="AJAX请求的步骤是什么？"></a>AJAX请求的步骤是什么？</h2><h2 id="什么是跨域？如何实现跨域？-★"><a href="#什么是跨域？如何实现跨域？-★" class="headerlink" title="什么是跨域？如何实现跨域？(★)"></a>什么是跨域？如何实现跨域？(★)</h2><h2 id="介绍一下JSONP，他的优缺点是什么？"><a href="#介绍一下JSONP，他的优缺点是什么？" class="headerlink" title="介绍一下JSONP，他的优缺点是什么？"></a>介绍一下JSONP，他的优缺点是什么？</h2><h2 id="浏览器执行过程"><a href="#浏览器执行过程" class="headerlink" title="浏览器执行过程"></a>浏览器执行过程</h2><p>浏览器执行过程可以简单分为<strong>加载</strong>、<strong>解析</strong>、<strong>渲染</strong>，这三个步骤。</p>
+<p><strong>加载</strong>：根据请求的URL进行域名解析，向服务器发送请求，接收响应文件（如 HTML、JS、CSS、图片等）。</p>
+<p><strong>解析</strong>：对加载到的资源（HTML、JS、CSS等）进行语法解析，构建相应的内部数据结构（比如HTML的DOM树，JS对象的属性表，CSS的样式规则等）。</p>
+<p><strong>渲染</strong>：构建渲染树，对各个元素进行位置计算、样式计算等，然后根据渲染树完成页面布局及绘制的过程（可以理解为“画”页面元素）。实际上，渲染的动作一般都会执行多次，最后一次渲染，一定是依据之前加载过的所有样式整合后的渲染树进行绘制页面的，已经被渲染过的页面元素，也会被重新渲染。</p>
+<p>这几个过程不是完全孤立的，会有交叉，比如HTML加载后就会进行解析，然后拉取HTML中指定的CSS、JS等。</p>
+<h1 id="手写代码"><a href="#手写代码" class="headerlink" title="手写代码"></a>手写代码</h1><h2 id="手写一个hash模式的简易路由"><a href="#手写一个hash模式的简易路由" class="headerlink" title="手写一个hash模式的简易路由"></a>手写一个hash模式的简易路由</h2><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6917523941435113486#heading-0">你好，谈谈你对前端路由的理解</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">  &lt;meta name=<span class="string">&quot;viewport&quot;</span> content=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br><span class="line">  &lt;title&gt;Hash 模式&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;ul&gt;</span><br><span class="line">        &lt;li&gt;<span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#/page1&quot;</span>&gt;</span>page1<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span>&lt;/li&gt;</span><br><span class="line">        &lt;li&gt;<span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#/page2&quot;</span>&gt;</span>page2<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span>&lt;/li&gt;</span><br><span class="line">      &lt;/ul&gt;</span><br><span class="line">      &lt;!--渲染对应组件的地方--&gt;</span><br><span class="line">      &lt;div id=<span class="string">&quot;route-view&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line">    <span class="comment">// 第一次加载的时候，不会执行 hashchange 监听事件，默认执行一次</span></span><br><span class="line">    <span class="comment">// DOMContentLoaded 为浏览器 DOM 加载完成时触发</span></span><br><span class="line">    <span class="built_in">window</span>.addEventListener(<span class="string">&#x27;DOMContentLoaded&#x27;</span>, Load)</span><br><span class="line">    <span class="built_in">window</span>.addEventListener(<span class="string">&#x27;hashchange&#x27;</span>, HashChange)</span><br><span class="line">    <span class="comment">// 展示页面组件的节点</span></span><br><span class="line">    <span class="keyword">var</span> routeView = <span class="literal">null</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">Load</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      routeView = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;route-view&#x27;</span>)</span><br><span class="line">      HashChange()</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">HashChange</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="comment">// 每次触发 hashchange 事件，通过 location.hash 拿到当前浏览器地址的 hash 值</span></span><br><span class="line">      <span class="comment">// 根据不同的路径展示不同的内容</span></span><br><span class="line">      <span class="keyword">switch</span>(location.hash) &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">&#x27;#/page1&#x27;</span>:</span><br><span class="line">        routeView.innerHTML = <span class="string">&#x27;page1&#x27;</span></span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">      <span class="keyword">case</span> <span class="string">&#x27;#/page2&#x27;</span>:</span><br><span class="line">        routeView.innerHTML = <span class="string">&#x27;page2&#x27;</span></span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">      <span class="keyword">default</span>:</span><br><span class="line">        routeView.innerHTML = <span class="string">&#x27;page1&#x27;</span></span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &lt;/script&gt;</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="手写一个简单的history模式的简单路由"><a href="#手写一个简单的history模式的简单路由" class="headerlink" title="手写一个简单的history模式的简单路由"></a>手写一个简单的history模式的简单路由</h2><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6917523941435113486#heading-0">你好，谈谈你对前端路由的理解</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">  &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">  &lt;meta name=<span class="string">&quot;viewport&quot;</span> content=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br><span class="line">  &lt;title&gt;History 模式&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;ul&gt;</span><br><span class="line">      &lt;li&gt;<span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/page1&quot;</span>&gt;</span>page1<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span>&lt;/li&gt;</span><br><span class="line">      &lt;li&gt;<span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/page2&quot;</span>&gt;</span>page2<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span>&lt;/li&gt;</span><br><span class="line">    &lt;/ul&gt;</span><br><span class="line">    &lt;div id=<span class="string">&quot;route-view&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">  &lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line">    <span class="built_in">window</span>.addEventListener(<span class="string">&#x27;DOMContentLoaded&#x27;</span>, Load)</span><br><span class="line">    <span class="built_in">window</span>.addEventListener(<span class="string">&#x27;popstate&#x27;</span>, PopChange)</span><br><span class="line">    <span class="keyword">var</span> routeView = <span class="literal">null</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">Load</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      routeView = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;route-view&#x27;</span>)</span><br><span class="line">      <span class="comment">// 默认执行一次 popstate 的回调函数，匹配一次页面组件</span></span><br><span class="line">      PopChange()</span><br><span class="line">      <span class="comment">// 获取所有带 href 属性的 a 标签节点</span></span><br><span class="line">      <span class="keyword">var</span> aList = <span class="built_in">document</span>.querySelectorAll(<span class="string">&#x27;a[href]&#x27;</span>)</span><br><span class="line">      <span class="comment">// 遍历 a 标签节点数组，阻止默认事件，添加点击事件回调函数</span></span><br><span class="line">      aList.forEach(<span class="function"><span class="params">aNode</span> =&gt;</span> aNode.addEventListener(<span class="string">&#x27;click&#x27;</span>, <span class="function"><span class="keyword">function</span>(<span class="params">e</span>) </span>&#123;</span><br><span class="line">        e.preventDefault() <span class="comment">//阻止a标签的默认事件</span></span><br><span class="line">        <span class="keyword">var</span> href = aNode.getAttribute(<span class="string">&#x27;href&#x27;</span>)</span><br><span class="line">        <span class="comment">//  手动修改浏览器的地址栏</span></span><br><span class="line">        history.pushState(<span class="literal">null</span>, <span class="string">&#x27;&#x27;</span>, href)</span><br><span class="line">        <span class="comment">// 通过 history.pushState 手动修改地址栏，</span></span><br><span class="line">        <span class="comment">// popstate 是监听不到地址栏的变化，所以此处需要手动执行回调函数 PopChange</span></span><br><span class="line">        PopChange()</span><br><span class="line">      &#125;))</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">PopChange</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">&#x27;location&#x27;</span>, location)</span><br><span class="line">      <span class="keyword">switch</span>(location.pathname) &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="string">&#x27;/page1&#x27;</span>:</span><br><span class="line">        routeView.innerHTML = <span class="string">&#x27;page1&#x27;</span></span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">      <span class="keyword">case</span> <span class="string">&#x27;/page2&#x27;</span>:</span><br><span class="line">        routeView.innerHTML = <span class="string">&#x27;page2&#x27;</span></span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">      <span class="keyword">default</span>:</span><br><span class="line">        routeView.innerHTML = <span class="string">&#x27;page1&#x27;</span></span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="手写一个节流和防抖功能"><a href="#手写一个节流和防抖功能" class="headerlink" title="手写一个节流和防抖功能"></a>手写一个节流和防抖功能</h2><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6916386899678461960">天哪！搞懂节流与防抖竟简单如斯</a></p>
+<h1 id="框架问题"><a href="#框架问题" class="headerlink" title="框架问题"></a>框架问题</h1><h2 id="Vue生命周期？-★"><a href="#Vue生命周期？-★" class="headerlink" title="Vue生命周期？(★)"></a>Vue生命周期？(★)</h2><h2 id="computed和watch的区别-★"><a href="#computed和watch的区别-★" class="headerlink" title="computed和watch的区别(★)"></a>computed和watch的区别(★)</h2><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903807592169486">面试题： Vue中的 computed 和 watch的区别</a></p>
+<h2 id="三大框架解决了传统JQuery开发的哪些问题？"><a href="#三大框架解决了传统JQuery开发的哪些问题？" class="headerlink" title="三大框架解决了传统JQuery开发的哪些问题？"></a>三大框架解决了传统JQuery开发的哪些问题？</h2><p>使前端不用再操纵 DOM,数据驱动，通过数据的改变直接改变 DOM。</p>
+<h2 id="Vue2-0-怎么实现双向绑定的"><a href="#Vue2-0-怎么实现双向绑定的" class="headerlink" title="Vue2.0 怎么实现双向绑定的"></a>Vue2.0 怎么实现双向绑定的</h2><h2 id="Vue3-0-怎么实现双向绑定的"><a href="#Vue3-0-怎么实现双向绑定的" class="headerlink" title="Vue3.0 怎么实现双向绑定的"></a>Vue3.0 怎么实现双向绑定的</h2><h2 id="Object-defineProperty-和proxy的区别？"><a href="#Object-defineProperty-和proxy的区别？" class="headerlink" title="Object.defineProperty() 和proxy的区别？"></a>Object.defineProperty() 和proxy的区别？</h2><h2 id="你使用过哪些-Vue-React-全家桶，分别解决了什么问题？"><a href="#你使用过哪些-Vue-React-全家桶，分别解决了什么问题？" class="headerlink" title="你使用过哪些 Vue/React 全家桶，分别解决了什么问题？"></a>你使用过哪些 Vue/React 全家桶，分别解决了什么问题？</h2><h2 id="Vue-hash-路由和-history-路由的区别？"><a href="#Vue-hash-路由和-history-路由的区别？" class="headerlink" title="Vue hash 路由和 history 路由的区别？"></a>Vue hash 路由和 history 路由的区别？</h2><h2 id="Vue-的-nexttick-实现的原理？"><a href="#Vue-的-nexttick-实现的原理？" class="headerlink" title="Vue 的 nexttick 实现的原理？"></a>Vue 的 nexttick 实现的原理？</h2><h2 id="你对Vue3-0了解吗？-★"><a href="#你对Vue3-0了解吗？-★" class="headerlink" title="你对Vue3.0了解吗？(★)"></a>你对Vue3.0了解吗？(★)</h2><h2 id="如果有2个父子组件，经历了哪些生命周期函数-★"><a href="#如果有2个父子组件，经历了哪些生命周期函数-★" class="headerlink" title="如果有2个父子组件，经历了哪些生命周期函数(★)"></a>如果有2个父子组件，经历了哪些生命周期函数(★)</h2><h2 id="虚拟DOM？-★"><a href="#虚拟DOM？-★" class="headerlink" title="虚拟DOM？(★)"></a>虚拟DOM？(★)</h2><h2 id="v-for的key的作用"><a href="#v-for的key的作用" class="headerlink" title="v-for的key的作用"></a><code>v-for</code>的key的作用</h2><h1 id="UI库"><a href="#UI库" class="headerlink" title="UI库"></a>UI库</h1><h2 id="如何导入和使用Element-UI？-★"><a href="#如何导入和使用Element-UI？-★" class="headerlink" title="如何导入和使用Element UI？(★)"></a>如何导入和使用<code>Element UI</code>？(★)</h2><h1 id="打包工具"><a href="#打包工具" class="headerlink" title="打包工具"></a>打包工具</h1><h2 id="webpack-相关，是否自己配置过？"><a href="#webpack-相关，是否自己配置过？" class="headerlink" title="webpack 相关，是否自己配置过？"></a>webpack 相关，是否自己配置过？</h2><h2 id="webpack-和其他自动化构建工具（gulp、grunt、rollup）有哪些区别？"><a href="#webpack-和其他自动化构建工具（gulp、grunt、rollup）有哪些区别？" class="headerlink" title="webpack 和其他自动化构建工具（gulp、grunt、rollup）有哪些区别？"></a>webpack 和其他自动化构建工具（gulp、grunt、rollup）有哪些区别？</h2><h2 id="模块化解决了前端的哪些痛点"><a href="#模块化解决了前端的哪些痛点" class="headerlink" title="模块化解决了前端的哪些痛点"></a>模块化解决了前端的哪些痛点</h2><ul>
+<li>命名冲突</li>
+<li>文件依赖</li>
+<li>代码复用</li>
+</ul>
+<h2 id="webpack-的-loader-和-plugin-区别，举几个常用的-loader-和-plugin-并说出作用？"><a href="#webpack-的-loader-和-plugin-区别，举几个常用的-loader-和-plugin-并说出作用？" class="headerlink" title="webpack 的 loader 和 plugin 区别，举几个常用的 loader 和 plugin 并说出作用？"></a>webpack 的 loader 和 plugin 区别，举几个常用的 loader 和 plugin 并说出作用？</h2><h2 id="webpack-打包的过程"><a href="#webpack-打包的过程" class="headerlink" title="webpack 打包的过程"></a>webpack 打包的过程</h2><ul>
+<li>读取文件，分析模块依赖</li>
+<li>对模块进行解析执行（深度遍历）</li>
+<li>针对不同的模块使用不同的 loader</li>
+<li>编译模块，生成抽象语法树（AST）</li>
+<li>遍历 AST，输出 JS</li>
+</ul>
+<h2 id="webpack-打包之后生成哪些文件？"><a href="#webpack-打包之后生成哪些文件？" class="headerlink" title="webpack 打包之后生成哪些文件？"></a>webpack 打包之后生成哪些文件？</h2><h2 id="webpack-打包出来的文件体积过大怎么办？"><a href="#webpack-打包出来的文件体积过大怎么办？" class="headerlink" title="webpack 打包出来的文件体积过大怎么办？"></a>webpack 打包出来的文件体积过大怎么办？</h2><h2 id="webpack-热部署的原理？"><a href="#webpack-热部署的原理？" class="headerlink" title="webpack 热部署的原理？"></a>webpack 热部署的原理？</h2><h1 id="项目实际问题"><a href="#项目实际问题" class="headerlink" title="项目实际问题"></a>项目实际问题</h1><h2 id="页面加载白屏的原因有哪些，以及如何监控白屏时间，如何优化"><a href="#页面加载白屏的原因有哪些，以及如何监控白屏时间，如何优化" class="headerlink" title="页面加载白屏的原因有哪些，以及如何监控白屏时间，如何优化"></a>页面加载白屏的原因有哪些，以及如何监控白屏时间，如何优化</h2><h2 id="通信的要点和目的"><a href="#通信的要点和目的" class="headerlink" title="通信的要点和目的"></a>通信的要点和目的</h2><ul>
+<li>要点：1. 发送者和接收者 2. 传输媒介 3. 传输的数据 4. 传输格式（协议）</li>
+<li>目的：1. 同步数据 2. 传递指令(执行的方法)</li>
+</ul>
+<h2 id="哪个项目让你最满意、代表你的最高水平？如何做的？"><a href="#哪个项目让你最满意、代表你的最高水平？如何做的？" class="headerlink" title="哪个项目让你最满意、代表你的最高水平？如何做的？"></a>哪个项目让你最满意、代表你的最高水平？如何做的？</h2><h2 id="让你印象最深刻的一个（技术）难点，害的你搞了很久，最后怎么解的，有什么心得？"><a href="#让你印象最深刻的一个（技术）难点，害的你搞了很久，最后怎么解的，有什么心得？" class="headerlink" title="让你印象最深刻的一个（技术）难点，害的你搞了很久，最后怎么解的，有什么心得？"></a>让你印象最深刻的一个（技术）难点，害的你搞了很久，最后怎么解的，有什么心得？</h2><h2 id="你做的时间最久的一个项目（或产品），你看到这个项目有哪些问题，你能做什么？"><a href="#你做的时间最久的一个项目（或产品），你看到这个项目有哪些问题，你能做什么？" class="headerlink" title="你做的时间最久的一个项目（或产品），你看到这个项目有哪些问题，你能做什么？"></a>你做的时间最久的一个项目（或产品），你看到这个项目有哪些问题，你能做什么？</h2><h2 id="你能给我们团队或者产品带来什么？"><a href="#你能给我们团队或者产品带来什么？" class="headerlink" title="你能给我们团队或者产品带来什么？"></a>你能给我们团队或者产品带来什么？</h2><h1 id="基础算法题"><a href="#基础算法题" class="headerlink" title="基础算法题"></a>基础算法题</h1><h1 id="非技术部分"><a href="#非技术部分" class="headerlink" title="非技术部分"></a>非技术部分</h1><h2 id="请你自我介绍一下你自己？-★"><a href="#请你自我介绍一下你自己？-★" class="headerlink" title="请你自我介绍一下你自己？(★)"></a>请你自我介绍一下你自己？(★)</h2><p>一般人回答这个问题过于平常，只说姓名、年龄、爱好、工作经验，这些在简历上都有。其实，企业最希望知道的是求职者能否胜任工作，包括：最强的技能、最深入研究的知识领域、个性中最积极的部分、做过的最成功的事，主要的成就等，这些都可以和学习无关，也可以和学习有关，但要突出积极的个性和做事的能力，说得合情合理企业才会相信。企业很重视一个人的礼貌，求职者要尊重考官，在回答每个问题之后都说一句“谢谢”，企业喜欢有礼貌的求职者。</p>
+<p>一般面试当中自我介绍不能太长，也不能过短，<strong>3分钟左右</strong>最合适。</p>
+<p>我的自我介绍如下：</p>
+<p>面试官好，我叫李明，94年生人，今年27岁，来自于安徽芜湖。</p>
+<p>2017年毕业于铜陵学院，本科学历，金融学专业。</p>
+<p>毕业后做了4年的财务工作，包括会计、审计等。</p>
+<p>2018年8月在学习Excel VBA的时候偶然接触了一些编程知识，然后仔细考虑了一下自己的未来和职业规划，产生了转行的想法，在网上看了一系列视频：C语言、Java、数据库、计算机网络、计算机组成原理等，因为非科班出生，所以这些课程对我来说十分晦涩难懂，<strong>2018年8月-2019年1月</strong>就处于一种瞎学乱学的阶段，一直到<strong>2019年8月份</strong>才真正开始决定学习前端作为自己今后的职业发展方向，然后就开始一边上班一边自学的生涯，一直到现在。</p>
+<p>经过1年半的学习，感觉前端的基本知识已经差不多都过了一遍，于是21年2月23日正式离职，准备转行了。</p>
+<p>我上家公司是一家科技型中介，主要给一些科技公司申报高新技术企业，软件著作权，注册商标等。我主要负责做审计报告，也兼任了一些出纳工作，因为工作比较轻松，朝九晚五，做五休二，所以我有比较充足的时间学习。</p>
+<p>我的博客地址：<a target="_blank" rel="noopener" href="http://www.lm1024.top/">www.lm1024.top</a></p>
+<p>我的大体学习时间线是这样的：</p>
+<p>19年8-9月，学习HTML、CSS；</p>
+<p>9-11月，学习JS；</p>
+<p>其中11月初的时候开始写博客，一直到现在。我的博客里也详细记录了我的学习轨迹和心路历程，如果您想了解更多的话可以访问一下我的博客。<a target="_blank" rel="noopener" href="http://www.lm1024.top./">www.lm1024.top。</a></p>
+<p>19年11月-20年2月，主要是看书《JavaScript高级程序设计》第3版和和复习以前学过的东西。期间也尝试过学习Vue，后来发现基础知识没打牢，时机没到，于是后面没学了。</p>
+<p>20年2-3月，学习DOM、BOM、PHP、JQuery；</p>
+<p>20年4-6月，感觉学习前端出现了瓶颈，于是学了一些网络安全和Linux；</p>
+<p>20年6-8月，重新学习DOM、BOM、PHP、JQuery、Bootstrap、AJAX；</p>
+<p>20年8-9月，学习JavaScript高级、H5C3、Flex布局、Node.js(学了一半没学完)</p>
+<p>20年9-11月，再次学习Vue，花了2个半月时间，又把Vue基础知识点认认真真学了一遍，比2020年元旦第一次学效果好多了。</p>
+<p>20年11月-21年1月，跟着视频做了一个Vue实战商城项目。</p>
+<p>21年1月-2月，做了一个Vue后台管理系统，UI框架是Element UI。</p>
+<p>21年1-2月，还学习完了小程序，做了一个小程序项目。</p>
+<p>21年2月-现在，辞职后主要是准备面试题，还有对以前所学的知识点进行查漏补缺，深入理解，还有准备再做几个项目，把TS和Vue 3.0学一下。</p>
+<p>以上就是我的基本情况了，谢谢。 </p>
+<p>(更加详细学习时间线请见我的另一篇博客<a target="_blank" rel="noopener" href="https://lm1024.top/2021/01/10/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E5%8E%86%E7%A8%8B/#more">前端学习历程</a>)</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag"># 面试</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/01/10/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E5%8E%86%E7%A8%8B/" rel="prev" title="前端学习历程">
+      <i class="fa fa-chevron-left"></i> 前端学习历程
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/01/13/%E5%AD%A6%E4%B9%A0HTML%E3%80%81CSS%E9%81%87%E5%88%B0%E7%9A%84%E7%93%B6%E9%A2%88%E4%B9%8B%E6%A6%82%E5%BF%B5/" rel="next" title="学习HTML、CSS遇到的瓶颈之概念">
+      学习HTML、CSS遇到的瓶颈之概念 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A2%98%E7%9B%AE%E6%9D%A5%E6%BA%90%EF%BC%9A"><span class="nav-text">题目来源：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HTML%E3%80%81CSS"><span class="nav-text">HTML、CSS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8B%E4%BD%A0%E5%AF%B9%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E6%A0%B8%E7%9A%84%E7%90%86%E8%A7%A3%EF%BC%9F%E5%B8%B8%E8%A7%81%E7%9A%84%E6%B5%8F%E8%A7%88%E5%99%A8%E5%86%85%E6%A0%B8%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="nav-text">介绍一下你对浏览器内核的理解？常见的浏览器内核有哪些？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#lt-image-gt-%E6%A0%87%E7%AD%BE%E4%B8%8Atitle%E5%B1%9E%E6%80%A7%E4%B8%8Ealt%E5%B1%9E%E6%80%A7%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-text">&lt;image&gt;标签上title属性与alt属性的区别是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E8%BF%B0%E4%B8%80%E4%B8%8Bsrc%E4%B8%8Ehref%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-text">简述一下src与href的区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BD%95img%E3%80%81input%E7%AD%89%E5%86%85%E8%81%94%E5%85%83%E7%B4%A0%E5%8F%AF%E4%BB%A5%E8%AE%BE%E7%BD%AE%E5%AE%BD%E3%80%81%E9%AB%98%EF%BC%9F"><span class="nav-text">为何img、input等内联元素可以设置宽、高？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E5%9D%97%E7%BA%A7%E5%85%83%E7%B4%A0%E4%B8%8E%E8%A1%8C%E5%86%85%E5%85%83%E7%B4%A0%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="nav-text">常见的块级元素与行内元素有哪些？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ul-li-dl-dt-dd%E6%98%AF%E5%9D%97%E7%BA%A7%E5%85%83%E7%B4%A0%E8%BF%98%E6%98%AF%E8%A1%8C%E5%86%85%E5%85%83%E7%B4%A0%E8%BF%98%E6%98%AF%E8%A1%8C%E5%86%85%E5%9D%97%E5%85%83%E7%B4%A0%EF%BC%9F"><span class="nav-text">ul,li,dl,dt,dd是块级元素还是行内元素还是行内块元素？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9D%97%E7%BA%A7%E5%85%83%E7%B4%A0%E3%80%81%E8%A1%8C%E5%86%85%E5%85%83%E7%B4%A0%E3%80%81%E8%A1%8C%E5%86%85%E5%9D%97%E5%85%83%E7%B4%A0%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-text">块级元素、行内元素、行内块元素的区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DIV-CSS%E5%B8%83%E5%B1%80%E7%9A%84%E5%A5%BD%E5%A4%84"><span class="nav-text">DIV+CSS布局的好处</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%B1%85%E4%B8%ADdiv%EF%BC%9F%E5%A6%82%E4%BD%95%E5%B1%85%E4%B8%AD%E4%B8%80%E4%B8%AA%E6%B5%AE%E5%8A%A8%E5%85%83%E7%B4%A0%EF%BC%9F%E5%A6%82%E4%BD%95%E8%AE%A9%E7%BB%9D%E5%AF%B9%E5%AE%9A%E4%BD%8D%E7%9A%84div%E5%B1%85%E4%B8%AD%EF%BC%9F"><span class="nav-text">如何居中div？如何居中一个浮动元素？如何让绝对定位的div居中？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%88%E8%B0%88%E4%BD%A0%E5%AF%B9CSS%E5%B8%83%E5%B1%80%E7%9A%84%E7%90%86%E8%A7%A3%EF%BC%9F"><span class="nav-text">谈谈你对CSS布局的理解？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8%EF%BC%9F%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8%E7%9A%84%E6%96%B9%E5%BC%8F%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%9F"><span class="nav-text">为什么要清除浮动？清除浮动的方式有哪些？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#import%E5%92%8Clink%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F-%E2%98%85%E2%97%8F"><span class="nav-text">@import和link的区别？(★●)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS%E9%80%89%E6%8B%A9%E5%99%A8%E5%8F%8A%E6%A0%B7%E5%BC%8F%E4%BC%98%E5%85%88%E7%BA%A7%EF%BC%9F"><span class="nav-text">CSS选择器及样式优先级？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%A4%96%E8%BE%B9%E8%B7%9D%E5%A1%8C%E9%99%B7-%E2%98%85"><span class="nav-text">什么是外边距塌陷(★)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#overflow-hidden%E5%87%A0%E7%A7%8D%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95%EF%BC%9F-%E2%98%85"><span class="nav-text">overflow:hidden几种使用方法？(★)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BA%A2%E5%87%BA%E9%9A%90%E8%97%8F"><span class="nav-text">溢出隐藏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8"><span class="nav-text">清除浮动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E5%A4%96%E8%BE%B9%E8%B7%9D%E5%A1%8C%E9%99%B7"><span class="nav-text">解决外边距塌陷</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E6%80%81%E6%A1%86%E6%8B%96%E6%8B%BD%E6%80%9D%E8%B7%AF-%E2%98%85"><span class="nav-text">模态框拖拽思路(★)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0-5%E8%BE%B9%E6%A1%86-%E2%98%85"><span class="nav-text">0.5边框(★)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B7%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8BBFC-%E5%9D%97%E7%BA%A7%E6%A0%BC%E5%BC%8F%E5%8C%96%E4%B8%8A%E4%B8%8B%E6%96%87-%EF%BC%9F"><span class="nav-text">请介绍一下BFC(块级格式化上下文)？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%8E%E4%B9%88%E5%AE%9E%E7%8E%B0%E4%B8%89%E5%88%97%E5%B8%83%E5%B1%80%EF%BC%88%E5%B7%A6%E4%BE%A7%E5%92%8C%E5%8F%B3%E4%BE%A7%E5%AE%BD%E5%BA%A6%E5%9B%BA%E5%AE%9A%EF%BC%8C%E4%B8%AD%E9%97%B4%E8%87%AA%E9%80%82%E5%BA%94%EF%BC%89"><span class="nav-text">怎么实现三列布局（左侧和右侧宽度固定，中间自适应）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E7%AB%AF%E5%BC%80%E5%8F%91-rem-%E5%B8%83%E5%B1%80%E7%9A%84%E5%8E%9F%E7%90%86%EF%BC%88rem-%E5%8D%95%E4%BD%8D%E6%8D%A2%E7%AE%97%EF%BC%89"><span class="nav-text">移动端开发 rem 布局的原理（rem 单位换算）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2-%E2%98%85"><span class="nav-text">什么是媒体查询(★)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%9C%A8%E9%A1%B5%E9%9D%A2%E4%B8%8A%E7%94%BB%E4%B8%80%E4%B8%AA%E6%A4%AD%E5%9C%86"><span class="nav-text">如何在页面上画一个椭圆</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HTML5%E3%80%81CSS3"><span class="nav-text">HTML5、CSS3</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B7%E5%86%99%E5%87%BA%E8%87%B3%E5%B0%915%E4%B8%AAHTML5%E6%96%B0%E5%A2%9E%E7%9A%84%E6%A0%87%E7%AD%BE%EF%BC%8C%E5%B9%B6%E8%AF%B4%E6%98%8E%E5%85%B6%E8%AF%AD%E4%B9%89%E5%92%8C%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%EF%BC%9F"><span class="nav-text">请写出至少5个HTML5新增的标签，并说明其语义和应用场景？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B7%E8%AF%B4%E8%AF%B4%E4%BD%A0%E5%AF%B9%E6%A0%87%E7%AD%BE%E8%AF%AD%E4%B9%89%E5%8C%96%E7%9A%84%E7%90%86%E8%A7%A3%EF%BC%9F"><span class="nav-text">请说说你对标签语义化的理解？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#JavaScript"><span class="nav-text">JavaScript</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#null%E5%92%8Cundefined%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-text">null和undefined的区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#script-%E6%A0%87%E7%AD%BE%E7%9A%84%E5%B1%9E%E6%80%A7%E6%9C%89%E5%93%AA%E4%BA%9B"><span class="nav-text">script 标签的属性有哪些</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#script-%E6%A0%87%E7%AD%BE%E7%9A%84-defer-%E5%92%8C-async-%E6%A0%87%E7%AD%BE%E7%9A%84%E4%BD%9C%E7%94%A8%E4%B8%8E%E5%8C%BA%E5%88%AB"><span class="nav-text">script 标签的 defer 和 async 标签的作用与区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JS%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%8C%E5%A6%82%E4%BD%95%E5%AF%B9%E5%AE%83%E4%BB%AC%E8%BF%9B%E8%A1%8C%E6%A3%80%E6%B5%8B%EF%BC%9F"><span class="nav-text">JS数据类型有哪些，如何对它们进行检测？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B7%E8%AF%B4%E5%87%BA10%E4%B8%AA%E6%95%B0%E7%BB%84%E7%9A%84%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-text">请说出10个数组的常用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B7%E5%88%97%E4%B8%BE%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%93%8D%E4%BD%9C%E7%9A%84%E6%96%B9%E6%B3%95%EF%BC%9F"><span class="nav-text">请列举字符串操作的方法？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B4%E8%AF%B4%E4%BD%A0%E5%AF%B9-this%E7%9A%84%E7%90%86%E8%A7%A3"><span class="nav-text">说说你对 this的理解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8BJS%E6%9C%89%E5%93%AA%E4%BA%9B%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1%EF%BC%9F"><span class="nav-text">介绍一下JS有哪些内置对象？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E9%97%AD%E5%8C%85%EF%BC%9F"><span class="nav-text">什么是闭包？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFpromise%EF%BC%9F%E5%AE%83%E8%A7%A3%E5%86%B3%E4%BA%86%E5%93%AA%E4%BA%9B%E9%97%AE%E9%A2%98"><span class="nav-text">什么是promise？它解决了哪些问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E6%B2%A1%E6%9C%89-promise-%E4%B9%8B%E5%89%8D%EF%BC%8C%E6%80%8E%E4%B9%88%E8%A7%A3%E5%86%B3%E5%BC%82%E6%AD%A5%E5%9B%9E%E8%B0%83"><span class="nav-text">在没有 promise 之前，怎么解决异步回调</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE%EF%BC%9F-%E2%98%85%E2%98%85%E2%98%85%E2%98%85%E2%98%85%E2%97%8F"><span class="nav-text">原型和原型链？(★★★★★●)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A6%82%E8%BF%B0"><span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-text">构造函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E6%88%90%E5%91%98%E5%92%8C%E5%AE%9E%E4%BE%8B%E6%88%90%E5%91%98"><span class="nav-text">静态成员和实例成员</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-text">构造函数的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%8E%9F%E5%9E%8Bprototype"><span class="nav-text">构造函数原型prototype</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E8%B1%A1%E5%8E%9F%E5%9E%8B-proto"><span class="nav-text">对象原型    __proto__</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#constructor%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-text">constructor构造函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E3%80%81%E5%AE%9E%E4%BE%8B%E3%80%81%E5%8E%9F%E5%9E%8B%E5%AF%B9%E8%B1%A1%E4%B8%89%E8%80%85%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="nav-text">构造函数、实例、原型对象三者之间的关系</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E5%9E%8B%E9%93%BE"><span class="nav-text">原型链</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript%E7%9A%84%E6%88%90%E5%91%98%E6%9F%A5%E6%89%BE%E6%9C%BA%E5%88%B6%EF%BC%88%E8%A7%84%E5%88%99%EF%BC%89"><span class="nav-text">JavaScript的成员查找机制（规则）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E5%9E%8B%E5%AF%B9%E8%B1%A1this%E6%8C%87%E5%90%91"><span class="nav-text">原型对象this指向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1"><span class="nav-text">扩展内置对象</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF-eventloop-%EF%BC%9F-%E2%98%85"><span class="nav-text">什么是事件循环(eventloop)？(★)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E5%A7%8B%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-text">原始数据类型和引用类型的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%B1%E6%8B%B7%E8%B4%9D%E5%92%8C%E6%B5%85%E6%8B%B7%E8%B4%9D%E7%9A%84%E5%8C%BA%E5%88%AB%E5%8F%8A%E5%85%B6%E5%AE%9E%E7%8E%B0"><span class="nav-text">深拷贝和浅拷贝的区别及其实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%85%E6%8B%B7%E8%B4%9D"><span class="nav-text">浅拷贝</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%B1%E6%8B%B7%E8%B4%9D"><span class="nav-text">深拷贝</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%92%8C%E9%9D%A2%E5%90%91%E8%BF%87%E7%A8%8B%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-text">面向对象和面向过程的区别</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ES6"><span class="nav-text">ES6</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%86%E8%A7%A3ES6%E7%9A%84let%E5%92%8Cconst%E5%8F%98%E9%87%8F%E5%A3%B0%E6%98%8E%E5%90%97%EF%BC%9F%E8%B7%9FES5%E7%9A%84var%E6%9C%89%E5%93%AA%E4%BA%9B%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-text">了解ES6的let和const变量声明吗？跟ES5的var有哪些区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#filter%E7%9A%84%E7%94%A8%E6%B3%95-%E2%98%85"><span class="nav-text">filter的用法(★)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%8F%8A%E6%95%B0%E6%8D%AE%E4%BA%A4%E4%BA%92"><span class="nav-text">计算机网络及数据交互</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sessionStorage%E3%80%81localStorage%E5%92%8Ccookie%E7%9A%84%E5%8C%BA%E5%88%AB-%E2%98%85%E2%97%8F"><span class="nav-text">sessionStorage、localStorage和cookie的区别(★●)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sessionStorage%E5%92%8ClocalStorage"><span class="nav-text">sessionStorage和localStorage</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cookie"><span class="nav-text">cookie</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#WebSocket%E7%9A%84%E8%AF%B7%E6%B1%82-%E2%98%85"><span class="nav-text">WebSocket的请求(★)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E8%BF%B0%E4%B8%89%E6%AC%A1%E6%8F%A1%E6%89%8B%E5%92%8C%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B%EF%BC%9F"><span class="nav-text">简述三次握手和四次挥手？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GET%E5%92%8CPOST%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-text">GET和POST的区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AJAX%E8%AF%B7%E6%B1%82%E7%9A%84%E6%AD%A5%E9%AA%A4%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-text">AJAX请求的步骤是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%B7%A8%E5%9F%9F%EF%BC%9F%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E8%B7%A8%E5%9F%9F%EF%BC%9F-%E2%98%85"><span class="nav-text">什么是跨域？如何实现跨域？(★)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8BJSONP%EF%BC%8C%E4%BB%96%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-text">介绍一下JSONP，他的优缺点是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B"><span class="nav-text">浏览器执行过程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%8B%E5%86%99%E4%BB%A3%E7%A0%81"><span class="nav-text">手写代码</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AAhash%E6%A8%A1%E5%BC%8F%E7%9A%84%E7%AE%80%E6%98%93%E8%B7%AF%E7%94%B1"><span class="nav-text">手写一个hash模式的简易路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84history%E6%A8%A1%E5%BC%8F%E7%9A%84%E7%AE%80%E5%8D%95%E8%B7%AF%E7%94%B1"><span class="nav-text">手写一个简单的history模式的简单路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AA%E8%8A%82%E6%B5%81%E5%92%8C%E9%98%B2%E6%8A%96%E5%8A%9F%E8%83%BD"><span class="nav-text">手写一个节流和防抖功能</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A1%86%E6%9E%B6%E9%97%AE%E9%A2%98"><span class="nav-text">框架问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%EF%BC%9F-%E2%98%85"><span class="nav-text">Vue生命周期？(★)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#computed%E5%92%8Cwatch%E7%9A%84%E5%8C%BA%E5%88%AB-%E2%98%85"><span class="nav-text">computed和watch的区别(★)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E5%A4%A7%E6%A1%86%E6%9E%B6%E8%A7%A3%E5%86%B3%E4%BA%86%E4%BC%A0%E7%BB%9FJQuery%E5%BC%80%E5%8F%91%E7%9A%84%E5%93%AA%E4%BA%9B%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="nav-text">三大框架解决了传统JQuery开发的哪些问题？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue2-0-%E6%80%8E%E4%B9%88%E5%AE%9E%E7%8E%B0%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A%E7%9A%84"><span class="nav-text">Vue2.0 怎么实现双向绑定的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue3-0-%E6%80%8E%E4%B9%88%E5%AE%9E%E7%8E%B0%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A%E7%9A%84"><span class="nav-text">Vue3.0 怎么实现双向绑定的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Object-defineProperty-%E5%92%8Cproxy%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-text">Object.defineProperty() 和proxy的区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%A0%E4%BD%BF%E7%94%A8%E8%BF%87%E5%93%AA%E4%BA%9B-Vue-React-%E5%85%A8%E5%AE%B6%E6%A1%B6%EF%BC%8C%E5%88%86%E5%88%AB%E8%A7%A3%E5%86%B3%E4%BA%86%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="nav-text">你使用过哪些 Vue&#x2F;React 全家桶，分别解决了什么问题？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-hash-%E8%B7%AF%E7%94%B1%E5%92%8C-history-%E8%B7%AF%E7%94%B1%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-text">Vue hash 路由和 history 路由的区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-%E7%9A%84-nexttick-%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%8E%9F%E7%90%86%EF%BC%9F"><span class="nav-text">Vue 的 nexttick 实现的原理？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%A0%E5%AF%B9Vue3-0%E4%BA%86%E8%A7%A3%E5%90%97%EF%BC%9F-%E2%98%85"><span class="nav-text">你对Vue3.0了解吗？(★)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E6%9E%9C%E6%9C%892%E4%B8%AA%E7%88%B6%E5%AD%90%E7%BB%84%E4%BB%B6%EF%BC%8C%E7%BB%8F%E5%8E%86%E4%BA%86%E5%93%AA%E4%BA%9B%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%87%BD%E6%95%B0-%E2%98%85"><span class="nav-text">如果有2个父子组件，经历了哪些生命周期函数(★)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%99%9A%E6%8B%9FDOM%EF%BC%9F-%E2%98%85"><span class="nav-text">虚拟DOM？(★)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#v-for%E7%9A%84key%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-text">v-for的key的作用</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#UI%E5%BA%93"><span class="nav-text">UI库</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%AF%BC%E5%85%A5%E5%92%8C%E4%BD%BF%E7%94%A8Element-UI%EF%BC%9F-%E2%98%85"><span class="nav-text">如何导入和使用Element UI？(★)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%93%E5%8C%85%E5%B7%A5%E5%85%B7"><span class="nav-text">打包工具</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#webpack-%E7%9B%B8%E5%85%B3%EF%BC%8C%E6%98%AF%E5%90%A6%E8%87%AA%E5%B7%B1%E9%85%8D%E7%BD%AE%E8%BF%87%EF%BC%9F"><span class="nav-text">webpack 相关，是否自己配置过？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webpack-%E5%92%8C%E5%85%B6%E4%BB%96%E8%87%AA%E5%8A%A8%E5%8C%96%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7%EF%BC%88gulp%E3%80%81grunt%E3%80%81rollup%EF%BC%89%E6%9C%89%E5%93%AA%E4%BA%9B%E5%8C%BA%E5%88%AB%EF%BC%9F"><span class="nav-text">webpack 和其他自动化构建工具（gulp、grunt、rollup）有哪些区别？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E5%8C%96%E8%A7%A3%E5%86%B3%E4%BA%86%E5%89%8D%E7%AB%AF%E7%9A%84%E5%93%AA%E4%BA%9B%E7%97%9B%E7%82%B9"><span class="nav-text">模块化解决了前端的哪些痛点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webpack-%E7%9A%84-loader-%E5%92%8C-plugin-%E5%8C%BA%E5%88%AB%EF%BC%8C%E4%B8%BE%E5%87%A0%E4%B8%AA%E5%B8%B8%E7%94%A8%E7%9A%84-loader-%E5%92%8C-plugin-%E5%B9%B6%E8%AF%B4%E5%87%BA%E4%BD%9C%E7%94%A8%EF%BC%9F"><span class="nav-text">webpack 的 loader 和 plugin 区别，举几个常用的 loader 和 plugin 并说出作用？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webpack-%E6%89%93%E5%8C%85%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="nav-text">webpack 打包的过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webpack-%E6%89%93%E5%8C%85%E4%B9%8B%E5%90%8E%E7%94%9F%E6%88%90%E5%93%AA%E4%BA%9B%E6%96%87%E4%BB%B6%EF%BC%9F"><span class="nav-text">webpack 打包之后生成哪些文件？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webpack-%E6%89%93%E5%8C%85%E5%87%BA%E6%9D%A5%E7%9A%84%E6%96%87%E4%BB%B6%E4%BD%93%E7%A7%AF%E8%BF%87%E5%A4%A7%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F"><span class="nav-text">webpack 打包出来的文件体积过大怎么办？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webpack-%E7%83%AD%E9%83%A8%E7%BD%B2%E7%9A%84%E5%8E%9F%E7%90%86%EF%BC%9F"><span class="nav-text">webpack 热部署的原理？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E5%AE%9E%E9%99%85%E9%97%AE%E9%A2%98"><span class="nav-text">项目实际问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B5%E9%9D%A2%E5%8A%A0%E8%BD%BD%E7%99%BD%E5%B1%8F%E7%9A%84%E5%8E%9F%E5%9B%A0%E6%9C%89%E5%93%AA%E4%BA%9B%EF%BC%8C%E4%BB%A5%E5%8F%8A%E5%A6%82%E4%BD%95%E7%9B%91%E6%8E%A7%E7%99%BD%E5%B1%8F%E6%97%B6%E9%97%B4%EF%BC%8C%E5%A6%82%E4%BD%95%E4%BC%98%E5%8C%96"><span class="nav-text">页面加载白屏的原因有哪些，以及如何监控白屏时间，如何优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E4%BF%A1%E7%9A%84%E8%A6%81%E7%82%B9%E5%92%8C%E7%9B%AE%E7%9A%84"><span class="nav-text">通信的要点和目的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%93%AA%E4%B8%AA%E9%A1%B9%E7%9B%AE%E8%AE%A9%E4%BD%A0%E6%9C%80%E6%BB%A1%E6%84%8F%E3%80%81%E4%BB%A3%E8%A1%A8%E4%BD%A0%E7%9A%84%E6%9C%80%E9%AB%98%E6%B0%B4%E5%B9%B3%EF%BC%9F%E5%A6%82%E4%BD%95%E5%81%9A%E7%9A%84%EF%BC%9F"><span class="nav-text">哪个项目让你最满意、代表你的最高水平？如何做的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A9%E4%BD%A0%E5%8D%B0%E8%B1%A1%E6%9C%80%E6%B7%B1%E5%88%BB%E7%9A%84%E4%B8%80%E4%B8%AA%EF%BC%88%E6%8A%80%E6%9C%AF%EF%BC%89%E9%9A%BE%E7%82%B9%EF%BC%8C%E5%AE%B3%E7%9A%84%E4%BD%A0%E6%90%9E%E4%BA%86%E5%BE%88%E4%B9%85%EF%BC%8C%E6%9C%80%E5%90%8E%E6%80%8E%E4%B9%88%E8%A7%A3%E7%9A%84%EF%BC%8C%E6%9C%89%E4%BB%80%E4%B9%88%E5%BF%83%E5%BE%97%EF%BC%9F"><span class="nav-text">让你印象最深刻的一个（技术）难点，害的你搞了很久，最后怎么解的，有什么心得？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%A0%E5%81%9A%E7%9A%84%E6%97%B6%E9%97%B4%E6%9C%80%E4%B9%85%E7%9A%84%E4%B8%80%E4%B8%AA%E9%A1%B9%E7%9B%AE%EF%BC%88%E6%88%96%E4%BA%A7%E5%93%81%EF%BC%89%EF%BC%8C%E4%BD%A0%E7%9C%8B%E5%88%B0%E8%BF%99%E4%B8%AA%E9%A1%B9%E7%9B%AE%E6%9C%89%E5%93%AA%E4%BA%9B%E9%97%AE%E9%A2%98%EF%BC%8C%E4%BD%A0%E8%83%BD%E5%81%9A%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-text">你做的时间最久的一个项目（或产品），你看到这个项目有哪些问题，你能做什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%A0%E8%83%BD%E7%BB%99%E6%88%91%E4%BB%AC%E5%9B%A2%E9%98%9F%E6%88%96%E8%80%85%E4%BA%A7%E5%93%81%E5%B8%A6%E6%9D%A5%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-text">你能给我们团队或者产品带来什么？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%AE%97%E6%B3%95%E9%A2%98"><span class="nav-text">基础算法题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9D%9E%E6%8A%80%E6%9C%AF%E9%83%A8%E5%88%86"><span class="nav-text">非技术部分</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B7%E4%BD%A0%E8%87%AA%E6%88%91%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8B%E4%BD%A0%E8%87%AA%E5%B7%B1%EF%BC%9F-%E2%98%85"><span class="nav-text">请你自我介绍一下你自己？(★)</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="筛滤淘"
+      src="/images/cat.jpg">
+  <p class="site-author-name" itemprop="name">筛滤淘</p>
+  <div class="site-description" itemprop="description">前端知识点总结</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">129</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lm101845" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lm101845" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1018457683@qq.com" title="E-Mail → mailto:1018457683@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.jianshu.com/u/6879af8ace24" title="简 书 → https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;6879af8ace24" rel="noopener" target="_blank"><i class="fa fa-jianshu fa-fw"></i>简 书</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/9002959" title="B  站 → https:&#x2F;&#x2F;space.bilibili.com&#x2F;9002959" rel="noopener" target="_blank"><i class="fa fa-bilibili fa-fw"></i>B  站</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">筛滤淘</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">3.7m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">56:03</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

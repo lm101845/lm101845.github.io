@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="（注1：死活找不到第3版的，只能看第二版的了，书上jQuery的版本是v1.7.1,现在[2019-12-27]的版本是v3.4.1）  （注2：我怕时间来不及，还是先学Vue.js吧–2019.12.30）  （注3：现在是2020年7月9日，我又搜了一下，居然找到了第三版的了。有啥来得及来不及的，先学JQuery！！！）  （注4：新下载的好像不是第3版的，好像比我之前下载的版本还老。算了，还">
+<meta property="og:type" content="article">
+<meta property="og:title" content="读书笔记：锋利的jQuery（第2版）">
+<meta property="og:url" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/index.html">
+<meta property="og:site_name" content="木子小屋">
+<meta property="og:description" content="（注1：死活找不到第3版的，只能看第二版的了，书上jQuery的版本是v1.7.1,现在[2019-12-27]的版本是v3.4.1）  （注2：我怕时间来不及，还是先学Vue.js吧–2019.12.30）  （注3：现在是2020年7月9日，我又搜了一下，居然找到了第三版的了。有啥来得及来不及的，先学JQuery！！！）  （注4：新下载的好像不是第3版的，好像比我之前下载的版本还老。算了，还">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/01.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/02.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/03.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/04.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/05.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/06.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/07.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/08.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/09.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/10.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/11.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/12.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/13.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/14.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/15.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/16.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/17.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/18.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/19.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/20.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/21.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/22.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/23.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/24.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/25.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/26.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/27.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/28.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/29.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/30.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/31.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/32.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/33.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/34.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/35.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/36.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/37.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/38.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/39.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/40.png">
+<meta property="og:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/41.png">
+<meta property="article:published_time" content="2019-12-26T23:20:04.000Z">
+<meta property="article:modified_time" content="2019-12-26T23:20:04.000Z">
+<meta property="article:author" content="筛滤淘">
+<meta property="article:tag" content="读书笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/01.png">
+
+<link rel="canonical" href="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>读书笔记：锋利的jQuery（第2版） | 木子小屋</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?79d7cb9c8fa9e57a2723fb8645f37638";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">木子小屋</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Talk is cheap. Show me the code.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cat.jpg">
+      <meta itemprop="name" content="筛滤淘">
+      <meta itemprop="description" content="前端知识点总结">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="木子小屋">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          读书笔记：锋利的jQuery（第2版）
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-12-27 07:20:04" itemprop="dateCreated datePublished" datetime="2019-12-27T07:20:04+08:00">2019-12-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/" itemprop="url" rel="index"><span itemprop="name">前端框架</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>15k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>14 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>（注1：死活找不到第3版的，只能看第二版的了，书上jQuery的版本是v1.7.1,现在[2019-12-27]的版本是v3.4.1）</p>
+<p>（注2：我怕时间来不及，还是先学Vue.js吧–2019.12.30）</p>
+<p>（注3：现在是2020年7月9日，我又搜了一下，居然找到了第三版的了。有啥来得及来不及的，先学JQuery！！！）</p>
+<p>（注4：新下载的好像不是第3版的，好像比我之前下载的版本还老。算了，还是看原来的第二版吧）</p>
+<h1 id="第1章：认识jQuery"><a href="#第1章：认识jQuery" class="headerlink" title="第1章：认识jQuery"></a>第1章：认识jQuery</h1><p>随着Web2.0的兴起，JavaScript越来越受到重视，一系列JavaScript程序库也蓬勃发展起来。从早期Prototype、Dojo到2006年的jQuery，再到2007年的ExtJS，互联网正在掀起一场JavaScript风暴。jQuery以其独特优雅的姿态，始终处于这场风暴的中心，受到越来越多的人的追捧。</p>
+<h2 id="JavaScript和JavaScript库"><a href="#JavaScript和JavaScript库" class="headerlink" title="JavaScript和JavaScript库"></a>JavaScript和JavaScript库</h2><h3 id="JavaScript简介"><a href="#JavaScript简介" class="headerlink" title="JavaScript简介"></a>JavaScript简介</h3><p>在正式介绍jQuery之前，有必要先了解一下JavaScript。</p>
+<p>JavaScript是Netscape公司开发的一种<strong>脚本语言</strong>（scripting language）。JavaScript的出现使得网页和用户之间实现了一种实时的、动态的和交互的关系，使网页可以包含更多活跃的元素和更加精彩的内容。JavaScript自身存在<strong>3个弊端</strong>，即<strong>复杂的文档对象模型（DOM）</strong>、<strong>不一致的浏览器实现</strong>和<strong>便捷的开发、调试工具的缺乏</strong>。</p>
+<p>正当JavaScript 从开发者的视线中渐渐隐去时，一种新型的基于JavaScript的Web技术——<strong>Ajax</strong><br>（Asynchronous JavaScript AndXML，异步的JavaScript和XML）诞生了。而使人们真正认识到Ajax技术的强大的导火索是Google公司推出的一系列<strong>新型Web应用</strong>，例如Gmail、Google Suggest和Google Map等。如今，浩瀚的互联网中基于JavaScript的应用越来越多，<strong>JavaScript不再是一种仅仅用于制作Web页面的简单脚本</strong>。</p>
+<h3 id="JavaScript库作用及对比"><a href="#JavaScript库作用及对比" class="headerlink" title="JavaScript库作用及对比"></a>JavaScript库作用及对比</h3><p>为了简化JavaScript的开发，一些JavaScript程序库诞生了。JavaScript程序库封装了很多预定义的对象和实用函数，能帮助使用者轻松地建立有高难度交互的Web2.0特性的富客户端页面，并且兼容各大浏览器。下面是目前几种流行的JavaScript程序库的介绍和对比。</p>
+<p><strong>Prototype</strong>（<a target="_blank" rel="noopener" href="http://www.prototypejs.org/%EF%BC%89%EF%BC%8CLogo%E5%A6%82%E5%9B%BE1-1%E6%89%80%E7%A4%BA%E3%80%82">http://www.prototypejs.org/），Logo如图1-1所示。</a></p>
+<p>Prototype是最早成型的JavaScript库之一，对JavaScript的内置对象（例如String对象、Array对象等）做了大量的扩展。现在还有很多项目使用Prototype。Prototype可以看做是把很多好的、有用的JavaScript的方法组合在一起而形成的JavaScript库。使用者可以在需要的时候随时将其中的几段代码抽出来放进自己的脚本里。但是由于Prototype成型年代较早，从整体上对面向对象的编程思想把握得不是很到位，导致了其结构的松散。不过现在Prototype也在慢慢改进。</p>
+<p><strong>Dojo</strong>（http:/dojotoolkit.org/），Logo如图1-2所示。</p>
+<img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/01.png" class>
+
+<p>Dojo的强大之处在于Dojo提供了很多其他JavaScript库所没有提供的功能。例如离线存储的API、生成图标的组件、基于SVG/VML的矢量图形库和Comet支持等。Dojo是一款非常适合企业级应用的JavaScript库，并且得到了IBM、SUN和BEA等一些大公司的支持。但是Dojo的缺点也是很明显的：学习曲线陡，文档不齐全，最严重的就是API不稳定，每次升级都可能导致已有的程序失效。但是自从Dojo的1.0.0版出现以后，情况有所好转，Dojo还是一个很有发展潜力的库。</p>
+<p><strong>YUI</strong>（http:/developer.yahoo.com/yui/），Logo如图1-3所示。</p>
+<p>YUI（Yahoo！UI，The Yahoo！User Interface Library），是由Yahoo公司开发的一套完备的、扩展性良好的富交互网页程序工具集。YUI封装了一系列比较丰富的功能，例如DOM操作和Ajax应用等，同时还包括了几个核心的CSS文件。该库本身文档极其完备，代码编写得也非常规范。</p>
+<p><strong>ExtJS</strong>（<a target="_blank" rel="noopener" href="http://www.extjs.com/%EF%BC%89%EF%BC%8CLogo">http://www.extjs.com/），Logo</a> 如图1-4所示。</p>
+<img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/02.png" class>
+
+<p>ExtJS常简称为Ext，原本是对YUI的一个扩展，主要用于创建前端用户界面，如今已经发展到可以利用包括jQuery在内的多种JavaScript框架作为基础库，而Ext作为界面的扩展库来使用。<br>Ext可以用来开发富有华丽外观的富客户端应用，能使B/S应用更加具有活力。但是由于Ext侧重于界面，本身比较腌肿，所以使用之前请先权衡利弊。另外，需要注意的是，Ext并非完全免费，如果用于商业用途，需要付费获得授权许可。</p>
+<p><strong>Moo Tools</strong>（<a target="_blank" rel="noopener" href="http://mootools.net/%EF%BC%89%EF%BC%8CLogo">http://mootools.net/），Logo</a> 如图1-5所示。<br>MooTools是一套轻量、简洁、模块化和面向对象的JavaScript框架。MooTools的语法几乎跟Prototype 一样，但却提供了更为强大的功能、更好的扩展性和兼容性。其模块化思想非常优秀，核心代码大小只有8KB。无论用到哪个模块都可即时导入，即使是完整版大小也不超过160KB。MooTools完全彻底的贯彻了面向对象的编程思想，语法简洁直观，文档完善，是一个非常不错的JavaScript库。</p>
+<p><strong>jQuery</strong>（http:/jquery.com），Logo如图1-6所示。</p>
+<img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/03.png" class>
+
+<p>本书的重点jQuery同样是一个轻量级的库，<strong>拥有强大的选择器、出色的DOM操作、可靠的事件处理、完善的兼容性和链式操作等功能</strong>。这些优点吸引了一批批的JavaScript开发者去学习它、研究它。</p>
+<p>总之，每个JavaScript库都有各自的优点和缺点，同时也有各自的支持者和反对者，目前几个最流行的JavaScript库的Google 访问量趋势图，如图1-7所示。很明显，自从iOuery诞生那天起，其关注度就一直在稳步上升，jQuery 已经逐渐从其他JavaScript库中脱颖而出，成为Web开发人员的最佳选择。</p>
+<img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/04.png" class>
+
+<h2 id="加入jQuery"><a href="#加入jQuery" class="headerlink" title="加入jQuery"></a>加入jQuery</h2><h3 id="jQuery简介"><a href="#jQuery简介" class="headerlink" title="jQuery简介"></a>jQuery简介</h3><p>jQuery 是继Prototype之后又一个优秀的JavaScript<strong>库</strong>，是一个由John Resig创建于2006年1月的开源项目。现在的jQuery团队主要包括核心库、UI、插件和jQuery Mobile等开发人员以及推广和网站设计、维护人员。</p>
+<p>jQuery 凭借简洁的语法和跨平台的兼容性，极大地<strong>简化了JavaScript开发人员遍历HTML文档、操作DOM、处理事件、执行动画和开发Ajax的操作</strong>。其独特而又优雅的代码风格改变了JavaScript程序员的设计思路和编写程序的方式。总之，无论是网页设计师、后台开发者、业余爱好者还是项目管理者，也无论是JavaScript初学者还是JavaScript高手，都有足够多的理由去学习jQuery。</p>
+<h3 id="jQuery的优势"><a href="#jQuery的优势" class="headerlink" title="jQuery的优势"></a>jQuery的优势</h3><p>jQuery强调的理念是写得少，做得多（write less，do more）。jQuery独特的选择器、链式操作、事件处理机制和封装完善的Ajax都是其他JavaScript库望尘莫及的。概括起来，jQuery有以下优势。</p>
+<p>（1）<strong>轻量级</strong></p>
+<p>jQuery非常轻巧，采用Dean Edwards编写的Packer（<a target="_blank" rel="noopener" href="http://dean.edwards.name/packer/%EF%BC%89%E5%8E%8B%E7%BC%A9%E5%90%8E%EF%BC%8C%E5%A4%A7%E5%B0%8F%E4%B8%8D%E5%88%B030KB%EF%BC%8C%E5%A6%82%E6%9E%9C%E4%BD%BF%E7%94%A8Min%E7%89%88%E5%B9%B6%E4%B8%94%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E5%90%AF%E7%94%A8Gzip%E5%8E%8B%E7%BC%A9%E5%90%8E%EF%BC%8C%E5%A4%A7%E5%B0%8F%E5%8F%AA%E6%9C%8918KB%E3%80%82">http://dean.edwards.name/packer/）压缩后，大小不到30KB，如果使用Min版并且在服务器端启用Gzip压缩后，大小只有18KB。</a></p>
+<p>（2）<strong>强大的选择器</strong></p>
+<p>jQuery允许开发者使用从CSS1到CSS3几乎所有的选择器，以及jQuery独创的高级而复杂的选择器。另外还可以加入插件使其支持XPath选择器，甚至开发者可以编写属于自己的选择器。由于jQuery支持选择器这一特性，因此有一定CSS经验的开发人员可以很容易地切入到jQuery的学习中来。第2章将详细讲解jQuery中强大的选择器。</p>
+<p>（3）<strong>出色的DOM操作的封装</strong></p>
+<p>jQuery封装了大量常用的DOM操作，使开发者在编写DOM操作相关程序的时候能够得心应手。jQuery轻松地完成各种原本非常复杂的操作，让JavaScript新手也能写出出色的程序。第3章将重点介绍jQuery中的DOM操作。</p>
+<p>（4）<strong>可靠的事件处理机制</strong></p>
+<p>jQuery的事件处理机制吸收了JavaScript 专家Dean Edwards编写的事件处理函数的精华，使得jQuery在处理事件绑定的时候相当可靠。在预留退路（graceful degradation）、循序渐进以及非入侵式（Unobtrusive）编程思想方面，jQuery也做得非常不错。第4章将重点介绍jQuery中的事件处理。</p>
+<p>（5）<strong>完善的Ajax</strong></p>
+<p>jQuery 将所有的Ajax 操作封装到一个函数$.ajax()里，使得开发者处理Ajax的时候能够专心处理业务逻辑而无需关心复杂的浏览器兼容性和XMLHttpRequest对象的创建和使用的问题。第6章将重点介绍jQuery中的Ajax处理。</p>
+<p>（6）<strong>不污染顶级变量</strong></p>
+<p>jQuery<strong>只建立一个名为jQuery的对象，其所有的函数方法都在这个对象之下</strong>。其别名$也可以随时交出控制权，绝对不会污染其他的对象。该特性使jQuery可以与其他JavaScript库共存，在项目中放心地引用而不需要考虑到后期可能的冲突。</p>
+<p>（7）<strong>出色的浏览器兼容性</strong></p>
+<p>作为一个流行的JavaScript库，浏览器的兼容性是必须具备的条件之一。jQuery能够在IE6.0+、FF3.6+、Safari 5.0+、Opera和Chrome等浏览器下正常运行。jQuery同时修复了一些浏览器之间的差异，<strong>使开发者不必在开展项目前建立浏览器兼容库。</strong></p>
+<p>（8）<strong>链式操作方式</strong></p>
+<p>jQuery中最有特色的莫过于它的<strong>链式操作</strong>方式——即对发生在同一个jQuery对象上的一组动作，可以<strong>直接连写而无需重复获取对象</strong>。这一特点使jQuery的代码无比优雅。在第1.3.3小节中，将要讨论代码风格的问题，从最开始就培养良好的编程习惯，将受益无穷。</p>
+<p>（9）<strong>隐式迭代</strong></p>
+<p>当用jQuery 找到带有“.myClass”类的全部元素，然后隐藏它们时，无需循环遍历每一个返回的元素。相反，jQuery里的方法都被设计成自动操作对象集合，而不是单独的对象，<strong>这使得大量的循环结构变得不再必要，从而大幅地减少了代码量</strong>。</p>
+<p>（10）<strong>行为层与结构层的分离</strong></p>
+<p>开发者可以使用jQuery选择器选中元素，然后直接给元素添加事件。这种将行为层与结构层完全分离的思想，可以使jQuery开发人员和HTML或其他页面开发人员各司其职，摆脱过去开发冲突或个人单干的开发模式。同时，后期维护也非常方便，不需要在HTML代码中寻找某些函数和重复修改HTML代码。</p>
+<p>（11）<strong>丰富的插件支持</strong></p>
+<p>jQuery的易扩展性，吸引了来自全球的开发者来编写jQuery的扩展插件。目前已经有成百上千的官方插件支持，而且还不断有新插件面世。第7章将介绍目前流行的几款插件并指导大家编写自己的插件。</p>
+<p>（12）<strong>完善的文档</strong></p>
+<p>jQuery的文档非常丰富，不管是英文文档，还是中文文档。我们也在长期更新着jQuery的中文文档。</p>
+<p>（13）<strong>开源</strong></p>
+<p>jQuery是一个开源的产品，任何人都可以自由地使用并提出改进意见。</p>
+<p>下面就一起开始我们的jQuery之旅吧。</p>
+<h2 id="jQuery代码的编写"><a href="#jQuery代码的编写" class="headerlink" title="jQuery代码的编写"></a>jQuery代码的编写</h2><h3 id="配置jQuery环境"><a href="#配置jQuery环境" class="headerlink" title="配置jQuery环境"></a>配置jQuery环境</h3><ol>
+<li><p>获取jQuery最新版本</p>
+<p>进入jQuery的官方网站<a target="_blank" rel="noopener" href="http://query.com/%EF%BC%8C%E5%9C%A8%E5%9B%BE1-8%E6%89%80%E7%A4%BA%E5%8F%B3%E8%BE%B9%E7%9A%84GRAB">http://query.com/，在图1-8所示右边的GRAB</a> THE LATEST VERSION区域，下载最新的jQuery库（目前是1.3.1版本）文件，本书所有的jQuery实例都是基于1.2.6版本进行编写的。</p>
+<blockquote>
+<p>现在版本都是3.5.1了，原来第三版也没有很新啊。不知道版本差距大不大，先这样学吧。</p>
+</blockquote>
+<img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/05.png" class>
+</li>
+<li><p>jQuery 库类型说明</p>
+<p>jQuery库的类型分为两种，分别是生产版（最小化和压缩版）和开发版（未压缩版），它们的区别如表1-1所示。</p>
+<img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/06.png" class>
+
+<p>为统一本书的讲解，建议选择下载jQuery最新版本。</p>
+</li>
+<li><p>jQuery环境配置</p>
+<p>jQuery<strong>不需要安装</strong>，把下载的jquery.js放到网站上的一个<strong>公共的位置</strong>，想要在某个页面上使用jQuery时，只需要在相关的HTML文档中<strong>引入</strong>该库文件的位置即可。</p>
+</li>
+<li><p>在页面中引入jQuery</p>
+<p>本书将jquery.js放在<strong>目录scripts下</strong>，在所提供的jQuery例子中为了方便调试，引用时使用的是相对路径。在实际项目中，读者可以根据实际需要调整jQuery库的路径。</p>
+<p>在编写的页面代码中&lt; head&gt;标签内引入jQuery库后，就可以使用jQuery库了，程序如下：</p>
+<img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/07.png" class>
+
+<blockquote>
+<p>在本书的所有章节中，如果没有特别说明，jQuery库都是默认导入的。</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="编写简单的jQuery代码"><a href="#编写简单的jQuery代码" class="headerlink" title="编写简单的jQuery代码"></a>编写简单的jQuery代码</h3><p>在开始编写第1个jQuery 程序之前，首先应该明确一点，在jQuery库中，<strong>$就是jQuery的一个简写形式</strong>，例如$（“#foo”）和jQuery（”#foo”）是等价的，$.ajax和jQuery.ajax是等价的。如果没有特别说明，<strong>程序中的$符号都是jQuery的一个简写形式</strong>。</p>
+<p>下面开始编写第1个jQuery程序。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//...省略其他代码</span></span><br><span class="line">&lt;!-- 引入 jQuery --&gt;</span><br><span class="line">&lt;script src=<span class="string">&quot;jquery.js&quot;</span> type=<span class="string">&quot;text/javascript&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line"><span class="comment">//等待DOM元素加载完毕.</span></span><br><span class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	alert(<span class="string">&quot;Hello World!&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"><span class="comment">//...省略其他代码</span></span><br></pre></td></tr></table></figure>
+<p>运行结果如图1-9所示。</p>
+<img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/08.png" class>
+
+<p>在上面的代码中有一个陌生的代码片段，如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"><span class="comment">//...</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>这段代码的作用类似于传统JavaScript中的window.onload方法，不过与window.onload还是有些区别。表格1-2对它们进行了简单对比。</p>
+<img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/09.png" class>
+
+<blockquote>
+<p>注意：关于$（document）.ready()的详细说明可以参考附录A；关于$（document）.ready()和 window.onload的详细对比，可以参考第4章4.1.1小节。</p>
+</blockquote>
+<h3 id="jQuery代码风格"><a href="#jQuery代码风格" class="headerlink" title="jQuery代码风格"></a>jQuery代码风格</h3><p>代码风格即程序开发人员所编写源代码的书写风格。良好代码风格的特点是使代码易读。如果能统一jQuery代码编码风格，对日后代码的维护是非常有利的。</p>
+<ol>
+<li><p><strong>链式操作风格</strong></p>
+<p>以一个实际项目中的代码为例，这是一个导航栏，HTML代码如下：</p>
+</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">	&lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">	&lt;title&gt;Document&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;box&quot;</span>&gt;</span><br><span class="line">		&lt;ul <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;menu&quot;</span>&gt;</span><br><span class="line">			&lt;li <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;level1&quot;</span>&gt;</span><br><span class="line">				&lt;a href=<span class="string">&quot;#none&quot;</span>&gt;衬衫&lt;/a&gt;</span><br><span class="line">				&lt;ul <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;level2&quot;</span>&gt;</span><br><span class="line">					&lt;li&gt;<span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#none&quot;</span>&gt;</span>短袖衬衫<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span>&lt;/li&gt;</span><br><span class="line">					&lt;li&gt;<span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#none&quot;</span>&gt;</span>长袖衬衫<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span>&lt;/li&gt;</span><br><span class="line">					&lt;li&gt;<span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#none&quot;</span>&gt;</span>短袖T恤<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span>&lt;/li&gt;</span><br><span class="line">					&lt;li&gt;<span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#none&quot;</span>&gt;</span>长袖T恤<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span>&lt;/li&gt;</span><br><span class="line">				&lt;/ul&gt;</span><br><span class="line">			&lt;/li&gt;</span><br><span class="line"></span><br><span class="line">			&lt;li <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;level1&quot;</span>&gt;</span><br><span class="line">				&lt;a href=<span class="string">&quot;#none&quot;</span>&gt;卫衣&lt;/a&gt;</span><br><span class="line">				&lt;ul <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;level2&quot;</span>&gt;</span><br><span class="line">					&lt;li&gt;<span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#none&quot;</span>&gt;</span>开襟卫衣<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span>&lt;/li&gt;</span><br><span class="line">					&lt;li&gt;<span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#none&quot;</span>&gt;</span>套头卫衣<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span>&lt;/li&gt;</span><br><span class="line">					&lt;li&gt;<span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#none&quot;</span>&gt;</span>运动卫衣<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span>&lt;/li&gt;</span><br><span class="line">					&lt;li&gt;<span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#none&quot;</span>&gt;</span>童装卫衣<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span>&lt;/li&gt;</span><br><span class="line">				&lt;/ul&gt;</span><br><span class="line">			&lt;/li&gt;</span><br><span class="line"></span><br><span class="line">			&lt;li <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;level1&quot;</span>&gt;</span><br><span class="line">				&lt;a href=<span class="string">&quot;#none&quot;</span>&gt;裤子&lt;/a&gt;</span><br><span class="line">				&lt;ul <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;level2&quot;</span>&gt;</span><br><span class="line">					&lt;li&gt;<span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#none&quot;</span>&gt;</span>短裤<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span>&lt;/li&gt;</span><br><span class="line">					&lt;li&gt;<span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#none&quot;</span>&gt;</span>休闲裤<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span>&lt;/li&gt;</span><br><span class="line">					&lt;li&gt;<span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#none&quot;</span>&gt;</span>牛仔裤<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span>&lt;/li&gt;</span><br><span class="line">					&lt;li&gt;<span class="xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#none&quot;</span>&gt;</span>卡其裤<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span>&lt;/li&gt;</span><br><span class="line">				&lt;/ul&gt;</span><br><span class="line">			&lt;/li&gt;</span><br><span class="line">		&lt;/ul&gt;</span><br><span class="line">	&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>代码执行效果如下：</p>
+<img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/10.png" class>
+
+<p>项目需求是做一个导航栏，单击不同的商品名称链接，显示相应的内容，同时高亮显示当前选择的商品。<br>选择jQuery来实现这个导航栏效果，编写的代码片段如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&quot;.level1&gt;a&quot;</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  		$(<span class="built_in">this</span>).addClass(<span class="string">&quot;current&quot;</span>).next().show().parent().siblings().children(<span class="string">&quot;a&quot;</span>).</span><br><span class="line">  	removeClass(<span class="string">&quot;current&quot;</span>).next().hide();</span><br><span class="line">  		<span class="keyword">return</span> flase;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>这段代码的作用是，当鼠标单击到a元素（它是class含有level1的子元素）的时候，给其添加一个名为current的class，然后将紧邻其后面的元素显示出来，同时将它的父辈的同辈元素内部的子元素&lt; a&gt;都去掉一个名为current的class，并且将紧邻它们后面的元素都隐藏。</p>
+<p>单击导航栏，效果如图1-11和图1-12所示。</p>
+<img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/11.png" class>
+
+<p>这就是jQuery<strong>强大的链式操作</strong>，一行代码就完成了导航栏的功能。</p>
+<p>虽然jQuery做到了行为和内容的分离，但jQuery代码本身也应该拥有良好的层次结构及规范，这样才能进一步改善代码的可读性和可维护性。因此，推荐一种带有适当的格式的代码风格。<br>上面的代码改成如下格式：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&quot;.level1&gt;a&quot;</span>).click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  	$(<span class="built_in">this</span>).addClass(<span class="string">&quot;current&quot;</span>)		<span class="comment">//给当前元素添加&quot;current&quot;样式</span></span><br><span class="line">    .next().show()					<span class="comment">//下一个元素显示</span></span><br><span class="line">    .parent().siblings().children(<span class="string">&quot;a&quot;</span>).removeClass(<span class="string">&quot;current&quot;</span>)</span><br><span class="line">  									<span class="comment">//父元素的同辈元素的子元素&lt;a&gt;移除&quot;current&quot;样式</span></span><br><span class="line">    .next().hide();							<span class="comment">//它们的下一个元素隐藏</span></span><br><span class="line">  	<span class="keyword">return</span> flase;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>代码格式调整后，易读性好了很多。</p>
+<p>也许读者看了上面的代码还是不明白其中的要领，这里总结3种情况。</p>
+<p>（1）对于<strong>同一个对象不超过3个操作的</strong>，可以直接写成一行。代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&quot;1i&quot;</span>).show().unbind(<span class="string">&quot;click&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>（2）对于<strong>同一个对象的较多操作，建议每行写一个操作</strong>。代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="built_in">this</span>).removeClass (<span class="string">&quot;mouseout&quot;</span>)</span><br><span class="line">	.addClass (<span class="string">&quot;mouseover&quot;</span>)</span><br><span class="line">  	.stop()</span><br><span class="line">  	.fadeTo(<span class="string">&quot;fast&quot;</span><span class="number">.0</span><span class="number">.6</span>)</span><br><span class="line">  	.fadeTo(<span class="string">&quot;fast&quot;</span><span class="number">.1</span>)</span><br><span class="line">  	.unbind(<span class="string">&quot;click&quot;</span>)</span><br><span class="line">	.click(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  		<span class="comment">//do something ..</span></span><br><span class="line">	&#125;);</span><br></pre></td></tr></table></figure>
+<p>（3）对于<strong>多个对象的少量操作</strong>，可以<strong>每个对象写一行</strong>，如果涉及子元素，可以考虑适当地<strong>缩进</strong>。例如上面提到的代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="built_in">this</span>).addClass(<span class="string">&quot;highlight&quot;</span>)</span><br><span class="line">		.children(<span class="string">&quot;1i&quot;</span>). show().end()</span><br><span class="line">.siblings (). removeClass (<span class="string">&quot;highlight&quot;</span>)</span><br><span class="line">		.children(<span class="string">&quot;1i&quot;</span>). hide();</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：程序块严格采用缩进风格书写，能保证代码清晰易读，风格一致。</p>
+</blockquote>
+<ol start="2">
+<li><strong>为代码添加注释</strong></li>
+</ol>
+<p>jQuery以其强大的选择器著称，有时候很复杂的问题用一行选择器就可以轻松解决。但是使用jQuery进行代码编写时应该注意一个问题，就是必要的注释。请看下面的例子，代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">&quot;#table&gt;tbody&gt;tr: has(td:has(:checkbox:enabled))&quot;</span>).css(<span class="string">&quot;background&quot;</span>,<span class="string">&quot;red&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>这行代码即使是经验丰富的jQuery开发者也不能立刻看懂。</p>
+<p>这行代码的作用是，在一个id为table的表格的tbody元素中，如果每行的一列中的checkbox没有被禁用，则把这一行的背景色设为红色。</p>
+<p>jQuery的选择器很强大，能够省去使用普通的JavaScript必须编写的很多行代码。但是，在编写一个优秀的选择器的时候，千万不要忘记给这一段代码加上注释，这很重要。无论是自己日后阅读还是与他人分享、合作开发，注释都能起到良好的效果。在上段代码片段中加上注释就能提高其易读性，如下所示：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//在一个id为table的表格的tbody元素中，如果每行的一列中的checkbox没有被禁用，则把这一行的背景色设为红色。</span></span><br><span class="line">$(<span class="string">&quot;#table&gt;tbody&gt;tr: has(td:has(:checkbox:enabled))&quot;</span>).css(<span class="string">&quot;background&quot;</span>,<span class="string">&quot;red&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>通过类似有意义的注释，能够培养良好的编码习惯和风格，提高开发效率。</p>
+<h2 id="jQuery对象和DOM对象"><a href="#jQuery对象和DOM对象" class="headerlink" title="jQuery对象和DOM对象"></a>jQuery对象和DOM对象</h2><h3 id="DOM对象和JQuery对象简介"><a href="#DOM对象和JQuery对象简介" class="headerlink" title="DOM对象和JQuery对象简介"></a>DOM对象和JQuery对象简介</h3><p>第一次学习jQuery，<strong>经常分辨不清哪些是jQuery对象、哪些是DOM对象</strong>，因此需要重点了解jQuery对象和DOM对象以及它们之间的关系。</p>
+<h4 id="DOM对象"><a href="#DOM对象" class="headerlink" title="DOM对象"></a>DOM对象</h4><p>DOM（Document Object Model，文档对象模型），每一份DOM都可以表示成一棵树。下面来构建一个非常基本的网页，网页代码如下：</p>
+<img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/12.png" class>
+
+<p>初始化效果图如图1-13所示。</p>
+<p>可以把上面的HTML结构描述为一棵DOM树，如图1-14所示。</p>
+<img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/13.png" class>
+
+<p>在这棵DOM树中，&lt; h3&gt;、&lt; p&gt;、&lt; u&gt;以及&lt; ul&gt;的3个&lt; li&gt;子节点都是DOM元素节点。可以通过JavaScript中的getElementsByTagName或者getElementByld来获取元素节点。像这样得到的DOM元素就是DOM对象。DOM对象可以使用JavaScript中的方法，示例如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> domObj  =  documnet.getElementById(<span class="string">&quot;id&quot;</span>);		<span class="comment">//获取DOM对象</span></span><br><span class="line"><span class="keyword">var</span> ObjHTML =  domObj.innerHTML;					<span class="comment">//使用JavaScript中的属性——innerHTML</span></span><br></pre></td></tr></table></figure>
+<h4 id="JQuery对象"><a href="#JQuery对象" class="headerlink" title="JQuery对象"></a>JQuery对象</h4><p>jQuery对象就是通过jQuery包装DOM对象后产生的对象。</p>
+<p><strong>jQuery对象是jQuery独有的</strong>。如果一个对象是jQuery对象，那么就可以使用jQuery里的方法。例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$（<span class="string">&quot;#foo&quot;</span>）.html();				<span class="comment">//获取id为foo的元素内的html代码。.html（）是jQuery里的方法</span></span><br></pre></td></tr></table></figure>
+<p>这段代码等同于：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">&quot;foo&quot;</span>).inerHTML:</span><br></pre></td></tr></table></figure>
+<img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/14.png" class>
+
+<blockquote>
+<p>注意：用#id作为选择符取得的是jQuery对象而并非document.getElementByld（”id”）所得到的DOM对象，两者并不等价。关于“#”选择符的运用，将在下一章进行讲解。从学习jQuery开始就应当树立正确的观念，<strong>分清jQuery对象和DOM对象之间的区别</strong>，之后学习jQuery就会轻松很多。</p>
+</blockquote>
+<h3 id="jQurey对象和DOM对象的相互转换"><a href="#jQurey对象和DOM对象的相互转换" class="headerlink" title="jQurey对象和DOM对象的相互转换"></a>jQurey对象和DOM对象的相互转换</h3><p>在讨论jQurey对象和DOM对象的相互转换之前，先<strong>约定好定义变量的风格</strong>。如果获取的对象是jQuery对象，那么在**变量前面加上$**，例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> $variable = jQuery对象;</span><br></pre></td></tr></table></figure>
+<p>如果获取的是DOM对象，则定义如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> variable = DOM对象</span><br></pre></td></tr></table></figure>
+<p>本书中的例子均会以这种方式呈现，以方便读者阅读。</p>
+<h4 id="jQuery对象转成DOM对象"><a href="#jQuery对象转成DOM对象" class="headerlink" title="jQuery对象转成DOM对象"></a>jQuery对象转成DOM对象</h4><p>jQuery对象不能使用DOM中的方法，但如果对jQuery对象所提供的方法不熟悉，或者jQuery没有封装想要的方法，不得不使用DOM对象的时候，有以下两种处理方法。</p>
+<p>Query提供了两种方法将一个jQuery对象转换成DOM对象，即**[index]<strong>和</strong>get（index）**。</p>
+<p>（1）jQuery 对象是一个<strong>类似数组</strong>的对象，<strong>可以通过[index]方法得到相应的DOM对象。</strong></p>
+<p>jQuery代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> $cr = $(<span class="string">&quot;#cr&quot;</span>);					<span class="comment">//jQuery对象</span></span><br><span class="line"><span class="keyword">var</span> cr = $cr[<span class="number">0</span>];					<span class="comment">//DOM对象</span></span><br><span class="line">alert(cr.checked);					<span class="comment">//检测这个checkbox是否被选中了</span></span><br></pre></td></tr></table></figure>
+<p>（2）另一种方法是jQuery本身提供的，通过getindex）方法得到相应的DOM对象。</p>
+<p>jQuery代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> $cr = $(<span class="string">&quot;#cr&quot;</span>);						<span class="comment">//jQuery对象</span></span><br><span class="line"><span class="keyword">var</span> cr = $cr.get(<span class="number">0</span>);					<span class="comment">//DOM对象</span></span><br><span class="line">alert(cr.checked);						<span class="comment">//检测这个checkbox是否被选中了</span></span><br></pre></td></tr></table></figure>
+<h4 id="DOM对象转成jQuery对象"><a href="#DOM对象转成jQuery对象" class="headerlink" title="DOM对象转成jQuery对象"></a>DOM对象转成jQuery对象</h4><p>对于一个DOM对象，只需要用SO把DOM对象包装起来，就可以获得一个jQuery对象了。方式为$(DOM对象)。</p>
+<p>jQuery代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> cr  = <span class="built_in">document</span>.getElementById(<span class="string">&quot;cr&quot;</span>);			<span class="comment">//DOM对象</span></span><br><span class="line"><span class="keyword">var</span> $cr = $(cr);									<span class="comment">//jQuery对象</span></span><br></pre></td></tr></table></figure>
+<p>转换后，可以任意使用jQuery中的方法。</p>
+<p>通过以上方法，可以任意地相互转换jQuery对象和DOM对象。</p>
+<p>最后再次强调，DOM对象才能使用DOM中的方法，jQuery对象不可以使用DOM中的方法，但jQuery对象提供了一套更加完善的工具用于操作DOM，关于jQuery的DOM操作将在第3章进行详细讲解。</p>
+<blockquote>
+<p>注意：平时用到的JQuery对象都是通过$()函数制造出来的，$()函数就是一个jQuery对象的制造工厂。</p>
+</blockquote>
+<h3 id="实例研究"><a href="#实例研究" class="headerlink" title="实例研究"></a>实例研究</h3><p>下面举个简单的例子，来加深对jQuery对象和DOM对象的理解。</p>
+<p>有些论坛在用户注册的时候，必须先要同意论坛的规章制度，才可以进行下一步操作。如图1-15是某个论坛的注册页面，用户必须选中页面下方的“同意并接受注册协议”复选框，否则不能提交。</p>
+<p>编写一段简单的代码来实现这个功能。新建一个空白的页面，然后添加以下HTML代码:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&#x27;checkbox&#x27;</span> <span class="attr">id</span>=<span class="string">&#x27;cr&#x27;</span>/&gt;</span><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&#x27;cr&#x27;</span>&gt;</span>我已经阅读了上面制度<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>HTML代码初始效果如图1-16所示。</p>
+<img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/15.png" class>
+
+<img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/16.png" class>
+
+<p>换一种方式，使用jQuery中的方法来判断选项是否被选中，代码如下：</p>
+<img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/17.png" class>
+
+<h2 id="解决jQuery和其他库的冲突"><a href="#解决jQuery和其他库的冲突" class="headerlink" title="解决jQuery和其他库的冲突"></a>解决jQuery和其他库的冲突</h2><p>在jQuery库中，几乎所有的插件都被限制在它的命名空间里。通常，全局对象都被很好地存储在jQuery命名空间里，因此当把jQuery和其他JavaScript库（例如Prototype，MooTools或YU）一起使用时，不会引起冲突。</p>
+<blockquote>
+<p>注意：默认情况下，jQuery用$作为自身的快捷方式。</p>
+</blockquote>
+<h3 id="jQuery库在其他库之后导入"><a href="#jQuery库在其他库之后导入" class="headerlink" title="jQuery库在其他库之后导入"></a>jQuery库在其他库之后导入</h3><p>在其他库和jQuery库都被加载完毕后，可以在任何时候调用jQuery.noConflict）函数来将变量S的控制权移交给其他JavaScript库。示例如下：</p>
+<img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/18.png" class>
+
+<p>然后，就可以在程序里将jQuery（）函数作为jQuery对象的制造工厂。</p>
+<p>此外，还有另一种选择。如果想确保jQuery不会与其他库冲突，但又想自定义一个快捷方式，可以进行如下操作：</p>
+<img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/19.png" class>
+
+<p>可以自定义备用名称，例如jq、$J、awesomequery等。</p>
+<p>如果不想给jQuery自定义这些备用名称，还想使用$而不管其他库的$()方法，同时又不想与其他库相冲突，那么可以使用以下两种解决方法。</p>
+<img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/20.png" class>
+
+<img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/21.png" class>
+
+<h3 id="jQuery库在其他库之前导入"><a href="#jQuery库在其他库之前导入" class="headerlink" title="jQuery库在其他库之前导入"></a>jQuery库在其他库之前导入</h3><p>如果jQuery库在其他库之前就导入了，那么可以直接使用”jQuery”来做一些jQuery的工作。同时，可以使用SO方法作为其他库的快捷方式。这里无需调用jQuery.noConfict）函数。示例如下：</p>
+<img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/22.png" class>
+
+<p>有了这些方法来解决冲突，就可以在项目中放心地引用jQuery了。</p>
+<h2 id="jQuery开发工具和插件"><a href="#jQuery开发工具和插件" class="headerlink" title="jQuery开发工具和插件"></a>jQuery开发工具和插件</h2><p>1.Dreamweaver(内容略，不写了)</p>
+<p>2.Aptana(内容略，不写了)</p>
+<p>3.jQueryWTP和Spket插件</p>
+<p>4.Visual Studio 2008</p>
+<p>5.其他工具</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>本章前半部分简单介绍了Javascript，同时也对目前流行的几个JavaScript库进行了介绍和对比。然后介绍了jQuery的由来和优势，接下来编写了一个最简单的jQuery程序。在程序中，接触到了$（document）.ready），此外还约定了jQuery的代码风格和变量风格。</p>
+<p>后半部分重点介绍了jQuery对象和DOM对象的区别以及它们之间的相互转换，中间插入了一个简单的实例用来加强对jQuery对象和DOM对象的理解。然后讲解了如何解决jQuery和其他JavaScript库冲突的问题，帮助那些项目上已经使用了其他JavaScript库的使用者。最后介绍了几个jQuery的自动提示代码功能的插件。</p>
+<p>第1章特意强调了代码风格和变量风格，jQuery对象和DOM对象，希望能引起初学者的注意。</p>
+<h1 id="第2章：jQuery选择器"><a href="#第2章：jQuery选择器" class="headerlink" title="第2章：jQuery选择器"></a>第2章：jQuery选择器</h1><p>选择器是jQuery的根基，在jQuery中，对事件处理、遍历DOM和Ajax操作都依赖于选择器。如果能熟练地使用选择器，不仅能简化代码，而且可以达到事半功倍的效果。</p>
+<h2 id="jQuery选择器是什么"><a href="#jQuery选择器是什么" class="headerlink" title="jQuery选择器是什么"></a>jQuery选择器是什么</h2><p><strong>1.CSS选择器</strong></p>
+<p>在开始学习jQuery选择器之前，有必要简单了解前几年流行起来的css（Cascading Style Shees，层叠样式表）技术。Css是一项出色的技术，它使得网页的结构和表现样式完全分离。利用CSS选择器能轻松地对某个元素添加样式而不改动HTML结构，只需通过添加不同的CSS规则，就可以得到各种不同样式的网页。</p>
+<p>(以下略，CSS学过就不重复学了)</p>
+<p><strong>2.jQuery选择器</strong></p>
+<p>jQuery中的选择器完全继承了CSS的风格。利用jQuery选择器，可以非常便捷和快速地找出特定的DOM元素，然后为它们添加相应的行为，而无需担心浏览器是否支持这一选择器。学会使用选择器是学习jQuery的基础，jQuery的行为规则都必须在获取到元素后才能生效。</p>
+<p>下面来看一个简单的例子，代码如下：</p>
+<img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/23.png" class>
+
+<p>此时，可以对Css的写法和jQuery的写法进行比较。<br>CSS获取到元素的代码如下：</p>
+<img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/24.png" class>
+
+<h2 id="jQuery选择器的优势"><a href="#jQuery选择器的优势" class="headerlink" title="jQuery选择器的优势"></a>jQuery选择器的优势</h2><p><strong>1.简洁的写法</strong></p>
+<p>$()函数在很多JavaScript类库中都被作为一个选择器函数来使用，在jQuery中也不例外。其中,$(“#ID”)用来代替document.getElementByld()函数，即通过ID获取元素；$(“tagName”)用来代替document.getElementsByTagName()函数，即通过标签名获取HTML元素；其他选择器的写法可以参见第2.3节。</p>
+<p><strong>2.支持CSS1到CSS3选择器</strong></p>
+<p>jQuery选择器支持CSS1、CSS2的全部和CSS3的部分选择器，同时它也有少量独有的选择器，因此对拥有一定CSS基础的开发人员来说，学习jQuery选择器是件非常容易的事，而对于没有接触过CSS技术的开发人员来说，在学习jQuery选择器的同时也可以掌握Css选择器的基本规则。</p>
+<p>使用CSS选择器时，开发人员需要考虑主流浏览器是否支持某些选择器。而在jQuery中，开发人员则可以放心地使用jQuery选择器而无需考虑浏览器是否支持这些选择器。</p>
+<img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/25.png" class>
+
+<p><strong>3.完善的处理机制</strong></p>
+<p>使用jQuery 选择器不仅比使用传统的getElementByld()和getElementsByTagName()函数简洁得多，而且还能避免某些错误。看下面这个例子，代码如下：</p>
+<img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/26.png" class>
+
+<p>运行上面的代码，浏览器就会报错，原因是网页中没有id为”tt”的元素。<br>改进后的代码如下：</p>
+<img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/27.png" class>
+
+<p>这样就可以避免浏览器报错，但如果要操作的元素很多，可能对每个元素都要进行一次判断，大量重复的工作会使开发人员感到厌倦，而jQuery在这方面问题上的处理是非常不错的，即使用jQuery获取网页中不存在的元素也不会报错，看下面的例子，代码如下：</p>
+<img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/28.png" class>
+
+<p>有了这个预防措施，即使以后因为某种原因删除网页上某个以前使用过的元素，也不用担心这个网页的Javascript代码会报错。</p>
+<p>需要注意的是，$(“#tt”)获取的永远是对象，即使网页上没有此元素。因此当要用jQuery检查某个元素在网页上是否存在时，不能使用以下代码：</p>
+<img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/29.png" class>
+
+<p>而应该根据获取到元素的长度来判断，代码如下：</p>
+<img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/30.png" class>
+
+<p>或者转化成DOM对象来判断，代码如下：</p>
+<img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/31.png" class>
+
+<h2 id="jQuery选择器"><a href="#jQuery选择器" class="headerlink" title="jQuery选择器"></a>jQuery选择器</h2><p>在正式学习jQuery选择器之前，先看几组用传统的JavaScript方法获取页面中的元素，然后给元素添加行为事件的例子。</p>
+<img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/32.png" class>
+
+<img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/33.png" class>
+
+<img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/34.png" class>
+
+<p>上面的几个例子都是用传统的JavaScript方法进行操作，中间使用了getElement Byld()、getElementsByTagName()和getElementsByName()等方法，然后动态地给元素添加行为或者样式。这些虽然都是JavaScript中最简单的操作，但不断重复使用getElementByld()和getElementsByTagName()等冗长而难记的名称，使越来越多的开发人员开始厌倦这种枯燥的写法，并且有时候为了获取网页中的某个元素，需要编写很多的getElementByld()和getElementsByTagName()方法。然而在jQuery中，类似的这些操作则非常简洁。</p>
+<p>下面学习如何使用jQuery获取这些元素。</p>
+<p>jQuery选择器分为基本选择器、层次选择器、过滤选择器和表单选择器。在下面的章节中将分别用不同的选择器来查找HTML代码中的元素并对其进行简单的操作。为了能更清晰、直观地讲解选择器，首先需要设计一个简单的页面，里面包含各种&lt;div元素和&lt; span&gt;元素，然后使用jQuery选择器来匹配元素并调整它们的样式。</p>
+<p>新建一个空白页面，输入以下HTML代码：</p>
+<img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/35.png" class>
+
+<p>然后用CSS对这些元素进行初始化大小和背景颜色的设置，CSS代码如下：</p>
+<img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/36.png" class>
+
+<img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/37.png" class>
+
+<h3 id="基本选择器"><a href="#基本选择器" class="headerlink" title="基本选择器"></a>基本选择器</h3><img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/38.png" class>
+
+<h3 id="层次选择器"><a href="#层次选择器" class="headerlink" title="层次选择器"></a>层次选择器</h3><img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/39.png" class>
+
+<h3 id="过滤选择器"><a href="#过滤选择器" class="headerlink" title="过滤选择器"></a>过滤选择器</h3><img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/40.png" class>
+
+<h3 id="表单选择器"><a href="#表单选择器" class="headerlink" title="表单选择器"></a>表单选择器</h3><img data-src="/2019/12/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E9%94%8B%E5%88%A9%E7%9A%84jQuery%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/41.png" class>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag"># 读书笔记</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/12/25/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AWireshark%E6%95%B0%E6%8D%AE%E5%8C%85%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%EF%BC%88%E7%AC%AC2%E7%89%88%EF%BC%89/" rel="prev" title="读书笔记：Wireshark数据包分析实战（第2版）">
+      <i class="fa fa-chevron-left"></i> 读书笔记：Wireshark数据包分析实战（第2版）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/12/30/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9A%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BANode.js/" rel="next" title="读书笔记：深入浅出Node.js">
+      读书笔记：深入浅出Node.js <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC1%E7%AB%A0%EF%BC%9A%E8%AE%A4%E8%AF%86jQuery"><span class="nav-text">第1章：认识jQuery</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#JavaScript%E5%92%8CJavaScript%E5%BA%93"><span class="nav-text">JavaScript和JavaScript库</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript%E7%AE%80%E4%BB%8B"><span class="nav-text">JavaScript简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JavaScript%E5%BA%93%E4%BD%9C%E7%94%A8%E5%8F%8A%E5%AF%B9%E6%AF%94"><span class="nav-text">JavaScript库作用及对比</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A0%E5%85%A5jQuery"><span class="nav-text">加入jQuery</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#jQuery%E7%AE%80%E4%BB%8B"><span class="nav-text">jQuery简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jQuery%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="nav-text">jQuery的优势</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jQuery%E4%BB%A3%E7%A0%81%E7%9A%84%E7%BC%96%E5%86%99"><span class="nav-text">jQuery代码的编写</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEjQuery%E7%8E%AF%E5%A2%83"><span class="nav-text">配置jQuery环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E5%86%99%E7%AE%80%E5%8D%95%E7%9A%84jQuery%E4%BB%A3%E7%A0%81"><span class="nav-text">编写简单的jQuery代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jQuery%E4%BB%A3%E7%A0%81%E9%A3%8E%E6%A0%BC"><span class="nav-text">jQuery代码风格</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jQuery%E5%AF%B9%E8%B1%A1%E5%92%8CDOM%E5%AF%B9%E8%B1%A1"><span class="nav-text">jQuery对象和DOM对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DOM%E5%AF%B9%E8%B1%A1%E5%92%8CJQuery%E5%AF%B9%E8%B1%A1%E7%AE%80%E4%BB%8B"><span class="nav-text">DOM对象和JQuery对象简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#DOM%E5%AF%B9%E8%B1%A1"><span class="nav-text">DOM对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JQuery%E5%AF%B9%E8%B1%A1"><span class="nav-text">JQuery对象</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jQurey%E5%AF%B9%E8%B1%A1%E5%92%8CDOM%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%9B%B8%E4%BA%92%E8%BD%AC%E6%8D%A2"><span class="nav-text">jQurey对象和DOM对象的相互转换</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#jQuery%E5%AF%B9%E8%B1%A1%E8%BD%AC%E6%88%90DOM%E5%AF%B9%E8%B1%A1"><span class="nav-text">jQuery对象转成DOM对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DOM%E5%AF%B9%E8%B1%A1%E8%BD%AC%E6%88%90jQuery%E5%AF%B9%E8%B1%A1"><span class="nav-text">DOM对象转成jQuery对象</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B%E7%A0%94%E7%A9%B6"><span class="nav-text">实例研究</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3jQuery%E5%92%8C%E5%85%B6%E4%BB%96%E5%BA%93%E7%9A%84%E5%86%B2%E7%AA%81"><span class="nav-text">解决jQuery和其他库的冲突</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#jQuery%E5%BA%93%E5%9C%A8%E5%85%B6%E4%BB%96%E5%BA%93%E4%B9%8B%E5%90%8E%E5%AF%BC%E5%85%A5"><span class="nav-text">jQuery库在其他库之后导入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jQuery%E5%BA%93%E5%9C%A8%E5%85%B6%E4%BB%96%E5%BA%93%E4%B9%8B%E5%89%8D%E5%AF%BC%E5%85%A5"><span class="nav-text">jQuery库在其他库之前导入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jQuery%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7%E5%92%8C%E6%8F%92%E4%BB%B6"><span class="nav-text">jQuery开发工具和插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC2%E7%AB%A0%EF%BC%9AjQuery%E9%80%89%E6%8B%A9%E5%99%A8"><span class="nav-text">第2章：jQuery选择器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#jQuery%E9%80%89%E6%8B%A9%E5%99%A8%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-text">jQuery选择器是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jQuery%E9%80%89%E6%8B%A9%E5%99%A8%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="nav-text">jQuery选择器的优势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jQuery%E9%80%89%E6%8B%A9%E5%99%A8"><span class="nav-text">jQuery选择器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E9%80%89%E6%8B%A9%E5%99%A8"><span class="nav-text">基本选择器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%82%E6%AC%A1%E9%80%89%E6%8B%A9%E5%99%A8"><span class="nav-text">层次选择器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%87%E6%BB%A4%E9%80%89%E6%8B%A9%E5%99%A8"><span class="nav-text">过滤选择器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A8%E5%8D%95%E9%80%89%E6%8B%A9%E5%99%A8"><span class="nav-text">表单选择器</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="筛滤淘"
+      src="/images/cat.jpg">
+  <p class="site-author-name" itemprop="name">筛滤淘</p>
+  <div class="site-description" itemprop="description">前端知识点总结</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">129</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lm101845" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lm101845" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1018457683@qq.com" title="E-Mail → mailto:1018457683@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.jianshu.com/u/6879af8ace24" title="简 书 → https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;6879af8ace24" rel="noopener" target="_blank"><i class="fa fa-jianshu fa-fw"></i>简 书</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/9002959" title="B  站 → https:&#x2F;&#x2F;space.bilibili.com&#x2F;9002959" rel="noopener" target="_blank"><i class="fa fa-bilibili fa-fw"></i>B  站</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">筛滤淘</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">3.7m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">56:03</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

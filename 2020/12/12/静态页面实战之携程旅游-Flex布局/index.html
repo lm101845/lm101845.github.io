@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="(注1：现在是2020年12月12日，抓紧时间把这个布局的项目实战看完啊，不能拖了。)  (视频地址：黑马Flex布局)  携程网首页案例制作 访问网址 技术选型  * 方案：我们采取单独制作移动页面方案  * 技术：布局采取Flex布局  搭建相关文件夹结构 设置视口标签以及引入初始化样式 常用初始化样式 overflow-x  常见模块命名 页面的宽度可以在不同的设备中进行缩放，但是高度是定死">
+<meta property="og:type" content="article">
+<meta property="og:title" content="静态页面实战之携程旅游(Flex布局)">
+<meta property="og:url" content="http://example.com/2020/12/12/%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2%E5%AE%9E%E6%88%98%E4%B9%8B%E6%90%BA%E7%A8%8B%E6%97%85%E6%B8%B8-Flex%E5%B8%83%E5%B1%80/index.html">
+<meta property="og:site_name" content="木子小屋">
+<meta property="og:description" content="(注1：现在是2020年12月12日，抓紧时间把这个布局的项目实战看完啊，不能拖了。)  (视频地址：黑马Flex布局)  携程网首页案例制作 访问网址 技术选型  * 方案：我们采取单独制作移动页面方案  * 技术：布局采取Flex布局  搭建相关文件夹结构 设置视口标签以及引入初始化样式 常用初始化样式 overflow-x  常见模块命名 页面的宽度可以在不同的设备中进行缩放，但是高度是定死">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2020/12/12/%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2%E5%AE%9E%E6%88%98%E4%B9%8B%E6%90%BA%E7%A8%8B%E6%97%85%E6%B8%B8-Flex%E5%B8%83%E5%B1%80/01.png">
+<meta property="og:image" content="http://example.com/2020/12/12/%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2%E5%AE%9E%E6%88%98%E4%B9%8B%E6%90%BA%E7%A8%8B%E6%97%85%E6%B8%B8-Flex%E5%B8%83%E5%B1%80/02.png">
+<meta property="og:image" content="http://example.com/2020/12/12/%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2%E5%AE%9E%E6%88%98%E4%B9%8B%E6%90%BA%E7%A8%8B%E6%97%85%E6%B8%B8-Flex%E5%B8%83%E5%B1%80/03.png">
+<meta property="og:image" content="http://example.com/2020/12/12/%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2%E5%AE%9E%E6%88%98%E4%B9%8B%E6%90%BA%E7%A8%8B%E6%97%85%E6%B8%B8-Flex%E5%B8%83%E5%B1%80/04.png">
+<meta property="og:image" content="http://example.com/2020/12/12/%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2%E5%AE%9E%E6%88%98%E4%B9%8B%E6%90%BA%E7%A8%8B%E6%97%85%E6%B8%B8-Flex%E5%B8%83%E5%B1%80/05.png">
+<meta property="og:image" content="http://example.com/2020/12/12/%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2%E5%AE%9E%E6%88%98%E4%B9%8B%E6%90%BA%E7%A8%8B%E6%97%85%E6%B8%B8-Flex%E5%B8%83%E5%B1%80/06.png">
+<meta property="og:image" content="http://example.com/2020/12/12/%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2%E5%AE%9E%E6%88%98%E4%B9%8B%E6%90%BA%E7%A8%8B%E6%97%85%E6%B8%B8-Flex%E5%B8%83%E5%B1%80/07.png">
+<meta property="article:published_time" content="2020-12-12T05:55:57.000Z">
+<meta property="article:modified_time" content="2020-12-12T05:55:57.000Z">
+<meta property="article:author" content="筛滤淘">
+<meta property="article:tag" content="项目实战">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2020/12/12/%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2%E5%AE%9E%E6%88%98%E4%B9%8B%E6%90%BA%E7%A8%8B%E6%97%85%E6%B8%B8-Flex%E5%B8%83%E5%B1%80/01.png">
+
+<link rel="canonical" href="http://example.com/2020/12/12/%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2%E5%AE%9E%E6%88%98%E4%B9%8B%E6%90%BA%E7%A8%8B%E6%97%85%E6%B8%B8-Flex%E5%B8%83%E5%B1%80/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>静态页面实战之携程旅游(Flex布局) | 木子小屋</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?79d7cb9c8fa9e57a2723fb8645f37638";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">木子小屋</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Talk is cheap. Show me the code.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/12/%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2%E5%AE%9E%E6%88%98%E4%B9%8B%E6%90%BA%E7%A8%8B%E6%97%85%E6%B8%B8-Flex%E5%B8%83%E5%B1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cat.jpg">
+      <meta itemprop="name" content="筛滤淘">
+      <meta itemprop="description" content="前端知识点总结">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="木子小屋">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          静态页面实战之携程旅游(Flex布局)
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-12-12 13:55:57" itemprop="dateCreated datePublished" datetime="2020-12-12T13:55:57+08:00">2020-12-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/" itemprop="url" rel="index"><span itemprop="name">项目实战</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>853</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>1 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>(注1：现在是2020年12月12日，抓紧时间把这个布局的项目实战看完啊，不能拖了。)</p>
+<p>(视频地址：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1N54y1i7dG?p=1">黑马Flex布局</a>)</p>
+<h1 id="携程网首页案例制作"><a href="#携程网首页案例制作" class="headerlink" title="携程网首页案例制作"></a>携程网首页案例制作</h1><h1 id="访问网址"><a href="#访问网址" class="headerlink" title="访问网址"></a><a target="_blank" rel="noopener" href="https://m.ctrip.com/html5/">访问网址</a></h1><h2 id="技术选型"><a href="#技术选型" class="headerlink" title="技术选型"></a>技术选型</h2><ul>
+<li>方案：我们采取单独制作移动页面方案</li>
+<li>技术：布局采取Flex布局</li>
+</ul>
+<h2 id="搭建相关文件夹结构"><a href="#搭建相关文件夹结构" class="headerlink" title="搭建相关文件夹结构"></a>搭建相关文件夹结构</h2><img data-src="/2020/12/12/%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2%E5%AE%9E%E6%88%98%E4%B9%8B%E6%90%BA%E7%A8%8B%E6%97%85%E6%B8%B8-Flex%E5%B8%83%E5%B1%80/01.png" class>
+
+<h2 id="设置视口标签以及引入初始化样式"><a href="#设置视口标签以及引入初始化样式" class="headerlink" title="设置视口标签以及引入初始化样式"></a>设置视口标签以及引入初始化样式</h2><img data-src="/2020/12/12/%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2%E5%AE%9E%E6%88%98%E4%B9%8B%E6%90%BA%E7%A8%8B%E6%97%85%E6%B8%B8-Flex%E5%B8%83%E5%B1%80/02.png" class>
+
+<h2 id="常用初始化样式"><a href="#常用初始化样式" class="headerlink" title="常用初始化样式"></a>常用初始化样式</h2><p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/overflow-x">overflow-x</a></p>
+<img data-src="/2020/12/12/%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2%E5%AE%9E%E6%88%98%E4%B9%8B%E6%90%BA%E7%A8%8B%E6%97%85%E6%B8%B8-Flex%E5%B8%83%E5%B1%80/03.png" class>
+
+<h2 id="常见模块命名"><a href="#常见模块命名" class="headerlink" title="常见模块命名"></a>常见模块命名</h2><blockquote>
+<p>页面的宽度可以在不同的设备中进行缩放，但是高度是定死的，不变的。</p>
+</blockquote>
+<img data-src="/2020/12/12/%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2%E5%AE%9E%E6%88%98%E4%B9%8B%E6%90%BA%E7%A8%8B%E6%97%85%E6%B8%B8-Flex%E5%B8%83%E5%B1%80/04.png" class>
+
+<img data-src="/2020/12/12/%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2%E5%AE%9E%E6%88%98%E4%B9%8B%E6%90%BA%E7%A8%8B%E6%97%85%E6%B8%B8-Flex%E5%B8%83%E5%B1%80/05.png" class>
+
+<h2 id="搜索框模块-search-index"><a href="#搜索框模块-search-index" class="headerlink" title="搜索框模块(search-index)"></a>搜索框模块(search-index)</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_39295546/article/details/104709129">css里2倍精灵图的使用方法</a></p>
+<img data-src="/2020/12/12/%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2%E5%AE%9E%E6%88%98%E4%B9%8B%E6%90%BA%E7%A8%8B%E6%97%85%E6%B8%B8-Flex%E5%B8%83%E5%B1%80/06.png" class>
+
+<ul>
+<li><p>我们先看右边的盒子，又分为上面一个盒子放图片，下面一个盒子放文字。</p>
+</li>
+<li><p>但是右边再放盒子挺麻烦的，我们用伪元素来写更简单。</p>
+</li>
+<li><p>“我的”上面图片的大小是24*26,而且还是精灵图，于是我搜了一下2020年都快过去了，除了PS外有哪些方便的切图工具可以用了。我暂且下载了一个蓝湖的切图软件，下载了发现好像不行，我还是老老实实的先用PS或者Adobe Fireworks吧。</p>
+</li>
+<li><p>背景精灵图是2倍图，要分为3大步：</p>
+<ul>
+<li>第一步是缩放为原来一半</li>
+<li>第二步是测量出来图片坐标</li>
+<li>第三部是再放大2倍</li>
+</ul>
+</li>
+<li><p>量一下搜索框的高度为26px，并且设置div的盒子模型为<code>div&#123;box-sizing: border-box;&#125;</code></p>
+</li>
+<li><p>左边的放大镜可以作为div的<code>::before</code>来做。</p>
+</li>
+</ul>
+<h2 id="焦点图模块-focus"><a href="#焦点图模块-focus" class="headerlink" title="焦点图模块(focus)"></a>焦点图模块(focus)</h2><ul>
+<li>给一个父盒子，把图片丢进去，把图片的宽度一定修改为和父亲一样宽即可。</li>
+<li>这个其实是轮播图，但是老师就先只放了一张图片就算完成了。</li>
+<li>老师说说以后讲PC端的时候再补上。</li>
+</ul>
+<h2 id="局部导航栏模块-local-nav"><a href="#局部导航栏模块-local-nav" class="headerlink" title="局部导航栏模块(local-nav)"></a>局部导航栏模块(local-nav)</h2><ul>
+<li>一个大盒子里面装着5个小盒子，而且这5个小盒子大小宽度一样。</li>
+<li>小盒子上面是图片，下面是文字，并且可以点击，采用<code>ul-li</code>的形式。</li>
+<li>大盒子总体长度比焦点图模块要端一些。</li>
+<li>先把大盒子设置好之后再去管小盒子。</li>
+</ul>
+<h3 id="常见Flex布局思路"><a href="#常见Flex布局思路" class="headerlink" title="常见Flex布局思路"></a>常见Flex布局思路</h3><img data-src="/2020/12/12/%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2%E5%AE%9E%E6%88%98%E4%B9%8B%E6%90%BA%E7%A8%8B%E6%97%85%E6%B8%B8-Flex%E5%B8%83%E5%B1%80/07.png" class>
+
+<blockquote>
+<p>Flex默认主轴是X轴，所以会让所有元素一行显示。但是我们想让它们上下显示，于是我们把主轴设为Y轴即可。</p>
+</blockquote>
+<h2 id="主导航栏-nav"><a href="#主导航栏-nav" class="headerlink" title="主导航栏(nav)"></a>主导航栏(nav)</h2><ul>
+<li>大盒子里面包含3行，每行高度88px。</li>
+<li>每一行又分成了3列，后面2列又分成上下2行。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/" rel="tag"># 项目实战</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/12/08/%E8%87%AA%E5%B7%B1%E5%81%9A%E8%BF%87%E7%9A%84%E9%A1%B9%E7%9B%AE%E6%B1%87%E6%80%BB/" rel="prev" title="自己做过的项目汇总">
+      <i class="fa fa-chevron-left"></i> 自己做过的项目汇总
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/12/14/React%E5%AE%9E%E7%94%A8%E6%95%99%E7%A8%8B/" rel="next" title="React实用教程">
+      React实用教程 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%90%BA%E7%A8%8B%E7%BD%91%E9%A6%96%E9%A1%B5%E6%A1%88%E4%BE%8B%E5%88%B6%E4%BD%9C"><span class="nav-text">携程网首页案例制作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%BF%E9%97%AE%E7%BD%91%E5%9D%80"><span class="nav-text">访问网址</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B"><span class="nav-text">技术选型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%AD%E5%BB%BA%E7%9B%B8%E5%85%B3%E6%96%87%E4%BB%B6%E5%A4%B9%E7%BB%93%E6%9E%84"><span class="nav-text">搭建相关文件夹结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E8%A7%86%E5%8F%A3%E6%A0%87%E7%AD%BE%E4%BB%A5%E5%8F%8A%E5%BC%95%E5%85%A5%E5%88%9D%E5%A7%8B%E5%8C%96%E6%A0%B7%E5%BC%8F"><span class="nav-text">设置视口标签以及引入初始化样式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%88%9D%E5%A7%8B%E5%8C%96%E6%A0%B7%E5%BC%8F"><span class="nav-text">常用初始化样式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E6%A8%A1%E5%9D%97%E5%91%BD%E5%90%8D"><span class="nav-text">常见模块命名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%90%9C%E7%B4%A2%E6%A1%86%E6%A8%A1%E5%9D%97-search-index"><span class="nav-text">搜索框模块(search-index)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%84%A6%E7%82%B9%E5%9B%BE%E6%A8%A1%E5%9D%97-focus"><span class="nav-text">焦点图模块(focus)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%80%E9%83%A8%E5%AF%BC%E8%88%AA%E6%A0%8F%E6%A8%A1%E5%9D%97-local-nav"><span class="nav-text">局部导航栏模块(local-nav)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81Flex%E5%B8%83%E5%B1%80%E6%80%9D%E8%B7%AF"><span class="nav-text">常见Flex布局思路</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E5%AF%BC%E8%88%AA%E6%A0%8F-nav"><span class="nav-text">主导航栏(nav)</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="筛滤淘"
+      src="/images/cat.jpg">
+  <p class="site-author-name" itemprop="name">筛滤淘</p>
+  <div class="site-description" itemprop="description">前端知识点总结</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">129</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lm101845" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lm101845" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1018457683@qq.com" title="E-Mail → mailto:1018457683@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.jianshu.com/u/6879af8ace24" title="简 书 → https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;6879af8ace24" rel="noopener" target="_blank"><i class="fa fa-jianshu fa-fw"></i>简 书</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/9002959" title="B  站 → https:&#x2F;&#x2F;space.bilibili.com&#x2F;9002959" rel="noopener" target="_blank"><i class="fa fa-bilibili fa-fw"></i>B  站</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">筛滤淘</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">3.7m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">56:03</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

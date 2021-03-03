@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="(注1：这个若依后台管理系统是在一个前端微信群里听说的，一个群员说他刚入职某公司，公司的人就让他先学一下这个，我觉得我也可以大体了解一下。大体看了一下，这个就相当于是一个后台管理系统的模版，做的挺好的，界面也挺精美的。)  特点 最新技术栈 使用最流行的技术SpringBoot、SpringCloud、Shiro、Thymeleaf、Vue、Element、Bootstrap。  前后端分离 提供">
+<meta property="og:type" content="article">
+<meta property="og:title" content="若依后台管理系统入门">
+<meta property="og:url" content="http://example.com/2021/01/14/%E8%8B%A5%E4%BE%9D%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="木子小屋">
+<meta property="og:description" content="(注1：这个若依后台管理系统是在一个前端微信群里听说的，一个群员说他刚入职某公司，公司的人就让他先学一下这个，我觉得我也可以大体了解一下。大体看了一下，这个就相当于是一个后台管理系统的模版，做的挺好的，界面也挺精美的。)  特点 最新技术栈 使用最流行的技术SpringBoot、SpringCloud、Shiro、Thymeleaf、Vue、Element、Bootstrap。  前后端分离 提供">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-01-14T12:46:50.000Z">
+<meta property="article:modified_time" content="2021-01-14T12:46:50.000Z">
+<meta property="article:author" content="筛滤淘">
+<meta property="article:tag" content="后台管理系统">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/01/14/%E8%8B%A5%E4%BE%9D%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E5%85%A5%E9%97%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>若依后台管理系统入门 | 木子小屋</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?79d7cb9c8fa9e57a2723fb8645f37638";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">木子小屋</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Talk is cheap. Show me the code.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/01/14/%E8%8B%A5%E4%BE%9D%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E5%85%A5%E9%97%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cat.jpg">
+      <meta itemprop="name" content="筛滤淘">
+      <meta itemprop="description" content="前端知识点总结">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="木子小屋">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          若依后台管理系统入门
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-01-14 20:46:50" itemprop="dateCreated datePublished" datetime="2021-01-14T20:46:50+08:00">2021-01-14</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/" itemprop="url" rel="index"><span itemprop="name">后台管理系统</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>6 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>(注1：这个若依后台管理系统是在一个前端微信群里听说的，一个群员说他刚入职某公司，公司的人就让他先学一下这个，我觉得我也可以大体了解一下。大体看了一下，这个就相当于是一个后台管理系统的模版，做的挺好的，界面也挺精美的。)</p>
+<h1 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h1><h2 id="最新技术栈"><a href="#最新技术栈" class="headerlink" title="最新技术栈"></a>最新技术栈</h2><p>使用最流行的技术SpringBoot、SpringCloud、Shiro、Thymeleaf、Vue、Element、Bootstrap。</p>
+<h2 id="前后端分离"><a href="#前后端分离" class="headerlink" title="前后端分离"></a>前后端分离</h2><p>提供前后端分离的版本：使用的前端技术Vue、Element后端SpringBoot &amp; Security完全分离的权限管理系统。</p>
+<h2 id="微服务版本"><a href="#微服务版本" class="headerlink" title="微服务版本"></a>微服务版本</h2><p>提供微服务架构的版本：使用的前端技术Vue、Element、后端Spring Cloud &amp; Alibaba微服务的权限管理系统。</p>
+<h2 id="代码生成器"><a href="#代码生成器" class="headerlink" title="代码生成器"></a>代码生成器</h2><p>在线配置表信息生成对应的代码，一键生成模块，包含增删改查/排序/导出/权限控制等操作，编译即可使用。</p>
+<h2 id="功能完善"><a href="#功能完善" class="headerlink" title="功能完善"></a>功能完善</h2><p>内置完整的权限架构，包括：菜单、角色、用户、字典、参数、监控、代码生成等一系列系统常规模块。</p>
+<h2 id="完全响应式布局"><a href="#完全响应式布局" class="headerlink" title="完全响应式布局"></a>完全响应式布局</h2><p>提供多终端适配：电脑、平板、手机等所有主流设备，提供多种不同风格的皮肤。页面美观，高端大气上档次。</p>
+<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>RuoYi从3.0开始，进行模块拆分，将原先的单应用转变为多模块，如需单应用，请移步 <a target="_blank" rel="noopener" href="https://gitee.com/y_project/RuoYi-fast">RuoYi-fast (opens new window)</a><code>(保持同步更新)</code>，如需其他版本，请移步 <a target="_blank" rel="noopener" href="http://doc.ruoyi.vip/ruoyi/document/xmkz.html">项目扩展 (opens new window)</a><code>(不定时更新)</code></p>
+<p>如需Vue分离版本，请移步 <a target="_blank" rel="noopener" href="https://gitee.com/y_project/RuoYi-Vue">RuoYi-Vue (opens new window)</a>，如需Cloud微服务版本，请移步 <a target="_blank" rel="noopener" href="https://gitee.com/y_project/RuoYi-Cloud">RuoYi-Cloud(opens new window)</a></p>
+<p><strong>RuoYi</strong>是一个后台管理系统，基于经典技术组合（Spring Boot、Apache Shiro、MyBatis、Thymeleaf）主要目的让开发者注重专注业务，降低技术难度，从而节省人力成本，缩短项目周期，提高软件安全质量。</p>
+<p><strong>在线体验</strong></p>
+<ol>
+<li>项目地址：<a target="_blank" rel="noopener" href="http://www.ruoyi.vip/">http://www.ruoyi.vip(opens new window)</a></li>
+<li>账号密码：admin/admin123</li>
+</ol>
+<p><strong>系统需求</strong></p>
+<ul>
+<li>JDK &gt;= 1.8</li>
+<li>MySQL &gt;= 5.7</li>
+<li>Maven &gt;= 3.0</li>
+</ul>
+<h1 id="快速了解"><a href="#快速了解" class="headerlink" title="快速了解"></a>快速了解</h1><h2 id="项目简介"><a href="#项目简介" class="headerlink" title="项目简介"></a>项目简介</h2><p>RuoYi是一款基于SpringBoot+Bootstrap的极速后台开发框架。</p>
+<ul>
+<li>RuoYi 官网地址：<a target="_blank" rel="noopener" href="http://ruoyi.vip/">http://ruoyi.vip(opens new window)</a></li>
+<li>RuoYi 在线文档：<a target="_blank" rel="noopener" href="http://doc.ruoyi.vip/">http://doc.ruoyi.vip(opens new window)</a></li>
+<li>RuoYi 源码下载：<a target="_blank" rel="noopener" href="https://gitee.com/y_project/RuoYi">https://gitee.com/y_project/RuoYi(opens new window)</a></li>
+<li>RuoYi 在线提问：<a target="_blank" rel="noopener" href="https://gitee.com/y_project/RuoYi/issues">https://gitee.com/y_project/RuoYi/issues(opens new window)</a></li>
+<li>RuoYi 博客：<a target="_blank" rel="noopener" href="https://www.oschina.net/p/ruoyi">https://www.oschina.net/p/ruoyi</a></li>
+</ul>
+<h2 id="主要特性"><a href="#主要特性" class="headerlink" title="主要特性"></a>主要特性</h2><ul>
+<li>完全响应式布局（支持电脑、平板、手机等所有主流设备）</li>
+<li>强大的一键生成功能（包括控制器、模型、视图、菜单等）</li>
+<li>支持多数据源，简单配置即可实现切换。</li>
+<li>支持按钮及数据权限，可自定义部门数据权限。</li>
+<li>对常用js插件进行二次封装，使js代码变得简洁，更加易维护</li>
+<li>完善的XSS防范及脚本过滤，彻底杜绝XSS攻击</li>
+<li>Maven多项目依赖，模块及插件分项目，尽量松耦合，方便模块升级、增减模块。</li>
+<li>国际化支持，服务端及客户端支持</li>
+<li>完善的日志记录体系简单注解即可实现</li>
+<li>支持服务监控，数据监控，缓存监控功能。</li>
+</ul>
+<h2 id="技术选型"><a href="#技术选型" class="headerlink" title="技术选型"></a>技术选型</h2><p><strong>1、系统环境</strong></p>
+<ul>
+<li>Java EE 8</li>
+<li>Servlet 3.0</li>
+<li>Apache Maven 3</li>
+</ul>
+<p><strong>2、主框架</strong></p>
+<ul>
+<li>Spring Boot 2.2.x</li>
+<li>Spring Framework 5.2.x</li>
+<li>Apache Shiro 1.7</li>
+</ul>
+<p><strong>3、持久层</strong></p>
+<ul>
+<li>Apache MyBatis 3.5.x</li>
+<li>Hibernate Validation 6.0.x</li>
+<li>Alibaba Druid 1.2.x</li>
+</ul>
+<p><strong>4、视图层</strong></p>
+<ul>
+<li>Bootstrap 3.3.7</li>
+<li>Thymeleaf 3.0.x</li>
+</ul>
+<h2 id="内置功能"><a href="#内置功能" class="headerlink" title="内置功能"></a>内置功能</h2><ul>
+<li>用户管理：用户是系统操作者，该功能主要完成系统用户配置。</li>
+<li>部门管理：配置系统组织机构（公司、部门、小组），树结构展现支持数据权限。</li>
+<li>岗位管理：配置系统用户所属担任职务。</li>
+<li>菜单管理：配置系统菜单，操作权限，按钮权限标识等。</li>
+<li>角色管理：角色菜单权限分配、设置角色按机构进行数据范围权限划分。</li>
+<li>字典管理：对系统中经常使用的一些较为固定的数据进行维护。</li>
+<li>参数管理：对系统动态配置常用参数。</li>
+<li>通知公告：系统通知公告信息发布维护。</li>
+<li>操作日志：系统正常操作日志记录和查询；系统异常信息日志记录和查询。</li>
+<li>登录日志：系统登录日志记录查询包含登录异常。</li>
+<li>在线用户：当前系统中活跃用户状态监控。</li>
+<li>定时任务：在线（添加、修改、删除)任务调度包含执行结果日志。</li>
+<li>代码生成：前后端代码的生成（java、html、xml、sql)支持CRUD下载 。</li>
+<li>系统接口：根据业务代码自动生成相关的api接口文档。</li>
+<li>服务监控：监视当前系统CPU、内存、磁盘、堆栈等相关信息。</li>
+<li>缓存监控：对系统的缓存查询，查看、清理等操作。</li>
+<li>在线构建器：拖动表单元素生成相应的HTML代码。</li>
+<li>连接池监视：监视当期系统数据库连接池状态，可进行分析SQL找出系统性能瓶颈。</li>
+</ul>
+<h2 id="历史漏洞"><a href="#历史漏洞" class="headerlink" title="历史漏洞"></a>历史漏洞</h2><ul>
+<li>任意文件下载漏洞 <code>RuoYi &lt;= v4.5.0</code></li>
+</ul>
+<p>任意文件下载漏洞，正常的利用手段是下载服务器文件，如脚本代码，服务器配置或者是系统配置等等。可以利用<code>../</code>来逐层猜测路径。</p>
+<p>网站由于业务需求，往往需要提供文件查看或文件下载功能，但若对用户查看或下载的文件不做限制，则恶意用户就能够查看或下载任意敏感文件，这就是文件查看与下载漏洞。</p>
+<p>检测漏洞：<code>CommonController.java</code>，<code>/common/download/resource</code>接口是否包含<code>checkAllowDownload</code>用于检查文件是否可下载，如果没有此方法需要修改，防止被下载关键信息。</p>
+<p>解决方案：升级<code>RuoYi</code>版本到 <code>&gt;=4.5.1</code>，或者重新添文件下载检查，防止任意文件下载。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 本地资源通用下载</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@GetMapping(&quot;/common/download/resource&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">resourceDownload</span><span class="params">(String resource, HttpServletRequest request, HttpServletResponse response)</span></span></span><br><span class="line"><span class="function">		<span class="keyword">throws</span> Exception</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">try</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (!FileUtils.checkAllowDownload(resource))</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> Exception(StringUtils.format(<span class="string">&quot;资源文件(&#123;&#125;)非法，不允许下载。 &quot;</span>, resource));</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// 本地资源路径</span></span><br><span class="line">		String localPath = Global.getProfile();</span><br><span class="line">		<span class="comment">// 数据库资源地址</span></span><br><span class="line">		String downloadPath = localPath + StringUtils.substringAfter(resource, Constants.RESOURCE_PREFIX);</span><br><span class="line">		<span class="comment">// 下载名称</span></span><br><span class="line">		String downloadName = StringUtils.substringAfterLast(downloadPath, <span class="string">&quot;/&quot;</span>);</span><br><span class="line">		response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);</span><br><span class="line">		FileUtils.setAttachmentResponseHeader(response, downloadName);</span><br><span class="line">		FileUtils.writeBytes(downloadPath, response.getOutputStream());</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">catch</span> (Exception e)</span><br><span class="line">	&#123;</span><br><span class="line">		log.error(<span class="string">&quot;下载文件失败&quot;</span>, e);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 检查文件是否可下载</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> resource 需要下载的文件</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> true 正常 false 非法</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">checkAllowDownload</span><span class="params">(String resource)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">// 禁止目录上跳级别</span></span><br><span class="line">	<span class="keyword">if</span> (StringUtils.contains(resource, <span class="string">&quot;..&quot;</span>))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 检查允许下载的文件规则</span></span><br><span class="line">	<span class="keyword">if</span> (ArrayUtils.contains(MimeTypeUtils.DEFAULT_ALLOWED_EXTENSION, FileTypeUtils.getFileType(resource)))</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 不在允许下载的文件规则</span></span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Spring Framework反射型文件下载漏洞 <code>RuoYi &lt; v4.5.0</code></li>
+</ul>
+<p>VMware Tanzu发布安全公告，在Spring Framework版本5.2.0-5.2.8、5.1.0-5.1.17、5.0.0-5.0.18、4.3.0-4.3.28和较旧的不受支持的版本中，公布了一个存在于Spring Framework中的反射型文件下载（Reflected File Download,RFD）漏洞（CVE-2020-5421）。</p>
+<p>CVE-2020-5421漏洞可通过jsessionid路径参数，绕过防御RFD攻击的保护。攻击者通过向用户发送带有批处理脚本扩展名的URL，使用户下载并执行文件，从而危害系统。VMware Tanzu官方已发布修复漏洞的新版本。</p>
+<p>解决方案：升级<code>spring-boot-starter</code>版本到 <code>&gt;=2.1.17</code>。</p>
+<ul>
+<li>Shiro阻止权限绕过漏洞 <code>RuoYi &lt; v4.4.0</code></li>
+</ul>
+<p>Shiro &lt; 1.6.0 版本存在一处权限绕过漏洞，由于 <code>shiro</code> 在处理 <code>url</code> 时与 <code>spring</code> 存在差异，处理身份验证请求时出错导致依然存在身份校验绕过漏洞，远程攻击者可以发送特制的 HTTP 请求，绕过身份验证过程并获得对应用程序的未授权访问。</p>
+<p>检测漏洞：<code>pom.xml</code> <code>Shiro &lt; 1.6.0</code> 则版本存在漏洞。</p>
+<p>解决方案：升级版本到 <code>&gt;=1.6.0</code>。</p>
+<ul>
+<li>命令执行漏洞 <code>RuoYi &lt;= v4.3.0</code></li>
+</ul>
+<p>若依管理系统使用了Apache Shiro，Shiro 提供了记住我（RememberMe）的功能，下次访问时无需再登录即可访问。系统将密钥硬编码在代码里，且在官方文档中并没有强调修改该密钥，导致框架使用者大多数都使用了默认密钥。攻击者可以构造一个恶意的对象，并且对其序列化、AES加密、base64编码后，作为cookie的rememberMe字段发送。Shiro将rememberMe进行解密并且反序列化，最终造成反序列化漏洞，进而在目标机器上执行任意命令。</p>
+<p>检测漏洞：<code>ShiroConfig.java</code> 是否包含 <code>fCq+/xW488hMTCD+cmJ3aQ==</code>，如果是使用的默认密钥则需要修改，防止被执行命令攻击。</p>
+<p>解决方案：升级版本到 <code>&gt;=v.4.3.1</code>，并且重新生成一个新的秘钥替换<code>cipherKey</code>，保证唯一且不要泄漏。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Shiro</span><br><span class="line">shiro:</span><br><span class="line">  cookie:</span><br><span class="line">    # 设置密钥，务必保持唯一性（生成方式，直接拷贝到main运行即可）KeyGenerator keygen = KeyGenerator.getInstance(&quot;AES&quot;); SecretKey deskey = keygen.generateKey(); System.out.println(Base64.encodeToString(deskey.getEncoded()));</span><br><span class="line">    cipherKey: zSyK5Kp6PZAAjlT+eeNMlg==</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 直接拷贝到main运行即可生成一个Base64唯一字符串</span></span><br><span class="line">KeyGenerator keygen = KeyGenerator.getInstance(<span class="string">&quot;AES&quot;</span>);</span><br><span class="line">SecretKey deskey = keygen.generateKey();</span><br><span class="line">System.out.println(Base64.encodeToString(deskey.getEncoded()));</span><br></pre></td></tr></table></figure>
+<ul>
+<li>SQL注入攻击 <code>RuoYi &lt;= v3.2.0</code></li>
+</ul>
+<p>若依管理系统使用了PageHelper，PageHelper提供了排序（Order by）的功能，前端直接传参完成排序。系统没有做字符检查，导致存在被注入的风险，最终造成数据库中存储的隐私信息全部泄漏。</p>
+<p>检测漏洞：<code>BaseController.java</code> 是否包含 <code>String orderBy = pageDomain.getOrderBy();</code>，如果没有字符检查需要修改，防止被执行注入攻击。</p>
+<p>解决方案：升级版本到 <code>&gt;=v.3.2.0</code>，或者重新添加字符检查<code>String orderBy = SqlUtil.escapeOrderBySql(pageDomain.getOrderBy());</code>，防止注入绕过。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.ruoyi.common.utils.sql;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.ruoyi.common.exception.base.BaseException;</span><br><span class="line"><span class="keyword">import</span> com.ruoyi.common.utils.StringUtils;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * sql操作工具类</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> ruoyi</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SqlUtil</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 仅支持字母、数字、下划线、空格、逗号、小数点（支持多个字段排序）</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String SQL_PATTERN = <span class="string">&quot;[a-zA-Z0-9_\\ \\,\\.]+&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 检查字符，防止注入绕过</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">escapeOrderBySql</span><span class="params">(String value)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (StringUtils.isNotEmpty(value) &amp;&amp; !isValidOrderBySql(value))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> BaseException(<span class="string">&quot;参数不符合规范，不能进行查询&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 验证 order by 语法是否符合规范</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">isValidOrderBySql</span><span class="params">(String value)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> value.matches(SQL_PATTERN);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Shiro阻止权限绕过漏洞 RuoYi &lt;= v4.3.0<br>Shiro &lt; 1.5.2 版本存在一处权限绕过漏洞，当受影响版本的Shiro框架结合Spring dynamic controllers使用时，未经授权的远程攻击者可以通过精心构造的请求包进行权限绕过，可能造成鉴权系统失效以及后台功能暴露。</p>
+<p>检测漏洞：pom.xml Shiro &lt;=1.5.2 则版本存在漏洞。</p>
+<p>解决方案：升级版本到 &gt;=1.5.3。</p>
+<p>Fastjson高危漏洞 RuoYi &lt;= v4.2.0<br>Fastjson &lt; 1.2.68 版本存在一处反序列化漏洞，主要为autoType开关绕过的反序列化漏洞利用，恶意攻击者可以通过该漏洞绕过autoType限制实现远程代码执行攻击，从而获取目标系统管理权限，建议尽快更新漏洞修复版本或采用临时缓解措施加固系统。</p>
+<p>检测漏洞：pom.xml Fastjson &lt;=1.2.68 则版本存在漏洞。</p>
+<p>解决方案：升级版本到 &gt;=1.2.70。</p>
+<blockquote>
+<p>注意</p>
+<p>若依平台的默认口令 admin/admin123，请大家在线上环境一定要修改超级管理员的密码。<br><code>SysPasswordService.encryptPassword(String username, String password, String salt)</code><br>直接到main运行此方法，填充账号密码及盐（保证唯一），生成md5加密字符串。</p>
+</blockquote>
+<h1 id="环境部署"><a href="#环境部署" class="headerlink" title="环境部署"></a>环境部署</h1><h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">JDK &gt;= 1.8 (推荐1.8版本)</span><br><span class="line">Mysql &gt;= 5.7.0 (推荐5.7版本)</span><br><span class="line">Maven &gt;= 3.0</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F/" rel="tag"># 后台管理系统</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/01/13/PS%E5%85%A5%E9%97%A8/" rel="prev" title="PS入门">
+      <i class="fa fa-chevron-left"></i> PS入门
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/02/23/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE3-%E5%95%86%E5%9F%8E%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%89%88-%E7%8E%8B%E7%BA%A2%E5%85%83/" rel="next" title="Vue实战项目3:商城小程序版(王红元)">
+      Vue实战项目3:商城小程序版(王红元) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%89%B9%E7%82%B9"><span class="nav-text">特点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E6%96%B0%E6%8A%80%E6%9C%AF%E6%A0%88"><span class="nav-text">最新技术栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB"><span class="nav-text">前后端分离</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%89%88%E6%9C%AC"><span class="nav-text">微服务版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90%E5%99%A8"><span class="nav-text">代码生成器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%9F%E8%83%BD%E5%AE%8C%E5%96%84"><span class="nav-text">功能完善</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%8C%E5%85%A8%E5%93%8D%E5%BA%94%E5%BC%8F%E5%B8%83%E5%B1%80"><span class="nav-text">完全响应式布局</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E4%BA%86%E8%A7%A3"><span class="nav-text">快速了解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E7%AE%80%E4%BB%8B"><span class="nav-text">项目简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E7%89%B9%E6%80%A7"><span class="nav-text">主要特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B"><span class="nav-text">技术选型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E7%BD%AE%E5%8A%9F%E8%83%BD"><span class="nav-text">内置功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%86%E5%8F%B2%E6%BC%8F%E6%B4%9E"><span class="nav-text">历史漏洞</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2"><span class="nav-text">环境部署</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-text">准备工作</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="筛滤淘"
+      src="/images/cat.jpg">
+  <p class="site-author-name" itemprop="name">筛滤淘</p>
+  <div class="site-description" itemprop="description">前端知识点总结</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">129</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lm101845" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lm101845" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1018457683@qq.com" title="E-Mail → mailto:1018457683@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.jianshu.com/u/6879af8ace24" title="简 书 → https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;6879af8ace24" rel="noopener" target="_blank"><i class="fa fa-jianshu fa-fw"></i>简 书</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/9002959" title="B  站 → https:&#x2F;&#x2F;space.bilibili.com&#x2F;9002959" rel="noopener" target="_blank"><i class="fa fa-bilibili fa-fw"></i>B  站</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">筛滤淘</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">3.7m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">56:03</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

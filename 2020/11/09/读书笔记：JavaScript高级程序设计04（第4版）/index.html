@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="第22章：处理 XML 第24章：网络请求与远程资源 AJAX前面学得已经忘得差不多了，刚好最近再学Axios,所以把这个拿过来再复习一下。  2005 年，Jesse James Garrett 撰写了一篇文章，“Ajax—A New Approach to Web Applications”。这篇文章中描绘了一个被他称作 Ajax（Asynchronous JavaScript+XML，即异步">
+<meta property="og:type" content="article">
+<meta property="og:title" content="读书笔记：JavaScript高级程序设计04（第4版）">
+<meta property="og:url" content="http://example.com/2020/11/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A104%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/index.html">
+<meta property="og:site_name" content="木子小屋">
+<meta property="og:description" content="第22章：处理 XML 第24章：网络请求与远程资源 AJAX前面学得已经忘得差不多了，刚好最近再学Axios,所以把这个拿过来再复习一下。  2005 年，Jesse James Garrett 撰写了一篇文章，“Ajax—A New Approach to Web Applications”。这篇文章中描绘了一个被他称作 Ajax（Asynchronous JavaScript+XML，即异步">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2020/11/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A104%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/04.png">
+<meta property="og:image" content="http://example.com/2020/11/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A104%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/05.png">
+<meta property="og:image" content="http://example.com/2020/11/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A104%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/06.png">
+<meta property="og:image" content="http://example.com/2020/11/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A104%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/07.png">
+<meta property="og:image" content="http://example.com/2020/11/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A104%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/10.png">
+<meta property="og:image" content="http://example.com/2020/11/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A104%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/01.png">
+<meta property="og:image" content="http://example.com/2020/11/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A104%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/02.png">
+<meta property="og:image" content="http://example.com/2020/11/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A104%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/03.png">
+<meta property="og:image" content="http://example.com/2020/11/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A104%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/08.png">
+<meta property="og:image" content="http://example.com/2020/11/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A104%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/09.png">
+<meta property="og:image" content="http://example.com/2020/11/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A104%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/11.png">
+<meta property="og:image" content="http://example.com/2020/11/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A104%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/12.png">
+<meta property="article:published_time" content="2020-11-09T14:56:16.000Z">
+<meta property="article:modified_time" content="2020-11-09T14:56:16.000Z">
+<meta property="article:author" content="筛滤淘">
+<meta property="article:tag" content="读书笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2020/11/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A104%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/04.png">
+
+<link rel="canonical" href="http://example.com/2020/11/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A104%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>读书笔记：JavaScript高级程序设计04（第4版） | 木子小屋</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?79d7cb9c8fa9e57a2723fb8645f37638";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">木子小屋</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Talk is cheap. Show me the code.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/11/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A104%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cat.jpg">
+      <meta itemprop="name" content="筛滤淘">
+      <meta itemprop="description" content="前端知识点总结">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="木子小屋">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          读书笔记：JavaScript高级程序设计04（第4版）
+        </h1>
+
+        <div class="post-meta">
+          
+            <i class="fa fa-thumb-tack"></i>
+            <font color="green">置顶</font>
+            <span class="post-meta-divider">|</span>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-11-09 22:56:16" itemprop="dateCreated datePublished" datetime="2020-11-09T22:56:16+08:00">2020-11-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%89%8D%E7%AB%AF%E7%90%86%E8%AE%BA/" itemprop="url" rel="index"><span itemprop="name">前端理论</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>28k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>26 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="第22章：处理-XML"><a href="#第22章：处理-XML" class="headerlink" title="第22章：处理 XML"></a>第22章：处理 XML</h1><h1 id="第24章：网络请求与远程资源"><a href="#第24章：网络请求与远程资源" class="headerlink" title="第24章：网络请求与远程资源"></a>第24章：网络请求与远程资源</h1><blockquote>
+<p>AJAX前面学得已经忘得差不多了，刚好最近再学Axios,所以把这个拿过来再复习一下。</p>
+</blockquote>
+<img data-src="/2020/11/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A104%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/04.png" class>
+
+<p>2005 年，Jesse James Garrett 撰写了一篇文章，“Ajax—A New Approach to Web Applications”。这篇文章中描绘了一个被他称作 Ajax（<strong>Asynchronous JavaScript+XML</strong>，即异步 JavaScript 加 XML）的技术。这个技术涉及发送服务器请求额外数据而不刷新页面，从而实现更好的用户体验。Garrett 解释了这个技术怎样改变自 Web 诞生以来就一直延续的传统单击等待的模式。</p>
+<p>把 Ajax 推到历史舞台上的关键技术是 <strong>XMLHttpRequest （XHR）</strong>对象。这个对象最早由微软发明，然后被其他浏览器所借鉴。在 XHR 出现之前，Ajax 风格的通信必须通过一些黑科技实现，主要是使用隐藏的窗格或内嵌窗格。XHR 为发送服务器请求和获取响应提供了合理的接口。这个接口可以实现异步从服务器获取额外数据，意味着用户点击不用页面刷新也可以获取数据。通过 XHR 对象获取数据后，可以使用 DOM方法把数据插入网页。虽然 Ajax 这个名称中包含 XML，但实际上 Ajax 通信与数据格式无关。<strong>这个技术主要是可以实现在不刷新页面的情况下从服务器获取数据，格式并不一定是 XML</strong>。</p>
+<p>实际上，Garrett 所称的这种 Ajax 技术已经出现很长时间了。在 Garrett 那篇文章之前，一般称这种技术为远程脚本。这种浏览器与服务器的通信早在 1998 年就通过不同方式实现了。最初，JavaScript 对服务器的请求可以通过中介（如 Java 小程序或 Flash 影片）来发送。后来 XHR 对象又为开发者提供了原生的浏览器通信能力，减少了实现这个目的的工作量。</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/24329240">使用更优雅的异步请求API——fetch</a></p>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000011433064">fetch，终于认识你</a></p>
+<p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API">Fetch API</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/28206325">为什么我不再使用Fetch API开发应用</a></p>
+<p>XHR对象的 API被普遍认为比较难用，而 Fetch API自从诞生以后就迅速成为了 XHR更现代的替代标准。<strong>Fetch API支持期约（promise）和服务线程（service worker），已经成为极其强大的 Web开发工具</strong>。</p>
+<img data-src="/2020/11/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A104%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/05.png" class>
+
+<h2 id="XMLHttpRequest-对象"><a href="#XMLHttpRequest-对象" class="headerlink" title="XMLHttpRequest 对象"></a>XMLHttpRequest 对象</h2><p>IE5 是第一个引入 XHR 对象的浏览器。这个对象是通过 ActiveX 对象实现并包含在 MSXML 库中的。为此，XHR对象的 3 个版本在浏览器中分别被暴露为 MSXML2.XMLHttp 、 MSXML2.XMLHttp.3.0和 MXSML2.XMLHttp.6.0 。</p>
+<p>所有现代浏览器都通过 XMLHttpRequest 构造函数原生支持 XHR 对象：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br></pre></td></tr></table></figure>
+<h3 id="使用-XHR"><a href="#使用-XHR" class="headerlink" title="使用 XHR"></a>使用 XHR</h3><p>使用 XHR 对象首先要调用<code>open()</code>方法，这个方法接收 3 个参数：<strong>请求类型( “get” 、 “post” 等)**、</strong>请求 URL<strong>，以及表示</strong>请求是否异步的布尔值**。下面是一个例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xhr.open(<span class="string">&quot;get&quot;</span>, <span class="string">&quot;example.php&quot;</span>, <span class="literal">false</span>);</span><br></pre></td></tr></table></figure>
+<p>这行代码就可以向<code>example.php</code>(服务器里面的文件)发送一个同步的 GET 请求。关于这行代码需要说明几点。<strong>首先</strong>，<strong>这里的 URL 是相对于代码所在页面</strong>的，当然也可以使用绝对 URL。<strong>其次</strong>，<strong>调用<code>open()</code>不会实际发送请求，只是为发送请求做好准备</strong>。</p>
+<img data-src="/2020/11/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A104%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/06.png" class>
+
+<p>要发送定义好的请求，必须像下面这样调用<code>send()</code>方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">xhr.open(<span class="string">&quot;get&quot;</span>, <span class="string">&quot;example.txt&quot;</span>, <span class="literal">false</span>);</span><br><span class="line">xhr.send(<span class="literal">null</span>);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><code>open()</code>方法是准备发射，而<code>send()</code>方法是开始发射。</p>
+</blockquote>
+<p><code>send() </code>方法接收一个参数，是作为请求体发送的数据。<strong>如果不需要发送请求体，则必须传<code>null</code>**，因为这个参数在某些浏览器中是必需的。</strong>调用<code>send()</code>之后，请求就会发送到服务器**。</p>
+<p>因为这个请求是<strong>同步</strong>的(第三个参数是false)，所以 <strong>JavaScript 代码会等待服务器响应之后再继续执行</strong>。收到响应后，<strong>XHR对象的以下属性会被填充上数据</strong>。</p>
+<ul>
+<li>responseText ：作为响应体返回的文本。</li>
+<li>responseXML ：如果响应的内容类型是 “text/xml” 或 “application/xml” ，那就是包含响应数据的 XML DOM 文档。</li>
+<li>status ：响应的 HTTP 状态。</li>
+<li>statusText ：响应的 HTTP 状态描述。</li>
+</ul>
+<p>收到响应后，第一步要检查 status 属性以确保响应成功返回。一般来说，<strong>HTTP 状态码为 2xx 表示成功</strong>。此时， responseText 或 responseXML （如果内容类型正确）属性中会有内容。<strong>如果 HTTP状态码是 304，则表示资源未修改过，是从浏览器缓存中直接拿取的。当然这也意味着响应有效。</strong>为确保收到正确的响应，应该检查这些状态，如下所示：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">xhr.open(<span class="string">&quot;get&quot;</span>, <span class="string">&quot;example.txt&quot;</span>, <span class="literal">false</span>);</span><br><span class="line">xhr.send(<span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ((xhr.status &gt;= <span class="number">200</span> &amp;&amp; xhr.status &lt; <span class="number">300</span>) || xhr.status == <span class="number">304</span>) &#123;</span><br><span class="line">	alert(xhr.responseText);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	alert(<span class="string">&quot;Request was unsuccessful: &quot;</span> + xhr.status);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上代码可能显示服务器返回的内容，也可能显示错误消息，取决于 HTTP 响应的状态码。<strong>为确定下一步该执行什么操作，最好检查 status 而不是 statusText 属性，因为后者已经被证明在跨浏览器的情况下不可靠</strong>。无论是什么响应内容类型， responseText 属性始终会保存响应体，而 responseXML则对于非 XML 数据是 null 。</p>
+<p>虽然可以像前面的例子一样发送同步请求，但<strong>多数情况下最好使用异步请求</strong>，这样可以不阻塞JavaScript 代码继续执行。XHR 对象有一个 readyState 属性，表示当前处在请求/响应过程的哪个阶段。这个属性有如下可能的值。</p>
+<ul>
+<li>0：未初始化（Uninitialized）。尚未调用<code>open()</code>方法。(火箭还没发射)</li>
+<li>1：已打开（Open）。已调用<code>open()</code>方法，尚未调用<code>send()</code>方法。(火箭准备工作做完了，但是还没点火)</li>
+<li>2：已发送（Sent）。已调用<code>send()</code>方法，尚未收到响应。(火箭点火发射了，但是还不知道情况)</li>
+<li>3：接收中（Receiving）。已经收到部分响应。(火箭只传回发射室一些信息)</li>
+<li>4：完成（Complete）。已经收到所有响应，可以使用了。(火箭传回发射室所有信息，可以看到火星的全貌了)</li>
+</ul>
+<p><strong>每次<code>readyState</code>从一个值变成另一个值，都会触发<code>readystatechange</code>事件</strong>。可以借此机会检查 readyState 的值。<strong>一般来说，我们唯一关心的 readyState 值是 4，表示数据已就绪。</strong>为保证跨浏览器兼容<code>onreadystatechange </code>事件处理程序应该在调用<code>open()</code>之前赋值。来看下面的例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">xhr.onreadystatechange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (xhr.readyState == <span class="number">4</span>) &#123;</span><br><span class="line">		<span class="keyword">if</span> ((xhr.status &gt;= <span class="number">200</span> &amp;&amp; xhr.status &lt; <span class="number">300</span>) || xhr.status == <span class="number">304</span>) &#123;</span><br><span class="line">			alert(xhr.responseText);</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			alert(<span class="string">&quot;Request was unsuccessful: &quot;</span> + xhr.status);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line">xhr.open(<span class="string">&quot;get&quot;</span>, <span class="string">&quot;example.txt&quot;</span>, <span class="literal">true</span>);</span><br><span class="line">xhr.send(<span class="literal">null</span>);</span><br></pre></td></tr></table></figure>
+<p>以上代码使用 DOM Level 0 风格为 XHR 对象添加了事件处理程序，因为并不是所有浏览器都支持DOM Level 2 风格。与其他事件处理程序不同， <code>onreadystatechange</code>事件处理程序不会收到 event对象。在事件处理程序中，必须使用 XHR 对象本身来确定接下来该做什么。</p>
+<img data-src="/2020/11/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A104%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/07.png" class>
+
+<p>在收到响应之前如果想取消异步请求，可以调用<code>abort()</code>方法：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xhr.abort();</span><br></pre></td></tr></table></figure>
+<p>调用这个方法后，XHR 对象会停止触发事件，并阻止访问这个对象上任何与响应相关的属性。<strong>中断请求后，应该取消对 XHR 对象的引用</strong>。由于内存问题，不推荐重用 XHR 对象。</p>
+<h3 id="HTTP头部"><a href="#HTTP头部" class="headerlink" title="HTTP头部"></a>HTTP头部</h3><p>每个 HTTP 请求和响应都会携带一些头部字段，这些字段可能对开发者有用。XHR 对象会通过一些方法暴露与请求和响应相关的头部字段。</p>
+<p>默认情况下，XHR 请求会<strong>发送</strong>以下头部字段。</p>
+<ul>
+<li>Accept ：浏览器可以处理的内容类型。</li>
+<li>Accept-Charset ：浏览器可以显示的字符集。</li>
+<li>Accept-Encoding ：浏览器可以处理的压缩编码类型。</li>
+<li>Accept-Language ：浏览器使用的语言。</li>
+<li>Connection ：浏览器与服务器的连接类型。</li>
+<li>Cookie ：页面中设置的 Cookie。</li>
+<li>Host ：发送请求的页面所在的域。</li>
+<li>Referer ：发送请求的页面的 URI。注意，这个字段在 HTTP 规范中就拼错了，所以考虑到兼容性也必须将错就错。（正确的拼写应该是 Referrer。）</li>
+<li>User-Agent ：浏览器的用户代理字符串。</li>
+</ul>
+<p>虽然不同浏览器发送的确切头部字段可能各不相同，但这些通常都是会发送的。如果需要发送额外的请求头部，可以使用<code>setRequestHeader()</code>方法。这个方法接收两个参数：头部字段的名称和值。为保证请求头部被发送，必须在<code>open()</code>之后、 <code>send()</code>之前调用<code>setRequestHeader()</code> ，如下面的例子所示：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">xhr.onreadystatechange = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (xhr.readyState == <span class="number">4</span>) &#123;</span><br><span class="line">		<span class="keyword">if</span> ((xhr.status &gt;= <span class="number">200</span> &amp;&amp; xhr.status &lt; <span class="number">300</span>) || xhr.status == <span class="number">304</span>) &#123;</span><br><span class="line">			alert(xhr.responseText);</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			alert(<span class="string">&quot;Request was unsuccessful: &quot;</span> + xhr.status);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line">xhr.open(<span class="string">&quot;get&quot;</span>, <span class="string">&quot;example.php&quot;</span>, <span class="literal">true</span>);</span><br><span class="line">xhr.setRequestHeader(<span class="string">&quot;MyHeader&quot;</span>, <span class="string">&quot;MyValue&quot;</span>);</span><br><span class="line">xhr.send(<span class="literal">null</span>);</span><br></pre></td></tr></table></figure>
+<p>服务器通过读取自定义头部可以确定适当的操作。自定义头部一定要区别于浏览器正常发送的头部，否则可能影响服务器正常响应。有些浏览器允许重写默认头部，有些浏览器则不允许。</p>
+<p>可以使用<code>getResponseHeader()</code>方法从 XHR 对象获取<strong>响应头部</strong>，只要传入要获取头部的名称即可。如果想取得所有响应头部，可以使用<code>getAllResponseHeaders()</code>方法，这个方法会返回包含所有响应头部的字符串。下面是调用这两个方法的例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> myHeader = xhr.getResponseHeader(<span class="string">&quot;MyHeader&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> allHeaders = xhr.getAllResponseHeaders();</span><br></pre></td></tr></table></figure>
+<p>服务器可以使用头部向浏览器传递额外的结构化数据。 <code>getAllResponseHeaders()</code>方法通常返回类似如下的字符串：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Date</span>: Sun, <span class="number">14</span> Nov <span class="number">2004</span> <span class="number">18</span>:<span class="number">04</span>:<span class="number">03</span> GMT</span><br><span class="line">Server: Apache/<span class="number">1.3</span><span class="number">.29</span> (Unix)</span><br><span class="line">Vary: Accept</span><br><span class="line">X-Powered-By: PHP/<span class="number">4.3</span><span class="number">.8</span></span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: text/html; charset=iso-<span class="number">8859</span>-<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>通过解析以上头部字段的输出，就可以知道服务器发送的所有头部，而不需要单独去检查了。</p>
+<h3 id="GET-请求"><a href="#GET-请求" class="headerlink" title="GET 请求"></a>GET 请求</h3><blockquote>
+<p>GET和POST到底是个什么玩意儿我到现在还不清楚啊！！！计算机网络知识欠缺。</p>
+<p>这两个方法的本质区别是<strong>是否幂等</strong>，不幂等的都应该用POST。</p>
+<p>HTTP只是个行为准则，而TCP才是GET和POST怎么实现的基本。</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/326687967/answer/700341259">http中的get和post的区别是什么呢?</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/42069829">通俗易懂地理解post和get的区别</a></p>
+<p><strong>最常用的请求方法是 GET 请求，用于向服务器查询某些信息</strong>。必要时，需要在 GET 请求的 URL后面添加查询字符串参数。对 XHR 而言，查询字符串必须正确编码后添加到 URL 后面，然后再传给<code>open()</code>方法。</p>
+<p>发送 GET 请求最常见的一个错误是查询字符串格式不对。查询字符串中的每个名和值都必须使用<br><code>encodeURIComponent()</code> 编码，所有名/值对必须以和号（ &amp; ）分隔，如下面的例子所示：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xhr.open(<span class="string">&quot;get&quot;</span>, <span class="string">&quot;example.php?name1=value1&amp;name2=value2&quot;</span>, <span class="literal">true</span>);</span><br></pre></td></tr></table></figure>
+<p>可以使用以下函数将查询字符串参数添加到现有的 URL 末尾：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addURLParam</span>(<span class="params">url, name, value</span>) </span>&#123;</span><br><span class="line">	url += (url.indexOf(<span class="string">&quot;?&quot;</span>) == -<span class="number">1</span> ? <span class="string">&quot;?&quot;</span> : <span class="string">&quot;&amp;&quot;</span>);</span><br><span class="line">	url += <span class="built_in">encodeURIComponent</span>(name) + <span class="string">&quot;=&quot;</span> + <span class="built_in">encodeURIComponent</span>(value);</span><br><span class="line">	<span class="keyword">return</span> url;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里定义了一个 addURLParam() 函数，它接收 3 个参数：要添加查询字符串的 URL、查询参数和参数值。首先，这个函数会检查 URL 中是否已经包含问号（以确定是否已经存在其他参数）。如果没有，则加上一个问号；否则就加上一个和号。然后，分别对参数名和参数值进行编码，并添加到 URL 末尾。最后一步是返回更新后的 URL。</p>
+<p>可以使用这个函数构建请求 URL，如下面的例子所示：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> url = <span class="string">&quot;example.php&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加参数</span></span><br><span class="line">url = addURLParam(url, <span class="string">&quot;name&quot;</span>, <span class="string">&quot;Nicholas&quot;</span>);</span><br><span class="line">url = addURLParam(url, <span class="string">&quot;book&quot;</span>, <span class="string">&quot;Professional JavaScript&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 初始化请求</span></span><br><span class="line">xhr.open(<span class="string">&quot;get&quot;</span>, url, <span class="literal">false</span>);</span><br></pre></td></tr></table></figure>
+<p>这里使用<code>addURLParam()</code>函数可以保证通过 XHR 发送请求的 URL 格式正确。</p>
+<h3 id="POST-请求"><a href="#POST-请求" class="headerlink" title="POST 请求"></a>POST 请求</h3><h1 id="第25章：客户端存储"><a href="#第25章：客户端存储" class="headerlink" title="第25章：客户端存储"></a>第25章：客户端存储</h1><img data-src="/2020/11/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A104%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/10.png" class>
+
+<p>随着 Web 应用程序的出现，直接在客户端存储用户信息的需求也随之出现。这背后的想法是合理的：<strong>与特定用户相关的信息应该保存在用户的机器上</strong>。无论是登录信息、个人偏好，还是其他数据，Web 应用程序提供者都需要有办法把它们保存在客户端。对该问题的第一个解决方案就是 cookie，cookie由古老的网景公司发明，由一份名为 Persistent Client State: HTTP Cookies的规范定义。今天，cookie 只是在客户端存储数据的一个选项。</p>
+<h2 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h2><p>HTTP cookie 通常也叫作 cookie，最初用于在客户端存储会话信息。这个规范要求服务器在响应HTTP 请求时，通过发送 Set-Cookie HTTP 头部包含会话信息。例如，下面是包含这个头部的一个 HTTP响应：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 <span class="number">200</span> OK</span><br><span class="line"><span class="attribute">Content-type</span>: text/html</span><br><span class="line"><span class="attribute">Set-Cookie</span>: name=value</span><br><span class="line"><span class="attribute">Other-header</span>: other-header-value</span><br></pre></td></tr></table></figure>
+<p>这个 HTTP 响应会设置一个名为 “name” ，值为 “value” 的 cookie。名和值在发送时都会经过 URL编码。浏览器会存储这些会话信息，并在之后的每个请求中都会通过 HTTP 头部 cookie 再将它们发回服务器，比如：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GET</span> <span class="string">/index.jsl</span> HTTP/1.1</span><br><span class="line"><span class="attribute">Cookie</span>: name=value</span><br><span class="line"><span class="attribute">Other-header</span>: other-header-value</span><br></pre></td></tr></table></figure>
+<p>这些发送回服务器的额外信息可用于唯一标识发送请求的客户端。</p>
+<h3 id="限制"><a href="#限制" class="headerlink" title="限制"></a>限制</h3><p>cookie 是与特定域绑定的。设置 cookie 后，它会与请求一起发送到创建它的域。这个限制能保证cookie 中存储的信息只对被认可的接收者开放，不被其他域访问。</p>
+<p>因为 cookie 存储在客户端机器上，所以为保证它不会被恶意利用，浏览器会施加限制。同时，cookie也不会占用太多磁盘空间。</p>
+<p>通常，只要遵守以下大致的限制，就不会在任何浏览器中碰到问题：</p>
+<ul>
+<li> 不超过 300 个 cookie；</li>
+<li> 每个 cookie 不超过 4096 字节；</li>
+<li> 每个域不超过 20 个 cookie；</li>
+<li>每个域不超过 81 920 字节。</li>
+</ul>
+<p>每个域能设置的 cookie 总数也是受限的，但不同浏览器的限制不同。例如：</p>
+<ul>
+<li>最新版 IE 和 Edge 限制每个域不超过 50 个 cookie；</li>
+<li>最新版 Firefox 限制每个域不超过 150 个 cookie；</li>
+<li>最新版 Opera 限制每个域不超过 180 个 cookie；</li>
+<li> Safari 和 Chrome 对每个域的 cookie 数没有硬性限制。</li>
+</ul>
+<p>如果 cookie 总数超过了单个域的上限，浏览器就会删除之前设置的 cookie。IE 和 Opera 会按照最近最少使用（LRU，Least Recently Used）原则删除之前的 cookie，以便为新设置的 cookie 腾出空间。Firefox好像会随机删除之前的 cookie，因此为避免不确定的结果，最好不要超出限制。</p>
+<p>浏览器也会限制 cookie 的大小。大多数浏览器对 cookie 的限制是不超过 4096 字节，上下可以有一个字节的误差。为跨浏览器兼容，最好保证 cookie 的大小不超过 4095 字节。这个大小限制适用于一个域的所有 cookie，而不是单个 cookie。</p>
+<p>如果创建的 cookie 超过最大限制，则该 cookie 会被静默删除。注意，一个字符通常会占 1 字节。如果使用多字节字符（如 UTF-8 Unicode 字符），则每个字符最多可能占 4 字节。</p>
+<h3 id="cookie-的构成"><a href="#cookie-的构成" class="headerlink" title="cookie 的构成"></a>cookie 的构成</h3><p>cookie 在浏览器中是由以下参数构成的。</p>
+<ul>
+<li><strong>名称</strong>：唯一标识 cookie 的名称。cookie 名不区分大小写，因此 myCookie 和 MyCookie 是同一<br>个名称。不过，实践中最好将 cookie 名当成区分大小写来对待，因为一些服务器软件可能这样<br>对待它们。cookie 名必须经过 URL 编码。</li>
+</ul>
+<h1 id="第26章：模块"><a href="#第26章：模块" class="headerlink" title="第26章：模块"></a>第26章：模块</h1><img data-src="/2020/11/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A104%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/01.png" class>
+
+<p>现代 JavaScript 开发毋庸置疑会遇到代码量大和广泛使用第三方库的问题。解决这个问题的方案通常需要把代码拆分成很多部分，然后再通过某种方式将它们连接起来。</p>
+<p>在 ECMAScript 6 模块规范出现之前，虽然浏览器原生不支持模块的行为，但迫切需要这样的行为。ECMAScript 同样不支持模块，因此希望使用模块模式的库或代码库必须基于 JavaScript 的语法和词法特性“伪造”出类似模块的行为。</p>
+<p>因为 JavaScript 是异步加载的解释型语言，所以得到广泛应用的各种模块实现也表现出不同的形态。这些不同的形态决定了不同的结果，但最终它们都实现了经典的模块模式。</p>
+<h2 id="理解模块模式"><a href="#理解模块模式" class="headerlink" title="理解模块模式"></a>理解模块模式</h2><p><strong>将代码拆分成独立的块，然后再把这些块连接起来可以通过模块模式来实现</strong>。这种模式背后的思想很简单：<strong>把逻辑分块，各自封装，相互独立，每个块自行决定对外暴露什么，同时自行决定引入执行哪些外部代码</strong>。不同的实现和特性让这些基本的概念变得有点复杂，<strong>但这个基本的思想是所有 JavaScript模块系统的基础</strong>。</p>
+<h3 id="模块标识符"><a href="#模块标识符" class="headerlink" title="模块标识符"></a>模块标识符</h3><p>模块标识符是所有模块系统通用的概念。模块系统本质上是键/值实体，其中每个模块都有个可用于引用它的标识符。这个标识符在模拟模块的系统中可能是字符串，在原生实现的模块系统中可能是模块文件的实际路径。</p>
+<p>有的模块系统支持明确声明模块的标识，还有的模块系统会隐式地使用文件名作为模块标识符。不管怎样，完善的模块系统一定不会存在模块标识冲突的问题，且系统中的任何模块都应该能够无歧义地引用其他模块。</p>
+<p>将模块标识符解析为实际模块的过程要根据模块系统对标识符的实现。原生浏览器模块标识符必须提供实际 JavaScript 文件的路径。除了文件路径，Node.js还会搜索 node_modules 目录，用标识符去匹配包含<code>index.js</code>的目录。</p>
+<h3 id="模块依赖"><a href="#模块依赖" class="headerlink" title="模块依赖"></a>模块依赖</h3><p>模块系统的核心是管理依赖。指定依赖的模块与周围的环境会达成一种契约。本地模块向模块系统声明一组外部模块（依赖），这些外部模块对于当前模块正常运行是必需的。模块系统检视这些依赖，进而保证这些外部模块能够被加载并在本地模块运行时初始化所有依赖。</p>
+<p>每个模块都会与某个唯一的标识符关联，该标识符可用于检索模块。这个标识符通常是 JavaScript文件的路径，但在某些模块系统中，这个标识符也可以是在模块本身内部声明的命名空间路径字符串。</p>
+<h3 id="模块加载"><a href="#模块加载" class="headerlink" title="模块加载"></a>模块加载</h3><p>加载模块的概念派生自依赖契约。当一个外部模块被指定为依赖时，本地模块期望在执行它时，依赖已准备好并已初始化。</p>
+<p>在浏览器中，加载模块涉及几个步骤。加载模块涉及执行其中的代码，但必须是在所有依赖都加载并执行之后。如果浏览器没有收到依赖模块的代码，则必须发送请求并等待网络返回。收到模块代码之后，浏览器必须确定刚收到的模块是否也有依赖。然后递归地评估并加载所有依赖，直到所有依赖模块都加载完成。只有整个依赖图都加载完成，才可以执行入口模块。</p>
+<h3 id="入口"><a href="#入口" class="headerlink" title="入口"></a>入口</h3><p>相互依赖的模块必须指定一个模块作为入口（entry point），这也是代码执行的起点。这是理所当然的，因为 JavaScript 是顺序执行的，并且是单线程的，所以代码必须有执行的起点。入口模块也可能依赖其他模块，其他模块同样可能有自己的依赖。于是模块化 JavaScript 应用程序的所有模块会构成依赖图。</p>
+<p>可以通过有向图来表示应用程序中各模块的依赖关系。图 26-1 展示了一个想象中应用程序的模块依赖关系图。</p>
+<img data-src="/2020/11/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A104%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/02.png" class>
+
+<p>图中的箭头表示依赖方向：模块 A 依赖模块 B 和模块 C，模块 B 依赖模块 D 和模块 E，模块 C 依赖模块 E。因为模块必须在依赖加载完成后才能被加载，所以这个应用程序的入口模块 A 必须在应用程序的其他部分加载后才能执行。</p>
+<p>在 JavaScript 中，“加载”的概念可以有多种实现方式。因为模块是作为包含将立即执行的 JavaScript代码的文件实现的，所以一种可能是按照依赖图的要求依次请求各个脚本。对于前面的应用程序来说，下面的脚本请求顺序能够满足依赖图的要求：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;script src=<span class="string">&quot;moduleE.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;script src=<span class="string">&quot;moduleD.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;script src=<span class="string">&quot;moduleC.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;script src=<span class="string">&quot;moduleB.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;script src=<span class="string">&quot;moduleA.js&quot;</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>模块加载是“阻塞的”</strong>，这意味着前置操作必须完成才能执行后续操作。每个模块在自己的代码到达浏览器之后完成加载，此时其依赖已经加载并初始化。不过，这个策略存在一些性能和复杂性问题。为一个应用程序而按顺序加载五个 JavaScript 文件并不理想，并且手动管理正确的加载顺序也颇为棘手。</p>
+<h3 id="异步依赖"><a href="#异步依赖" class="headerlink" title="异步依赖"></a>异步依赖</h3><h2 id="凑合的模块系统"><a href="#凑合的模块系统" class="headerlink" title="凑合的模块系统"></a>凑合的模块系统</h2><p>为按照模块模式提供必要的封装，ES6 之前的模块有时候会使用函数作用域和<strong>立即调用函数表达式</strong>(IIFE，Immediately Invoked Function Expression)将模块定义封装在匿名闭包中。模块定义是立即执行的，如下：</p>
+<h2 id="使用-ES6-之前的模块加载器"><a href="#使用-ES6-之前的模块加载器" class="headerlink" title="使用 ES6 之前的模块加载器"></a>使用 ES6 之前的模块加载器</h2><p>在 ES6 原生支持模块之前，使用模块的 JavaScript 代码本质上是希望使用默认没有的语言特性。因此，必须按照符合某种规范的模块语法来编写代码，另外还需要单独的模块工具把这些模块语法与JavaScript 运行时连接起来。这里的模块语法和连接方式有不同的表现形式，通常需要在浏览器中额外加载库或者在构建时完成预处理。</p>
+<h3 id="CommonJS"><a href="#CommonJS" class="headerlink" title="CommonJS"></a>CommonJS</h3><p>CommonJS 规范概述了同步声明依赖的模块定义。这个规范主要用于在<strong>服务器端</strong>实现模块化代码组织，但也可用于定义在浏览器中使用的模块依赖。<strong>CommonJS 模块语法不能在浏览器中直接运行</strong>。</p>
+<img data-src="/2020/11/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A104%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/03.png" class>
+
+<p>CommonJS 模块定义需要<strong>使用<code>require()</code>指定依赖</strong>，而<strong>使用<code>exports</code>对象定义自己的公共 API</strong>。下面的代码展示了简单的模块定义：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> moduleB = <span class="built_in">require</span>(<span class="string">&#x27;./moduleB&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">	stuff: moduleB.doStuff();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>moduleA 通过使用模块定义的相对路径来指定自己对 moduleB 的依赖</strong>(不知道什么意思)。什么是“模块定义”，以及如何将字符串解析为模块，完全取决于模块系统的实现。比如在 Node.js中，模块标识符可能指向文件，也可能指向包含 <code>index.js</code>文件的目录。</p>
+<p>请求模块会加载相应模块，而<strong>把模块赋值给变量也非常常见，但赋值给变量不是必需的</strong>。调用require() 意味着模块会原封不动地加载进来：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;moduleA&#x27;</span>);</span><br><span class="line"><span class="built_in">require</span>(<span class="string">&#x27;./moduleA&#x27;</span>); <span class="comment">// &quot;moduleA&quot;</span></span><br></pre></td></tr></table></figure>
+<p>无论一个模块在<code>require()</code>中被引用多少次，模块永远是单例。在下面的例子中， moduleA 只会被打印一次。这是因为无论请求多少次， moduleA 只会被加载一次。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;moduleA&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> a1 = <span class="built_in">require</span>(<span class="string">&#x27;./moduleA&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> a2 = <span class="built_in">require</span>(<span class="string">&#x27;./moduleA&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a1 === a2); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>模块第一次加载后会被缓存，后续加载会取得缓存的模块（如下代码所示）。模块加载顺序由依赖图决定。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;moduleA&#x27;</span>);</span><br><span class="line"><span class="built_in">require</span>(<span class="string">&#x27;./moduleA&#x27;</span>);</span><br><span class="line"><span class="built_in">require</span>(<span class="string">&#x27;./moduleB&#x27;</span>); <span class="comment">// &quot;moduleA&quot;</span></span><br><span class="line"><span class="built_in">require</span>(<span class="string">&#x27;./moduleA&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<p>在 CommonJS 中，模块加载是模块系统执行的同步操作。因此 require() 可以像下面这样以编程方式嵌入在模块中：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;moduleA&#x27;</span>);</span><br><span class="line"><span class="keyword">if</span> (loadCondition) &#123;</span><br><span class="line">	<span class="built_in">require</span>(<span class="string">&#x27;./moduleA&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里， moduleA 只会在 loadCondition 求值为 true 时才会加载。这个加载是同步的，因此 if()块之前的任何代码都会在加载 moduleA 之前执行，而 if() 块之后的任何代码都会在加载 moduleA 之后执行。同样，加载顺序规则也会适用。因此，如果 moduleA 已经在前面某个地方加载过了，这个条件 require() 就意味着只暴露 moduleA 这个命名空间而已。</p>
+<p>在上面的例子中，模块系统是 Node.js实现的，因此 ./moduleB 是相对路径，指向与当前模块位于同一目录中的模块目标。Node.js 会使用<code>require()</code>调用中的模块标识符字符串去解析模块引用。在Node.js 中可以使用绝对或相对路径，也可以使用安装在<code>node_modules</code>目录中依赖的模块标识符。我们并不关心这些细节，重要的是知道在不同的 CommonJS 实现中模块字符串引用的含义可能不同。不过，所有 CommonJS 风格的实现共同之处是模块不会指定自己的标识符，它们的标识符由其在模块文件层级中的位置决定。</p>
+<p>指向模块定义的路径可能引用一个目录，也可能是一个 JavaScript 文件。无论是什么，这与本地模块实现无关，而 moduleB 被加载到本地变量中。 moduleA 在<code>module.exports</code>对象上定义自己的公共接口，即 foo 属性。</p>
+<p>如果有模块想使用这个接口，可以像下面这样导入它：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> moduleA = <span class="built_in">require</span>(<span class="string">&#x27;./moduleA&#x27;</span>);</span><br><span class="line"><span class="built_in">console</span>.log(moduleA.stuff);</span><br></pre></td></tr></table></figure>
+<p>注意，此模块不导出任何内容。即使它没有公共接口，如果应用程序请求了这个模块，那也会在加载时执行这个模块体。</p>
+<p><code>module.exports</code>对象非常灵活，有多种使用方式。如果只想导出一个实体，可以直接给<code>module.exports</code>赋值：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="string">&#x27;foo&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<p>这样，整个模块就导出一个字符串，可以像下面这样使用：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> moduleA = <span class="built_in">require</span>(<span class="string">&#x27;./moduleB&#x27;</span>);</span><br><span class="line"><span class="built_in">console</span>.log(moduleB); <span class="comment">// &#x27;foo&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>导出多个值也很常见，可以使用对象字面量赋值或每个属性赋一次值来实现：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 等价操作：</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">	a: <span class="string">&#x27;A&#x27;</span>,</span><br><span class="line">	b: <span class="string">&#x27;B&#x27;</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports.a = <span class="string">&#x27;A&#x27;</span>;</span><br><span class="line"><span class="built_in">module</span>.exports.b = <span class="string">&#x27;B&#x27;</span>;</span><br></pre></td></tr></table></figure>
+<p>模块的一个主要用途是托管类定义（这里使用 ES6 风格的类定义，不过 ES5 风格也兼容）：</p>
+<h1 id="第28章：最佳实践"><a href="#第28章：最佳实践" class="headerlink" title="第28章：最佳实践"></a>第28章：最佳实践</h1><blockquote>
+<p>代码规范挺重要的，读起来也比较轻松，适合放松时阅读。</p>
+</blockquote>
+<img data-src="/2020/11/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A104%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/08.png" class>
+
+<p>自 2000 年以来，Web 开发一直在以惊人的速度发展。从最初毫无章法可循的“野蛮生长”，到如今已发展出完整的规范体系，各种研究成果和最佳实践层出不穷。随着简单的网站变成复杂的 Web 应用程序，曾经的 Web 开发爱好者也变成了收入不菲的专业人士。Web 开发领域的最新技术和开发工具已经令人目不暇接。其中，JavaScript 尤其成为了研究和关注的焦点。JavaScript 的最佳实践可以分成几类，适用于开发流程的不同阶段。</p>
+<h2 id="可维护性"><a href="#可维护性" class="headerlink" title="可维护性"></a>可维护性</h2><p>在早期网站中，JavaScript 主要用于实现一些小型动效或表单验证。今天的 Web 应用程序则动辄成千上万行 JavaScript 代码，用于完成各种各样的复杂处理。这些变化要求开发者把可维护能力放到重要位置上。正如更传统意义上的软件工程师一样，JavaScript 开发者受雇是要为公司创造价值的。他们不仅要保证产品如期上线，而且要随着时间推移为公司不断积累知识资产。</p>
+<p>编写可维护的代码十分重要，因为大多数开发者会花大量时间去维护别人写的代码。<strong>实际开发中，从第一行代码开始写起的情况非常少</strong>，通常是要在别人的代码之上构建自己的工作。让自己的代码容易维护，可以保证其他开发者更好地完成自己的工作。</p>
+<img data-src="/2020/11/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A104%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/09.png" class>
+
+<h3 id="什么是可维护的代码"><a href="#什么是可维护的代码" class="headerlink" title="什么是可维护的代码"></a>什么是可维护的代码</h3><p>通常，说代码“可维护”就意味着它具备如下特点。</p>
+<ul>
+<li> <strong>容易理解</strong>：无须求助原始开发者，任何人一看代码就知道它是干什么的，以及它是怎么实现的。</li>
+<li><strong>符合常识</strong>：代码中的一切都显得顺理成章，无论操作有多么复杂。</li>
+<li><strong>容易适配</strong>：即使数据发生变化也不用完全重写。</li>
+<li><strong>容易扩展</strong>：代码架构经过认真设计，支持未来扩展核心功能。</li>
+<li><strong>容易调试</strong>：出问题时，代码可以给出明确的信息，通过它能直接定位问题。</li>
+</ul>
+<p>能够写出可维护的 JavaScript 代码是一项重要的专业技能。这就是业余爱好者和专业开发人员之间的区别，<strong>前者用一个周末就拼凑出一个网站，而后者真正了解自己的技术</strong>。</p>
+<h3 id="编码规范"><a href="#编码规范" class="headerlink" title="编码规范"></a>编码规范</h3><p>编写可维护代码的第一步是认真考虑编码规范。大多数编程语言会涉及编码规范，简单上网一搜，就可以找到成千上万的相关文章。专业组织有为开发者建立的编码规范，旨在让人写出更容易维护的代码。优秀开源项目有严格的编码规范，可以让社区的所有人容易地理解代码是如何组织的。</p>
+<p>编码规范对 JavaScript 而言非常重要，因为这门语言实在太灵活了。与大多数面向对象语言不同，JavaScript 并不强迫开发者把任何东西都定义为对象。它支持任何编程风格，包括传统的面向对象编程、声明式编程，以及函数式编程。简单看几个开源的 JavaScript 库，就会发现有很多方式可以创建对象、定义方法和管理环境。</p>
+<p>接下来的几节会讨论制定编码规范的一些基础知识。这些话题很重要，当然每个人的需求不同，实现方式也可以不同。</p>
+<p><strong>1.可读性</strong></p>
+<p>要想让代码容易维护，首先必须使其可读。可读性必须考虑代码是一种文本文件。为此，代码缩进是保证可读性的重要基础。如果所有人都使用相同的缩进，整个项目的代码就会更容易让人看懂。缩进通常要使用空格数而不是 Tab（制表符）来定义，因为后者在不同文本编辑器中的显示不同。一般来说，缩进是 4 个空格，当然具体多少个可以自己定。</p>
+<p>可读性的另一方面是代码注释。在大多数编程语言中，广泛接受的做法是为每个方法都编写注释。因为 JavaScript 可以在代码中的任何地方创建函数，所以这一点经常被忽视。正因为如此，可能给JavaScript 中的每个函数都写注释才更重要。一般来说，以下这些地方应该写注释。</p>
+<ul>
+<li><p><strong>函数和方法</strong>。每个函数和方法都应该有注释来描述其用途，以及完成任务所用的算法。同时，也写清使用这个函数或方法的前提（假设）、每个参数的含义，以及函数是否返回值（因为通过函数定义看不出来）。</p>
+</li>
+<li><p><strong>大型代码块</strong>。多行代码但用于完成单一任务的，应该在前面给出注释，把要完成的任务写清楚。</p>
+</li>
+<li><p><strong>复杂的算法</strong>。如果使用了独特的方法解决问题，要通过注释解释明白。这样不仅可以帮助别人查看代码，也可以帮助自己今后查看代码。</p>
+</li>
+<li><p><strong>使用黑科技</strong>。由于浏览器之间的差异，JavaScript 代码中通常包含一些黑科技。不要假设其他人一看就能明白某个黑科技是为了解决某个浏览器的什么问题。如果某个浏览器不能使用正常方式达到目的，那要在注释里把黑科技的用途写出来。这样可以避免别人误以为黑科技没有用而把它“修复”掉，结果你已解决的问题又会出现。</p>
+</li>
+</ul>
+<p>缩进和注释可以让代码更容易理解，将来也更容易维护。</p>
+<p><strong>2.变量和函数命名</strong></p>
+<p>代码中变量和函数的适当命名对于其可读性和可维护性至关重要。因为很多 JavaScript 开发者是业余爱好者出身，所以很容易用 foo 、 bar 命名变量，用 doSomething 来命名函数。专业 JavaScript 开发者必须改掉这些习惯，这样才能写出可维护的代码。以下是关于命名的通用规则。</p>
+<ul>
+<li><p> 变量名应该是名词，例如 car 或 person 。</p>
+</li>
+<li><p>函数名应该以动词开始，例如<code>getName()</code>。<strong>返回布尔值的函数通常以 is 开头</strong>，比如 isEnabled() 。</p>
+</li>
+<li><p>对变量和函数都使用符合逻辑的名称，不用担心长度。长名字的问题可以通过后处理和压缩解决（本章稍后会讨论）。</p>
+</li>
+<li><p><strong>变量、函数和方法应该以小写字母开头，使用驼峰大小写（camelCase）形式</strong>，如<code>getName()</code>和isPerson 。类名应该首字母大写，如 Person 、 RequestFactory 。常量值应该全部大写并以下划线相接，比如 REQUEST_TIMEOUT 。</p>
+</li>
+<li><p>名称要尽量用描述性和直观的词汇，但不要过于冗长。 getName() 一看就知道会返回名称，而PersonFactory 一看就知道会产生某个 Person 对象或实体。</p>
+</li>
+</ul>
+<p>要完全避免没有用的变量名，如不能表示所包含数据的类型的变量名。<strong>通过适当命名，代码读起来就会像故事，因此更容易理解</strong>。</p>
+<p><strong>3.变量类型透明化</strong></p>
+<p>因为 JavaScript 是松散类型的语言，所以很容易忘记变量包含的数据类型。适当命名可以在某种程度上解决这个问题，但还不够。有三种方式可以标明变量的数据类型。</p>
+<p>第一种标明变量类型的方式是通过初始化。定义变量时，应该立即将其初始化为一个将来要使用的类型值。例如，要保存布尔值的变量，可以将其初始化为 true 或 false ；而要保存数值的变量，可以将其初始化为一个数值。再看几个例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 通过初始化标明变量类型</span></span><br><span class="line"><span class="keyword">let</span> found = <span class="literal">false</span>; <span class="comment">// 布尔值</span></span><br><span class="line"><span class="keyword">let</span> count = -<span class="number">1</span>; <span class="comment">// 数值</span></span><br><span class="line"><span class="keyword">let</span> name = <span class="string">&quot;&quot;</span>; <span class="comment">// 字符串</span></span><br><span class="line"><span class="keyword">let</span> person = <span class="literal">null</span>; <span class="comment">// 对象</span></span><br></pre></td></tr></table></figure>
+<p>初始化为特定数据类型的值可以明确表示变量的类型。ES6 之前，初始化方式不适合函数声明中函数的参数；ES6 之后，可以在函数声明中为参数指定默认值来标明参数类型。</p>
+<p>第二种标明变量类型的方式是使用匈牙利表示法。匈牙利表示法指的是在变量名前面前缀一个或多个字符表示数据类型。这种表示法曾在脚本语言中非常流行，很长时间以来也是 JavaScript 首选的格式。对于基本数据类型，<strong>JavaScript 传统的匈牙利表示法用 o 表示对象， s 表示字符串， i 表示整数， f 表示浮点数， b 表示布尔值</strong>。示例如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用匈牙利表示法标明数据类型</span></span><br><span class="line"><span class="keyword">let</span> bFound; <span class="comment">// 布尔值</span></span><br><span class="line"><span class="keyword">let</span> iCount; <span class="comment">// 整数</span></span><br><span class="line"><span class="keyword">let</span> sName; <span class="comment">// 字符串</span></span><br><span class="line"><span class="keyword">let</span> oPerson; <span class="comment">// 对象</span></span><br></pre></td></tr></table></figure>
+<p>匈牙利表示法也可以很好地应用于函数参数。它的缺点是使代码可读性下降、不够直观，并破坏了类似句子的自然阅读流畅性。因此，匈牙利表示法在开发者中失宠了。</p>
+<p>最后一种标明变量类型的方式是使用类型注释。类型注释放在变量名后面、初始化表达式的前面。基本思路是在变量旁边使用注释说明类型，比如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用类型注释表明数据类型</span></span><br><span class="line"><span class="keyword">let</span> found <span class="comment">/*:Boolean*/</span> = <span class="literal">false</span>;</span><br><span class="line"><span class="keyword">let</span> count <span class="comment">/*:int*/</span> = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">let</span> name <span class="comment">/*:String*/</span> = <span class="string">&quot;Nicholas&quot;</span>;</span><br><span class="line"><span class="keyword">let</span> person <span class="comment">/*:Object*/</span> = <span class="literal">null</span>;</span><br></pre></td></tr></table></figure>
+<p>类型注释在保持代码整体可读性的同时向其注释了类型信息。类型注释的缺点是不能再使用多行注释把大型代码块注释掉了。因为类型注释也是多行注释，所以会造成干扰，如下例所示：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这样多行注释不会生效</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">let found /*:Boolean*/</span> = <span class="literal">false</span>;</span><br><span class="line"><span class="keyword">let</span> count <span class="comment">/*:int*/</span> = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">let</span> name <span class="comment">/*:String*/</span> = <span class="string">&quot;Nicholas&quot;</span>;</span><br><span class="line"><span class="keyword">let</span> person <span class="comment">/*:Object*/</span> = <span class="literal">null</span>;</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+<p>这里本来是想使用多行注释把所有变量声明都注释掉。但类型注释产生了干扰，因为第一个 /*（第 2 行）的实例会与第一个 */ （第 3 行）的实例匹配，所以会导致语法错误。如果想注释掉使用类型注释的代码，则只能使用单行注释一行一行地注释掉每一行（很多编辑器可以自动完成）。</p>
+<p>以上是最常用的三种标明变量数据类型方式。每种方式都有其优点和缺点，可以根据实际情况选用。关键要看哪一种最适合自己的项目，并保证一致性。</p>
+<h3 id="松散耦合"><a href="#松散耦合" class="headerlink" title="松散耦合"></a>松散耦合</h3><p>只要应用程序的某个部分对另一个部分依赖得过于紧密，代码就会变成紧密耦合，因而难以维护。典型的问题是在一个对象中直接引用另一个对象，这样，修改其中一个，可能必须还得修改另一个。紧密耦合的软件难于维护，肯定需要频繁地重写。</p>
+<p>考虑到相关的技术，Web 应用程序在某些情况下可能变得过于紧密耦合。关键在于有这个意识，随时注意不要让代码产生紧密耦合。</p>
+<p><strong>1.解耦 HTML/JavaScript</strong></p>
+<p>Web 开发中最常见的耦合是 HTML/JavaScript 耦合。在网页中，HTML 和 JavaScript 分别代表不同层面的解决方案。HTML 是数据，JavaScript 是行为。这是因为它们之间要交互操作，需要通过不同的方式将这两种技术联系起来。可惜的是，其中一些方式会导致 HTML 与 JavaScript 紧密耦合。</p>
+<p>把 JavaScript 直接嵌入在 HTML 中，要么使用包含嵌入代码的<code>&lt;script&gt;</code>元素，要么使用 HTML属性添加事件处理程序，这些都会造成紧密耦合。比如下面的例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 使用&lt;script&gt;造成 HTML/JavaScript 紧密耦合 --&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line"><span class="built_in">document</span>.write(<span class="string">&quot;Hello world!&quot;</span>);</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 使用事件处理程序属性造成 HTML/JavaScript 紧密耦合 --&gt;</span><br><span class="line">&lt;input type=<span class="string">&quot;button&quot;</span> value=<span class="string">&quot;Click Me&quot;</span> onclick=<span class="string">&quot;doSomething()&quot;</span>/&gt;</span><br></pre></td></tr></table></figure>
+<p>虽然技术上这样做没有问题，但实践中，这样会将表示数据的 HTML 与定义行为的 JavaScript 紧密耦合在一起。理想情况下，HTML 和 JavaScript 应该完全分开，通过外部文件引入 JavaScript，然后使用DOM 添加行为。</p>
+<p>HTML 与 JavaScript 紧密耦合的情况下，每次分析 JavaScript 的报错都要先确定错误来自 HTML 还是JavaScript。这样也会引入代码可用性的新错误。在这个例子中，用户可能会在 doSomething() 函数可用之前点击按钮，从而导致 JavaScript 报错。因为每次修改按钮的行为都需要既改 HTML 又改JavaScript，而实际上只有后者才是有必要修改的，所以就会降低代码的可维护性。</p>
+<p>在相反的情况下，HTML 和 JavaScript 也会变得紧密耦合：把 HTML 包含在 JavaScript 中。这种情况通常发生在把一段 HTML 通过 innerHTML 插入到页面中时，示例如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// HTML 紧密耦合到了 JavaScript</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">insertMessage</span>(<span class="params">msg</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> container = <span class="built_in">document</span>.getElementById(<span class="string">&quot;container&quot;</span>);</span><br><span class="line">	container.innerHTML = <span class="string">`&lt;div class=&quot;msg&quot;&gt;</span></span><br><span class="line"><span class="string">	&lt;p&gt; class=&quot;post&quot;&gt;<span class="subst">$&#123;msg&#125;</span>&lt;/p&gt;</span></span><br><span class="line"><span class="string">	&lt;p&gt;&lt;em&gt;Latest message above.&lt;/em&gt;&lt;/p&gt;</span></span><br><span class="line"><span class="string">&lt;/div&gt;`</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一般来说，应该避免在 JavaScript 中创建大量 HTML。同样，这主要是为了做到数据层和行为层各司其职，在出错时更容易定位问题所在。使用上面的示例代码时，如果动态插入的 HTML 格式不对，就会造成页面布局出错。不过在这种情况下定位错误就更困难了，因为这时候通常首先会去找页面中出错的 HTML 源代码，但又找不到，因为它是动态生成的。修改数据或页面的同时还需要修改 JavaScript，这说明两层是紧密耦合的。</p>
+<p>HTML 渲染应该尽可能与 JavaScript 分开。在使用 JavaScript 插入数据时，应该尽可能不要插入标记。相应的标记可以包含并隐藏在页面中，在需要的时候 JavaScript 可以直接用它来显示，而不需要动态生成。另一个办法是通过 Ajax 请求获取要显示的 HTML，这样也可以保证同一个渲染层（PHP、JSP、Ruby 等）负责输出标记，而不是把标记嵌在 JavaScript 中。</p>
+<p>解耦 HTML 和 JavaScript 可以节省排错时间，因为更容易定位错误来源。同样解耦也有助于保证可维护性。修改行为只涉及 JavaScript，修改标记只涉及要渲染的文件。</p>
+<p><strong>2.解耦 CSS/JavaScript</strong></p>
+<p>Web应用程序的另一层是CSS，主要负责页面显示。JavaScript和CSS紧密相关，它们都建构在HTML之上，因此也经常一起使用。与 HTML 和 JavaScript 的情况类似，CSS 也可能与 JavaScript 产生紧密耦合。最常见的例子就是使用 JavaScript 修改个别样式，比如：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// <span class="selector-tag">CSS</span> 紧耦合到了 <span class="selector-tag">JavaScript</span></span><br><span class="line">element.style.color = &quot;red&quot;;</span><br><span class="line">element.style.backgroundColor = &quot;blue&quot;;</span><br></pre></td></tr></table></figure>
+<p>因为 CSS 负责页面显示，所以任何样式的问题都应该通过 CSS 文件解决。可是，如果 JavaScript直接修改个别样式（比如颜色），就会增加一个排错时要考虑甚至要修改的因素。结果是 JavaScript 某种程度上承担了页面显示的任务，与 CSS 成了紧密耦合。如果将来有一天要修改样式，那么 CSS 和JavaScript 可能都需要修改。这对负责维护的开发者来说是一个噩梦。层与层的清晰解耦是必需的。</p>
+<p>现代 Web 应用程序经常使用 JavaScript 改变样式，因此虽然不太可能完全解耦 CSS 和 JavaScript，但可以让这种耦合变成更松散。这主要可以通过动态修改类名而不是样式来实现，比如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// CSS 与 JavaScript 松散耦合</span></span><br><span class="line">element.className = <span class="string">&quot;edit&quot;</span>;</span><br></pre></td></tr></table></figure>
+<p>通过修改元素的 CSS 类名，可以把大部分样式限制在 CSS 文件里。JavaScript 只负责修改应用样式的类名，而不直接影响元素的样式。只要应用的类名没错，那么显示的问题就只跟 CSS 有关，而跟JavaScript 无关。</p>
+<p>同样，保证层与层之间的适当分离至关重要。显示出问题就应该只到 CSS 中解决，行为出问题就应该只找 JavaScript 的问题。这些层之间的松散耦合可以提升整个应用程序的可维护性。</p>
+<p><strong>3.解耦应用程序逻辑/事件处理程序</strong></p>
+<p>每个 Web 应用程序中都会有大量事件处理程序在监听各种事件。可是，其中很少能真正做到应用程序逻辑与事件处理程序分离。来看下面的例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">handleKeyPress</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (event.keyCode == <span class="number">13</span>) &#123;</span><br><span class="line">		<span class="keyword">let</span> target = event.target;</span><br><span class="line">		<span class="keyword">let</span> value = <span class="number">5</span> * <span class="built_in">parseInt</span>(target.value);</span><br><span class="line">		<span class="keyword">if</span> (value &gt; <span class="number">10</span>) &#123;</span><br><span class="line">			<span class="built_in">document</span>.getElementById(<span class="string">&quot;error-msg&quot;</span>).style.display = <span class="string">&quot;block&quot;</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个事件处理程序除了处理事件，还包含了应用程序逻辑。这样做的问题是双重的。首先，除了事件没有办法触发应用程序逻辑，结果造成调试困难。如果没有产生预期的结果怎么办？是因为没有调用事件处理程序，还是因为应用程序逻辑有错误？其次，如果后续事件也会对应相同的应用程序逻辑，则会导致代码重复，或者把它提取到单独的函数中。无论情况如何，都会导致原本不必要的多余工作。</p>
+<p>更好的做法是将应用程序逻辑与事件处理程序分开，各自负责处理各自的事情。事件处理程序应该专注于 event 对象的相关信息，然后把这些信息传给处理应用程序逻辑的某些方法。例如，前面的例子可以重写为如下代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">validateValue</span>(<span class="params">value</span>) </span>&#123;</span><br><span class="line">	value = <span class="number">5</span> * <span class="built_in">parseInt</span>(value);</span><br><span class="line">	<span class="keyword">if</span> (value &gt; <span class="number">10</span>) &#123;</span><br><span class="line">		<span class="built_in">document</span>.getElementById(<span class="string">&quot;error-msg&quot;</span>).style.display = <span class="string">&quot;block&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">handleKeyPress</span>(<span class="params">event</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (event.keyCode == <span class="number">13</span>) &#123;</span><br><span class="line">		<span class="keyword">let</span> target = event.target;</span><br><span class="line">		validateValue(target.value);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样修改之后，应用程序逻辑跟事件处理程序就分开了。 handleKeyPress() 函数只负责检查用户是不是按下了回车键（ event.keyCode 等于 13 ），如果是则取得事件目标，并把目标值传给<code>validateValue()</code>函数，该函数包含应用程序逻辑。注意，<code>validateValue()</code>函数中不包含任何依赖事件处理程序的代码。这个函数只负责接收一个值，并根据该值执行其他所有操作。</p>
+<p>把应用程序逻辑从事件处理程序中分离出来有很多好处。首先，这可以让我们以最少的工作量轻松地修改触发某些流程的事件。如果原来是通过鼠标单击触发流程，而现在又想增加键盘操作来触发，那么修改起来也很简单。其次，可以在不用添加事件的情况下测试代码，这样创建单元测试或自动化应用程序流都会更简单。</p>
+<p>以下是在解耦应用程序逻辑和业务逻辑时应该注意的几点。</p>
+<ul>
+<li>不要把 event 对象传给其他方法，而是只传递 event 对象中必要的数据。</li>
+<li> 应用程序中每个可能的操作都应该无须事件处理程序就可以执行。</li>
+<li>事件处理程序应该处理事件，而把后续处理交给应用程序逻辑。</li>
+</ul>
+<p>做到上述几点能够给任何代码的可维护性带来巨大的提升，同时也能为将来的测试和开发提供很多可能性。</p>
+<h3 id="编码惯例"><a href="#编码惯例" class="headerlink" title="编码惯例"></a>编码惯例</h3><p>编写可维护的 JavaScript 不仅仅涉及代码格式和规范，也涉及代码做什么。企业开发 Web 应用程序通常需要很多人协同工作。这时候就需要保证每个人的浏览器环境都有恒定不变的规则。为此，开发者应该遵守某些编码惯例。</p>
+<p><strong>1.尊重对象所有权</strong></p>
+<p>JavaScript 的动态特性意味着几乎可以在任何时候修改任何东西。过去有人说，JavaScript 中没有什么是神圣不可侵犯的，因为不能把任何东西标记为最终结果或者恒定不变。但 ECMAScript 5 引入防篡改对象之后，情况不同了。当然，对象默认还是可以修改的。在其他语言中，在没有源代码的情况下，对象和类不可修改。JavaScript 则允许在任何时候修改任何对象，因此就可能导致意外地覆盖默认行为。因为这门语言没有什么限制，所以就需要开发者自己限制自己。</p>
+<p>在企业开发中，非常重要的编码惯例就是尊重对象所有权，这意味着不要修改不属于你的对象。简单来讲，如果你不负责创建和维护某个对象及其构造函数或方法，就不应该对其进行任何修改。更具体一点说，就是如下惯例。</p>
+<ul>
+<li>不要给实例或原型添加属性。</li>
+<li>不要给实例或原型添加方法。</li>
+<li>不要重定义已有的方法。</li>
+</ul>
+<p>问题在于，开发者会假设浏览器环境以某种方式运行。修改了多个人使用的对象也就意味着会有错误发生。假设有人希望某个函数叫作 stopEvent() ，用于取消某个事件的默认行为。然后，你把它给改了，除了取消事件的默认行为，又添加了其他事件处理程序。可想而知，问题肯定会接踵而至。别人还认为这个函数只做最开始的那点事，但由于对它后来添加的副作用并不知情，因此很可能就会用错或者造成损失。</p>
+<p>以上规则不仅适用于自定义类型和对象，而且适用于原生类型和对象，比如 Object 、 String 、document 、window ，等等。考虑到浏览器厂商也有可能会在不公开的情况下以非预期方式修改这些对象，潜在的风险就更大了。</p>
+<p>有个流行的 Prototype 库就发生过类似的事件。该库在 document 对象上实现了了<code>getElementsByClassName() </code>方法，返回一个 Array 的实例，而这个实例上还增加了 each() 方法。jQuery 的作者 John Resig 后来在自己的博客上分析了这个问题造成的影响。他在博客中指出这个问题是由于浏览器也原生实现了相同的<code>getElementsByClassName()</code>方法造成的，但 Prototype 的同名方法返回的是 Array 而非 NodeList ， NodeList 没有 each() 方法。使用这个库的开发者之前会写这样的代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.getElementsByClassName(<span class="string">&quot;selected&quot;</span>).each(Element.hide);</span><br></pre></td></tr></table></figure>
+<p>虽然这样写在没有原生实现 getElementsByClassName() 方法的浏览器里没有问题，但在实现它的浏览器里就会出问题。这是因为两个同名方法返回的结果不一样。我们不能预见浏览器厂商将来会怎么修改原生对象，因此不管怎么修改它们都可能在将来某个时刻出现冲突时导致问题。</p>
+<p>为此，最好的方法是永远不要修改不属于你的对象。只有你自己创建的才是你的对象，包括自定义类型和对象字面量。 Array 、 document 等对象都不是你的，因为在你的代码执行之前它们已经存在了。可以按如下这样为对象添加新功能。</p>
+<ul>
+<li>创建包含想要功能的新对象，通过它与别人的对象交互。</li>
+<li> 创建新自定义类型继承本来想要修改的类型，可以给自定义类型添加新功能。</li>
+</ul>
+<p>很多 JavaScript 库目前支持这种开发理念，这样无论浏览器怎样改变都可以发展和适应。</p>
+<p><strong>2.不声明全局变量</strong></p>
+<p>与尊重对象所有权密切相关的是尽可能不声明全局变量和函数。同样，这也关系到创建一致和可维护的脚本运行环境。最多可以创建一个全局变量，作为其他对象和函数的命名空间。来看下面的例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 两个全局变量：不要！</span></span><br><span class="line"><span class="keyword">var</span> name = <span class="string">&quot;Nicholas&quot;</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sayName</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上代码声明了两个全局变量： name 和<code>sayName()</code>。可以像下面这样把它们包含在一个对象中：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 一个全局变量：推荐</span></span><br><span class="line"><span class="keyword">var</span> MyApplication = &#123;</span><br><span class="line">	name: <span class="string">&quot;Nicholas&quot;</span>,</span><br><span class="line">	sayName: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="built_in">this</span>.name);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>这个重写后的版本只声明了一个全局对象 MyApplication 。该对象包含了 name 和<code>sayName()</code>。这样可以避免之前版本的几个问题。首先，变量 name 会覆盖 window.name 属性，而这可能会影响其他功能。其次，有助于分清功能都集中在哪里。调用<code>MyApplication.sayName()</code>从逻辑上会暗示，出现任何问题都可以在 MyApplication 的代码中找原因。</p>
+<p>这样一个全局对象可以扩展为<strong>命名空间</strong>的概念。命名空间涉及创建一个对象，然后通过这个对象来暴露能力。比如，Google Closure 库就利用了这样的命名空间来组织其代码。下面是几个例子。</p>
+<ul>
+<li><code>goog.string</code> ：用于操作字符串的方法。</li>
+<li><code>goog.html.utils </code>：与 HTML 相关的方法</li>
+<li><code>goog.i18n</code>：与国际化（i18n）相关的方法。</li>
+</ul>
+<p>对象 goog 就相当于一个容器，其他对象包含在这里面。只要使用对象以这种方式来组织功能，就可以称该对象为命名空间。整个 Google Closure 库都构建在这个概念之上，能够在同一个页面上与其他JavaScript 库共存。</p>
+<p>关于命名空间，最重要的确定一个所有人都同意的全局对象名称。这个名称要足够独特，不可能与其他人的冲突。大多数情况下，可以使用开发者所在的公司名，例如 goog 或 Wrox 。下面的例子演示了使用 Wrox 作为命名空间来组织功能：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建全局对象</span></span><br><span class="line"><span class="keyword">var</span> Wrox = &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 为本书（Professional JavaScript）创建命名空间</span></span><br><span class="line">Wrox.ProJS = &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加本书用到的其他对象</span></span><br><span class="line">Wrox.ProJS.EventUtil = &#123; ... &#125;;</span><br><span class="line">Wrox.ProJS.CookieUtil = &#123; ... &#125;;</span><br></pre></td></tr></table></figure>
+<p>在这个例子中， Wrox 是全局变量，然后在它的下面又创建了命名空间。如果本书所有代码都保存在<code>Wrox.ProJS</code>命名空间中，那么其他作者的代码就可以使用自己的对象来保存。只要每个人都遵循这个模式，就不必担心有人会覆盖这里的 EventUtil 或 CookieUtil ，因为即使重名它们也只会出现在不同的命名空间中。比如下面的例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 为另一本书（Professional Ajax）创建命名空间</span></span><br><span class="line">Wrox.ProAjax = &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 添加其他对象</span></span><br><span class="line">Wrox.ProAjax.EventUtil = &#123; ... &#125;;</span><br><span class="line">Wrox.ProAjax.CookieUtil = &#123; ... &#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 可以照常使用 ProJS 下面的对象</span></span><br><span class="line">Wrox.ProJS.EventUtil.addHandler( ... );</span><br><span class="line">                                </span><br><span class="line"><span class="comment">// 以及 ProAjax 下面的对象</span></span><br><span class="line">Wrox.ProAjax.EventUtil.addHandler( ... );</span><br></pre></td></tr></table></figure>
+<p>虽然命名空间需要多写一点代码，但从可维护性角度看，这个代价还是非常值得的。命名空间可以确保代码与页面上的其他代码互不干扰。</p>
+<p><strong>3.不要比较 null</strong></p>
+<p>JavaScript 不会自动做任何类型检查，因此就需要开发者担起这个责任。结果，很多 JavaScript 代码不会做类型检查。最常见的类型检查是看值是不是 null 。然而，与 null 进行比较的代码太多了，其中很多因为类型检查不够而频繁引发错误。比如下面的例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sortArray</span>(<span class="params">values</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (values != <span class="literal">null</span>) &#123; <span class="comment">// 不要这样比较！</span></span><br><span class="line">		values.sort(comparator);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个函数的目的是使用给定的比较函数对数组进行排序。为保证函数正常执行， values 参数必须是数组。但是， if 语句在这里只简单地检查了这个值不是 null 。实际上，字符串、数值还有其他很多值可以通过这里的检查，结果就会导致错误。</p>
+<p>现实当中，单纯比较 null 通常是不够的。检查值的类型就要真的检查类型，而不是检查它不能是什么。例如，在前面的代码中， values 参数应该是数组。为此，应该检查它到底是不是数组，而不是检查它不是 null 。可以像下面这样重写那个函数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sortArray</span>(<span class="params">values</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (values <span class="keyword">instanceof</span> <span class="built_in">Array</span>) &#123; <span class="comment">//  推荐</span></span><br><span class="line">		values.sort(comparator);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>此函数的这个版本可以过滤所有无效的值，根本不需要使用 null 。</p>
+<p>如果看到比较 null 的代码，可以使用下列某种技术替换它。</p>
+<ul>
+<li> 如果值应该是引用类型，则使用 instanceof 操作符检查其构造函数。</li>
+<li> 如果值应该是原始类型，则使用 typeof 检查其类型。</li>
+<li> 如果希望值是有特定方法名的对象，则使用 typeof 操作符确保对象上存在给定名字的方法。</li>
+</ul>
+<p>代码中比较 null 的地方越少，就越容易明确类型检查的目的，从而消除不必要的错误。</p>
+<p><strong>4.使用常量</strong></p>
+<p>依赖常量的目标是从应用程序逻辑中分离数据，以便修改数据时不会引发错误。显示在用户界面上的字符串就应该以这种方式提取出来，可以方便实现国际化。URL 也应该这样提取出来，因为随着应用程序越来越复杂，URL 极有可能变化。基本上，像这种地方将来因为某种原因而需要修改时，可能就要找到某个函数并修改其中的代码。每次像这样修改应用程序逻辑，都可能引入新错误。为此，可以把这些可能会修改的数据提取出来，放在单独定义的常量中，以实现数据与逻辑分离。</p>
+<p>关键在于把数据从使用它们的逻辑中分离出来。可以使用以下标准检查哪些数据需要提取。</p>
+<ul>
+<li><p><strong>重复出现的值</strong>：任何使用超过一次的值都应该提取到常量中，这样可以消除一个值改了而另一<br>个值没改造成的错误。这里也包括 CSS 的类名。</p>
+</li>
+<li><p> <strong>用户界面字符串</strong>：任何会显示给用户的字符串都应该提取出来，以方便实现国际化。</p>
+</li>
+<li><p><strong>URL</strong>：Web 应用程序中资源的地址经常会发生变化，因此建议把所有 URL 集中放在一个地方<br>管理。</p>
+</li>
+<li><p> <strong>任何可能变化的值</strong>：任何时候，只要在代码中使用字面值，就问问自己这个值将来是否可能会变。如果答案是“是”，那么就应该把它提取到常量中。</p>
+</li>
+</ul>
+<p>使用常量是企业级 JavaScript 开发的重要技术，因为它可以让代码更容易维护，同时可以让代码免受数据变化的影响。</p>
+<h2 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h2><p>相比 JavaScript 刚问世时，目前每个网页中 JavaScript 代码的数量已有极大的增长。代码量的增长也带来了运行时执行 JavaScript 的性能问题。JavaScript 一开始就是一门解释型语言，因此执行速度比编译型语言要慢一些。Chrome 是第一个引入优化引擎将 JavaScript 编译为原生代码的浏览器。随后，其他主流浏览器也紧随其后，实现了 JavaScript 编译。</p>
+<p>即使到了编译 JavaScript 时代，仍可能写出运行慢的代码。不过，如果遵循一些基本模式，就能保证写出执行速度很快的代码。</p>
+<h3 id="作用域意识"><a href="#作用域意识" class="headerlink" title="作用域意识"></a>作用域意识</h3><p>第 4 章讨论过 JavaScript 作用域的概念，以及作用域链的工作原理。随着作用域链中作用域数量的增加，访问当前作用域外部变量所需的时间也会增加。访问全局变量始终比访问局部变量慢，因为必须遍历作用域链。任何可以缩短遍历作用域链时间的举措都能提升代码性能。</p>
+<p><strong>1.避免全局查找</strong></p>
+<p>改进代码性能非常重要的一件事，可能就是要提防全局查询。全局变量和函数相比于局部值始终是最费时间的，因为需要经历作用域链查找。来看下面的函数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">updateUI</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> imgs = <span class="built_in">document</span>.getElementsByTagName(<span class="string">&quot;img&quot;</span>);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>, len = imgs.length; i &lt; len; i++) &#123;</span><br><span class="line">		imgs[i].title = <span class="string">&#x27;$&#123;document.title&#125; image $&#123;i&#125;&#x27;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">let</span> msg = <span class="built_in">document</span>.getElementById(<span class="string">&quot;msg&quot;</span>);</span><br><span class="line">	msg.innerHTML = <span class="string">&quot;Update complete.&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个函数看起来好像没什么问题，但<strong>其中三个地方引用了全局 document 对象</strong>。如果页面的图片非常多，那么 for 循环中就需要引用 document 几十甚至上百次，每次都要遍历一次作用域链。通过在局部作用域中保存 document 对象的引用，能够明显提升这个函数的性能，因为只需要作用域链查找。</p>
+<p>通过创建一个指向 document 对象的局部变量，可以通过将全局查找的数量限制为一个来提高这个函数的性能：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">updateUI</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> doc = <span class="built_in">document</span>;</span><br><span class="line">	<span class="keyword">let</span> imgs = doc.getElementsByTagName(<span class="string">&quot;img&quot;</span>);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>, len = imgs.length; i &lt; len; i++) &#123;</span><br><span class="line">		imgs[i].title = <span class="string">&#x27;$&#123;doc.title&#125; image $&#123;i&#125;&#x27;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">let</span> msg = doc.getElementById(<span class="string">&quot;msg&quot;</span>);</span><br><span class="line">	msg.innerHTML = <span class="string">&quot;Update complete.&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里先把 document 对象保存在局部变量 doc 中。然后用 doc 替代了代码中所有的 document 。这样调用这个函数只会查找一次作用域链，相对上一个版本，肯定会快很多。因此，一个经验规则就是，<strong>只要函数中有引用超过两次的全局对象，就应该把这个对象保存为一个局部变量</strong>。</p>
+<p><strong>2.不使用 with 语句</strong></p>
+<p>在性能很重要的代码中，应避免使用 with 语句。与函数类似， with 语句会创建自己的作用域，因此也会加长其中代码的作用域链。在 with 语句中执行的代码一定比在它外部执行的代码慢，因为作用域链查找时多一步。</p>
+<p>实际编码时很少有需要使用 with 语句的情况，因为它的主要用途是节省一点代码。大多数情况下，使用局部变量可以实现同样的效果，无须增加新作用域。下面看一个例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">updateBody</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="function"><span class="title">with</span>(<span class="params"><span class="built_in">document</span>.body</span>)</span> &#123;</span><br><span class="line">		<span class="built_in">console</span>.log(tagName);</span><br><span class="line">		innerHTML = <span class="string">&quot;Hello world!&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码中的 with 语句让使用 document.body 更简单了。使用局部变量也可以实现同样的效果，如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">updateBody</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> body = <span class="built_in">document</span>.body;</span><br><span class="line">	<span class="built_in">console</span>.log(body.tagName);</span><br><span class="line">	body.innerHTML = <span class="string">&quot;Hello world!&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>虽然这段代码多了几个字符，但比使用 with 语句还更容易理解了，因为 tagName 和 innerHTML属于谁很明确。这段代码还通过把 document.body 保存在局部变量中来省去全局查找。</p>
+<h3 id="选择正确的方法"><a href="#选择正确的方法" class="headerlink" title="选择正确的方法"></a>选择正确的方法</h3><p>与其他语言一样，<strong>影响性能的因素通常涉及算法或解决问题的方法</strong>。经验丰富的开发者知道用什么方法性能更佳。通常很多能在其他编程语言中提升性能的技术和方法同样也适用于 JavaScript。</p>
+<p><strong>1.避免不必要的属性查找</strong></p>
+<p>在计算机科学中，算法复杂度使用大 O 表示法来表示。最简单同时也最快的算法可以表示为常量值<br>或 O(1)。然后，稍微复杂一些的算法同时执行时间也更长一些。下表列出了 JavaScript中常见算法的类型。</p>
+<img data-src="/2020/11/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A104%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/11.png" class>
+
+<p>常量值或 O(1)，指字面量和保存在变量中的值，表示读取常量值所需的时间不会因值的多少而变化。<strong>读取常量值是效率极高的操作，因此非常快</strong>。来看下面的例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> value = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">let</span> sum = <span class="number">10</span> + value;</span><br><span class="line"><span class="built_in">console</span>.log(sum);</span><br></pre></td></tr></table></figure>
+<p>以上代码查询了 4 次常量值：数值 5、变量 value 、数值 10 和变量 sum 。整体代码的复杂度可以认为是 O(1)。</p>
+<p>在 JavaScript 中访问数组元素也是 O(1)操作，与简单的变量查找一样。因此，下面的代码与前面的例子效率一样：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> values = [<span class="number">5</span>, <span class="number">10</span>];</span><br><span class="line"><span class="keyword">let</span> sum = values[<span class="number">0</span>] + values[<span class="number">1</span>];</span><br><span class="line"><span class="built_in">console</span>.log(sum);</span><br></pre></td></tr></table></figure>
+<p>使用变量和数组相比访问对象属性效率更高，访问对象属性的算法复杂度是 O(n)。访问对象的每个属性都比访问变量或数组花费的时间长，因为查找属性名要搜索原型链。简单来说，查找的属性越多，执行时间就越长。来看下面的例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> values = &#123; <span class="attr">first</span>: <span class="number">5</span>, <span class="attr">second</span>: <span class="number">10</span> &#125;;</span><br><span class="line"><span class="keyword">let</span> sum = values.first + values.second;</span><br><span class="line"><span class="built_in">console</span>.log(sum);</span><br></pre></td></tr></table></figure>
+<p>这个例子使用两次属性查找来计算 sum 的值。一两次属性查找可能不会有明显的性能问题，但几百上千次则绝对会拖慢执行速度。</p>
+<p>特别要注意避免<strong>通过多次查找获取一个值</strong>。例如，看下面的例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> query = <span class="built_in">window</span>.location.href.substring(<span class="built_in">window</span>.location.href.indexOf(<span class="string">&quot;?&quot;</span>));</span><br></pre></td></tr></table></figure>
+<p>这里有 6 次属性查找：3 次是为查找<code>window.location.href.substring()</code>，3 次是为查找<br><code>window.location.href.indexOf() </code>。通过数代码中出现的点号数量，就可以知道有几次属性查找。以上代码效率特别低，这是因为使用了两次<code>window.location.href</code>，即同样的查找执行了两遍。</p>
+<p>只要使用某个 object 属性超过一次，就应该将其保存在局部变量中。第一次仍然要用 O(n)的复杂度去访问这个属性，但后续每次访问就都是 O(1)，这样就是质的提升了。例如，前面的代码可以重写为如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> url = <span class="built_in">window</span>.location.href;</span><br><span class="line"><span class="keyword">let</span> query = url.substring(url.indexOf(<span class="string">&quot;?&quot;</span>));</span><br></pre></td></tr></table></figure>
+<p>这个版本的代码只有 4 次属性查找，比之前节省了约 33%。在大型脚本中如果能这样优化，可能就会明显改进性能。</p>
+<p>通常，只要能够降低算法复杂度，就应该尽量通过在局部变量中保存值来替代属性查找。另外，如果实现某个需求既可以使用数组的数值索引，又可以使用命名属性（比如 NodeList 对象），那就都应该使用数值索引。</p>
+<p><strong>2.优化循环</strong></p>
+<p>循环是编程中常用的语法构造，因此在 JavaScript 中也十分常见。优化这些循环是性能优化的重要内容，因为循环会重复多次运行相同的代码，所以运行时间会自动增加。其他语言有很多关于优化循环的研究，这些技术同样适用于 JavaScript。优化循环的基本步骤如下。</p>
+<p>(1) 简化终止条件。因为每次循环都会计算终止条件，所以它应该尽可能地快。这意味着要避免属性查找或其他 O(n)操作。<br>(2) 简化循环体。循环体是最花时间的部分，因此要尽可能优化。要确保其中不包含可以轻松转移到循环外部的密集计算。<br>(3) 使用后测试循环。最常见的循环就是 for 和 while 循环，这两种循环都属于先测试循环。 do-while就是后测试循环，避免了对终止条件初始评估 ，因此应该会更快。</p>
+<img data-src="/2020/11/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A104%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/12.png" class>
+
+
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" rel="tag"># 读书笔记</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/11/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A102%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/" rel="prev" title="读书笔记：JavaScript高级程序设计02（第4版）">
+      <i class="fa fa-chevron-left"></i> 读书笔记：JavaScript高级程序设计02（第4版）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/11/09/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A103%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/" rel="next" title="读书笔记：JavaScript高级程序设计03（第4版）">
+      读书笔记：JavaScript高级程序设计03（第4版） <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC22%E7%AB%A0%EF%BC%9A%E5%A4%84%E7%90%86-XML"><span class="nav-text">第22章：处理 XML</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC24%E7%AB%A0%EF%BC%9A%E7%BD%91%E7%BB%9C%E8%AF%B7%E6%B1%82%E4%B8%8E%E8%BF%9C%E7%A8%8B%E8%B5%84%E6%BA%90"><span class="nav-text">第24章：网络请求与远程资源</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#XMLHttpRequest-%E5%AF%B9%E8%B1%A1"><span class="nav-text">XMLHttpRequest 对象</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-XHR"><span class="nav-text">使用 XHR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP%E5%A4%B4%E9%83%A8"><span class="nav-text">HTTP头部</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GET-%E8%AF%B7%E6%B1%82"><span class="nav-text">GET 请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#POST-%E8%AF%B7%E6%B1%82"><span class="nav-text">POST 请求</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC25%E7%AB%A0%EF%BC%9A%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%AD%98%E5%82%A8"><span class="nav-text">第25章：客户端存储</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#cookie"><span class="nav-text">cookie</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%99%90%E5%88%B6"><span class="nav-text">限制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#cookie-%E7%9A%84%E6%9E%84%E6%88%90"><span class="nav-text">cookie 的构成</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC26%E7%AB%A0%EF%BC%9A%E6%A8%A1%E5%9D%97"><span class="nav-text">第26章：模块</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%90%86%E8%A7%A3%E6%A8%A1%E5%9D%97%E6%A8%A1%E5%BC%8F"><span class="nav-text">理解模块模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E6%A0%87%E8%AF%86%E7%AC%A6"><span class="nav-text">模块标识符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E4%BE%9D%E8%B5%96"><span class="nav-text">模块依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E5%8A%A0%E8%BD%BD"><span class="nav-text">模块加载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A5%E5%8F%A3"><span class="nav-text">入口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5%E4%BE%9D%E8%B5%96"><span class="nav-text">异步依赖</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%91%E5%90%88%E7%9A%84%E6%A8%A1%E5%9D%97%E7%B3%BB%E7%BB%9F"><span class="nav-text">凑合的模块系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8-ES6-%E4%B9%8B%E5%89%8D%E7%9A%84%E6%A8%A1%E5%9D%97%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="nav-text">使用 ES6 之前的模块加载器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CommonJS"><span class="nav-text">CommonJS</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC28%E7%AB%A0%EF%BC%9A%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="nav-text">第28章：最佳实践</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E7%BB%B4%E6%8A%A4%E6%80%A7"><span class="nav-text">可维护性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%8F%AF%E7%BB%B4%E6%8A%A4%E7%9A%84%E4%BB%A3%E7%A0%81"><span class="nav-text">什么是可维护的代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83"><span class="nav-text">编码规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9D%BE%E6%95%A3%E8%80%A6%E5%90%88"><span class="nav-text">松散耦合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E7%A0%81%E6%83%AF%E4%BE%8B"><span class="nav-text">编码惯例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%A7%E8%83%BD"><span class="nav-text">性能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8%E5%9F%9F%E6%84%8F%E8%AF%86"><span class="nav-text">作用域意识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E6%AD%A3%E7%A1%AE%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-text">选择正确的方法</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="筛滤淘"
+      src="/images/cat.jpg">
+  <p class="site-author-name" itemprop="name">筛滤淘</p>
+  <div class="site-description" itemprop="description">前端知识点总结</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">129</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lm101845" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lm101845" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1018457683@qq.com" title="E-Mail → mailto:1018457683@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.jianshu.com/u/6879af8ace24" title="简 书 → https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;6879af8ace24" rel="noopener" target="_blank"><i class="fa fa-jianshu fa-fw"></i>简 书</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/9002959" title="B  站 → https:&#x2F;&#x2F;space.bilibili.com&#x2F;9002959" rel="noopener" target="_blank"><i class="fa fa-bilibili fa-fw"></i>B  站</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">筛滤淘</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">3.7m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">56:03</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
