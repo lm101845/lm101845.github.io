@@ -23,12 +23,12 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="(注1:2019年10月末开始弄这个Hexo博客，一直搞了有一个多星期才搞好)  (注2:博客平稳运行一年后误删文件，后来我就重新装了一次，因为版本的更迭，发生了很多小问题，一年后的我又差不多搞了一个多星期才把它搞好。)  (注3：我以后是再也不想动它了，不折腾了，博客建好后好好写文章，做项目才是王道啊。)  博客搭建各种坑 使用git分支保存hexo博客源码到github  本文并不是介绍如何一">
+  <meta name="description" content="(注1:2019年10月末开始弄这个Hexo博客，一直搞了有一个多星期才搞好)  (注2:博客平稳运行一年后误删文件，后来我就重新装了一次，因为版本的更迭，发生了很多小问题，一年后的我又差不多搞了一个多星期才把它搞好。)  (注3：我以后是再也不想动它了，不折腾了，博客建好后好好写文章，做项目才是王道啊。)  (注4：现在是2021年3月3日，最近我发现GitHub是不是出现了问题，我死活打不开我">
 <meta property="og:type" content="article">
 <meta property="og:title" content="博客搭建与优化">
 <meta property="og:url" content="http://example.com/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/index.html">
 <meta property="og:site_name" content="木子小屋">
-<meta property="og:description" content="(注1:2019年10月末开始弄这个Hexo博客，一直搞了有一个多星期才搞好)  (注2:博客平稳运行一年后误删文件，后来我就重新装了一次，因为版本的更迭，发生了很多小问题，一年后的我又差不多搞了一个多星期才把它搞好。)  (注3：我以后是再也不想动它了，不折腾了，博客建好后好好写文章，做项目才是王道啊。)  博客搭建各种坑 使用git分支保存hexo博客源码到github  本文并不是介绍如何一">
+<meta property="og:description" content="(注1:2019年10月末开始弄这个Hexo博客，一直搞了有一个多星期才搞好)  (注2:博客平稳运行一年后误删文件，后来我就重新装了一次，因为版本的更迭，发生了很多小问题，一年后的我又差不多搞了一个多星期才把它搞好。)  (注3：我以后是再也不想动它了，不折腾了，博客建好后好好写文章，做项目才是王道啊。)  (注4：现在是2021年3月3日，最近我发现GitHub是不是出现了问题，我死活打不开我">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/01.jpg">
 <meta property="og:image" content="http://example.com/2019/11/07/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E4%B8%8E%E4%BC%98%E5%8C%96/02.jpg">
@@ -275,7 +275,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>4k</span>
+              <span>4.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -297,6 +297,7 @@
         <p>(注1:2019年10月末开始弄这个Hexo博客，一直搞了有一个多星期才搞好)</p>
 <p>(注2:博客平稳运行一年后误删文件，后来我就重新装了一次，因为版本的更迭，发生了很多小问题，一年后的我又差不多搞了一个多星期才把它搞好。)</p>
 <p>(注3：我以后是再也不想动它了，不折腾了，博客建好后好好写文章，做项目才是王道啊。)</p>
+<p>(注4：现在是2021年3月3日，最近我发现GitHub是不是出现了问题，我死活打不开我的博客了。于是产生了把自己的Hexo博客再部署到Gitee上的想法。)</p>
 <h1 id="博客搭建各种坑"><a href="#博客搭建各种坑" class="headerlink" title="博客搭建各种坑"></a>博客搭建各种坑</h1><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/8814ce1da7a4">使用git分支保存hexo博客源码到github</a></p>
 <p>本文并不是介绍如何一步一步搭建博客的经验贴，只是纯记录自己搭建博客时的经历。如果想学习如何通过GithubPage + Hexo + NexT搭建属于自己的博客，推荐几个链接，我当初主要就是看下面的链接一步一步来的，当然途中遇到了非常多的坑。</p>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/26625249">知乎：GitHub+Hexo 搭建个人网站详细教程</a></p>
@@ -412,6 +413,7 @@
 <li><p>希望以后我可以不再写这篇博文了。</p>
 </li>
 </ul>
+<h1 id="Hexo博客部署到Gitee码云"><a href="#Hexo博客部署到Gitee码云" class="headerlink" title="Hexo博客部署到Gitee码云"></a>Hexo博客部署到Gitee码云</h1><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/mqdxiaoxiao/article/details/95781368">Hexo博客部署到Gitee码云</a></p>
 
     </div>
 
@@ -495,7 +497,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E5%90%84%E7%A7%8D%E5%9D%91"><span class="nav-text">博客搭建各种坑</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%8C%E6%9C%9B%E8%BF%9B%E8%A1%8C%E7%9A%84%E5%8D%9A%E5%AE%A2%E4%BC%98%E5%8C%96"><span class="nav-text">希望进行的博客优化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98"><span class="nav-text">遇到的一些问题</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E5%90%84%E7%A7%8D%E5%9D%91"><span class="nav-text">博客搭建各种坑</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%8C%E6%9C%9B%E8%BF%9B%E8%A1%8C%E7%9A%84%E5%8D%9A%E5%AE%A2%E4%BC%98%E5%8C%96"><span class="nav-text">希望进行的博客优化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98"><span class="nav-text">遇到的一些问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Hexo%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%88%B0Gitee%E7%A0%81%E4%BA%91"><span class="nav-text">Hexo博客部署到Gitee码云</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
