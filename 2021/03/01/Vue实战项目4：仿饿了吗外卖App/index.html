@@ -282,7 +282,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>2.8k</span>
+              <span>2.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
@@ -459,8 +459,14 @@
 </li>
 <li><p><code>App.vue</code>中的<code>import Hello from &#39;./components/Hello&#39;</code>表明先把这个<code>Hello.vue</code>组件先引用过来，<code>export default&#123;components:&#123;Hello&#125;&#125;</code>表明再把这个组件进行注册，最后才能再<code>App.vue</code>里面进行使用。第一步：<strong>引用</strong>；第二步：<strong>注册</strong>；第三步：<strong>使用</strong>。</p>
 </li>
-<li><p>我们之所以可以在<code>index.html</code>中直接使用<code>&lt;app&gt;&lt;/app&gt;</code>，是因为我们在入口文件<code>main.js</code>里面进行了<code>new Vue(&#123;components:&#123;App&#125;&#125;)</code>的注册，所以才能使用。</p>
+<li><p>我们之所以可以在<code>index.html</code>中直接使用<code>&lt;app&gt;&lt;/app&gt;</code>，是因为我们在入口文件<code>main.js</code>里面进行了<code>new Vue(&#123;components:&#123;App&#125;&#125;)</code>的注册，所以才能使用。</p>
 </li>
+</ul>
+<h3 id="项目文件介绍"><a href="#项目文件介绍" class="headerlink" title="项目文件介绍"></a>项目文件介绍</h3><ul>
+<li>老师就简单介绍了一下每个项目具体是干什么的，有什么用。</li>
+</ul>
+<h3 id="Webpack打包"><a href="#Webpack打包" class="headerlink" title="Webpack打包"></a>Webpack打包</h3><ul>
+<li>老师也就大体讲了一下Webpack文件里面的代码，这玩意儿没法做笔记，我也就大体听了一下了。</li>
 </ul>
 <h1 id="第2期视频-Vue2-5开发"><a href="#第2期视频-Vue2-5开发" class="headerlink" title="第2期视频(Vue2.5开发)"></a>第2期视频(Vue2.5开发)</h1><h2 id="课程导学"><a href="#课程导学" class="headerlink" title="课程导学"></a>课程导学</h2><h3 id="课程概述"><a href="#课程概述" class="headerlink" title="课程概述"></a>课程概述</h3><img data-src="/2021/03/01/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE4%EF%BC%9A%E4%BB%BF%E9%A5%BF%E4%BA%86%E5%90%97%E5%A4%96%E5%8D%96App/01.png" class>
 
@@ -497,7 +503,10 @@
     <a href="/2021/02/28/%E5%89%8D%E7%AB%AF%E9%83%A8%E7%BD%B2%E9%A1%B9%E7%9B%AE%E5%88%B0%E8%85%BE%E8%AE%AF%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%A5%E9%97%A8/" rel="prev" title="前端部署项目到腾讯云服务器入门">
       <i class="fa fa-chevron-left"></i> 前端部署项目到腾讯云服务器入门
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2021/03/03/React%E6%A1%86%E6%9E%B6%E5%85%A5%E9%97%A8/" rel="next" title="React框架入门">
+      React框架入门 <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -556,7 +565,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC1%E6%9C%9F%E8%A7%86%E9%A2%91-Vue1-0%E5%BC%80%E5%8F%91"><span class="nav-text">第1期视频(Vue1.0开发)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BE%E7%A8%8B%E7%AE%80%E4%BB%8B"><span class="nav-text">课程简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8DVue-js"><span class="nav-text">介绍Vue.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E6%AD%A5%E9%AA%A4"><span class="nav-text">项目步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E8%A6%81%E6%B1%82"><span class="nav-text">代码质量要求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%9F%E8%83%BD%E6%8A%80%E6%9C%AF%E5%88%86%E6%9E%90"><span class="nav-text">功能技术分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-text">前置知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87"><span class="nav-text">学习目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E5%86%85%E5%AE%B9"><span class="nav-text">学习内容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-js%E4%BB%8B%E7%BB%8D"><span class="nav-text">Vue.js介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%91%E5%B9%B4%E6%9D%A5%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%B6%8B%E5%8A%BF"><span class="nav-text">近年来前端开发趋势</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MVVM%E6%A1%86%E6%9E%B6"><span class="nav-text">MVVM框架</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MVVM%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-text">MVVM应用场景</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFVue-js"><span class="nav-text">什么是Vue.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E6%AF%94Angular%E3%80%81React"><span class="nav-text">对比Angular、React</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-js%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3"><span class="nav-text">Vue.js核心思想</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-cli%E5%BC%80%E5%90%AFVue-js%E9%A1%B9%E7%9B%AE"><span class="nav-text">Vue-cli开启Vue.js项目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-cli%E4%BB%8B%E7%BB%8D"><span class="nav-text">Vue-cli介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-cli%E5%AE%89%E8%A3%85"><span class="nav-text">Vue-cli安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E8%BF%90%E8%A1%8C"><span class="nav-text">项目运行</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC2%E6%9C%9F%E8%A7%86%E9%A2%91-Vue2-5%E5%BC%80%E5%8F%91"><span class="nav-text">第2期视频(Vue2.5开发)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BE%E7%A8%8B%E5%AF%BC%E5%AD%A6"><span class="nav-text">课程导学</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%BE%E7%A8%8B%E6%A6%82%E8%BF%B0"><span class="nav-text">课程概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF"><span class="nav-text">核心技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%BE%E7%A8%8B%E5%AE%89%E6%8E%92"><span class="nav-text">课程安排</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%B2%E6%8E%88%E6%96%B9%E5%BC%8F"><span class="nav-text">讲授方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%BE%E7%A8%8B%E6%94%B6%E8%8E%B7"><span class="nav-text">课程收获</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E5%89%8D%E6%8F%90"><span class="nav-text">学习前提</span></a></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC1%E6%9C%9F%E8%A7%86%E9%A2%91-Vue1-0%E5%BC%80%E5%8F%91"><span class="nav-text">第1期视频(Vue1.0开发)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BE%E7%A8%8B%E7%AE%80%E4%BB%8B"><span class="nav-text">课程简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8DVue-js"><span class="nav-text">介绍Vue.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E6%AD%A5%E9%AA%A4"><span class="nav-text">项目步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E8%A6%81%E6%B1%82"><span class="nav-text">代码质量要求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%9F%E8%83%BD%E6%8A%80%E6%9C%AF%E5%88%86%E6%9E%90"><span class="nav-text">功能技术分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="nav-text">前置知识</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87"><span class="nav-text">学习目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E5%86%85%E5%AE%B9"><span class="nav-text">学习内容</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-js%E4%BB%8B%E7%BB%8D"><span class="nav-text">Vue.js介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%91%E5%B9%B4%E6%9D%A5%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E8%B6%8B%E5%8A%BF"><span class="nav-text">近年来前端开发趋势</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MVVM%E6%A1%86%E6%9E%B6"><span class="nav-text">MVVM框架</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#MVVM%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-text">MVVM应用场景</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFVue-js"><span class="nav-text">什么是Vue.js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E6%AF%94Angular%E3%80%81React"><span class="nav-text">对比Angular、React</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-js%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3"><span class="nav-text">Vue.js核心思想</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue-cli%E5%BC%80%E5%90%AFVue-js%E9%A1%B9%E7%9B%AE"><span class="nav-text">Vue-cli开启Vue.js项目</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-cli%E4%BB%8B%E7%BB%8D"><span class="nav-text">Vue-cli介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Vue-cli%E5%AE%89%E8%A3%85"><span class="nav-text">Vue-cli安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E8%BF%90%E8%A1%8C"><span class="nav-text">项目运行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E6%96%87%E4%BB%B6%E4%BB%8B%E7%BB%8D"><span class="nav-text">项目文件介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Webpack%E6%89%93%E5%8C%85"><span class="nav-text">Webpack打包</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC2%E6%9C%9F%E8%A7%86%E9%A2%91-Vue2-5%E5%BC%80%E5%8F%91"><span class="nav-text">第2期视频(Vue2.5开发)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%BE%E7%A8%8B%E5%AF%BC%E5%AD%A6"><span class="nav-text">课程导学</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%BE%E7%A8%8B%E6%A6%82%E8%BF%B0"><span class="nav-text">课程概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF"><span class="nav-text">核心技术</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%BE%E7%A8%8B%E5%AE%89%E6%8E%92"><span class="nav-text">课程安排</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%B2%E6%8E%88%E6%96%B9%E5%BC%8F"><span class="nav-text">讲授方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%BE%E7%A8%8B%E6%94%B6%E8%8E%B7"><span class="nav-text">课程收获</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E5%89%8D%E6%8F%90"><span class="nav-text">学习前提</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -572,7 +581,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">129</span>
+          <span class="site-state-item-count">131</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -585,7 +594,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-count">59</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -640,7 +649,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">56:03</span>
+    <span title="站点阅读时长">56:10</span>
 </div>
 
         

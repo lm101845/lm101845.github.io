@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="(注1：这是是黑马新版本的React课程，之前也看过一小部分黑马的老版本的React课程，后来感觉越学越不对劲，就没有继续看那个视频了。前几天找工作，人家问我会不会React，我说不会，然后就没有然后了，那我想着就趁着离职在家的这段时间里把React基础知识也学一遍吧。先学一遍黑马的，如果后面还有时间的话，再把后面撩课的视频也再重新学习一遍，就当作复习了。没有办法，2021年找工作和以前不一样了，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React框架入门">
+<meta property="og:url" content="http://example.com/2021/03/03/React%E6%A1%86%E6%9E%B6%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="木子小屋">
+<meta property="og:description" content="(注1：这是是黑马新版本的React课程，之前也看过一小部分黑马的老版本的React课程，后来感觉越学越不对劲，就没有继续看那个视频了。前几天找工作，人家问我会不会React，我说不会，然后就没有然后了，那我想着就趁着离职在家的这段时间里把React基础知识也学一遍吧。先学一遍黑马的，如果后面还有时间的话，再把后面撩课的视频也再重新学习一遍，就当作复习了。没有办法，2021年找工作和以前不一样了，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2021/03/03/React%E6%A1%86%E6%9E%B6%E5%85%A5%E9%97%A8/04.png">
+<meta property="og:image" content="http://example.com/2021/03/03/React%E6%A1%86%E6%9E%B6%E5%85%A5%E9%97%A8/02.png">
+<meta property="og:image" content="http://example.com/2021/03/03/React%E6%A1%86%E6%9E%B6%E5%85%A5%E9%97%A8/03.png">
+<meta property="og:image" content="http://example.com/2021/03/03/React%E6%A1%86%E6%9E%B6%E5%85%A5%E9%97%A8/01.png">
+<meta property="article:published_time" content="2021-03-03T14:16:26.000Z">
+<meta property="article:modified_time" content="2021-03-03T14:16:26.000Z">
+<meta property="article:author" content="筛滤淘">
+<meta property="article:tag" content="React">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/03/03/React%E6%A1%86%E6%9E%B6%E5%85%A5%E9%97%A8/04.png">
+
+<link rel="canonical" href="http://example.com/2021/03/03/React%E6%A1%86%E6%9E%B6%E5%85%A5%E9%97%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>React框架入门 | 木子小屋</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?79d7cb9c8fa9e57a2723fb8645f37638";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">木子小屋</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Talk is cheap. Show me the code.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/03/React%E6%A1%86%E6%9E%B6%E5%85%A5%E9%97%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cat.jpg">
+      <meta itemprop="name" content="筛滤淘">
+      <meta itemprop="description" content="前端知识点总结">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="木子小屋">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          React框架入门
+        </h1>
+
+        <div class="post-meta">
+          
+            <i class="fa fa-thumb-tack"></i>
+            <font color="green">置顶</font>
+            <span class="post-meta-divider">|</span>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-03 22:16:26" itemprop="dateCreated datePublished" datetime="2021-03-03T22:16:26+08:00">2021-03-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/React/" itemprop="url" rel="index"><span itemprop="name">React</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>(注1：这是是黑马新版本的React课程，之前也看过一小部分黑马的老版本的React课程，后来感觉越学越不对劲，就没有继续看那个视频了。前几天找工作，人家问我会不会React，我说不会，然后就没有然后了，那我想着就趁着离职在家的这段时间里把React基础知识也学一遍吧。先学一遍黑马的，如果后面还有时间的话，再把后面撩课的视频也再重新学习一遍，就当作复习了。没有办法，2021年找工作和以前不一样了，对前端的要求也更加高了，所以只能去学习啊。)</p>
+<p>(注2：现在是2021年3月3日，我其实还有很多事情要去做啊。要继续做Vue和小程序的新项目；要复习做过的旧项目；要背面试题；要复习以前的知识点，查漏补缺；要学习Vue源码；要学习TypeScript和Vue3.0；要学习React；要把Node.js视频看完，做一个项目吧；这样一看我估计2个月都不够啊，所以还是要抓紧时间啊，不过也只能慢慢来了，不能操之过急啊。一步一步的稳步向前走吧。)</p>
+<p>(注3：老师应该是叫刘龙彬，讲的挺好的。)</p>
+<h1 id="React简介"><a href="#React简介" class="headerlink" title="React简介"></a>React简介</h1><ul>
+<li>React起源于Facebook的内部项目，因为该公司对市场上所有 JavaScript MVC 框架，都不满意，就决定自己写一套，用来架设Instagram(照片交友)的网站。做出来以后，发现这套东西很好用，<strong>就在2013年5月开源了</strong>。</li>
+<li>与此对比：Angular1从2009年就出来了，是谷歌开发的。Angular1它是MVC类型的框架，刚开始就有设计缺陷，不支持组件化开发。(直到Angular2后才开始支持组件化开发，Angular1和2之间的断层非常厉害，而且学习曲线十分陡峭，是谷歌一群搞Java的人开发的前端框架，里面有很多Java的思想，对前端来说不太好理解，所以后面就慢慢衰落了。)</li>
+<li>由于 React 的<strong>设计思想极其独特</strong>，属于革命性创新，性能出众，代码逻辑却非常简单。所以，越来越多的人开始关注和使用，认为它可能是将来 Web 开发的主流工具。</li>
+<li>清楚两个概念：<ul>
+<li>library(库)：<strong>小而巧</strong>的库，<strong>只提供了特定的API</strong>；优点就是<strong>船小好掉头</strong>，可以很方便的从一个库切换到另外的库；但是<strong>代码几乎不会改变</strong>；</li>
+<li>Framework(框架)：<strong>大而全</strong>的是框架；框架<strong>提供了一整套的解决方案</strong>(比如Vue全家桶)；所以，如果在项目中间，想切换到另外的框架，是比较困难的；</li>
+</ul>
+</li>
+</ul>
+<h1 id="前端三大主流框架"><a href="#前端三大主流框架" class="headerlink" title="前端三大主流框架"></a>前端三大主流框架</h1><blockquote>
+<p>三大框架一大抄。</p>
+</blockquote>
+<ul>
+<li><code>Angular.js</code>：出来<strong>较早</strong>的前端框架，学习曲线比较陡，NG1学起来比较麻烦，NG2 ~ NG5开始，进行了一系列的改革，也提供了组件化开发的概念；从NG2开始，也支持使用TS（TypeScript）进行编程；<ul>
+<li>Angular在印度用的比较多。</li>
+</ul>
+</li>
+<li><code>Vue.js</code>：<strong>最火</strong>(关注的人比较多)的一门前端框架，它是中国人开发的，对我我们来说，文档要友好一些；</li>
+<li><code>React.js</code>：<strong>最流行</strong>(用的人比较多)的一门框架，因为它的设计很优秀；</li>
+</ul>
+<h1 id="React与vue的对比"><a href="#React与vue的对比" class="headerlink" title="React与vue的对比"></a>React与vue的对比</h1><h2 id="组件化方面"><a href="#组件化方面" class="headerlink" title="组件化方面"></a>组件化方面</h2><ul>
+<li><p><strong>什么是模块化：</strong>是从<strong>代码</strong>的角度来进行分析的；把一些<strong>可复用的代码</strong>，<strong>抽离为单个的模块</strong>；便于项目的维护和开发；</p>
+</li>
+<li><p><strong>什么是组件化：</strong> 是从 <strong>UI 界面</strong>的角度来进行分析的；把一些<strong>可复用的UI元素</strong>，<strong>抽离为单独的组件</strong>；便于项目的维护和开发；</p>
+</li>
+<li><p><strong>组件化的好处：</strong>随着项目规模的增大，手里的组件越来越多；很方便就能<strong>把现有的组件</strong>，<strong>拼接为一个完整的页面</strong>；</p>
+</li>
+<li><p><strong>Vue是如何实现组件化的：</strong> 通过 <code>.vue</code> 文件，来创建对应的组件；</p>
+<ul>
+<li>template   结构</li>
+<li>script         行为</li>
+<li>style           样式</li>
+</ul>
+</li>
+<li><p><strong>React如何实现组件化</strong>：大家注意，React<strong>中有组件化的概念</strong>，但是，<strong>并没有像vue这样的组件模板文件</strong>；React中，<strong>一切都是以JS来表现的</strong>；因此要学习React，JS要合格；ES6 和 ES7 (async 和await)要会用；</p>
+</li>
+</ul>
+<h2 id="开发团队方面"><a href="#开发团队方面" class="headerlink" title="开发团队方面"></a>开发团队方面</h2><ul>
+<li>React是由FaceBook前端官方团队进行维护和更新的；因此，React的维护开发团队，技术实力比较雄厚；</li>
+<li>Vue：第一版，主要是有作者 尤雨溪 专门进行维护的，当 Vue更新到 2.x 版本后，也有了一个以尤雨溪为主导的开源小团队，进行相关的开发和维护；</li>
+</ul>
+<h2 id="社区方面"><a href="#社区方面" class="headerlink" title="社区方面"></a>社区方面</h2><ul>
+<li>在社区方面，React由于诞生的较早，所以社区比较强大，一些常见的问题、坑、最优解决方案，文档、博客在社区中都是可以很方便就能找到的；</li>
+<li>Vue是近两年才火起来的，所以，它的社区相对于React来说，要小一些，可能有的一些坑，没人踩过；</li>
+</ul>
+<h2 id="移动APP开发体验方面"><a href="#移动APP开发体验方面" class="headerlink" title="移动APP开发体验方面"></a>移动APP开发体验方面</h2><ul>
+<li>Vue，结合Weex这门技术，提供了迁移到移动端App开发的体验（Weex，目前只是一个 小的玩具， 并没有很成功的大案例；）</li>
+<li>React，结合ReactNative，也提供了无缝迁移到 移动App的开发体验（RN用的最多，也是最火最流行的）；</li>
+</ul>
+<h1 id="为什么要学习React"><a href="#为什么要学习React" class="headerlink" title="为什么要学习React"></a>为什么要学习React</h1><ul>
+<li><p>和Angular1相比，React设计很优秀，一切基于JS并且实现了组件化开发的思想；</p>
+</li>
+<li><p>开发团队实力强悍，不必担心断更的情况；</p>
+</li>
+<li><p>社区强大，很多问题都能找到对应的解决方案；</p>
+</li>
+<li><p>提供了无缝转到 ReactNative 上的开发体验，让我们技术能力得到了拓展；增强了我们的核心竞争力；</p>
+</li>
+<li><p>很多企业中，前端项目的技术选型采用的是React.js；</p>
+</li>
+</ul>
+<h1 id="React中几个核心的概念"><a href="#React中几个核心的概念" class="headerlink" title="React中几个核心的概念"></a>React中几个核心的概念</h1><h2 id="虚拟DOM"><a href="#虚拟DOM" class="headerlink" title="虚拟DOM"></a>虚拟DOM</h2><ul>
+<li><strong>DOM的本质是什么</strong>：<strong>浏览器中的概念</strong>(只局限于浏览器端)，<strong>用JS对象来表示页面上的元素</strong>，并提供了操作 DOM 对象的API；</li>
+<li><strong>什么是React中的虚拟DOM</strong>：是<strong>框架中的概念</strong>，是<strong>程序员</strong>用JS对象来<strong>模拟</strong>页面上的DOM元素和DOM嵌套；</li>
+<li><strong>为什么要实现虚拟DOM（虚拟DOM的目的）：</strong>为了实现页面中， <strong>DOM元素的高效更新</strong>；</li>
+<li><strong>DOM和虚拟DOM的区别</strong>：<ul>
+<li><strong>DOM：</strong>是浏览器中的概念；用JS对象，表示页面上的元素，并提供了操作元素的API；</li>
+<li><strong>虚拟DOM：</strong>是框架中的概念；而是开发框架的程序员，手动用JS对象来模拟DOM元素和嵌套关系；<ul>
+<li>本质： 用<strong>JS对象</strong>，来<strong>模拟DOM元素和嵌套关系；</strong></li>
+<li>目的：就是为了实现页面元素的<strong>高效更新</strong>；</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<img data-src="/2021/03/03/React%E6%A1%86%E6%9E%B6%E5%85%A5%E9%97%A8/04.png" class>
+
+<img data-src="/2021/03/03/React%E6%A1%86%E6%9E%B6%E5%85%A5%E9%97%A8/02.png" class>
+
+<img data-src="/2021/03/03/React%E6%A1%86%E6%9E%B6%E5%85%A5%E9%97%A8/03.png" class>
+
+<h2 id="Diff算法"><a href="#Diff算法" class="headerlink" title="Diff算法"></a>Diff算法</h2><blockquote>
+<p>diff是different的所写，是2棵DOM树找差异的算法。</p>
+</blockquote>
+<ul>
+<li><strong>tree diff:**新旧两棵DOM树，</strong>逐层对比的过程**，就是 Tree Diff； 当整颗DOM逐层对比完毕，则所有需要被按需更新的元素，必然能够找到；</li>
+<li><strong>component diff：</strong>在进行Tree Diff的时候，每一层中，<strong>组件级别</strong>的对比，叫做 Component Diff；<ul>
+<li>如果对比前后，<strong>组件类型</strong>相同，则<strong>暂时</strong>认为此组件不需要被更新；</li>
+<li>如果对比前后，组件类型不同，则需要移除旧组件，创建新组件，并追加到页面上；</li>
+</ul>
+</li>
+<li>**element diff:**在进行组件对比的时候，如果两个组件类型相同，则需要进行元素级别的对比，这叫做 Element Diff；</li>
+</ul>
+<img data-src="/2021/03/03/React%E6%A1%86%E6%9E%B6%E5%85%A5%E9%97%A8/01.png" class>
+
+<h1 id="创建基本的webpack4-x项目"><a href="#创建基本的webpack4-x项目" class="headerlink" title="创建基本的webpack4.x项目"></a>创建基本的webpack4.x项目</h1><ul>
+<li><p>运行<code>npm init -y</code> 快速初始化项目</p>
+</li>
+<li><p>在项目根目录创建<code>src</code>源代码目录和<code>dist</code>产品目录</p>
+</li>
+<li><p>在 src 目录下创建 <code>index.html</code></p>
+</li>
+<li><p>使用 cnpm 安装 webpack ，运行<code>cnpm i webpack webpack-cli -D</code></p>
+<ul>
+<li>如何安装 <code>cnpm</code>: 全局运行 <code>npm i cnpm -g</code></li>
+</ul>
+</li>
+<li><p>注意：webpack 4.x 提供了 约定大于配置的概念；目的是为了尽量减少 配置文件的体积；</p>
+<ul>
+<li>默认约定了：</li>
+<li>打包的入口是<code>src</code> -&gt; <code>index.js</code></li>
+<li>打包的输出文件是<code>dist</code> -&gt; <code>main.js</code></li>
+<li>4.x中新增了 <code>mode</code> 选项(为必选项)，可选的值为：<code>development</code> 和 <code>production</code>;</li>
+</ul>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/React/" rel="tag"># React</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/01/Vue%E5%AE%9E%E6%88%98%E9%A1%B9%E7%9B%AE4%EF%BC%9A%E4%BB%BF%E9%A5%BF%E4%BA%86%E5%90%97%E5%A4%96%E5%8D%96App/" rel="prev" title="Vue实战项目4：仿饿了吗外卖App">
+      <i class="fa fa-chevron-left"></i> Vue实战项目4：仿饿了吗外卖App
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/03/06/Java%E5%85%A5%E9%97%A8/" rel="next" title="Java入门">
+      Java入门 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#React%E7%AE%80%E4%BB%8B"><span class="nav-text">React简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E4%B8%89%E5%A4%A7%E4%B8%BB%E6%B5%81%E6%A1%86%E6%9E%B6"><span class="nav-text">前端三大主流框架</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#React%E4%B8%8Evue%E7%9A%84%E5%AF%B9%E6%AF%94"><span class="nav-text">React与vue的对比</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6%E5%8C%96%E6%96%B9%E9%9D%A2"><span class="nav-text">组件化方面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E5%9B%A2%E9%98%9F%E6%96%B9%E9%9D%A2"><span class="nav-text">开发团队方面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A4%BE%E5%8C%BA%E6%96%B9%E9%9D%A2"><span class="nav-text">社区方面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8APP%E5%BC%80%E5%8F%91%E4%BD%93%E9%AA%8C%E6%96%B9%E9%9D%A2"><span class="nav-text">移动APP开发体验方面</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%AD%A6%E4%B9%A0React"><span class="nav-text">为什么要学习React</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#React%E4%B8%AD%E5%87%A0%E4%B8%AA%E6%A0%B8%E5%BF%83%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="nav-text">React中几个核心的概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%99%9A%E6%8B%9FDOM"><span class="nav-text">虚拟DOM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Diff%E7%AE%97%E6%B3%95"><span class="nav-text">Diff算法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%9F%BA%E6%9C%AC%E7%9A%84webpack4-x%E9%A1%B9%E7%9B%AE"><span class="nav-text">创建基本的webpack4.x项目</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="筛滤淘"
+      src="/images/cat.jpg">
+  <p class="site-author-name" itemprop="name">筛滤淘</p>
+  <div class="site-description" itemprop="description">前端知识点总结</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">131</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">59</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lm101845" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lm101845" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1018457683@qq.com" title="E-Mail → mailto:1018457683@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.jianshu.com/u/6879af8ace24" title="简 书 → https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;6879af8ace24" rel="noopener" target="_blank"><i class="fa fa-jianshu fa-fw"></i>简 书</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/9002959" title="B  站 → https:&#x2F;&#x2F;space.bilibili.com&#x2F;9002959" rel="noopener" target="_blank"><i class="fa fa-bilibili fa-fw"></i>B  站</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">筛滤淘</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">3.7m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">56:10</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
