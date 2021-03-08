@@ -5,7 +5,7 @@
 # Site
 title: 木子小屋
 subtitle: Talk is cheap. Show me the code.
-description: 前端知识点总结
+description: 学习笔记记录
 keywords: 前端博客,JavaScript,HTML,CSS,Vue
 author: 筛滤淘
 language: zh-CN
@@ -109,5 +109,5 @@ search:
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repo: git@github.com:lm101845/lm101845.github.io.git
+  repo: git@two.github.com:liming1018/liming1018.github.io.git
   branch: master
