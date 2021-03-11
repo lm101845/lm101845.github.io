@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="(注1：现在是2021年3月6日，我也不知道我是不是疯了，在当前还未找到前端工作的情况下，居然又想着开新坑，想再学习一门Java。尽管2019年9-12月短暂的学习过4个月，不过也不过是蜻蜓点水而已。况且我的Node.js也并没有学完，除此之外，前端还有大量的东西需要我去补充和继续学习。而且，一旦写了这篇博文以后，我的博客介绍就不是”前端知识点总结”了，而应该是”前后端知识点总结”了。)  (注2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java入门(苏星河)">
+<meta property="og:url" content="http://example.com/2021/03/06/Java%E5%85%A5%E9%97%A8(%E8%8B%8F%E6%98%9F%E6%B2%B3)/index.html">
+<meta property="og:site_name" content="木子小屋">
+<meta property="og:description" content="(注1：现在是2021年3月6日，我也不知道我是不是疯了，在当前还未找到前端工作的情况下，居然又想着开新坑，想再学习一门Java。尽管2019年9-12月短暂的学习过4个月，不过也不过是蜻蜓点水而已。况且我的Node.js也并没有学完，除此之外，前端还有大量的东西需要我去补充和继续学习。而且，一旦写了这篇博文以后，我的博客介绍就不是”前端知识点总结”了，而应该是”前后端知识点总结”了。)  (注2">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2021/03/06/Java%E5%85%A5%E9%97%A8(%E8%8B%8F%E6%98%9F%E6%B2%B3)/01.png">
+<meta property="og:image" content="http://example.com/2021/03/06/Java%E5%85%A5%E9%97%A8(%E8%8B%8F%E6%98%9F%E6%B2%B3)/02.png">
+<meta property="og:image" content="http://example.com/2021/03/06/Java%E5%85%A5%E9%97%A8(%E8%8B%8F%E6%98%9F%E6%B2%B3)/03.png">
+<meta property="og:image" content="http://example.com/2021/03/06/Java%E5%85%A5%E9%97%A8(%E8%8B%8F%E6%98%9F%E6%B2%B3)/04.png">
+<meta property="og:image" content="http://example.com/2021/03/06/Java%E5%85%A5%E9%97%A8(%E8%8B%8F%E6%98%9F%E6%B2%B3)/05.png">
+<meta property="og:image" content="http://example.com/2021/03/06/Java%E5%85%A5%E9%97%A8(%E8%8B%8F%E6%98%9F%E6%B2%B3)/08.png">
+<meta property="og:image" content="http://example.com/2021/03/06/Java%E5%85%A5%E9%97%A8(%E8%8B%8F%E6%98%9F%E6%B2%B3)/06.png">
+<meta property="og:image" content="http://example.com/2021/03/06/Java%E5%85%A5%E9%97%A8(%E8%8B%8F%E6%98%9F%E6%B2%B3)/07.png">
+<meta property="og:image" content="http://example.com/2021/03/06/Java%E5%85%A5%E9%97%A8(%E8%8B%8F%E6%98%9F%E6%B2%B3)/09.png">
+<meta property="og:image" content="http://example.com/2021/03/06/Java%E5%85%A5%E9%97%A8(%E8%8B%8F%E6%98%9F%E6%B2%B3)/10.png">
+<meta property="og:image" content="http://example.com/2021/03/06/Java%E5%85%A5%E9%97%A8(%E8%8B%8F%E6%98%9F%E6%B2%B3)/11.png">
+<meta property="og:image" content="http://example.com/2021/03/06/Java%E5%85%A5%E9%97%A8(%E8%8B%8F%E6%98%9F%E6%B2%B3)/12.png">
+<meta property="og:image" content="http://example.com/2021/03/06/Java%E5%85%A5%E9%97%A8(%E8%8B%8F%E6%98%9F%E6%B2%B3)/13.png">
+<meta property="og:image" content="http://example.com/2021/03/06/Java%E5%85%A5%E9%97%A8(%E8%8B%8F%E6%98%9F%E6%B2%B3)/14.png">
+<meta property="og:image" content="http://example.com/2021/03/06/Java%E5%85%A5%E9%97%A8(%E8%8B%8F%E6%98%9F%E6%B2%B3)/15.png">
+<meta property="article:published_time" content="2021-03-06T15:09:23.000Z">
+<meta property="article:modified_time" content="2021-03-06T15:09:23.000Z">
+<meta property="article:author" content="筛滤淘">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/03/06/Java%E5%85%A5%E9%97%A8(%E8%8B%8F%E6%98%9F%E6%B2%B3)/01.png">
+
+<link rel="canonical" href="http://example.com/2021/03/06/Java%E5%85%A5%E9%97%A8(%E8%8B%8F%E6%98%9F%E6%B2%B3)/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Java入门(苏星河) | 木子小屋</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?79d7cb9c8fa9e57a2723fb8645f37638";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">木子小屋</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Talk is cheap. Show me the code.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/06/Java%E5%85%A5%E9%97%A8(%E8%8B%8F%E6%98%9F%E6%B2%B3)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cat.jpg">
+      <meta itemprop="name" content="筛滤淘">
+      <meta itemprop="description" content="前端知识点总结">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="木子小屋">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java入门(苏星河)
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-06 23:09:23" itemprop="dateCreated datePublished" datetime="2021-03-06T23:09:23+08:00">2021-03-06</time>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>(注1：现在是2021年3月6日，我也不知道我是不是疯了，在当前还未找到前端工作的情况下，居然又想着开新坑，想再学习一门Java。尽管2019年9-12月短暂的学习过4个月，不过也不过是蜻蜓点水而已。况且我的Node.js也并没有学完，除此之外，前端还有大量的东西需要我去补充和继续学习。而且，一旦写了这篇博文以后，我的博客介绍就不是”前端知识点总结”了，而应该是”前后端知识点总结”了。)</p>
+<p>(注2：不过，在一年零三个月后，我依然还是想着学习一下Java，那就先占个坑吧，我知道，在我的职业生涯里，绝对会在某个阶段去学习Java，C，C++的，那晚学不如早学，起码开个坑，到时候慢慢去填吧。)</p>
+<p>(注3：我的第三次面试感觉有点希望，如果他们要我的话，我就去，工资6K也不管了，先做个2年再说吧。然后就开始在实际的项目中磨练自己的知识点吧。)</p>
+<p>(注4：这个视频前面部分的老师好像叫苏星河，讲的非常好，通俗易懂，对新手非常友好，我2019年的时候也是看的他的视频。)</p>
+<p>(注5：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Qy4y1k7kL?p=1">视频链接</a>)</p>
+<p>(注6：因为我也不算是零基础了，所以前面的基础视频部分我就1.5倍速看了。)</p>
+<h1 id="第1章：开发前言"><a href="#第1章：开发前言" class="headerlink" title="第1章：开发前言"></a>第1章：开发前言</h1><h2 id="Java语言概述"><a href="#Java语言概述" class="headerlink" title="Java语言概述"></a>Java语言概述</h2><h3 id="什么是Java语言"><a href="#什么是Java语言" class="headerlink" title="什么是Java语言"></a>什么是Java语言</h3><p>Java语言是美国Sun公司（Stanford University Network），在1995年推出的高级编程语言。所谓编程语言，是计算机的语言，人们可以使用编程语言对计算机下达命令，让计算机完成人们需要的功能。</p>
+<h3 id="Java语言发展历史"><a href="#Java语言发展历史" class="headerlink" title="Java语言发展历史"></a>Java语言发展历史</h3><ul>
+<li>1995年Sun公司发布Java1.0版本</li>
+<li>1997年发布Java1.1版本</li>
+<li>1998年发布Java1.2版本</li>
+<li>2000年发布Java1.3版本</li>
+<li>2002年发布Java1.4版本</li>
+<li>2004年发布Java5版本</li>
+<li>2006年发布Java6版本</li>
+<li>2009年Oracle甲骨文公司收购Sun公司，并于2011发布Java7版本</li>
+<li>2014年发布ala8版本</li>
+<li>2017年9月发布Java9版本</li>
+<li>2018年3月发布Java10版本</li>
+</ul>
+<h3 id="Java语言能做什么"><a href="#Java语言能做什么" class="headerlink" title="Java语言能做什么"></a>Java语言能做什么</h3><p>Java语言主要应用在互联网程序的开发领域。常见的互联网应用比如天猫、京东、物流系统、网银系统等，以及服务器后台处理大数据的存储、查询、数据挖掘等也有很多应用。</p>
+<img data-src="/2021/03/06/Java%E5%85%A5%E9%97%A8(%E8%8B%8F%E6%98%9F%E6%B2%B3)/01.png" class>
+
+<img data-src="/2021/03/06/Java%E5%85%A5%E9%97%A8(%E8%8B%8F%E6%98%9F%E6%B2%B3)/02.png" class>
+
+<img data-src="/2021/03/06/Java%E5%85%A5%E9%97%A8(%E8%8B%8F%E6%98%9F%E6%B2%B3)/03.png" class>
+
+<img data-src="/2021/03/06/Java%E5%85%A5%E9%97%A8(%E8%8B%8F%E6%98%9F%E6%B2%B3)/04.png" class>
+
+<h2 id="计算机基础知识"><a href="#计算机基础知识" class="headerlink" title="计算机基础知识"></a>计算机基础知识</h2><h3 id="二进制"><a href="#二进制" class="headerlink" title="二进制"></a>二进制</h3><blockquote>
+<p>二进制是莱布尼兹最早发明的。</p>
+</blockquote>
+<p>计算机中的数据不同于人们生活中的数据，人们生活采用十进制数，而计算机中全部采用二进制数表示，它只包含0、1两个数，逢二进一，1+1=10。每一个0或者每一个1，叫做一个bit（比特，位）。</p>
+<p>下面了解一下十进制和二进制数据之间的转换计算。</p>
+<ul>
+<li><p>十进制数据转成二进制数据：使用除以2获取余数的方式</p>
+<img data-src="/2021/03/06/Java%E5%85%A5%E9%97%A8(%E8%8B%8F%E6%98%9F%E6%B2%B3)/05.png" class>
+</li>
+<li><p>二进制数据转成十进制数据：使用8421编码的方式</p>
+<img data-src="/2021/03/06/Java%E5%85%A5%E9%97%A8(%E8%8B%8F%E6%98%9F%E6%B2%B3)/08.png" class>
+
+<img data-src="/2021/03/06/Java%E5%85%A5%E9%97%A8(%E8%8B%8F%E6%98%9F%E6%B2%B3)/06.png" class>
+
+</li>
+</ul>
+<blockquote>
+<p>小贴士：二进制数系统中，每个0或1就是一个位，叫做bit（比特）。</p>
+</blockquote>
+<h3 id="字节"><a href="#字节" class="headerlink" title="字节"></a>字节</h3><p><strong>字节</strong>(而不是位)是我们常见的计算机中最小存储单元。计算机存储任何的数据，都是以字节的形式存储，右键点击文件属性，我们可以查看文件的字节大小。</p>
+<p>8个bit（二进制位）0000-0000表示为1个字节，写成1byte或者1B。</p>
+<ul>
+<li>1Byte = 8 bit</li>
+<li>1KB  = 1024B</li>
+<li>1MB = 1024KB </li>
+<li>1GB = 1024MB </li>
+<li>1TB  = 1024GB </li>
+<li>1PB = 1024TB </li>
+<li>1EB = 1024PB </li>
+<li>1ZB = 1024EB </li>
+</ul>
+<h3 id="常用DOS命令"><a href="#常用DOS命令" class="headerlink" title="常用DOS命令"></a>常用DOS命令</h3><p>Java语言的初学者，学习一些DOS命令，会非常有帮助。DOS是一个早期的操作系统，现在已经被Windows系统取代，对于我们开发人员，目前需要在DOS中完成一些事情，因此就需要掌握一些必要的命令。</p>
+<img data-src="/2021/03/06/Java%E5%85%A5%E9%97%A8(%E8%8B%8F%E6%98%9F%E6%B2%B3)/07.png" class>
+
+<h1 id="第2章：Java语言开发环境搭建"><a href="#第2章：Java语言开发环境搭建" class="headerlink" title="第2章：Java语言开发环境搭建"></a>第2章：Java语言开发环境搭建</h1><h2 id="Java-虚拟机——JVM"><a href="#Java-虚拟机——JVM" class="headerlink" title="Java 虚拟机——JVM"></a>Java 虚拟机——JVM</h2><ul>
+<li><strong>JVM</strong> （Java Virtual Machine ）：<strong>Java虚拟机</strong>，简称JVM，是运行所有Java程序的假想计算机，是<strong>Java程序的</strong><br><strong>运行环境</strong>，是Java 最具吸引力的特性之一。我们编写的Java代码，都运行在<code>JVM</code>之上。</li>
+<li><strong>跨平台</strong> ：任何软件的运行，都必须要运行在操作系统之上，而我们用Java编写的软件可以运行在任何的操作系<br>统上，这个特性称为<strong>Java语言的跨平台特性</strong>。该特性是由JVM实现的，<strong>我们编写的程序运行在JVM上，而JVM</strong><br><strong>运行在操作系统上</strong>。</li>
+</ul>
+<img data-src="/2021/03/06/Java%E5%85%A5%E9%97%A8(%E8%8B%8F%E6%98%9F%E6%B2%B3)/09.png" class>
+
+<p>如图所示，Java的虚拟机本身不具备跨平台功能的，每个操作系统下都有不同版本的虚拟机。</p>
+<h2 id="JRE和JDK"><a href="#JRE和JDK" class="headerlink" title="JRE和JDK"></a>JRE和JDK</h2><ul>
+<li><p><strong>JRE</strong>(Java Runtime Environment) ：是Java程序的运行时环境，包含<strong>JVM</strong>和运行时所需要的<strong>核心类库</strong> 。</p>
+</li>
+<li><p><strong>JDK</strong>(Java Development Kit)：是Java程序开发工具包，包含<strong>JRE</strong>和<strong>开发人员使用的工具</strong>。</p>
+</li>
+</ul>
+<p>我们想要运行一个<strong>已有的</strong>Java程序，那么只需安装<strong>JRE</strong>即可。</p>
+<p>我们想要开发一个<strong>全新的</strong>Java程序，那么必须安装<strong>JDK</strong> 。</p>
+<img data-src="/2021/03/06/Java%E5%85%A5%E9%97%A8(%E8%8B%8F%E6%98%9F%E6%B2%B3)/10.png" class>
+
+<blockquote>
+<p>三者关系：JDK &gt; JRE &gt; JVM</p>
+</blockquote>
+<img data-src="/2021/03/06/Java%E5%85%A5%E9%97%A8(%E8%8B%8F%E6%98%9F%E6%B2%B3)/11.png" class>
+
+<h2 id="JDK9安装"><a href="#JDK9安装" class="headerlink" title="JDK9安装"></a>JDK9安装</h2><blockquote>
+<p>老师这个视频是2018年的，有点老了，学的是Java 9.0.4版本。</p>
+<p>注意1：安装路径中，不要包含中文和空格。</p>
+<p>注意2：不要安装公共JRE了，因为开发工具(JDK)里面也包括了JRE了。</p>
+</blockquote>
+<h2 id="JAVA-HOME-环境变量的配置"><a href="#JAVA-HOME-环境变量的配置" class="headerlink" title="JAVA_HOME 环境变量的配置"></a>JAVA_HOME 环境变量的配置</h2><h3 id="配置环境变量作用"><a href="#配置环境变量作用" class="headerlink" title="配置环境变量作用"></a>配置环境变量作用</h3><p>开发Java程序，需要使用JDK中提供的工具，工具在JDK9安装目录的 bin 目录下。</p>
+<p>在DOS命令行下使用这些工具，就要先进入到JDK的bin目录下，这个过程就会非常的麻烦。</p>
+<p>不进入JDK的 bin 目录，这些工具就不能使用，会报错。</p>
+<p>为了开发方便，我们想在任意的目录下都可以使用JDK的开发工具，则必须要配置环境变量，配置环境变量的意义<br>在于告诉操作系统，我们使用的JDK开发工具在哪个目录下。</p>
+<h3 id="配置环境变量步骤"><a href="#配置环境变量步骤" class="headerlink" title="配置环境变量步骤"></a>配置环境变量步骤</h3><img data-src="/2021/03/06/Java%E5%85%A5%E9%97%A8(%E8%8B%8F%E6%98%9F%E6%B2%B3)/12.png" class>
+
+<img data-src="/2021/03/06/Java%E5%85%A5%E9%97%A8(%E8%8B%8F%E6%98%9F%E6%B2%B3)/13.png" class>
+
+<img data-src="/2021/03/06/Java%E5%85%A5%E9%97%A8(%E8%8B%8F%E6%98%9F%E6%B2%B3)/14.png" class>
+
+<h1 id="第3章：HelloWorld入门程序"><a href="#第3章：HelloWorld入门程序" class="headerlink" title="第3章：HelloWorld入门程序"></a>第3章：HelloWorld入门程序</h1><h2 id="程序开发步骤说明"><a href="#程序开发步骤说明" class="headerlink" title="程序开发步骤说明"></a>程序开发步骤说明</h2><p>开发环境已经搭建完毕，可以开发我们第一个Java程序了。</p>
+<p>Java程序开发三步骤：<strong>编写</strong>、<strong>编译</strong>、<strong>运行</strong>。</p>
+<img data-src="/2021/03/06/Java%E5%85%A5%E9%97%A8(%E8%8B%8F%E6%98%9F%E6%B2%B3)/15.png" class>
+
+<h2 id="编写Java源程序"><a href="#编写Java源程序" class="headerlink" title="编写Java源程序"></a>编写Java源程序</h2><ul>
+<li><p>新建文本文件，完整的文件名修改为<code>HelloWorld.java </code>，其中文件名为HelloWorld ，后缀名必须为<code>.java</code>。</p>
+</li>
+<li><p>用记事本打开或使用notepad++记事本软件。</p>
+</li>
+<li><p>在文件中键入文本并保存，代码如下：</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorld</span> </span>&#123;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;  </span><br><span class="line">     System.out.println(<span class="string">&quot;Hello World!&quot;</span>);    </span><br><span class="line">   &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>文件名必须是 HelloWorld ，保证文件名和类的名字是一致的，<strong>注意大小写</strong>。</p>
+<p>每个字母和符号必须与示例代码一模一样。</p>
+</blockquote>
+<p>第一个HelloWord<strong>源程序</strong>就编写完成了，但是这个文件是<strong>程序员</strong>编写的，<strong>JVM</strong>是看不懂的，也就不能运行，因此我<br>们必须将编写好的 Java源文件编译成JVM可以看懂的<strong>字节码文件</strong> 。</p>
+<h2 id="编译Java源文件"><a href="#编译Java源文件" class="headerlink" title="编译Java源文件"></a>编译Java源文件</h2><p>在DOS命令行中，进入Java源文件的目录，使用<code>javac</code>命令进行编译。</p>
+<p>命令：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javac Java源文件名.后缀名</span><br></pre></td></tr></table></figure>
+<p>举例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javac HelloWorld.java</span><br></pre></td></tr></table></figure>
+<h2 id="运行Java程序"><a href="#运行Java程序" class="headerlink" title="运行Java程序"></a>运行Java程序</h2><p>在DOS命令行中，进入Java源文件的目录，使用<code>java</code>命令进行运行。</p>
+<p>命令：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java 类名字</span><br></pre></td></tr></table></figure>
+<p>举例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java HelloWorld</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意1：<strong>编译</strong>用<strong>javac命令</strong>，后面文件要写后缀名**.java**</p>
+<p>注意2：<strong>运行</strong>用<strong>java命令</strong>，后面文件不要写后缀名**.class**</p>
+<p>注意3：Java程序**.class<strong>文件的运行工具</strong>java.exe** ，在JDK安装目录的<strong>bin目录</strong>下。但是由于配置了<strong>环境变量</strong>，所以可以在任意目录下使用。</p>
+</blockquote>
+<h2 id="入门程序说明"><a href="#入门程序说明" class="headerlink" title="入门程序说明"></a>入门程序说明</h2><h3 id="编译和运行是两回事"><a href="#编译和运行是两回事" class="headerlink" title="编译和运行是两回事"></a>编译和运行是两回事</h3><ul>
+<li><strong>编译</strong> ：是指将我们编写的Java源文件翻译成<strong>JVM认识的class文件</strong>，在这个过程中， <strong>javac编译器</strong>会检查我们<br>所写的程序是否有错误，<strong>有错误就会提示出来</strong>，如果没有错误就会编译成功。</li>
+<li><strong>运行</strong> ：是指将<strong>class文件</strong>交给JVM去运行，此时JVM就会去执行我们编写的程序了。</li>
+</ul>
+<h3 id="关于main方法"><a href="#关于main方法" class="headerlink" title="关于main方法"></a>关于main方法</h3><ul>
+<li><strong>main方法</strong>：称为主方法。写法是固定格式不可以更改。main方法是程序的入口点或起始点，无论我们编写多<br>少程序，JVM在运行的时候，都会从main方法这里开始执行。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"># Java</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/03/React%E6%A1%86%E6%9E%B6%E5%85%A5%E9%97%A8/" rel="prev" title="React框架入门">
+      <i class="fa fa-chevron-left"></i> React框架入门
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/03/11/2021%E5%B7%A5%E4%BD%9C%E6%97%A5%E5%BF%97-3-15-3-21/" rel="next" title="2021工作日志(3.15-3.21)">
+      2021工作日志(3.15-3.21) <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC1%E7%AB%A0%EF%BC%9A%E5%BC%80%E5%8F%91%E5%89%8D%E8%A8%80"><span class="nav-text">第1章：开发前言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Java%E8%AF%AD%E8%A8%80%E6%A6%82%E8%BF%B0"><span class="nav-text">Java语言概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFJava%E8%AF%AD%E8%A8%80"><span class="nav-text">什么是Java语言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java%E8%AF%AD%E8%A8%80%E5%8F%91%E5%B1%95%E5%8E%86%E5%8F%B2"><span class="nav-text">Java语言发展历史</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java%E8%AF%AD%E8%A8%80%E8%83%BD%E5%81%9A%E4%BB%80%E4%B9%88"><span class="nav-text">Java语言能做什么</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-text">计算机基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6"><span class="nav-text">二进制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E8%8A%82"><span class="nav-text">字节</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8DOS%E5%91%BD%E4%BB%A4"><span class="nav-text">常用DOS命令</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC2%E7%AB%A0%EF%BC%9AJava%E8%AF%AD%E8%A8%80%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="nav-text">第2章：Java语言开发环境搭建</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Java-%E8%99%9A%E6%8B%9F%E6%9C%BA%E2%80%94%E2%80%94JVM"><span class="nav-text">Java 虚拟机——JVM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JRE%E5%92%8CJDK"><span class="nav-text">JRE和JDK</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JDK9%E5%AE%89%E8%A3%85"><span class="nav-text">JDK9安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JAVA-HOME-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-text">JAVA_HOME 环境变量的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E4%BD%9C%E7%94%A8"><span class="nav-text">配置环境变量作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E6%AD%A5%E9%AA%A4"><span class="nav-text">配置环境变量步骤</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC3%E7%AB%A0%EF%BC%9AHelloWorld%E5%85%A5%E9%97%A8%E7%A8%8B%E5%BA%8F"><span class="nav-text">第3章：HelloWorld入门程序</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91%E6%AD%A5%E9%AA%A4%E8%AF%B4%E6%98%8E"><span class="nav-text">程序开发步骤说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E5%86%99Java%E6%BA%90%E7%A8%8B%E5%BA%8F"><span class="nav-text">编写Java源程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91Java%E6%BA%90%E6%96%87%E4%BB%B6"><span class="nav-text">编译Java源文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%90%E8%A1%8CJava%E7%A8%8B%E5%BA%8F"><span class="nav-text">运行Java程序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%A5%E9%97%A8%E7%A8%8B%E5%BA%8F%E8%AF%B4%E6%98%8E"><span class="nav-text">入门程序说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%92%8C%E8%BF%90%E8%A1%8C%E6%98%AF%E4%B8%A4%E5%9B%9E%E4%BA%8B"><span class="nav-text">编译和运行是两回事</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8Emain%E6%96%B9%E6%B3%95"><span class="nav-text">关于main方法</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="筛滤淘"
+      src="/images/cat.jpg">
+  <p class="site-author-name" itemprop="name">筛滤淘</p>
+  <div class="site-description" itemprop="description">前端知识点总结</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">134</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">61</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lm101845" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lm101845" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1018457683@qq.com" title="E-Mail → mailto:1018457683@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.jianshu.com/u/6879af8ace24" title="简 书 → https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;6879af8ace24" rel="noopener" target="_blank"><i class="fa fa-jianshu fa-fw"></i>简 书</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/9002959" title="B  站 → https:&#x2F;&#x2F;space.bilibili.com&#x2F;9002959" rel="noopener" target="_blank"><i class="fa fa-bilibili fa-fw"></i>B  站</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">筛滤淘</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">4m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">60:07</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="(注1：网上找了一些资料，还是要尝试着去学学框架源码啊。”问渠那得清如许，为有源头活水来”，我们不止要会用框架，还要了解它内部的原理，看看尤雨溪是到底怎么开发出来的，对于今后的工作学习是十分有好处的啊。)  (注2：现阶段主要是搜集一些文字资料，看看别人是如何学习Vue源码的。)  (注3：等自己学到了一定的程度了，或者说看文字资料遇到了瓶颈了，就去网上找一些视频来看。我之前找过，感觉有点不好找，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue源码入门">
+<meta property="og:url" content="http://example.com/2020/09/05/Vue%E6%BA%90%E7%A0%81%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="木子小屋">
+<meta property="og:description" content="(注1：网上找了一些资料，还是要尝试着去学学框架源码啊。”问渠那得清如许，为有源头活水来”，我们不止要会用框架，还要了解它内部的原理，看看尤雨溪是到底怎么开发出来的，对于今后的工作学习是十分有好处的啊。)  (注2：现阶段主要是搜集一些文字资料，看看别人是如何学习Vue源码的。)  (注3：等自己学到了一定的程度了，或者说看文字资料遇到了瓶颈了，就去网上找一些视频来看。我之前找过，感觉有点不好找，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2020/09/05/Vue%E6%BA%90%E7%A0%81%E5%85%A5%E9%97%A8/01.png">
+<meta property="article:published_time" content="2020-09-04T16:08:42.000Z">
+<meta property="article:modified_time" content="2020-09-04T16:08:42.000Z">
+<meta property="article:author" content="筛滤淘">
+<meta property="article:tag" content="Vue源码">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2020/09/05/Vue%E6%BA%90%E7%A0%81%E5%85%A5%E9%97%A8/01.png">
+
+<link rel="canonical" href="http://example.com/2020/09/05/Vue%E6%BA%90%E7%A0%81%E5%85%A5%E9%97%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Vue源码入门 | 木子小屋</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?79d7cb9c8fa9e57a2723fb8645f37638";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">木子小屋</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Talk is cheap. Show me the code.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/05/Vue%E6%BA%90%E7%A0%81%E5%85%A5%E9%97%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cat.jpg">
+      <meta itemprop="name" content="筛滤淘">
+      <meta itemprop="description" content="前端知识点总结">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="木子小屋">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Vue源码入门
+        </h1>
+
+        <div class="post-meta">
+          
+            <i class="fa fa-thumb-tack"></i>
+            <font color="green">置顶</font>
+            <span class="post-meta-divider">|</span>
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-05 00:08:42" itemprop="dateCreated datePublished" datetime="2020-09-05T00:08:42+08:00">2020-09-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.7k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>(注1：网上找了一些资料，还是要尝试着去学学框架源码啊。”问渠那得清如许，为有源头活水来”，我们不止要会用框架，还要了解它内部的原理，看看尤雨溪是到底怎么开发出来的，对于今后的工作学习是十分有好处的啊。)</p>
+<p>(注2：现阶段主要是搜集一些文字资料，看看别人是如何学习Vue源码的。)</p>
+<p>(注3：等自己学到了一定的程度了，或者说看文字资料遇到了瓶颈了，就去网上找一些视频来看。我之前找过，感觉有点不好找，这个到时候再说了啊。)</p>
+<p>(注4：但是我现在要明确一下学哪个版本的Vue源码啊，现在Vue3.0也出来了。)</p>
+<p>(注5：现在是2021年3月1日，我现在真的要开始着手熟悉一下Vue的源码了，主要是通过看<strong>黄弈的视频</strong>以及GitHub上的这个<a target="_blank" rel="noopener" href="https://github.com/woai3c/mini-vue/tree/v0.1">mini-vue</a>这个项目进行学习，希望可以对Vue有更深层次的理解和熟练使用吧。)</p>
+<p>(注6：现在是2021年3月10日，我开始看黄弈的视频了吧，这篇博文主要也是看视频做的笔记了。)</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/53184632">Vue源码阅读总结大会</a></p>
+<h1 id="看过的Vue源码有关资料"><a href="#看过的Vue源码有关资料" class="headerlink" title="看过的Vue源码有关资料"></a>看过的Vue源码有关资料</h1><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzUxNjQ1NjMwNw==&mid=2247483922&idx=1&sn=228ca8365d8566d59630d5bad4bf7d58&chksm=f9a6680eced1e118b628499600abd12d622083a0434673514cd5da4cc69a9325c555c051c147&scene=21#wechat_redirect">【Vue原理】响应式原理 - 白话版</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/53218851">【Vue原理】Props - 白话版</a></p>
+<h1 id="阅读源码前的准备"><a href="#阅读源码前的准备" class="headerlink" title="阅读源码前的准备"></a>阅读源码前的准备</h1><ul>
+<li><p><strong>JavaScript 扎实基础</strong></p>
+</li>
+<li><p><strong>看完《 JavaScript 设计模式》</strong></p>
+</li>
+<li><p><strong>掌握 Vue 所有API</strong></p>
+</li>
+</ul>
+<p>我把 Vue 的所有 API 都详细研究使用过了一遍，而且尽量在项目中都有使用，让自己有深一点的体会</p>
+<p>而且我对着官方文档，一个个做了详细的笔记，而且联想过了使用场景。</p>
+<ul>
+<li><strong>学会调试</strong></li>
+</ul>
+<p>我很大胆地说，如果你不会调试，你看 Vue 源码，或者你会想死，你会出现这个场景：”MMP，这个方法是怎么跳到 那个方法的，那个方法和 这个方法又是怎么联系起来的？”</p>
+<p>也许你可以慢慢<strong>使用函数名字</strong>去寻找，但是无疑你会多消耗几倍时间，而且你会更烦。使用调试真的方便，以前我也真的不喜欢调试，觉得好像很难，更喜欢使用 <code>console.log</code>去打印信息。</p>
+<p>是啊，我自己写项目的时候，我还是会使用<code>console.log</code>去调试，那是因为我自己代码，我知道怎么跑。你看别人的代码，还是超级抽象的框架，使用 <code>console.log</code> 的方式相信我，你会掉很多头发。</p>
+<p>这里，我使用的是 <strong>VSCode</strong> 去调试，真的简单又方便，我当时也真的很难去让自己又要学一个东西,但是我咬咬牙，我还是学了，感谢自己。我可以保证，你从不懂到掌握，只要不到十分钟，简直就是现实版的十分钟精通到入门</p>
+<h1 id="Vue-源码的简短总结"><a href="#Vue-源码的简短总结" class="headerlink" title="Vue 源码的简短总结"></a>Vue 源码的简短总结</h1><ul>
+<li><strong>封装了很多常用的函数</strong></li>
+</ul>
+<p>常用的<strong>类型判断、 类型转换 、数据格式转换（数组转对象）</strong>等等。主要目的是为了<strong>复用</strong>且<strong>易维护</strong>。</p>
+<p>举个例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isObject</span>(<span class="params">obj</span>) </span>&#123;    <span class="keyword">return</span> obj !== <span class="literal">null</span> &amp;&amp; <span class="keyword">typeof</span> obj === <span class="string">&#x27;object&#x27;</span>&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isUndef</span>(<span class="params">v</span>) </span>&#123;    <span class="keyword">return</span> v === <span class="literal">undefined</span> || v === <span class="literal">null</span>&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">isDef</span>(<span class="params">v</span>) </span>&#123;    <span class="keyword">return</span> v !== <span class="literal">undefined</span> &amp;&amp; v !== <span class="literal">null</span>&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">toString</span>(<span class="params">val</span>) </span>&#123;    </span><br><span class="line">    <span class="keyword">return</span> val == <span class="literal">null</span> ?    <span class="string">&#x27;&#x27;</span> :    </span><br><span class="line">    <span class="keyword">typeof</span> val === <span class="string">&#x27;object&#x27;</span> ?    </span><br><span class="line">    <span class="built_in">JSON</span>.stringify(val, <span class="literal">null</span>, <span class="number">2</span>) :    <span class="built_in">String</span>(val)</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">toObject</span>(<span class="params">arr</span>) </span>&#123;    </span><br><span class="line">    <span class="keyword">var</span> res = &#123;&#125;;    </span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; arr.length; i++) &#123;        </span><br><span class="line">        <span class="keyword">if</span> (arr[i]) &#123;</span><br><span class="line">            extend(res, arr[i]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;    <span class="keyword">return</span> res</span><br><span class="line">&#125;</span><br><span class="line">....</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>此段源码地址为：到时候找一下。</p>
+</blockquote>
+<p>你说说不定过了几年，判断是否是一个对象，不再是什么<code>typeof obj == &quot;object&quot;</code>了。</p>
+<p>如果没有封装，那岂不是所有代码涉及到的都要改一遍，且不说如果有很多个都变了，那你就头大了。</p>
+<ul>
+<li><strong>节点操作兼容函数</strong></li>
+</ul>
+<p><strong>addClass ,removeClass，createElement，appendChild，removeChild</strong>等。</p>
+<p>举个例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">addClass</span>(<span class="params">el, cls</span>) </span>&#123;    </span><br><span class="line">    <span class="keyword">if</span> (!cls || !(cls = cls.trim())) <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">if</span> (el.classList) &#123;        </span><br><span class="line">        <span class="keyword">if</span> (cls.indexOf(<span class="string">&#x27; &#x27;</span>) &gt; -<span class="number">1</span>) &#123;</span><br><span class="line">            cls.split(<span class="regexp">/\s+/</span>).forEach(<span class="function"><span class="keyword">function</span>(<span class="params">c</span>) </span>&#123; <span class="keyword">return</span> el.classList.add(c); &#125;);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            el.classList.add(cls);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;        </span><br><span class="line">       <span class="keyword">var</span> cur = <span class="string">&quot; &quot;</span> + (el.getAttribute(<span class="string">&#x27;class&#x27;</span>) || <span class="string">&#x27;&#x27;</span>) + <span class="string">&quot; &quot;</span>;        </span><br><span class="line">       <span class="keyword">if</span> (cur.indexOf(<span class="string">&#x27; &#x27;</span> + cls + <span class="string">&#x27; &#x27;</span>) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            el.setAttribute(<span class="string">&#x27;class&#x27;</span>, (cur + cls).trim());</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">....</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>此段源码地址为：到时候找一下。</p>
+</blockquote>
+<p>这些函数都很有用，所以我都记下来了，<strong>毕竟是框架封装的，肯定是最完善的</strong>。</p>
+<ul>
+<li><strong>真的用了很多设计模式</strong></li>
+</ul>
+<p>就我看到的设计模式就有：观察者模式、状态模式、节流模式、 参与者模式、备忘录模式、单例模式 装饰者模式、组合继承模式、链模式等。我怀疑 Vue 把所有的设计模式都用完了。真的，如果你不懂设计模式，你真不会领悟到他这么写的精髓。(所以记得要把前面提到的书籍《 JavaScript 设计模式》看一遍啊)</p>
+<p>我就选 Vue 常用的一个设计模式来讲：<strong>参与者模式</strong>。</p>
+<p>Vue 封装的很多函数都是用了 参与者模式，也可以叫做<strong>柯里化</strong>。</p>
+<p>先来简单解释下什么是参与者模式：首先保存第一次调用，传入参数。其次返回定制函数，函数内使用参数。</p>
+<h1 id="mini-vue项目学习笔记"><a href="#mini-vue项目学习笔记" class="headerlink" title="mini-vue项目学习笔记"></a>mini-vue项目学习笔记</h1><p><a target="_blank" rel="noopener" href="https://github.com/woai3c/mini-vue/tree/v0.1">mini-vue项目地址</a></p>
+<p>我现在还不太会学习别人仓库里的东西，我先fork了一份，然后自己也建了一个空仓库，名字叫<a target="_blank" rel="noopener" href="https://github.com/lm101845/VueSourceCodeLearning">VueSourceCodeLearning</a>，就打算跟着视频和这个项目从头开始写一遍Vue1.0的大体源码吧。</p>
+<h1 id="黄弈视频笔记"><a href="#黄弈视频笔记" class="headerlink" title="黄弈视频笔记"></a>黄弈视频笔记</h1><h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>那么从这一章开始我们即捋分析Vue的源码，我们将会介绍一些<strong>前置知识</strong>如flow、源码目录、构建方式、编译人口等。</p>
+<p>除此之外，我希望你已经用过Vue做过2个以上的实际项目，对Vue的思想有了一定的了解，对绝大部分的API都已经有使用。同时，我也要求你有一定的原生JavaScript的功底，并对代码调试有一定的了解。</p>
+<p>如果你具备了以上条件，并且对Vue的实现原理很感兴趣，那么就可以开始这课程的学习了，我将会为你打开Vue的底层世界大内，对它的实现细节一探究竟。</p>
+<h3 id="认识-Flow"><a href="#认识-Flow" class="headerlink" title="认识 Flow"></a>认识 Flow</h3><p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/46397274">Vue 2.0 为什么选用 Flow 进行静态代码检查而不是直接使用 TypeScript？</a></p>
+<p><a target="_blank" rel="noopener" href="https://flow.org/en/docs/getting-started/">Flow</a> 是 facebook 出品的<br>JavaScript 静态类型检查工具。Vue.js 的源码利用了 Flow 做了静态类型检查，所以了解 Flow 有助于我们阅读源码。</p>
+<h4 id="为什么用-Flow"><a href="#为什么用-Flow" class="headerlink" title="为什么用 Flow"></a>为什么用 Flow</h4><blockquote>
+<p>可以使用<code>npm install -g flow-bin</code>来安装它。</p>
+</blockquote>
+<p>JavaScript 是<strong>动态类型语言</strong>，它的灵活性有目共睹，但是过于灵活的副作用是很容易就写出非常隐蔽的隐患代码，在编译期甚至看上去都不会报错，但在<strong>运行阶段</strong>就可能出现各种奇怪的 bug。</p>
+<p>类型检查是当前动态类型语言的发展趋势，所谓类型检查，就是在<strong>编译期</strong>尽早发现（由类型错误引起的）bug，又不影响代码运行（不需要运行时动态检查类型），使编写 JavaScript 具有和编写 Java 等强类型语言相近的体验。</p>
+<p>项目越复杂就越需要通过工具的手段来保证项目的维护性和增强代码的可读性。 Vue.js 在做 2.0 重构的时候，在 ES2015 的基础上，除了 ESLint 保证代码风格之外，也引入了 Flow 做静态类型检查。之所以选择 Flow，主要是因为 Babel 和 ESLint 都有对应的 Flow 插件以支持语法，可以完全沿用现有的构建配置，非常小成本的改动就可以拥有<strong>静态类型检查</strong>的能力。</p>
+<h4 id="Flow-的工作方式"><a href="#Flow-的工作方式" class="headerlink" title="Flow 的工作方式"></a>Flow 的工作方式</h4><blockquote>
+<p>前面的注释<code>/*@flow*/</code>是有用的，没有它就不会进行静态类型检查了。</p>
+</blockquote>
+<p>通常类型检查分成 2 种方式：</p>
+<ul>
+<li><strong>类型推断</strong>：通过变量的使用上下文来推断出变量类型，然后根据这些推断来检查类型。</li>
+<li><strong>类型注释</strong>：事先注释好我们期待的类型，Flow 会基于这些注释来判断。</li>
+</ul>
+<h5 id="类型推断"><a href="#类型推断" class="headerlink" title="类型推断"></a>类型推断</h5><p>它不需要任何代码修改即可进行类型检查，最小化开发者的工作量。它不会强制你改变开发习惯，因为它会自动推断出变量的类型。这就是所谓的类型推断，Flow 最重要的特性之一。</p>
+<p>通过一个简单例子说明一下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*@flow*/</span><span class="string">``</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">split</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> str.split(<span class="string">&#x27; &#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">split(<span class="number">11</span>)</span><br></pre></td></tr></table></figure>
+<p>Flow 检查上述代码后会报错，因为函数 <code>split</code> 期待的参数是字符串，而我们输入了数字。</p>
+<h5 id="类型注释"><a href="#类型注释" class="headerlink" title="类型注释"></a>类型注释</h5><p>如上所述，类型推断是 Flow 最有用的特性之一，不需要编写类型注释就能获取有用的反馈。但在某些特定的场景下，添加类型注释可以提供更好更明确的检查依据。</p>
+<p>考虑如下代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*@flow*/</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">x, y</span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> x + y</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">add(<span class="string">&#x27;Hello&#x27;</span>, <span class="number">11</span>)</span><br></pre></td></tr></table></figure>
+<p>Flow 检查上述代码时检查不出任何错误，因为从语法层面考虑， <code>+</code> 即可以用在字符串上，也可以用在数字上，我们并没有明确指出 <code>add()</code> 的参数必须为数字。</p>
+<p>在这种情况下，我们可以借助类型注释来指明期望的类型。类型注释是以冒号 <code>:</code> 开头，可以在函数参数，返回值，变量声明中使用。</p>
+<p>如果我们在上段代码中添加类型注释，就会变成如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*@flow*/</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">add</span>(<span class="params">x: number, y: number</span>): <span class="title">number</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> x + y</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">add(<span class="string">&#x27;Hello&#x27;</span>, <span class="number">11</span>)</span><br></pre></td></tr></table></figure>
+<p>现在 Flow 就能检查出错误，因为函数参数的期待类型为数字，而我们提供了字符串。</p>
+<p>上面的例子是针对函数的类型注释。接下来我们来看看 Flow 能支持的一些常见的类型注释。</p>
+<p><strong>数组</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*@flow*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> arr: <span class="built_in">Array</span>&lt;number&gt; = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"></span><br><span class="line">arr.push(<span class="string">&#x27;Hello&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>数组类型注释的格式是 <code>Array&lt;T&gt;</code>，<code>T</code> 表示数组中每项的数据类型。在上述代码中，arr 是每项均为数字的数组。如果我们给这个数组添加了一个字符串，Flow 能检查出错误。</p>
+<p><strong>类和对象</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*@flow*/</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bar</span> </span>&#123;</span><br><span class="line">  x: string;           <span class="comment">// x 是字符串</span></span><br><span class="line">  y: string | number;  <span class="comment">// y 可以是字符串或者数字</span></span><br><span class="line">  z: boolean;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="title">constructor</span>(<span class="params">x: string, y: string | number</span>)</span> &#123;</span><br><span class="line">    <span class="built_in">this</span>.x = x</span><br><span class="line">    <span class="built_in">this</span>.y = y</span><br><span class="line">    <span class="built_in">this</span>.z = <span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> bar: Bar = <span class="keyword">new</span> Bar(<span class="string">&#x27;hello&#x27;</span>, <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> obj: &#123; <span class="attr">a</span>: string, <span class="attr">b</span>: number, <span class="attr">c</span>: <span class="built_in">Array</span>&lt;string&gt;, d: Bar &#125; = &#123;</span><br><span class="line">  a: <span class="string">&#x27;hello&#x27;</span>,</span><br><span class="line">  b: <span class="number">11</span>,</span><br><span class="line">  c: [<span class="string">&#x27;hello&#x27;</span>, <span class="string">&#x27;world&#x27;</span>],</span><br><span class="line">  d: <span class="keyword">new</span> Bar(<span class="string">&#x27;hello&#x27;</span>, <span class="number">3</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>类的类型注释格式如上，可以对类自身的属性做类型检查，也可以对构造函数的参数做类型检查。这里需要注意的是，属性 <code>y</code> 的类型中间用 <code>|</code> 做间隔，表示 <code>y</code> 的类型即可以是字符串也可以是数字。</p>
+<p>对象的注释类型类似于类，需要指定对象属性的类型。</p>
+<p><strong>Null</strong></p>
+<p>若想任意类型 <code>T</code> 可以为 <code>null</code> 或者 <code>undefined</code>，只需类似如下写成 <code>?T</code> 的格式即可。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*@flow*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> foo: ?string = <span class="literal">null</span></span><br></pre></td></tr></table></figure>
+<p>此时，<code>foo</code> 可以为字符串，也可以为 <code>null</code>。</p>
+<p>目前我们只列举了 Flow 的一些常见的类型注释。如果想了解所有类型注释，请移步 Flow 的<a target="_blank" rel="noopener" href="https://flow.org/en/docs/types/">官方文档</a>。</p>
+<h3 id="FLow在Vue-js源码中的应用"><a href="#FLow在Vue-js源码中的应用" class="headerlink" title="FLow在Vue.js源码中的应用"></a>FLow在Vue.js源码中的应用</h3><p>有时候我们想引用第三方库，或者自定义一些类型，但 Flow 并不认识，因此检查的时候会报错。为了解决这类问题，Flow 提出了一个 <code>libdef</code> 的概念，可以用来识别这些第三方库或者是自定义类型，而 Vue.js 也利用了这一特性。</p>
+<p>在 Vue.js 的主目录下有 <code>.flowconfig</code> 文件， 它是 Flow 的配置文件，感兴趣的同学可以看<a target="_blank" rel="noopener" href="https://flow.org/en/docs/config/">官方文档</a>。这其中的 <code>[libs]</code> 部分用来描述包含指定库定义的目录，默认是名为 <code>flow-typed</code> 的目录。</p>
+<p>这里 <code>[libs]</code> 配置的是 <code>flow</code>，表示指定的库定义都在 <code>flow</code> 文件夹内。我们打开这个目录，会发现文件如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">flow</span><br><span class="line">├── compiler.js        # 编译相关</span><br><span class="line">├── component.js       # 组件数据结构</span><br><span class="line">├── global-api.js      # Global API 结构</span><br><span class="line">├── modules.js         # 第三方库定义</span><br><span class="line">├── options.js         # 选项相关</span><br><span class="line">├── ssr.js             # 服务端渲染相关</span><br><span class="line">├── vnode.js           # 虚拟 node 相关</span><br></pre></td></tr></table></figure>
+<img data-src="/2020/09/05/Vue%E6%BA%90%E7%A0%81%E5%85%A5%E9%97%A8/01.png" class>
+
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>通过对 Flow 的认识，有助于我们阅读 Vue 的源码，并且这种静态类型检查的方式非常有利于大型项目源码的开发和维护。类似<br>Flow 的工具还有如 <strong>TypeScript</strong>，感兴趣的同学也可以自行去了解一下。</p>
+<blockquote>
+<p>现在TypeScript成了主流了，尤雨溪也用TypeScript来重构了Vue3.x了。</p>
+</blockquote>
+<h3 id><a href="#" class="headerlink" title></a></h3>
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Vue%E6%BA%90%E7%A0%81/" rel="tag"># Vue源码</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/09/04/Vue%E9%9D%A2%E8%AF%95%E9%A2%98/" rel="prev" title="Vue面试题">
+      <i class="fa fa-chevron-left"></i> Vue面试题
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/09/05/%E5%88%A9%E7%94%A8Vue-Node-js%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%8D%9A%E5%AE%A2%E7%B3%BB%E7%BB%9F/" rel="next" title="利用Vue+Node.js实现一个博客系统">
+      利用Vue+Node.js实现一个博客系统 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9C%8B%E8%BF%87%E7%9A%84Vue%E6%BA%90%E7%A0%81%E6%9C%89%E5%85%B3%E8%B5%84%E6%96%99"><span class="nav-text">看过的Vue源码有关资料</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%98%85%E8%AF%BB%E6%BA%90%E7%A0%81%E5%89%8D%E7%9A%84%E5%87%86%E5%A4%87"><span class="nav-text">阅读源码前的准备</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Vue-%E6%BA%90%E7%A0%81%E7%9A%84%E7%AE%80%E7%9F%AD%E6%80%BB%E7%BB%93"><span class="nav-text">Vue 源码的简短总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#mini-vue%E9%A1%B9%E7%9B%AE%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0"><span class="nav-text">mini-vue项目学习笔记</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%BB%84%E5%BC%88%E8%A7%86%E9%A2%91%E7%AC%94%E8%AE%B0"><span class="nav-text">黄弈视频笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-text">准备工作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%A4%E8%AF%86-Flow"><span class="nav-text">认识 Flow</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8-Flow"><span class="nav-text">为什么用 Flow</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Flow-%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%96%B9%E5%BC%8F"><span class="nav-text">Flow 的工作方式</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E6%8E%A8%E6%96%AD"><span class="nav-text">类型推断</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E6%B3%A8%E9%87%8A"><span class="nav-text">类型注释</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FLow%E5%9C%A8Vue-js%E6%BA%90%E7%A0%81%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-text">FLow在Vue.js源码中的应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-text"></span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="筛滤淘"
+      src="/images/cat.jpg">
+  <p class="site-author-name" itemprop="name">筛滤淘</p>
+  <div class="site-description" itemprop="description">前端知识点总结</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">134</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">61</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lm101845" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lm101845" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1018457683@qq.com" title="E-Mail → mailto:1018457683@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.jianshu.com/u/6879af8ace24" title="简 书 → https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;6879af8ace24" rel="noopener" target="_blank"><i class="fa fa-jianshu fa-fw"></i>简 书</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/9002959" title="B  站 → https:&#x2F;&#x2F;space.bilibili.com&#x2F;9002959" rel="noopener" target="_blank"><i class="fa fa-bilibili fa-fw"></i>B  站</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">筛滤淘</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">4m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">60:07</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
