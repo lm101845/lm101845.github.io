@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-mac-osx.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":true,"preload":true},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="(注1：现在是2021年3月16日，我上班的第一天。领导让我着重学习一下D2Admin，这个是用Vue写的后台管理系统。然后还给我看了一下他们现在正在做的用D2Admin做的一个项目。那我当前的学习目的就很明确了，复习Vue和学习D2Admin这个后台管理系统，顺便再把SVN学一下，这个很好学，和Git一样，但是比Git简单。)  (注2：我现在就主要把官方文档看一遍吧，然后再跟着抄一遍官方文档，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="D2Admin入门">
+<meta property="og:url" content="http://example.com/2021/03/16/D2Admin%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="木子小屋">
+<meta property="og:description" content="(注1：现在是2021年3月16日，我上班的第一天。领导让我着重学习一下D2Admin，这个是用Vue写的后台管理系统。然后还给我看了一下他们现在正在做的用D2Admin做的一个项目。那我当前的学习目的就很明确了，复习Vue和学习D2Admin这个后台管理系统，顺便再把SVN学一下，这个很好学，和Git一样，但是比Git简单。)  (注2：我现在就主要把官方文档看一遍吧，然后再跟着抄一遍官方文档，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2021/03/16/D2Admin%E5%85%A5%E9%97%A8/01.png">
+<meta property="og:image" content="http://example.com/2021/03/16/D2Admin%E5%85%A5%E9%97%A8/02.png">
+<meta property="article:published_time" content="2021-03-16T05:05:00.000Z">
+<meta property="article:modified_time" content="2021-03-16T05:05:00.000Z">
+<meta property="article:author" content="筛滤淘">
+<meta property="article:tag" content="D2Admin">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/03/16/D2Admin%E5%85%A5%E9%97%A8/01.png">
+
+<link rel="canonical" href="http://example.com/2021/03/16/D2Admin%E5%85%A5%E9%97%A8/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>D2Admin入门 | 木子小屋</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?79d7cb9c8fa9e57a2723fb8645f37638";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">木子小屋</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Talk is cheap. Show me the code.</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/03/16/D2Admin%E5%85%A5%E9%97%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/cat.jpg">
+      <meta itemprop="name" content="筛滤淘">
+      <meta itemprop="description" content="前端知识点总结">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="木子小屋">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          D2Admin入门
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2021-03-16 13:05:00" itemprop="dateCreated datePublished" datetime="2021-03-16T13:05:00+08:00">2021-03-16</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/D2Admin/" itemprop="url" rel="index"><span itemprop="name">D2Admin</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>9.6k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>9 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>(注1：现在是2021年3月16日，我上班的第一天。领导让我着重学习一下<code>D2Admin</code>，这个是用Vue写的后台管理系统。然后还给我看了一下他们现在正在做的用<code>D2Admin</code>做的一个项目。那我当前的学习目的就很明确了，复习Vue和学习<code>D2Admin</code>这个后台管理系统，顺便再把<code>SVN</code>学一下，这个很好学，和Git一样，但是比Git简单。)</p>
+<p>(注2：我现在就主要把官方文档看一遍吧，然后再跟着抄一遍官方文档，再根据里面的示例代码和郭哥给的项目代码进行一些代码测试方面的工作。)</p>
+<p><a target="_blank" rel="noopener" href="https://d2.pub/zh/doc/d2-admin/">官方文档</a></p>
+<h1 id="开始使用"><a href="#开始使用" class="headerlink" title="开始使用"></a>开始使用</h1><h2 id="D2Admin"><a href="#D2Admin" class="headerlink" title="D2Admin"></a>D2Admin</h2><p><a target="_blank" rel="noopener" href="https://github.com/d2-projects/d2-admin">D2Admin</a>是一个完全 <strong>开源免费</strong> 的企业中后台产品前端集成方案，使用最新的前端技术栈，小于 60kb 的本地首屏 js 加载，已经做好大部分项目前期准备工作，并且带有大量示例代码，助力管理系统快速开发。</p>
+<p><strong>完整版</strong></p>
+<ul>
+<li>仓库： <a target="_blank" rel="noopener" href="https://github.com/d2-projects/d2-admin">Github </a>/ <a target="_blank" rel="noopener" href="https://gitee.com/d2-projects/d2-admin">码云</a>/ <a target="_blank" rel="noopener" href="https://d2-projects.coding.net/p/d2-projects/d/d2-admin/git">coding</a></li>
+<li>预览： <a target="_blank" rel="noopener" href="https://d2.pub/d2-admin/preview">https://d2.pub/d2-admin/preview</a></li>
+</ul>
+<p><strong>简化版</strong></p>
+<ul>
+<li>仓库： <a target="_blank" rel="noopener" href="https://github.com/d2-projects/d2-admin-start-kit">Github</a>/ <a target="_blank" rel="noopener" href="https://gitee.com/d2-projects/d2-admin-start-kit">码云</a>/ <a target="_blank" rel="noopener" href="https://d2-projects.coding.net/p/d2-projects/d/d2-admin-start-kit/git">coding</a></li>
+<li>预览： <a target="_blank" rel="noopener" href="https://d2.pub/d2-admin-start-kit/preview">https://d2.pub/d2-admin-start-kit/preview</a></li>
+</ul>
+<h3 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h3><ul>
+<li>使用 vue-cli3 构建</li>
+<li>首屏加载等待动画</li>
+<li>五款主题</li>
+<li>内置 UEditor 富文本编辑器</li>
+<li>详细的文档</li>
+<li>登录和注销</li>
+<li>分离的路由和菜单设置</li>
+<li>可折叠侧边栏</li>
+<li>多国语</li>
+<li>富文本编辑器</li>
+<li>Markdown 编辑器</li>
+<li>全屏</li>
+<li>Fontawesome 图标库</li>
+<li>图标选择器</li>
+<li>自动注册 SVG 图标</li>
+<li>模拟数据</li>
+<li>剪贴板封装</li>
+<li>图表库</li>
+<li>时间日期计算工具</li>
+<li>导入 Excel （ xlsx + csv ）</li>
+<li>数据导出 Excel （ xlsx + csv ）</li>
+<li>数据导出文本</li>
+<li>数字动画</li>
+<li>可拖拽调整大小的区块布局</li>
+<li>可拖拽调整大小和位置的网格布局</li>
+<li>开箱即用的页面布局组件</li>
+<li>加载并解析 markdown 文件</li>
+<li>GitHub 样式的 markdown 显示组件</li>
+<li>markdown 内代码高亮</li>
+<li>为 markdown 扩展了百度云链接解析和优化显示</li>
+<li>右键菜单组件</li>
+<li>自定义滚动条和滚动控制</li>
+<li>公用样式抽离，方便的主题定制</li>
+<li>支持临时菜单配置</li>
+<li>系统功能展示模块 <code>1.1.4 +</code></li>
+<li>多标签页模式 <code>1.1.4 +</code></li>
+<li>美化滚动条 <code>1.1.4 +</code></li>
+<li>json view <code>1.1.4 +</code></li>
+<li>cookie 封装 <code>1.1.5 +</code></li>
+<li>多标签页全局控制 API <code>1.1.5 +</code></li>
+<li>菜单全局控制 API <code>1.1.5 +</code></li>
+<li>多标签页关闭控制支持右键菜单 <code>1.1.10 +</code></li>
+<li>模块化全局状态管理 <code>1.2.0 +</code></li>
+<li>多种数据持久化方式：区分用户，区分路由，页面数据快照功能 <code>1.2.0 +</code></li>
+<li>支持跳出外部链接的菜单系统 <code>1.2.0 +</code></li>
+<li>支持菜单 svg 图标 <code>1.3.0 +</code></li>
+<li>日志记录和错误捕捉 <code>1.3.0 +</code></li>
+<li>全局菜单搜索 <code>1.3.0 +</code></li>
+<li>自定义登录重定向 <code>1.3.0 +</code></li>
+<li>切换全局基础组件尺寸 <code>1.4.0 +</code></li>
+<li>页面载入进度条 <code>1.4.1 +</code></li>
+<li>自适应的顶部菜单栏 <code>1.4.7 +</code></li>
+<li>数据导出 xslx 时支持合并单元格 <code>1.5.4 +</code></li>
+<li>多标签页支持拖拽排序 <code>1.8.0 +</code></li>
+<li>优化生产环境构建，首页只加载小于 60kb 的本地 js 代码 <code>1.8.0 +</code></li>
+<li>内置了构建文件体积检查工具 <code>1.8.0 +</code></li>
+</ul>
+<h3 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h3><blockquote>
+<p>树形图生成工具</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/d2-projects/folder-explorer">Folder Explorer</a></p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br></pre></td><td class="code"><pre><span class="line">├─.browserslistrc ------------------- // 目标浏览器配置</span><br><span class="line">├─.editorconfig --------------------- // 编辑器配置</span><br><span class="line">├─.env ------------------------------ // 基础环境变量配置</span><br><span class="line">├─.env.development ------------------ // 开发模式下的环境变量配置</span><br><span class="line">├─.env.preview ---------------------- // 各个环境通用的环境变量</span><br><span class="line">├─.eslintignore --------------------- // ESLint 的忽略目录配置</span><br><span class="line">├─.eslintrc.js ---------------------- // ESLint 的配置文件</span><br><span class="line">├─.github --------------------------- // Github 配置</span><br><span class="line">│ ├─ISSUE_TEMPLATE ------------------ // GitHub issue 模板</span><br><span class="line">│ └─workflows ----------------------- // GitHub action 配置文件</span><br><span class="line">├─.gitignore ------------------------ // git 的忽略配置</span><br><span class="line">├─.postcssrc.js --------------------- // postcss 插件设置</span><br><span class="line">├─.releaserc.js --------------------- // semantic 配置文件</span><br><span class="line">├─LICENSE --------------------------- // 开源协议</span><br><span class="line">├─README.md ------------------------- // 介绍</span><br><span class="line">├─README.zh.md ---------------------- // 中文介绍 在码云仓库下自动加载这个文件</span><br><span class="line">├─babel.config.js ------------------- // babel 设置</span><br><span class="line">├─d2-admin.babel -------------------- // 多国语设置软件 BabelEdit 的项目文件</span><br><span class="line">├─dependencies-cdn.js --------------- // 构建时的 CDN 依赖配置</span><br><span class="line">├─docs ------------------------------ // 文档相关</span><br><span class="line">├─jest.config.js -------------------- // 单元测试配置</span><br><span class="line">├─jsconfig.json --------------------- // 指定根文件和 JavaScript 语言服务提供的功能选项</span><br><span class="line">├─package-lock.json ----------------- // 锁定依赖版本</span><br><span class="line">├─package.json ---------------------- // 项目信息和依赖</span><br><span class="line">├─public ---------------------------- // 静态资源文件夹，不经过 webpack 处理</span><br><span class="line">│ ├─html ---------------------------- // 用于演示加载静态页面的资源</span><br><span class="line">│ ├─icon.ico ------------------------ // 网站图标</span><br><span class="line">│ ├─image </span><br><span class="line">│ │ ├─baidu-pan-logo.png </span><br><span class="line">│ │ ├─loading ----------------------- // index.html 使用的加载图标</span><br><span class="line">│ │ │ └─loading-spin.svg </span><br><span class="line">│ │ └─theme ------------------------- // 主题图片资源</span><br><span class="line">│ │   ├─chester </span><br><span class="line">│ │   ├─d2 </span><br><span class="line">│ │   ├─element </span><br><span class="line">│ │   ├─line </span><br><span class="line">│ │   ├─star </span><br><span class="line">│ │   ├─tomorrow-night-blue </span><br><span class="line">│ │   └─violet </span><br><span class="line">│ ├─index.html ---------------------- // 网站的基础页面模板</span><br><span class="line">│ ├─lib ----------------------------- // 静态依赖</span><br><span class="line">│ │ └─UEditor ----------------------- // 编辑器</span><br><span class="line">│ └─markdown ------------------------ // 用于展示 Markdown 远程加载资源的文件</span><br><span class="line">├─src ------------------------------- // 主要的代码目录</span><br><span class="line">│ ├─App.vue ------------------------- // 项目根组件</span><br><span class="line">│ ├─api ----------------------------- // 网络请求配置</span><br><span class="line">│ │ ├─index.js </span><br><span class="line">│ │ ├─modules ----------------------- // API 配置</span><br><span class="line">│ │ │ ├─demo.js </span><br><span class="line">│ │ │ ├─file.js </span><br><span class="line">│ │ │ └─sys.user.js </span><br><span class="line">│ │ ├─service.js -------------------- // 用于网络请求的实例配置</span><br><span class="line">│ │ └─tools.js ---------------------- // 网络请求相关工具函数</span><br><span class="line">│ ├─assets -------------------------- // 资源文件夹</span><br><span class="line">│ │ ├─style ------------------------- // 样式资源</span><br><span class="line">│ │ │ ├─animate --------------------- // 页面过渡动画</span><br><span class="line">│ │ │ │ └─vue-transition.scss </span><br><span class="line">│ │ │ ├─fixed ----------------------- // 覆盖一些组件库的默认样式</span><br><span class="line">│ │ │ ├─public-class.scss ----------- // 导出可以直接使用的 class</span><br><span class="line">│ │ │ ├─public.scss ----------------- // 导出所有公用的 scss 资源</span><br><span class="line">│ │ │ ├─theme ----------------------- // 主题样式相关</span><br><span class="line">│ │ │ │ ├─chester </span><br><span class="line">│ │ │ │ ├─d2 </span><br><span class="line">│ │ │ │ ├─element </span><br><span class="line">│ │ │ │ ├─line </span><br><span class="line">│ │ │ │ ├─register.scss ------------- // 注册所有主题样式</span><br><span class="line">│ │ │ │ ├─star </span><br><span class="line">│ │ │ │ ├─theme-base.scss ----------- // 每个主题共用的样式</span><br><span class="line">│ │ │ │ ├─theme.scss ---------------- // 每个主题特有的设置</span><br><span class="line">│ │ │ │ ├─tomorrow-night-blue </span><br><span class="line">│ │ │ │ └─violet </span><br><span class="line">│ │ │ └─unit ------------------------ // scss 的基础变量</span><br><span class="line">│ │ │   └─color.scss </span><br><span class="line">│ │ └─svg-icons --------------------- // svg 图标</span><br><span class="line">│ │   ├─icons ----------------------- // 用来存放图标的文件夹</span><br><span class="line">│ │   └─index.js -------------------- // 自动导入所有符合条件的图标</span><br><span class="line">│ ├─components ---------------------- // 组件</span><br><span class="line">│ │ ├─d2-container ------------------ // 页面容器</span><br><span class="line">│ │ ├─d2-container-frame ------------ // 用于显示外部网页的页面容器</span><br><span class="line">│ │ ├─d2-count-up ------------------- // 数字动画组件</span><br><span class="line">│ │ ├─d2-highlight ------------------ // 代码高亮组件</span><br><span class="line">│ │ ├─d2-icon ----------------------- // 图标组件</span><br><span class="line">│ │ ├─d2-icon-select ---------------- // 图标选择组件</span><br><span class="line">│ │ ├─d2-icon-svg ------------------- // svg 图标组件</span><br><span class="line">│ │ ├─d2-icon-svg-select ------------ // svg 图标选择组件</span><br><span class="line">│ │ ├─d2-link-btn ------------------- // 链接组件</span><br><span class="line">│ │ ├─d2-markdown ------------------- // Markdown 加载和显示组件</span><br><span class="line">│ │ ├─d2-mde ------------------------ // Markdown 编辑器</span><br><span class="line">│ │ ├─d2-module-index-banner -------- // 演示用 每个模块首页的展示组件</span><br><span class="line">│ │ ├─d2-module-index-menu ---------- // 演示用 每个模块首页的展示组件</span><br><span class="line">│ │ ├─d2-quill ---------------------- // 富文本编辑器</span><br><span class="line">│ │ ├─d2-ueditor -------------------- // 富文本编辑器</span><br><span class="line">│ │ └─index.js ---------------------- // 组件注册</span><br><span class="line">│ ├─i18n.js ------------------------- // 国际化配置</span><br><span class="line">│ ├─layout -------------------------- // 布局</span><br><span class="line">│ │ └─header-aside ------------------ // 具有顶栏加侧边栏的布局</span><br><span class="line">│ │   ├─components </span><br><span class="line">│ │   ├─index.js </span><br><span class="line">│ │   ├─layout.vue </span><br><span class="line">│ │   └─mixins </span><br><span class="line">│ │     └─search.js </span><br><span class="line">│ ├─libs ---------------------------- // 一些通用的方法</span><br><span class="line">│ │ ├─util.cookies.js --------------- // cookie 相关</span><br><span class="line">│ │ ├─util.db.js -------------------- // 数据存储相关</span><br><span class="line">│ │ ├─util.import.development.js ---- // 开发环境下使用的页面导入方法</span><br><span class="line">│ │ ├─util.import.production.js ----- // 开发环境下使用的页面导入方法</span><br><span class="line">│ │ ├─util.js ----------------------- // 杂项</span><br><span class="line">│ │ └─util.log.js ------------------- // 日志相关</span><br><span class="line">│ ├─locales ------------------------- // 国际化语言配置</span><br><span class="line">│ │ ├─en.json </span><br><span class="line">│ │ ├─ja.json </span><br><span class="line">│ │ ├─mixin.js </span><br><span class="line">│ │ ├─zh-chs.json </span><br><span class="line">│ │ └─zh-cht.json </span><br><span class="line">│ ├─main.js ------------------------- // 程序主入口</span><br><span class="line">│ ├─menu ---------------------------- // 静态的菜单数据</span><br><span class="line">│ │ ├─index.js </span><br><span class="line">│ │ └─modules </span><br><span class="line">│ │   ├─demo-business.js </span><br><span class="line">│ │   ├─demo-charts.js </span><br><span class="line">│ │   ├─demo-components.js </span><br><span class="line">│ │   ├─demo-d2-crud.js </span><br><span class="line">│ │   ├─demo-frame.js </span><br><span class="line">│ │   ├─demo-playground.js </span><br><span class="line">│ │   └─demo-plugins.js </span><br><span class="line">│ ├─plugin -------------------------- // 插件</span><br><span class="line">│ │ ├─api </span><br><span class="line">│ │ ├─d2admin ----------------------- // 统一注册系统必须的资源</span><br><span class="line">│ │ ├─error ------------------------- // 错误拦截</span><br><span class="line">│ │ ├─log --------------------------- // 日志</span><br><span class="line">│ │ └─open -------------------------- // 新窗口打开</span><br><span class="line">│ ├─router -------------------------- // 路由</span><br><span class="line">│ │ ├─index.js ---------------------- // 注册路由以及设置拦截规则</span><br><span class="line">│ │ ├─modules ----------------------- // 预先设置好的静态路由</span><br><span class="line">│ │ │ ├─business.js </span><br><span class="line">│ │ │ ├─charts.js </span><br><span class="line">│ │ │ ├─components.js </span><br><span class="line">│ │ │ ├─d2-crud.js </span><br><span class="line">│ │ │ ├─frame.js </span><br><span class="line">│ │ │ ├─playground.js </span><br><span class="line">│ │ │ └─plugins.js </span><br><span class="line">│ │ └─routes.js --------------------- // 导入所有路由</span><br><span class="line">│ ├─setting.js ---------------------- // 全局设置</span><br><span class="line">│ ├─store --------------------------- // vuex</span><br><span class="line">│ │ ├─index.js ---------------------- // vuex 注册主入口</span><br><span class="line">│ │ └─modules ----------------------- // 模块目录</span><br><span class="line">│ │   └─d2admin --------------------- // 系统自带模块，业务模块建议在同级新建</span><br><span class="line">│ │     ├─index.js ------------------ // 模块主入口</span><br><span class="line">│ │     └─modules ------------------- // 子模块</span><br><span class="line">│ │       ├─account.js -------------- // 用户身份</span><br><span class="line">│ │       ├─color.js ---------------- // 主题颜色</span><br><span class="line">│ │       ├─db.js ------------------- // 本地数据库</span><br><span class="line">│ │       ├─fullscreen.js ----------- // 全屏</span><br><span class="line">│ │       ├─gray.js ----------------- // 灰度模式</span><br><span class="line">│ │       ├─log.js ------------------ // 日志</span><br><span class="line">│ │       ├─menu.js ----------------- // 菜单</span><br><span class="line">│ │       ├─page.js ----------------- // 多页面控制</span><br><span class="line">│ │       ├─releases.js ------------- // 版本</span><br><span class="line">│ │       ├─search.js --------------- // 全局搜索</span><br><span class="line">│ │       ├─size.js ----------------- // 全局尺寸</span><br><span class="line">│ │       ├─theme.js ---------------- // 主题</span><br><span class="line">│ │       ├─transition.js ----------- // 过渡效果</span><br><span class="line">│ │       ├─ua.js ------------------- // 浏览器信息</span><br><span class="line">│ │       └─user.js ----------------- // 用户信息</span><br><span class="line">│ └─views --------------------------- // 页面视图</span><br><span class="line">│   ├─demo -------------------------- // 演示页面</span><br><span class="line">│   │ ├─business -------------------- // 业务页面演示</span><br><span class="line">│   │ ├─charts ---------------------- // 图表</span><br><span class="line">│   │ ├─components ------------------ // 内置组件演示</span><br><span class="line">│   │ ├─d2-crud --------------------- // D2CRUD 表格封装演示</span><br><span class="line">│   │ ├─element --------------------- // Element UI 组件</span><br><span class="line">│   │ ├─frame ----------------------- // 嵌套第三方页面演示</span><br><span class="line">│   │ ├─playground ------------------ // 试验台</span><br><span class="line">│   │ └─plugins --------------------- // 插件演示</span><br><span class="line">│   └─system ------------------------ // 系统页面</span><br><span class="line">├─tests ----------------------------- // 单元测试</span><br><span class="line">│ └─unit </span><br><span class="line">├─vue.config.js --------------------- // vue-cli3 的项目配置文件</span><br><span class="line">└─yarn.lock ------------------------- // 版本锁定</span><br></pre></td></tr></table></figure>
+<h2 id="快速上手"><a href="#快速上手" class="headerlink" title="快速上手"></a>快速上手</h2><p>本文将会带领您从零开始使用 D2Admin 创建下面的页面：</p>
+<blockquote>
+<p>提示：本示例中的代码和截图可能和您现在手中的版本不同，但操作思路一样。</p>
+</blockquote>
+<img data-src="/2021/03/16/D2Admin%E5%85%A5%E9%97%A8/01.png" class>
+
+<h3 id="安装环境"><a href="#安装环境" class="headerlink" title="安装环境"></a>安装环境</h3><blockquote>
+<p>提示：如果您以前运行过 webpack 项目，并且本机 node 版本 &gt;=8，可以忽略这一步。</p>
+</blockquote>
+<p>(以下略，具体怎么安装就不写了。)</p>
+<h3 id="下载项目"><a href="#下载项目" class="headerlink" title="下载项目"></a>下载项目</h3><p>前往仓库下载源码：</p>
+<ul>
+<li>完整版仓库 <a target="_blank" rel="noopener" href="https://github.com/d2-projects/d2-admin">Github </a>| <a target="_blank" rel="noopener" href="https://gitee.com/d2-projects/d2-admin">码云</a></li>
+<li>简化版起始模板 <a target="_blank" rel="noopener" href="https://github.com/d2-projects/d2-admin-start-kit">Github </a>| <a target="_blank" rel="noopener" href="https://gitee.com/d2-projects/d2-admin-start-kit">码云</a></li>
+</ul>
+<p>挑选一个您喜欢的网站 Fork 代码到您的仓库，然后下载或克隆。</p>
+<p>我的建议是使用 <strong>简化版起始模板</strong> 因为在完整版的基础上做减法，要比在简化版基础上做加法复杂。</p>
+<p>下面的步骤都以简化版起始模板为基础演示如何使用。</p>
+<p>下载完成后您会得到这些资源（以 1.1.5 版本为例）：</p>
+<img data-src="/2021/03/16/D2Admin%E5%85%A5%E9%97%A8/02.png" class>
+
+<h3 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h3><p>将终端切换到项目目录之后安装依赖：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i</span><br></pre></td></tr></table></figure>
+<p>如果遇到问题比如 node-sass 安装不上，请参考 <a target="_blank" rel="noopener" href="https://d2.pub/zh/doc/d2-admin/question/">常见问题</a>。</p>
+<h3 id="开发调试"><a href="#开发调试" class="headerlink" title="开发调试"></a>开发调试</h3><p>在项目目录内启动项目：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="需要查漏补缺的知识点"><a href="#需要查漏补缺的知识点" class="headerlink" title="需要查漏补缺的知识点"></a>需要查漏补缺的知识点</h1><h2 id="HTML、CSS"><a href="#HTML、CSS" class="headerlink" title="HTML、CSS"></a>HTML、CSS</h2><ul>
+<li>他使用了<code>scss</code>作为预处理器，所以要复习一下<code>scss</code><ul>
+<li><code>@extend</code></li>
+<li><code>&amp;:hover </code></li>
+</ul>
+</li>
+<li><code>opacity: 0;</code></li>
+<li><code>transform: translateX(30px);</code></li>
+<li><code>ransform: scale(0.8);</code></li>
+<li><code>transition: all .5s;</code></li>
+<li><code>box-shadow: 0 0 8px 0 rgba(232,237,250,.6), 0 2px 4px 0 rgba(232,237,250,.5);</code></li>
+<li><code>display: table-cell !important;</code></li>
+<li><code>@import </code></li>
+<li>Flex布局<ul>
+<li><code>ustify-content: center;</code></li>
+<li><code> align-items: center;</code></li>
+<li><code> flex-direction: column;</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="JS"><a href="#JS" class="headerlink" title="JS"></a>JS</h2><ul>
+<li><p><code>Object.assign()</code></p>
+</li>
+<li><p><code>...语法</code></p>
+</li>
+<li><p><code>setAttribute()</code></p>
+</li>
+<li><p><code>createElement</code></p>
+</li>
+<li><p><code>document.body.removeChild()</code></p>
+</li>
+<li><p><code>async</code>和<code>await</code></p>
+</li>
+</ul>
+<h2 id="Vue"><a href="#Vue" class="headerlink" title="Vue"></a>Vue</h2><ul>
+<li><p>基础语法</p>
+<ul>
+<li><code>v-if</code></li>
+<li><code>:class</code></li>
+</ul>
+</li>
+<li><p>常用方法</p>
+<ul>
+<li><code>init ()</code></li>
+<li><code>  this.init()</code></li>
+<li><code>render (h)</code></li>
+<li><code>Vue.use()</code></li>
+</ul>
+</li>
+<li><p>组件相关</p>
+<ul>
+<li><code>ref</code>和<code>$refs</code></li>
+<li><code>props</code></li>
+<li><code>this.$el</code></li>
+<li><code>this.$emit</code></li>
+</ul>
+</li>
+<li><p>生命周期函数</p>
+<ul>
+<li><code>mounted()</code></li>
+<li><code>beforeDestroy()</code></li>
+<li><code>scroll()</code></li>
+</ul>
+</li>
+<li><p>混入(mixin)</p>
+</li>
+<li><p>计算属性computed</p>
+<ul>
+<li><code>show()</code></li>
+</ul>
+</li>
+<li><p>路由</p>
+<ul>
+<li>路由懒加载：<code>full: () =&gt; import(&#39;./components/d2-container-full.vue&#39;)</code></li>
+</ul>
+</li>
+<li><p>Vuex状态管理</p>
+</li>
+<li><p>其他</p>
+</li>
+</ul>
+<h2 id="网络及数据交互"><a href="#网络及数据交互" class="headerlink" title="网络及数据交互"></a>网络及数据交互</h2><ul>
+<li><code>cookies</code></li>
+<li></li>
+</ul>
+<h2 id="插件及框架"><a href="#插件及框架" class="headerlink" title="插件及框架"></a>插件及框架</h2><ul>
+<li><p>页面滚动插件：<code>better-scroll</code></p>
+<ul>
+<li><code>scrollInit()</code></li>
+<li><code>scrollDestroy()</code></li>
+<li><code>scrollToTop()</code></li>
+</ul>
+</li>
+<li><p>代码高亮插件：<code>highlight.js</code></p>
+</li>
+<li><p>富文本编辑器插件：<code>quill</code></p>
+</li>
+<li><p><code>element-ui</code>框架</p>
+</li>
+</ul>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ul>
+<li>svg图片</li>
+<li><code>mock.js</code>模拟数据。</li>
+<li><code>export function()</code></li>
+<li>正则表达式：<code> const bdPanUrlPwd = /^链接: https:\/\/pan\.baidu\.com\/s\/[a-z0-9]+ 密码: [a-z0-9]&#123;4&#125;$/i</code></li>
+</ul>
+<h1 id="一些感悟"><a href="#一些感悟" class="headerlink" title="一些感悟"></a>一些感悟</h1><ul>
+<li>我应该试着去加入一些D2Admin的QQ交流群，微信群，多和一些人进行沟通。</li>
+<li>我有时间也在网上找一找有没有相关视频什么的看一下。</li>
+<li>别人也是前端工程师，他能写一个通用后台管理系统出来。而我只是被动的学习，还这么吃力，说明还是水平不够啊。还是要多学习，多敲代码啊！</li>
+<li>这个好像还有一个简化版，如果学习这个感到吃力的话可以试着从简化版开始看起。总之，一定要多敲代码进行测试，不能光看不敲。</li>
+<li>感觉自己确实好像是年纪大了，看到现在感觉有点想休息了。所以上班有一个好处就是：如果我现在在家里，我估计就想着先睡一会，现在在上班，所以没有办法睡觉，必须要继续学习。所以上班挺好的，既能学到东西，又有工资可以拿，所以努力吧，抓紧时间跟上同事的进度啊。</li>
+</ul>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
+<li><p>这里面的代码引号都是使用的单引号</p>
+</li>
+<li><p>多行注释的格式是类似这样的：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description </span>接口请求返回 正确返回</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;Any&#125;</span> </span>data 返回值</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param <span class="type">&#123;String&#125;</span> </span>msg 状态信息</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure></li>
+<li></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/D2Admin/" rel="tag"># D2Admin</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/15/Flutter%E5%85%A5%E9%97%A8/" rel="prev" title="Flutter入门">
+      <i class="fa fa-chevron-left"></i> Flutter入门
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/03/16/SVN%E5%85%A5%E9%97%A8/" rel="next" title="SVN入门">
+      SVN入门 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8"><span class="nav-text">开始使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#D2Admin"><span class="nav-text">D2Admin</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%9F%E8%83%BD"><span class="nav-text">功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84"><span class="nav-text">项目结构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B"><span class="nav-text">快速上手</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E7%8E%AF%E5%A2%83"><span class="nav-text">安装环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E9%A1%B9%E7%9B%AE"><span class="nav-text">下载项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96"><span class="nav-text">安装依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E8%B0%83%E8%AF%95"><span class="nav-text">开发调试</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9C%80%E8%A6%81%E6%9F%A5%E6%BC%8F%E8%A1%A5%E7%BC%BA%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="nav-text">需要查漏补缺的知识点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HTML%E3%80%81CSS"><span class="nav-text">HTML、CSS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JS"><span class="nav-text">JS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue"><span class="nav-text">Vue</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%8F%8A%E6%95%B0%E6%8D%AE%E4%BA%A4%E4%BA%92"><span class="nav-text">网络及数据交互</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E4%BB%B6%E5%8F%8A%E6%A1%86%E6%9E%B6"><span class="nav-text">插件及框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E6%84%9F%E6%82%9F"><span class="nav-text">一些感悟</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="筛滤淘"
+      src="/images/cat.jpg">
+  <p class="site-author-name" itemprop="name">筛滤淘</p>
+  <div class="site-description" itemprop="description">前端知识点总结</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">138</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">52</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">63</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/lm101845" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;lm101845" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:1018457683@qq.com" title="E-Mail → mailto:1018457683@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://www.jianshu.com/u/6879af8ace24" title="简 书 → https:&#x2F;&#x2F;www.jianshu.com&#x2F;u&#x2F;6879af8ace24" rel="noopener" target="_blank"><i class="fa fa-jianshu fa-fw"></i>简 书</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://space.bilibili.com/9002959" title="B  站 → https:&#x2F;&#x2F;space.bilibili.com&#x2F;9002959" rel="noopener" target="_blank"><i class="fa fa-bilibili fa-fw"></i>B  站</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">筛滤淘</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="站点总字数">4m</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">61:13</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="/lib/canvas-ribbon/canvas-ribbon.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+  <script defer src="/lib/three/three.min.js"></script>
+    <script defer src="/lib/three/canvas_lines.min.js"></script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

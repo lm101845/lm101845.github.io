@@ -39,6 +39,7 @@
 <meta property="og:image" content="http://example.com/2020/10/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A101%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/07.png">
 <meta property="og:image" content="http://example.com/2020/10/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A101%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/08.png">
 <meta property="og:image" content="http://example.com/2020/10/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A101%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/09.png">
+<meta property="og:image" content="http://example.com/2020/10/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A101%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/12.png">
 <meta property="og:image" content="http://example.com/2020/10/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A101%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/10.png">
 <meta property="og:image" content="http://example.com/2020/10/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A101%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/11.png">
 <meta property="article:published_time" content="2020-10-27T14:16:14.000Z">
@@ -273,14 +274,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>57k</span>
+              <span>59k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>52 分钟</span>
+              <span>54 分钟</span>
             </span>
 
         </div>
@@ -711,19 +712,41 @@
 </blockquote>
 <h3 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h3><h3 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h3><h2 id="小结-3"><a href="#小结-3" class="headerlink" title="小结"></a>小结</h2><h1 id="第5章：基本引用类型"><a href="#第5章：基本引用类型" class="headerlink" title="第5章：基本引用类型"></a>第5章：基本引用类型</h1><img data-src="/2020/10/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A101%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/09.png" class>
 
-
-
-<p>引用值（或者对象）是某个特定<strong>引用类型</strong>的实例。在 ECMAScript 中，引用类型是把数据和功能组织到一起的结构，经常被人错误地称作“类”。虽然从技术上讲 JavaScript 是一门面向对象语言，但ECMAScript 缺少传统的面向对象编程语言所具备的某些基本结构，包括类和接口。引用类型有时候也被称为<strong>对象定义</strong>，因为它们描述了自己的对象应有的属性和方法。</p>
+<p><strong>引用值（或者对象）</strong>是某个特定<strong>引用类型</strong>的实例。在 ECMAScript中，引用类型是把数据和功能组织到一起的结构，经常被人错误地称作“类”。虽然从技术上讲 JavaScript 是一门面向对象语言，但ECMAScript 缺少传统的面向对象编程语言所具备的某些基本结构，包括类和接口。引用类型有时候也被称为<strong>对象定义</strong>，因为它们<strong>描述了自己的对象应有的属性和方法</strong>。</p>
 <blockquote>
 <p>注意 引用类型虽然有点像类，但跟类并不是一个概念。为避免混淆，本章后面不会使用术语“类”。</p>
 </blockquote>
-<p>对象被认为是某个特定引用类型的<strong>实例</strong>。新对象通过使用 new 操作符后跟一个<strong>构造函数（constructor）</strong>来创建。构造函数就是用来创建新对象的函数，比如下面这行代码：</p>
+<p>对象被认为是某个特定引用类型的<strong>实例</strong>。新对象通过使用 new 操作符后跟一个<strong>构造函数（constructor）</strong>来创建。<strong>构造函数就是用来创建新对象的函数</strong>，比如下面这行代码：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> now = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br></pre></td></tr></table></figure>
-<p>这行代码创建了引用类型 Date 的一个新实例，并将它保存在变量 now 中。 <code>Date() </code>在这里就是构造函数，它负责创建一个只有默认属性和方法的简单对象。ECMAScript 提供了很多像 Date 这样的<strong>原生引用类型</strong>，帮助开发者实现常见的任务。</p>
+<p>这行代码创建了<strong>引用类型Date</strong>的一个<strong>新实例</strong>，并<strong>将它保存在变量 now 中</strong>。 <code>Date() </code>在这里就是构造函数，它负责创建一个只有默认属性和方法的简单对象。ECMAScript 提供了很多像 Date这样的<strong>原生引用类型</strong>，帮助开发者实现常见的任务。</p>
 <blockquote>
 <p>注意 函数也是一种引用类型，但有关函数的内容太多了，一章放不下，所以本书专门用第10章来介绍函数。</p>
 </blockquote>
-<h2 id="Date"><a href="#Date" class="headerlink" title="Date"></a>Date</h2><h3 id="继承的方法"><a href="#继承的方法" class="headerlink" title="继承的方法"></a>继承的方法</h3><h3 id="日期格式化方法"><a href="#日期格式化方法" class="headerlink" title="日期格式化方法"></a>日期格式化方法</h3><h3 id="日期-时间组件方法"><a href="#日期-时间组件方法" class="headerlink" title="日期/时间组件方法"></a>日期/时间组件方法</h3><h2 id="RegExp-以后补"><a href="#RegExp-以后补" class="headerlink" title="RegExp(以后补)"></a>RegExp(以后补)</h2><h3 id="RegExp-实例属性"><a href="#RegExp-实例属性" class="headerlink" title="RegExp 实例属性"></a>RegExp 实例属性</h3><h3 id="RegExp-实例方法"><a href="#RegExp-实例方法" class="headerlink" title="RegExp 实例方法"></a>RegExp 实例方法</h3><h3 id="RegExp-构造函数属性"><a href="#RegExp-构造函数属性" class="headerlink" title="RegExp 构造函数属性"></a>RegExp 构造函数属性</h3><h3 id="模式局限"><a href="#模式局限" class="headerlink" title="模式局限"></a>模式局限</h3><h2 id="原始值包装类型"><a href="#原始值包装类型" class="headerlink" title="原始值包装类型"></a>原始值包装类型</h2><h3 id="Boolean"><a href="#Boolean" class="headerlink" title="Boolean"></a>Boolean</h3><h3 id="Number"><a href="#Number" class="headerlink" title="Number"></a>Number</h3><h3 id="String-以后补"><a href="#String-以后补" class="headerlink" title="String(以后补)"></a>String(以后补)</h3><p><strong>1.JavaScript 字符</strong></p>
+<h2 id="Date"><a href="#Date" class="headerlink" title="Date"></a>Date</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wenweidev/article/details/54646731">Java为什么计算时间从1970年1月1日开始</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/u013095264/article/details/91457473">关于1970年之前的时间要怎么转换成时间戳啊 负数要怎么处理</a></p>
+<p>ECMAScript 的 Date 类型参考了 Java 早期版本中的 java.util.Date 。为此， Date 类型将日期<br>保存为自协调世界时（UTC，Universal Time Coordinated）时间 1970 年 1 月 1 日午夜（零时）至今所经过的毫秒数。使用这种存储格式， Date 类型可以精确表示1970年1月1日之前及之后285616年的日期。</p>
+<p>要创建日期对象，就使用 new 操作符来调用 Date 构造函数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> now = <span class="keyword">new</span> <span class="built_in">Date</span>();</span><br></pre></td></tr></table></figure>
+<p>在不给 Date 构造函数传参数的情况下，创建的对象将保存当前日期和时间。要基于其他日期和时<br>间创建日期对象，必须传入其毫秒表示（UNIX 纪元 1970 年 1 月 1 日午夜之后的毫秒数）。ECMAScript<br>为此提供了两个辅助方法：<code>Date.parse()</code>和<code>Date.UTC() </code>。</p>
+<p><code>Date.parse()</code>方法接收一个表示日期的<strong>字符串参数</strong>，<strong>尝试将这个字符串转换为表示该日期的毫秒数</strong>。ECMA-262 第 5 版定义了<code>Date.parse()</code>应该支持的日期格式，填充了第 3 版遗留的空白。所有实<br>现都必须支持下列日期格式：</p>
+<ul>
+<li>“月/日/年”，如 “5/23/2019” ；</li>
+<li>“月名 日, 年”，如 “May 23, 2019” ；</li>
+<li>“周几 月名 日 年 时:分:秒 时区”，如 “Tue May 23 2019 00:00:00 GMT-0700” ；</li>
+<li>ISO 8601 扩展格式“YYYY-MM-DDTHH:mm:ss.sssZ”，如 2019-05-23T00:00:00 （只适用于<br>兼容 ES5 的实现）。</li>
+</ul>
+<p>比如，要创建一个表示“2019 年 5 月 23 日”的日期对象，可以使用以下代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> someDate = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="built_in">Date</span>.parse(<span class="string">&quot;May 23, 2019&quot;</span>));</span><br></pre></td></tr></table></figure>
+<p>如果传给 Date.parse() 的字符串并不表示日期，则该方法会返回 NaN 。如果直接把表示日期的字符串传给 Date 构造函数，那么Date会在后台调用<code>Date.parse() </code>。换句话说，下面这行代码跟前面那行代码是等价的：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> someDate = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="string">&quot;May 23, 2019&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>这两行代码得到的日期对象相同。</p>
+<img data-src="/2020/10/27/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%9AJavaScript%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A101%EF%BC%88%E7%AC%AC4%E7%89%88%EF%BC%89/12.png" class>
+
+<p><code>Date.UTC()</code>方法也返回日期的毫秒表示，但使用的是跟 Date.parse() 不同的信息来生成这个值。<br>传给 <code>Date.UTC()</code>的参数是年、<strong>零起点月数</strong>（1 月是 0，2 月是 1，以此类推）、日（1~31）、时（0~23）、<br>分、秒和毫秒。这些参数中，只有前两个（年和月）是必需的。如果不提供日，那么默认为 1 日。其他<br>参数的默认值都是 0。下面是使用<code>Date.UTC()</code>的两个例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// GMT 时间 2000 年 1 月 1 日零点</span></span><br><span class="line"><span class="keyword">let</span> y2k = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="built_in">Date</span>.UTC(<span class="number">2000</span>, <span class="number">0</span>));</span><br><span class="line"></span><br><span class="line"><span class="comment">// GMT 时间 2005 年 5 月 5 日下午 5 点 55 分 55 秒</span></span><br><span class="line"><span class="keyword">let</span> allFives = <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="built_in">Date</span>.UTC(<span class="number">2005</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">17</span>, <span class="number">55</span>, <span class="number">55</span>));</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="继承的方法"><a href="#继承的方法" class="headerlink" title="继承的方法"></a>继承的方法</h3><h3 id="日期格式化方法"><a href="#日期格式化方法" class="headerlink" title="日期格式化方法"></a>日期格式化方法</h3><h3 id="日期-时间组件方法"><a href="#日期-时间组件方法" class="headerlink" title="日期/时间组件方法"></a>日期/时间组件方法</h3><h2 id="RegExp-以后补"><a href="#RegExp-以后补" class="headerlink" title="RegExp(以后补)"></a>RegExp(以后补)</h2><h3 id="RegExp-实例属性"><a href="#RegExp-实例属性" class="headerlink" title="RegExp 实例属性"></a>RegExp 实例属性</h3><h3 id="RegExp-实例方法"><a href="#RegExp-实例方法" class="headerlink" title="RegExp 实例方法"></a>RegExp 实例方法</h3><h3 id="RegExp-构造函数属性"><a href="#RegExp-构造函数属性" class="headerlink" title="RegExp 构造函数属性"></a>RegExp 构造函数属性</h3><h3 id="模式局限"><a href="#模式局限" class="headerlink" title="模式局限"></a>模式局限</h3><h2 id="原始值包装类型"><a href="#原始值包装类型" class="headerlink" title="原始值包装类型"></a>原始值包装类型</h2><h3 id="Boolean"><a href="#Boolean" class="headerlink" title="Boolean"></a>Boolean</h3><h3 id="Number"><a href="#Number" class="headerlink" title="Number"></a>Number</h3><h3 id="String-以后补"><a href="#String-以后补" class="headerlink" title="String(以后补)"></a>String(以后补)</h3><p><strong>1.JavaScript 字符</strong></p>
 <p><strong>2.<code>normalize()</code>方法</strong></p>
 <p><strong>3.字符串操作方法</strong></p>
 <p><strong>4.字符串位置方法</strong></p>
@@ -869,8 +892,11 @@
 <blockquote>
 <p>注意：如果数组中某一项是 null 或 undefined ，则在 <code>join() </code>、 <code>toLocaleString()</code> 、<code>toString()</code> 和 <code>valueOf() </code>返回的结果中会以空字符串表示。</p>
 </blockquote>
-<h3 id="栈方法"><a href="#栈方法" class="headerlink" title="栈方法"></a>栈方法</h3><h3 id="队列方法"><a href="#队列方法" class="headerlink" title="队列方法"></a>队列方法</h3><h3 id="排序方法"><a href="#排序方法" class="headerlink" title="排序方法"></a>排序方法</h3><h3 id="操作方法"><a href="#操作方法" class="headerlink" title="操作方法"></a>操作方法</h3><h3 id="搜索和位置方法"><a href="#搜索和位置方法" class="headerlink" title="搜索和位置方法"></a>搜索和位置方法</h3><p><strong>1.严格相等</strong></p>
-<p>ECMAScript 提供了 3 个严格相等的搜索方法：<code> indexOf()</code> 、 <code>lastIndexOf()</code> 和 <code>includes() </code>。其中，前两个方法在所有版本中都可用，而第三个方法是 ECMAScript 7 新增的。这些方法都接收两个参数：要查找的元素和一个可选的起始搜索位置。 <code>indexOf()</code>和<code>includes()</code>方法从数组前头（第一项）开始向后搜索，而 lastIndexOf() 从数组末尾（最后一项）开始向前搜索。</p>
+<h3 id="栈方法"><a href="#栈方法" class="headerlink" title="栈方法"></a>栈方法</h3><h3 id="队列方法"><a href="#队列方法" class="headerlink" title="队列方法"></a>队列方法</h3><h3 id="排序方法"><a href="#排序方法" class="headerlink" title="排序方法"></a>排序方法</h3><h3 id="操作方法"><a href="#操作方法" class="headerlink" title="操作方法"></a>操作方法</h3><h3 id="搜索和位置方法"><a href="#搜索和位置方法" class="headerlink" title="搜索和位置方法"></a>搜索和位置方法</h3><p>ECMAScript 提供两类搜索数组的方法：按<strong>严格相等搜索</strong>和按<strong>断言函数搜索</strong>。</p>
+<p><strong>1.严格相等</strong></p>
+<p>ECMAScript提供了 3 个严格相等的搜索方法：<code> indexOf()</code> 、 <code>lastIndexOf()</code> 和 <code>includes() </code>。其中，前两个方法在所有版本中都可用，而第三个方法是 ECMAScript 7 新增的。这些方法都<strong>接收两个参数</strong>：<strong>要查找的元素和一个可选的起始搜索位置</strong>。 <code>indexOf()</code>和<code>includes()</code>方法从数组前头（第一项）开始向后搜索，而 lastIndexOf() 从数组末尾（最后一项）开始向前搜索。</p>
+<p><code> indexOf()</code> 和<code>lastIndexOf()</code> 都返回要查找的元素<strong>在数组中的位置</strong>，<strong>如果没找到则返回-1</strong>。<br><code>includes()</code>返回布尔值，表示是否至少找到一个与指定元素匹配的项。在比较第一个参数跟数组每一<br>项时，会使用全等（ === ）比较，也就是说两项必须严格相等。下面来看一些例子：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> numbers = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">alert(numbers.indexOf(<span class="number">4</span>)); <span class="comment">// 3</span></span><br><span class="line">alert(numbers.lastIndexOf(<span class="number">4</span>)); <span class="comment">// 5</span></span><br><span class="line">alert(numbers.includes(<span class="number">4</span>)); <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line">alert(numbers.indexOf(<span class="number">4</span>, <span class="number">4</span>)); <span class="comment">// 5</span></span><br><span class="line">alert(numbers.lastIndexOf(<span class="number">4</span>, <span class="number">4</span>)); <span class="comment">// 3</span></span><br><span class="line">alert(numbers.includes(<span class="number">4</span>, <span class="number">7</span>)); <span class="comment">// false</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> person = &#123; <span class="attr">name</span>: <span class="string">&quot;Nicholas&quot;</span> &#125;;</span><br><span class="line"><span class="keyword">let</span> people = [&#123; <span class="attr">name</span>: <span class="string">&quot;Nicholas&quot;</span> &#125;];</span><br><span class="line"><span class="keyword">let</span> morePeople = [person];</span><br><span class="line"></span><br><span class="line">alert(people.indexOf(person)); <span class="comment">// -1</span></span><br><span class="line">alert(morePeople.indexOf(person)); <span class="comment">// 0</span></span><br><span class="line">alert(people.includes(person)); <span class="comment">// false</span></span><br><span class="line">alert(morePeople.includes(person)); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
 <p><strong>2.断言函数</strong></p>
 <h3 id="迭代方法-以后补"><a href="#迭代方法-以后补" class="headerlink" title="迭代方法(以后补)"></a>迭代方法(以后补)</h3><p>ECMAScript 为数组定义了 5 个迭代方法。<strong>每个方法接收两个参数</strong>：以<strong>每一项为参数运行的函数</strong>，以及<strong>可选的作为函数运行上下文的作用域对象（影响函数中 this 的值）</strong>。<strong>传给每个方法的函数</strong>接收 <strong>3个参数</strong>：<strong>数组元素</strong>、<strong>元素索引</strong>和<strong>数组本身</strong>。因具体方法而异，这个函数的执行结果可能会也可能不会影响方法的返回值。数组的 5 个迭代方法如下。</p>
 <ul>
@@ -1108,20 +1134,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">135</span>
+          <span class="site-state-item-count">138</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-count">52</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">61</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -1176,7 +1202,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">60:37</span>
+    <span title="站点阅读时长">61:13</span>
 </div>
 
         

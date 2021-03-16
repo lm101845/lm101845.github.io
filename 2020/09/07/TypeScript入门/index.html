@@ -229,6 +229,10 @@
 
         <div class="post-meta">
           
+            <i class="fa fa-thumb-tack"></i>
+            <font color="green">置顶</font>
+            <span class="post-meta-divider">|</span>
+          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
@@ -260,14 +264,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>11k</span>
+              <span>14k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>10 分钟</span>
+              <span>13 分钟</span>
             </span>
 
         </div>
@@ -546,13 +550,288 @@ console.log(k.gender === Gender.Male);
     let someValue: unknown = &quot;this is a string&quot;;
     let strLength: number = (&lt;string&gt;someValue).length;
     ```
-
 </code></pre>
 </li>
 </ul>
 </li>
 </ul>
-<h1 id="编译选项"><a href="#编译选项" class="headerlink" title="编译选项"></a>编译选项</h1>
+<h1 id="编译选项"><a href="#编译选项" class="headerlink" title="编译选项"></a>编译选项</h1><ul>
+<li><p>自动编译文件</p>
+<ul>
+<li><p>编译文件时，使用-w指令后，TS编译器会<strong>自动监视</strong>文件的变化，并在文件发生变化时对文件进行重新编译。</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tsc xxx.ts -w</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>自动编译整个项目</p>
+<ul>
+<li><p>如果直接使用tsc指令，则可以自动将当前项目下的所有ts文件编译为js文件。</p>
+</li>
+<li><p>但是能直接使用tsc命令的前提时，要先在<strong>项目根目录下</strong>创建一个ts的配置文件<code>tsconfig.json</code></p>
+</li>
+<li><p><code>tsconfig.json</code>是一个JSON文件，添加配置文件后，只需只需 tsc 命令即可完成对整个项目的编译</p>
+</li>
+<li><p>配置选项：</p>
+<ul>
+<li><p>include</p>
+<ul>
+<li><p>定义希望被编译文件所在的目录</p>
+</li>
+<li><p>默认值：<code>[&quot;\*\*/\*&quot;]</code></p>
+</li>
+<li><p>注意：<code>**</code>表示任意目录，<code>*</code>表示任意文件。</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;include&quot;</span>:[<span class="string">&quot;src/**/*&quot;</span>, <span class="string">&quot;tests/**/*&quot;</span>]</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>上述示例中，所有src目录和tests目录下的文件都会被编译</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>exclude</p>
+<ul>
+<li><p>定义需要排除在外的目录</p>
+</li>
+<li><p>默认值：<code>[&quot;node_modules&quot;, &quot;bower_components&quot;, &quot;jspm_packages&quot;]</code></p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;exclude&quot;</span>: [<span class="string">&quot;./src/hello/**/*&quot;</span>]</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>上述示例中，src下hello目录下的文件都不会被编译</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>extends</p>
+<ul>
+<li><p>定义被继承的配置文件</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;extends&quot;</span>: <span class="string">&quot;./configs/base&quot;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>上述示例中，当前配置文件中会自动包含config目录下base.json中的所有配置信息</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>files</p>
+<ul>
+<li><p>指定被编译文件的列表，只有<strong>需要编译的文件很少时</strong>才会用到</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;files&quot;</span>: [</span><br><span class="line">    <span class="string">&quot;core.ts&quot;</span>,</span><br><span class="line">    <span class="string">&quot;sys.ts&quot;</span>,</span><br><span class="line">    <span class="string">&quot;types.ts&quot;</span>,</span><br><span class="line">    <span class="string">&quot;scanner.ts&quot;</span>,</span><br><span class="line">    <span class="string">&quot;parser.ts&quot;</span>,</span><br><span class="line">    <span class="string">&quot;utilities.ts&quot;</span>,</span><br><span class="line">    <span class="string">&quot;binder.ts&quot;</span>,</span><br><span class="line">    <span class="string">&quot;checker.ts&quot;</span>,</span><br><span class="line">    <span class="string">&quot;tsc.ts&quot;</span></span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>列表中的文件都会被TS编译器所编译。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>compilerOptions</p>
+<ul>
+<li><p>编译选项是配置文件中非常重要也比较复杂的配置选项</p>
+</li>
+<li><p>在compilerOptions中包含多个子选项，用来完成对编译的配置</p>
+<ul>
+<li><p>项目选项</p>
+<ul>
+<li><p>target</p>
+<ul>
+<li><p>设置TS代码编译的<strong>目标版本</strong></p>
+</li>
+<li><p>可选值：</p>
+<ul>
+<li>ES3（默认）、ES5、ES6/ES2015、ES7/ES2016、ES2017、ES2018、ES2019、ES2020、ESNext</li>
+</ul>
+</li>
+<li><p>示例：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&quot;compilerOptions&quot;: &#123;</span><br><span class="line">    &quot;target&quot;: &quot;ES6&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>如上设置，我们所编写的ts代码将会被编译为ES6版本的js代码</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>lib</p>
+<ul>
+<li><p>指定代码运行时所包含的库（宿主环境）</p>
+</li>
+<li><p>可选值：</p>
+<ul>
+<li>ES5、ES6/ES2015、ES7/ES2016、ES2017、ES2018、ES2019、ES2020、ESNext、DOM、WebWorker、ScriptHost ……</li>
+</ul>
+</li>
+<li><p>示例：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;compilerOptions&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;target&quot;</span>: <span class="string">&quot;ES6&quot;</span>,</span><br><span class="line">    <span class="string">&quot;lib&quot;</span>: [<span class="string">&quot;ES6&quot;</span>, <span class="string">&quot;DOM&quot;</span>],</span><br><span class="line">    <span class="string">&quot;outDir&quot;</span>: <span class="string">&quot;dist&quot;</span>,</span><br><span class="line">    <span class="string">&quot;outFile&quot;</span>: <span class="string">&quot;dist/aa.js&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>module</p>
+<ul>
+<li><p>设置编译后代码使用的<strong>模块化系统</strong></p>
+</li>
+<li><p>可选值：</p>
+<ul>
+<li>CommonJS、UMD、AMD、System、ES2020、ESNext、None</li>
+</ul>
+</li>
+<li><p>示例：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;compilerOptions&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;module&quot;</span>: <span class="string">&quot;CommonJS&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>outDir</p>
+<ul>
+<li><p><strong>编译后文件的所在目录</strong></p>
+</li>
+<li><p>默认情况下，编译后的js文件会和ts文件位于相同的目录，设置outDir后可以改变编译后文件的位置</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;compilerOptions&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;outDir&quot;</span>: <span class="string">&quot;dist&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>设置后编译后的js文件将会生成到dist目录</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>outFile</p>
+<ul>
+<li><p><strong>将所有的文件编译为一个js文件</strong></p>
+</li>
+<li><p>默认会将所有的编写在全局作用域中的代码合并为一个js文件，如果module制定了None、System或AMD则会将模块一起合并到文件之中</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;compilerOptions&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;outFile&quot;</span>: <span class="string">&quot;dist/app.js&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>rootDir</p>
+<ul>
+<li><p>指定代码的根目录，默认情况下<strong>编译后文件的目录结构</strong>会以最长的公共目录为根目录，通过rootDir可以手动指定根目录</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;compilerOptions&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;rootDir&quot;</span>: <span class="string">&quot;./src&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>allowJs</p>
+<ul>
+<li>是否对js文件编译</li>
+</ul>
+</li>
+<li><p>checkJs</p>
+<ul>
+<li><p>是否对js文件进行检查</p>
+</li>
+<li><p>示例：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;compilerOptions&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;allowJs&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="string">&quot;checkJs&quot;</span>: <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>removeComments</p>
+<ul>
+<li>是否删除注释</li>
+<li>默认值：false</li>
+</ul>
+</li>
+<li><p>noEmit</p>
+<ul>
+<li>不对代码进行编译</li>
+<li>默认值：false</li>
+</ul>
+</li>
+<li><p>sourceMap</p>
+<ul>
+<li>是否生成sourceMap</li>
+<li>默认值：false</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>严格检查</p>
+<ul>
+<li>strict<ul>
+<li>启用所有的严格检查，默认值为true，设置后相当于开启了所有的严格检查</li>
+</ul>
+</li>
+<li>alwaysStrict<ul>
+<li>总是以严格模式对代码进行编译</li>
+</ul>
+</li>
+<li>noImplicitAny<ul>
+<li>禁止隐式的any类型</li>
+</ul>
+</li>
+<li>noImplicitThis<ul>
+<li>禁止类型不明确的this</li>
+</ul>
+</li>
+<li>strictBindCallApply<ul>
+<li>严格检查bind、call和apply的参数列表</li>
+</ul>
+</li>
+<li>strictFunctionTypes<ul>
+<li>严格检查函数的类型</li>
+</ul>
+</li>
+<li>strictNullChecks<ul>
+<li>严格的空值检查</li>
+</ul>
+</li>
+<li>strictPropertyInitialization<ul>
+<li>严格检查属性是否初始化</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>额外检查</p>
+<ul>
+<li>noFallthroughCasesInSwitch<ul>
+<li>检查switch语句包含正确的break</li>
+</ul>
+</li>
+<li>noImplicitReturns<ul>
+<li>检查函数没有隐式的返回值</li>
+</ul>
+</li>
+<li>noUnusedLocals<ul>
+<li>检查未使用的局部变量</li>
+</ul>
+</li>
+<li>noUnusedParameters<ul>
+<li>检查未使用的参数</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>高级</p>
+<ul>
+<li><p>allowUnreachableCode</p>
+<ul>
+<li>检查不可达代码</li>
+<li>可选值：<ul>
+<li>true，忽略不可达代码</li>
+<li>false，不可达代码将引起错误</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>noEmitOnError</p>
+<ul>
+<li>有错误的情况下不进行编译</li>
+<li>默认值：false</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
     </div>
 
     
@@ -651,20 +930,20 @@ console.log(k.gender === Gender.Male);
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">135</span>
+          <span class="site-state-item-count">138</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-count">52</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">61</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -719,7 +998,7 @@ console.log(k.gender === Gender.Male);
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">60:37</span>
+    <span title="站点阅读时长">61:13</span>
 </div>
 
         
