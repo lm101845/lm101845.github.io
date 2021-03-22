@@ -32,6 +32,9 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2021/03/16/D2Admin%E5%85%A5%E9%97%A8/01.png">
 <meta property="og:image" content="http://example.com/2021/03/16/D2Admin%E5%85%A5%E9%97%A8/02.png">
+<meta property="og:image" content="http://example.com/2021/03/16/D2Admin%E5%85%A5%E9%97%A8/03.png">
+<meta property="og:image" content="http://example.com/2021/03/16/D2Admin%E5%85%A5%E9%97%A8/04.png">
+<meta property="og:image" content="http://example.com/2021/03/16/D2Admin%E5%85%A5%E9%97%A8/05.png">
 <meta property="article:published_time" content="2021-03-16T05:05:00.000Z">
 <meta property="article:modified_time" content="2021-03-16T05:05:00.000Z">
 <meta property="article:author" content="筛滤淘">
@@ -260,14 +263,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>9.6k</span>
+              <span>13k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>9 分钟</span>
+              <span>12 分钟</span>
             </span>
 
         </div>
@@ -281,6 +284,7 @@
       
         <p>(注1：现在是2021年3月16日，我上班的第一天。领导让我着重学习一下<code>D2Admin</code>，这个是用Vue写的后台管理系统。然后还给我看了一下他们现在正在做的用<code>D2Admin</code>做的一个项目。那我当前的学习目的就很明确了，复习Vue和学习<code>D2Admin</code>这个后台管理系统，顺便再把<code>SVN</code>学一下，这个很好学，和Git一样，但是比Git简单。)</p>
 <p>(注2：我现在就主要把官方文档看一遍吧，然后再跟着抄一遍官方文档，再根据里面的示例代码和郭哥给的项目代码进行一些代码测试方面的工作。)</p>
+<p>(注3：<a target="_blank" rel="noopener" href="https://github.com/lm101845/LearnD2Admin">我写的代码的仓库地址</a>)</p>
 <p><a target="_blank" rel="noopener" href="https://d2.pub/zh/doc/d2-admin/">官方文档</a></p>
 <h1 id="开始使用"><a href="#开始使用" class="headerlink" title="开始使用"></a>开始使用</h1><h2 id="D2Admin"><a href="#D2Admin" class="headerlink" title="D2Admin"></a>D2Admin</h2><p><a target="_blank" rel="noopener" href="https://github.com/d2-projects/d2-admin">D2Admin</a>是一个完全 <strong>开源免费</strong> 的企业中后台产品前端集成方案，使用最新的前端技术栈，小于 60kb 的本地首屏 js 加载，已经做好大部分项目前期准备工作，并且带有大量示例代码，助力管理系统快速开发。</p>
 <p><strong>完整版</strong></p>
@@ -380,8 +384,49 @@
 <h3 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h3><p>将终端切换到项目目录之后安装依赖：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i</span><br></pre></td></tr></table></figure>
 <p>如果遇到问题比如 node-sass 安装不上，请参考 <a target="_blank" rel="noopener" href="https://d2.pub/zh/doc/d2-admin/question/">常见问题</a>。</p>
+<blockquote>
+<p>这里要安装48个依赖包，生成<code>node_modules</code>文件夹。</p>
+</blockquote>
 <h3 id="开发调试"><a href="#开发调试" class="headerlink" title="开发调试"></a>开发调试</h3><p>在项目目录内启动项目：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
+<p>或者使用：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm start</span><br></pre></td></tr></table></figure>
+<p>也可以使用 cli3 新推荐的命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run serve</span><br></pre></td></tr></table></figure>
+<p>以上每种方式效果都是一样的，只是为了照顾不同人的习惯起了三个名字，实质上都是运行了 <code>vue-cli-service serve --open</code>。</p>
+<p>成功运行后会显示登录界面：</p>
+<img data-src="/2021/03/16/D2Admin%E5%85%A5%E9%97%A8/03.png" class>
+
+<h3 id="新建页面"><a href="#新建页面" class="headerlink" title="新建页面"></a>新建页面</h3><blockquote>
+<p>注意：这份官方文档的版本是<code>V1.1.5 </code>，而我下载的版本是<code>V1.20.1</code>，所以有些地方是不一样的。比如，现在已经没有<code>pages</code>目录了，现在页面都放到<code>views</code>目录下了，所以我做的话，要把<code>index.vue</code>放到<code>src/views/demo</code>下才对。</p>
+</blockquote>
+<p><code>src/pages</code> 目录是页面存放目录，在此目录下新建目录，例如 <strong>page-demo</strong>：</p>
+<img data-src="/2021/03/16/D2Admin%E5%85%A5%E9%97%A8/04.png" class>
+
+<p>然后在文件夹内新建 <strong>index.vue</strong> 文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;d2-container&gt;</span><br><span class="line">    &lt;template slot&#x3D;&quot;header&quot;&gt;header&lt;&#x2F;template&gt;</span><br><span class="line">    Hello World</span><br><span class="line">    &lt;template slot&#x3D;&quot;footer&quot;&gt;footer&lt;&#x2F;template&gt;</span><br><span class="line">  &lt;&#x2F;d2-container&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br></pre></td></tr></table></figure>
+<p>我的版本这样写：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;d2-container&gt;</span><br><span class="line">      &lt;template slot&#x3D;&quot;header&quot;&gt;header&lt;&#x2F;template&gt;  </span><br><span class="line">      Hello World </span><br><span class="line">      &lt;template slot&#x3D;&quot;footer&quot;&gt;footer&lt;&#x2F;template&gt;  </span><br><span class="line">  &lt;&#x2F;d2-container&gt;</span><br><span class="line">&lt;&#x2F;template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default &#123;</span><br><span class="line">  name: &#39;page-demo&#39;</span><br><span class="line">&#125;</span><br><span class="line">&lt;&#x2F;script&gt;</span><br></pre></td></tr></table></figure>
+
+
+<p>上面的代码生成了一个带有 header 和 footer 的页面，页面内容只有一句话，如果您好奇为什么这么写，可以参考 <a target="_blank" rel="noopener" href="https://d2.pub/zh/doc/d2-admin/sys-components/container.html">页面容器</a></p>
+<img data-src="/2021/03/16/D2Admin%E5%85%A5%E9%97%A8/05.png" class>
+
+<h3 id="设置路由"><a href="#设置路由" class="headerlink" title="设置路由"></a>设置路由</h3><p><code>src/router/routes.js</code> 是路由配置文件。</p>
+<p>在 <code>frameIn</code> 变量最后添加：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  path: &#x27;/page-demo&#x27;,</span><br><span class="line">  name: &#x27;page-demo&#x27;,</span><br><span class="line">  component: () =&gt; import(&#x27;@/pages/page-demo&#x27;),</span><br><span class="line">  meta: &#123;</span><br><span class="line">    auth: true,</span><br><span class="line">    title: &#x27;新建示例&#x27;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后 <code>frameIn</code> 变量应该是这样：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">const frameIn = [</span><br><span class="line">  &#123;</span><br><span class="line">    path: &#x27;/&#x27;,</span><br><span class="line">    redirect: &#123; name: &#x27;index&#x27; &#125;,</span><br><span class="line">    component: layoutHeaderAside,</span><br><span class="line">    children: [</span><br><span class="line">      &#123;</span><br><span class="line">        path: &#x27;index&#x27;,</span><br><span class="line">        name: &#x27;index&#x27;,</span><br><span class="line">        meta,</span><br><span class="line">        component: () =&gt; import(&#x27;@/pages/index&#x27;)</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line">      &#123;</span><br><span class="line">        path: &#x27;/page3&#x27;,</span><br><span class="line">        name: &#x27;page3&#x27;,</span><br><span class="line">        component: () =&gt; import(&#x27;@/pages/page3&#x27;),</span><br><span class="line">        meta: &#123;</span><br><span class="line">          auth: true, </span><br><span class="line">          title: &#x27;页面 3&#x27;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      &#123;</span><br><span class="line">        path: &#x27;/page-demo&#x27;,</span><br><span class="line">        name: &#x27;page-demo&#x27;,</span><br><span class="line">        component: () =&gt; import(&#x27;@/pages/page-demo&#x27;),</span><br><span class="line">        meta: &#123;</span><br><span class="line">          auth: true, </span><br><span class="line">          title: &#x27;新建示例&#x27;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这些在我的新版本上都变了，路径应该是<code>component:()=&gt;_import(&#39;demo/page-demo&#39;)</code>了。</p>
+</blockquote>
+<h3 id="设置菜单"><a href="#设置菜单" class="headerlink" title="设置菜单"></a>设置菜单</h3><p><code>src/menu</code> 目录是<strong>菜单存放目录</strong>，里面的两个文件分别存放顶栏和侧边栏的菜单。</p>
+<blockquote>
+<p>提示：D2Admin 现在将顶栏和侧边栏菜单分别存放然后赋值的逻辑只是一个最简单的演示，请根据您的需要自己修改菜变化逻辑，您可以只用一行代码就可以动态更新菜单，方法见 <a target="_blank" rel="noopener" href="https://d2.pub/zh/doc/d2-admin/vuex/menu.html">vuex menu 模块</a>。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> [</span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">&#x27;/index&#x27;</span>, <span class="attr">title</span>: <span class="string">&#x27;首页&#x27;</span>, <span class="attr">icon</span>: <span class="string">&#x27;home&#x27;</span> &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    title: <span class="string">&#x27;页面&#x27;</span>,</span><br><span class="line">    icon: <span class="string">&#x27;folder-o&#x27;</span>,</span><br><span class="line">    children: [</span><br><span class="line">      &#123; <span class="attr">path</span>: <span class="string">&#x27;/page1&#x27;</span>, <span class="attr">title</span>: <span class="string">&#x27;页面 1&#x27;</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">path</span>: <span class="string">&#x27;/page2&#x27;</span>, <span class="attr">title</span>: <span class="string">&#x27;页面 2&#x27;</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">path</span>: <span class="string">&#x27;/page3&#x27;</span>, <span class="attr">title</span>: <span class="string">&#x27;页面 3&#x27;</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">path</span>: <span class="string">&#x27;/page-demo&#x27;</span>, <span class="attr">title</span>: <span class="string">&#x27;新建示例&#x27;</span> &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>打开 <code>src/menu/aside.js</code> 添加新的菜单（高亮行）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> [</span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">&#x27;/index&#x27;</span>, <span class="attr">title</span>: <span class="string">&#x27;首页&#x27;</span>, <span class="attr">icon</span>: <span class="string">&#x27;home&#x27;</span> &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    title: <span class="string">&#x27;页面&#x27;</span>,</span><br><span class="line">    icon: <span class="string">&#x27;folder-o&#x27;</span>,</span><br><span class="line">    children: [</span><br><span class="line">      &#123; <span class="attr">path</span>: <span class="string">&#x27;/page1&#x27;</span>, <span class="attr">title</span>: <span class="string">&#x27;页面 1&#x27;</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">path</span>: <span class="string">&#x27;/page2&#x27;</span>, <span class="attr">title</span>: <span class="string">&#x27;页面 2&#x27;</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">path</span>: <span class="string">&#x27;/page3&#x27;</span>, <span class="attr">title</span>: <span class="string">&#x27;页面 3&#x27;</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">path</span>: <span class="string">&#x27;/page-demo&#x27;</span>, <span class="attr">title</span>: <span class="string">&#x27;新建示例&#x27;</span> &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
 
 
 <h1 id="需要查漏补缺的知识点"><a href="#需要查漏补缺的知识点" class="headerlink" title="需要查漏补缺的知识点"></a>需要查漏补缺的知识点</h1><h2 id="HTML、CSS"><a href="#HTML、CSS" class="headerlink" title="HTML、CSS"></a>HTML、CSS</h2><ul>
@@ -441,6 +486,8 @@
 <li><code>this.$emit</code></li>
 </ul>
 </li>
+<li><p>插槽：<code>&lt;template slot=&quot;footer&quot;&gt;header&lt;/template&gt;</code></p>
+</li>
 <li><p>生命周期函数</p>
 <ul>
 <li><code>mounted()</code></li>
@@ -458,6 +505,11 @@
 <li><p>路由</p>
 <ul>
 <li>路由懒加载：<code>full: () =&gt; import(&#39;./components/d2-container-full.vue&#39;)</code></li>
+</ul>
+</li>
+<li><p>由于懒加载页面太多的话会造成webpack热更新太慢，所以开发环境不使用懒加载，只有生产环境使用懒加载</p>
+<ul>
+<li><code>const _import = require(&#39;@/libs/util.import.&#39; + process.env.NODE_ENV)</code></li>
 </ul>
 </li>
 <li><p>Vuex状态管理</p>
@@ -587,7 +639,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8"><span class="nav-text">开始使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#D2Admin"><span class="nav-text">D2Admin</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%9F%E8%83%BD"><span class="nav-text">功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84"><span class="nav-text">项目结构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B"><span class="nav-text">快速上手</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E7%8E%AF%E5%A2%83"><span class="nav-text">安装环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E9%A1%B9%E7%9B%AE"><span class="nav-text">下载项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96"><span class="nav-text">安装依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E8%B0%83%E8%AF%95"><span class="nav-text">开发调试</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9C%80%E8%A6%81%E6%9F%A5%E6%BC%8F%E8%A1%A5%E7%BC%BA%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="nav-text">需要查漏补缺的知识点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HTML%E3%80%81CSS"><span class="nav-text">HTML、CSS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JS"><span class="nav-text">JS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue"><span class="nav-text">Vue</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%8F%8A%E6%95%B0%E6%8D%AE%E4%BA%A4%E4%BA%92"><span class="nav-text">网络及数据交互</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E4%BB%B6%E5%8F%8A%E6%A1%86%E6%9E%B6"><span class="nav-text">插件及框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E6%84%9F%E6%82%9F"><span class="nav-text">一些感悟</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8"><span class="nav-text">开始使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#D2Admin"><span class="nav-text">D2Admin</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%9F%E8%83%BD"><span class="nav-text">功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E7%BB%93%E6%9E%84"><span class="nav-text">项目结构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B"><span class="nav-text">快速上手</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E7%8E%AF%E5%A2%83"><span class="nav-text">安装环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E9%A1%B9%E7%9B%AE"><span class="nav-text">下载项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96"><span class="nav-text">安装依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E8%B0%83%E8%AF%95"><span class="nav-text">开发调试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%B0%E5%BB%BA%E9%A1%B5%E9%9D%A2"><span class="nav-text">新建页面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E8%B7%AF%E7%94%B1"><span class="nav-text">设置路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E8%8F%9C%E5%8D%95"><span class="nav-text">设置菜单</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9C%80%E8%A6%81%E6%9F%A5%E6%BC%8F%E8%A1%A5%E7%BC%BA%E7%9A%84%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="nav-text">需要查漏补缺的知识点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HTML%E3%80%81CSS"><span class="nav-text">HTML、CSS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JS"><span class="nav-text">JS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue"><span class="nav-text">Vue</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E5%8F%8A%E6%95%B0%E6%8D%AE%E4%BA%A4%E4%BA%92"><span class="nav-text">网络及数据交互</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E4%BB%B6%E5%8F%8A%E6%A1%86%E6%9E%B6"><span class="nav-text">插件及框架</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-text">其他</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E6%84%9F%E6%82%9F"><span class="nav-text">一些感悟</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-text">总结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -603,7 +655,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">138</span>
+          <span class="site-state-item-count">139</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -671,7 +723,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">61:13</span>
+    <span title="站点阅读时长">61:19</span>
 </div>
 
         
