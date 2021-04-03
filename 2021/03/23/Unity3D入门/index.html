@@ -54,6 +54,10 @@
 <meta property="og:image" content="http://example.com/2021/03/23/Unity3D%E5%85%A5%E9%97%A8/22.png">
 <meta property="og:image" content="http://example.com/2021/03/23/Unity3D%E5%85%A5%E9%97%A8/23.png">
 <meta property="og:image" content="http://example.com/2021/03/23/Unity3D%E5%85%A5%E9%97%A8/24.png">
+<meta property="og:image" content="http://example.com/2021/03/23/Unity3D%E5%85%A5%E9%97%A8/31.png">
+<meta property="og:image" content="http://example.com/2021/03/23/Unity3D%E5%85%A5%E9%97%A8/28.png">
+<meta property="og:image" content="http://example.com/2021/03/23/Unity3D%E5%85%A5%E9%97%A8/29.png">
+<meta property="og:image" content="http://example.com/2021/03/23/Unity3D%E5%85%A5%E9%97%A8/30.png">
 <meta property="og:image" content="http://example.com/2021/03/23/Unity3D%E5%85%A5%E9%97%A8/25.png">
 <meta property="og:image" content="http://example.com/2021/03/23/Unity3D%E5%85%A5%E9%97%A8/26.png">
 <meta property="og:image" content="http://example.com/2021/03/23/Unity3D%E5%85%A5%E9%97%A8/27.png">
@@ -285,14 +289,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.1k</span>
+              <span>1.7k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -376,8 +380,49 @@
 <li>很可能老师讲的这个在实际工作中用的根本就不是它，这个都很正常，所以技术不重要，能力最重要。</li>
 <li>为什么大家都喜欢要相关专业的，名牌大学的毕业生呢？也许他掌握的知识点还没自己多呢？但是如果有一个问题，刚开始你也不会，他也不会，  但是你可能花了一天时间才把它解决掉，而他只用了一个小时，这个就是解决问题能力的差距，企业看中的就是这一点。所以，如果你学历不高，但是你有<strong>解决问题的能力</strong>，你也可以在这个行业混下去。</li>
 </ul>
-<h4 id="Unity引擎基础-1"><a href="#Unity引擎基础-1" class="headerlink" title="Unity引擎基础"></a>Unity引擎基础</h4><img data-src="/2021/03/23/Unity3D%E5%85%A5%E9%97%A8/24.png" class>
+<h4 id="Unity引擎基础-1"><a href="#Unity引擎基础-1" class="headerlink" title="Unity引擎基础"></a>Unity引擎基础</h4><ul>
+<li>美工做的模型是<code>.FBX</code>文件扩展名。</li>
+<li>一个项目说白了就是一个文件夹。</li>
+</ul>
+<img data-src="/2021/03/23/Unity3D%E5%85%A5%E9%97%A8/24.png" class>
 
+<h5 id="Scene场景面板"><a href="#Scene场景面板" class="headerlink" title="Scene场景面板"></a>Scene场景面板</h5><img data-src="/2021/03/23/Unity3D%E5%85%A5%E9%97%A8/31.png" class>
+
+<ul>
+<li>你可以把整个文件夹都复制回家继续做，也可以只复制Assets文件夹，其他的文件等你到了家里的电脑打开后会自动再生成的。</li>
+<li>你对Assets内部文件做修改，实际上就是在修改projects面板，但是建议不要在资源文件里面互相拷贝和粘贴，而是应该直接在面板里面进行操作，因为每一个资源都有一个<code>meta</code>文件，这个文件是Unity自动生成的，你不要直接在内部文件里面瞎拷贝，容易造成错误，而应该在project面板里拷贝，这样没有问题。</li>
+</ul>
+<img data-src="/2021/03/23/Unity3D%E5%85%A5%E9%97%A8/28.png" class>
+
+<img data-src="/2021/03/23/Unity3D%E5%85%A5%E9%97%A8/29.png" class>
+
+<ul>
+<li><p>总之，project面板与assets文件夹是对应的关系。</p>
+</li>
+<li><p>project面板放的是<strong>游戏资源</strong>，你是看不见实物的；它左边的hierarchy面板放的是<strong>游戏对象</strong>，只有你把游戏资源拽到hierarchy面板，你才能看到。</p>
+</li>
+<li><p>左上角的scene面板是用来操作游戏界面的，做场景布局的。比如：”树我放左边，人我放右边等。”</p>
+</li>
+<li><p>左下角的game面板是用来预览的，可以看到用户实际玩起来是什么样的。</p>
+</li>
+<li><p>scene面板的常用快捷键：</p>
+<ul>
+<li><p>鼠标右键+移动：旋转你的视野</p>
+</li>
+<li><p>鼠标滚轮滑动：前进和后退</p>
+</li>
+<li><p>按下鼠标滚轮：让整个场景拖动</p>
+</li>
+<li><p>选中一个物体+按F键：把这个物体在整个scene面板居中。(并且要选择第二个选项：拖动物体)</p>
+<img data-src="/2021/03/23/Unity3D%E5%85%A5%E9%97%A8/30.png" class>
+</li>
+<li><p>Alt + 鼠标左键：围绕旋转，可以看这个物体的左右、上下都是什么样子</p>
+</li>
+<li><p>Alt + 鼠标右键：放大缩小。  </p>
+</li>
+</ul>
+</li>
+</ul>
 <h4 id="Unity高级应用"><a href="#Unity高级应用" class="headerlink" title="Unity高级应用"></a>Unity高级应用</h4><img data-src="/2021/03/23/Unity3D%E5%85%A5%E9%97%A8/25.png" class>
 
 <h4 id="游戏架构设计"><a href="#游戏架构设计" class="headerlink" title="游戏架构设计"></a>游戏架构设计</h4><img data-src="/2021/03/23/Unity3D%E5%85%A5%E9%97%A8/26.png" class>
@@ -477,7 +522,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Unity%E5%BC%95%E6%93%8E%E5%9F%BA%E7%A1%80"><span class="nav-text">Unity引擎基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-text">学习注意事项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unity3D%E4%BB%8B%E7%BB%8D"><span class="nav-text">Unity3D介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Unity3D"><span class="nav-text">Unity3D</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B8%B8%E6%88%8F"><span class="nav-text">游戏</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E7%8E%B0%E5%AE%9E"><span class="nav-text">虚拟现实</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E"><span class="nav-text">游戏引擎</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Unity3D%E7%89%B9%E7%82%B9"><span class="nav-text">Unity3D特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%82%E5%9C%BA%E4%BB%BD%E9%A2%9D"><span class="nav-text">市场份额</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%91%97%E5%90%8D%E6%B8%B8%E6%88%8F%E5%85%AC%E5%8F%B8%E7%9A%84%E5%8A%A0%E5%85%A5"><span class="nav-text">著名游戏公司的加入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Unity3D%E5%BC%80%E5%8F%91%E7%9A%84%E6%B8%B8%E6%88%8F"><span class="nav-text">使用Unity3D开发的游戏</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8E%86%E5%8F%B2"><span class="nav-text">历史</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B8%B8%E6%88%8F%E5%85%AC%E5%8F%B8%E5%A4%A7%E8%87%B4%E5%88%86%E5%B7%A5"><span class="nav-text">游戏公司大致分工</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%BE%E7%A8%8B%E4%BD%93%E7%B3%BB"><span class="nav-text">课程体系</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Unity%E5%BC%95%E6%93%8E%E5%9F%BA%E7%A1%80-1"><span class="nav-text">Unity引擎基础</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Unity%E9%AB%98%E7%BA%A7%E5%BA%94%E7%94%A8"><span class="nav-text">Unity高级应用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="nav-text">游戏架构设计</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98"><span class="nav-text">完整项目实战</span></a></li></ol></li></ol></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Unity%E5%BC%95%E6%93%8E%E5%9F%BA%E7%A1%80"><span class="nav-text">Unity引擎基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-text">学习注意事项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unity3D%E4%BB%8B%E7%BB%8D"><span class="nav-text">Unity3D介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Unity3D"><span class="nav-text">Unity3D</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B8%B8%E6%88%8F"><span class="nav-text">游戏</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E7%8E%B0%E5%AE%9E"><span class="nav-text">虚拟现实</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B8%B8%E6%88%8F%E5%BC%95%E6%93%8E"><span class="nav-text">游戏引擎</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Unity3D%E7%89%B9%E7%82%B9"><span class="nav-text">Unity3D特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%82%E5%9C%BA%E4%BB%BD%E9%A2%9D"><span class="nav-text">市场份额</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%91%97%E5%90%8D%E6%B8%B8%E6%88%8F%E5%85%AC%E5%8F%B8%E7%9A%84%E5%8A%A0%E5%85%A5"><span class="nav-text">著名游戏公司的加入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Unity3D%E5%BC%80%E5%8F%91%E7%9A%84%E6%B8%B8%E6%88%8F"><span class="nav-text">使用Unity3D开发的游戏</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8E%86%E5%8F%B2"><span class="nav-text">历史</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B8%B8%E6%88%8F%E5%85%AC%E5%8F%B8%E5%A4%A7%E8%87%B4%E5%88%86%E5%B7%A5"><span class="nav-text">游戏公司大致分工</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%BE%E7%A8%8B%E4%BD%93%E7%B3%BB"><span class="nav-text">课程体系</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Unity%E5%BC%95%E6%93%8E%E5%9F%BA%E7%A1%80-1"><span class="nav-text">Unity引擎基础</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Scene%E5%9C%BA%E6%99%AF%E9%9D%A2%E6%9D%BF"><span class="nav-text">Scene场景面板</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Unity%E9%AB%98%E7%BA%A7%E5%BA%94%E7%94%A8"><span class="nav-text">Unity高级应用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B8%B8%E6%88%8F%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="nav-text">游戏架构设计</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%8C%E6%95%B4%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98"><span class="nav-text">完整项目实战</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -493,7 +538,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">144</span>
+          <span class="site-state-item-count">145</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -561,7 +606,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">61:22</span>
+    <span title="站点阅读时长">61:33</span>
 </div>
 
         

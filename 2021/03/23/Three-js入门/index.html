@@ -31,6 +31,7 @@
 <meta property="og:description" content="(注1：今天是2021年3月23日，已经是上班第二周了，下班后不知道怎么了不太想再继续学前端了，然后就想着不然换换口味吧，正好我们公司也主要是做多媒体数字视觉服务的，所以我就想着不然就稍微学一下C#、Unity3D、WebGL、Three.js、Canvas吧，当然了，现在的主要精力还是放在前端上的，不过在学习感到疲倦的时候我觉得调剂一下学点别的也是不错的选择。)  (注2：现阶段也不用说学得有多">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2021/03/23/Three-js%E5%85%A5%E9%97%A8/01.png">
+<meta property="og:image" content="http://example.com/2021/03/23/Three-js%E5%85%A5%E9%97%A8/02.png">
 <meta property="article:published_time" content="2021-03-23T11:55:49.000Z">
 <meta property="article:modified_time" content="2021-03-23T11:55:49.000Z">
 <meta property="article:author" content="筛滤淘">
@@ -259,14 +260,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>534</span>
+              <span>4.9k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>4 分钟</span>
             </span>
 
         </div>
@@ -282,14 +283,141 @@
 <p>(注2：现阶段也不用说学得有多深，大体了解一下即可。也为了方便以后和其他同事进行沟通和交流吧。)</p>
 <p>(注3：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Xi4y1u7pR?from=search&seid=426737862845848583">视频链接1</a>)</p>
 <p>(注4：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1va4y1p7QB?from=search&seid=11868492760104464723">视频链接2</a>)</p>
-<p>(注5：<a target="_blank" rel="noopener" href="http://www.yanhuangxueyuan.com/threejs/docs/index.html">电子书</a>)</p>
-<p>(注6：我主要是抄这个电子书，然后顺便再看一下视频。)</p>
-<h1 id="学前内容"><a href="#学前内容" class="headerlink" title="学前内容"></a>学前内容</h1><p>正式学习Three.js编程之前先对threejs进行整体介绍，大家对Three.js整体面貌有一定认知之后，更有利于自己之后的学习安排和规划。</p>
+<p>(注5：<a target="_blank" rel="noopener" href="http://www.yanhuangxueyuan.com/threejs/docs/index.html#manual/zh/introduction/Creating-a-scene">电子书1</a>)</p>
+<p>(注6：<a target="_blank" rel="noopener" href="http://www.yanhuangxueyuan.com/Three.js/">电子书2</a>)</p>
+<p>(注7：我主要是抄这个电子书和官方中文文档，然后顺便再看一下视频。)</p>
+<p>(注8：我查了一下，Three.js最早的版本是2010年，离现在也只有10年而已。)</p>
+<h1 id="Three-js零基础入门教程-郭隆邦"><a href="#Three-js零基础入门教程-郭隆邦" class="headerlink" title="Three.js零基础入门教程(郭隆邦)"></a>Three.js零基础入门教程(郭隆邦)</h1><h1 id="学前内容"><a href="#学前内容" class="headerlink" title="学前内容"></a>学前内容</h1><p>正式学习Three.js编程之前先对threejs进行整体介绍，大家对Three.js整体面貌有一定认知之后，更有利于自己之后的学习安排和规划。</p>
 <img data-src="/2021/03/23/Three-js%E5%85%A5%E9%97%A8/01.png" class>
 
 <h2 id="了解Three-js"><a href="#了解Three-js" class="headerlink" title="了解Three.js"></a>了解Three.js</h2><p>Three.js是基于原生WebGL封装运行的三维引擎，在所有WebGL引擎中，Three.js是国内文资料最多、使用最广泛的三维引擎。</p>
 <p>既然Threejs是一款WebGL三维引擎，那么它可以用来做什么想必你一定很关心。所以接下来内容会展示大量基于Threejs引擎或Threejs类似引擎开发的Web3D应用，以便大家了解。</p>
+<h3 id="物联网3D可视化"><a href="#物联网3D可视化" class="headerlink" title="物联网3D可视化"></a>物联网3D可视化</h3><p>在人与人之间联系的互联网时代，主要是满足人与人之间的交流，Web页面的交互界面主要呈现为2D的交互效果，比如按钮、输入框等。</p>
+<p>随着物联网的发展,工业、建筑等各个领域与物联网相关Web项目网页交互界面都会呈现出3D化的趋势。物联网相比较传统互联网更强调的是人与物、物与物的联系，当人与物进行交互的时候，比如你通过网页页面远程控制工厂中的一台机器启动或关停，你可以在网页上通过div元素写一个按钮，然后表示机器设备的开关，当然你也可以把该设备以3D的形式展示在网页上，然后就像玩游戏一样直接点击模型上的开关按钮，这两种方式肯定是3D的方式更为直观，当然开发成本也比较大。</p>
+<p><a target="_blank" rel="noopener" href="http://www.yanhuangxueyuan.com/3D/liangcang/index.html">物联网粮仓3D可视化案例</a></p>
+<h3 id="产品720在线预览"><a href="#产品720在线预览" class="headerlink" title="产品720在线预览"></a>产品720在线预览</h3><p>在浏览器不支持WebGL技术的时代，如果你想在网页上展示一款产品往往是通过2D图片的形式实现。如果想3D展示一个产品，往往依赖于OpenGL技术，比如通过unity3D或ue4开发一个桌面应用，这样做往往很难随意传播，需要用户下载程序很麻烦，如果是通过Web的方式展示产品的三维模型，一个超链接就可以随意传播。</p>
+<p>随着WebGL技术的持续推广，5G技术的持续推广，各种产品在线3D展示将会变得越来越普及，比如一家汽车公司的新款轿车可以在官网上在线预览，也许有一天一些电商平台会通过3D模型取代2D图片，现在你朋友推荐推荐给你一款新衣服，你会说发一张图片看看，也许将来你会说发来一个3D模型链接看看。</p>
+<p><a target="_blank" rel="noopener" href="http://www.yanhuangxueyuan.com/3D/liangcang/index.html">玉镯产品在线预览案例</a></p>
+<p><a target="_blank" rel="noopener" href="http://app.xuanke3d.com/apps/trayton/#/show">沙发在线预览</a></p>
+<p><a target="_blank" rel="noopener" href="http://suit.xuantech.cn/">服装在线预览</a></p>
+<p><a target="_blank" rel="noopener" href="https://cdn.weshape3d.com/hir001/1021/web/index.html">洗衣机在线交互预览</a></p>
+<h3 id="数据可视化"><a href="#数据可视化" class="headerlink" title="数据可视化"></a>数据可视化</h3><p>与webgl相关的数据可视化主要是两方面，一方面是海量超大数据的可视化，另一方面是与3D相关的数据可视化。对于超大的海量数据而言，基于canvas、svg等方式进行web可视化，没有基于WebGL技术实现性能更好，对于3D相关的数据可视化基于WebGL技术，借助3D引擎Threejs可以很好的实现。</p>
+<p><a target="_blank" rel="noopener" href="http://www.yanhuangxueyuan.com/3D/geojsonChina/index.html">解析GeoJOSN数据中国GDP数据可视化</a></p>
+<h3 id="H5-微信小游戏"><a href="#H5-微信小游戏" class="headerlink" title="H5/微信小游戏"></a>H5/微信小游戏</h3><p>非常火的微信小游戏跳一跳就是使用Three.js引擎开发的。 开发3D类的H5小游戏或者微信小游戏，Three.js引擎是非常好的选择。</p>
+<p>通过Threejs开发的小游戏，可以直接部署在微信小程序或者web端，无需下载，方便传播，目前的生态非常和小游戏开发。</p>
+<h3 id="科教领域"><a href="#科教领域" class="headerlink" title="科教领域"></a>科教领域</h3><p>在科教领域通过3D方式展示特定的知识相比较图像更为直观。</p>
+<p><a target="_blank" rel="noopener" href="http://www.rcsb.org/3d-view/2JEN/1">科研平台-蛋白质结构可视化案例</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.yanhuangxueyuan.com/3D/fenzi/index.html">化学相关——分子结构可视化</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.yanhuangxueyuan.com/3D/solarSystem/index.html">地理天文相关——太阳系3D预览</a></p>
+<h3 id="机械领域"><a href="#机械领域" class="headerlink" title="机械领域"></a>机械领域</h3><p><a target="_blank" rel="noopener" href="http://www.yanhuangxueyuan.com/3D/jixiezhuangpei/index.html">机械模型在线预览demo</a></p>
+<p>Onshape是一款机械领域的三维建模软件，如果熟悉Solidworks、UG等CAD软件，那么你可以把Onshape理解为云Solidworks。</p>
+<h3 id="WebVR"><a href="#WebVR" class="headerlink" title="WebVR"></a>WebVR</h3><p>对于现在比较火的VR、AR概念，WebGL技术的出现，也是一个好消息，如果你想预览一些VR内容，完全可以不下载一个VR相关的APP，通过threejs引擎实现VR内容发布，然后用户直接通过微信等社交方式推广，直接打开VR内容链接就可以观看。</p>
+<p>VR与Web3D技术结合自然就衍生出来一个新的概念WebVR，也就是基于Web实现的VR内容。</p>
+<h3 id="家装室内设计相关"><a href="#家装室内设计相关" class="headerlink" title="家装室内设计相关"></a>家装室内设计相关</h3><p><a target="_blank" rel="noopener" href="http://www.yanhuangxueyuan.com/3D/houseDesign/index.html">室内设计作品展示案例</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.kujiale.com/">云装修平台酷家乐</a></p>
+<h3 id="三维模型在线预览平台"><a href="#三维模型在线预览平台" class="headerlink" title="三维模型在线预览平台"></a>三维模型在线预览平台</h3><table>
+<thead>
+<tr>
+<th>平台</th>
+<th>国家</th>
+<th>网址</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>sketchfab</td>
+<td>国外</td>
+<td><a target="_blank" rel="noopener" href="https://sketchfab.com/">https://sketchfab.com/</a></td>
+</tr>
+<tr>
+<td>动动三维</td>
+<td>国内</td>
+<td><a target="_blank" rel="noopener" href="https://www.ddd.online/">https://www.ddd.online/</a></td>
+</tr>
+<tr>
+<td>琢刻</td>
+<td>国内</td>
+<td><a target="_blank" rel="noopener" href="https://gizmohub.com/">https://gizmohub.com/</a></td>
+</tr>
+</tbody></table>
+<h3 id="室内逆向全景漫游平台"><a href="#室内逆向全景漫游平台" class="headerlink" title="室内逆向全景漫游平台"></a>室内逆向全景漫游平台</h3><p>通过3D相机对室内空间进行逆向，在Web端以全景图的方式预览室内效果。</p>
+<table>
+<thead>
+<tr>
+<th>平台</th>
+<th>国家</th>
+<th>网址</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>众趣科技</td>
+<td>国内</td>
+<td><a target="_blank" rel="noopener" href="http://www.3dnest.cn/">http://www.3dnest.cn/</a></td>
+</tr>
+<tr>
+<td>贝壳</td>
+<td>国内</td>
+<td><a target="_blank" rel="noopener" href="https://zz.ke.com//">https://zz.ke.com//</a></td>
+</tr>
+<tr>
+<td>matterport</td>
+<td>国外</td>
+<td><a target="_blank" rel="noopener" href="https://matterport.com/">https://matterport.com/</a></td>
+</tr>
+</tbody></table>
+<h2 id="Three-js资源"><a href="#Three-js资源" class="headerlink" title="Three.js资源"></a>Three.js资源</h2><p>github链接：<a target="_blank" rel="noopener" href="https://github.com/mrdoob/three.js">https://github.com/mrdoob/three.js</a></p>
+<p>Three.js官网：<a target="_blank" rel="noopener" href="https://threejs.org/">https://threejs.org/</a></p>
+<h3 id="Threejs中文文档"><a href="#Threejs中文文档" class="headerlink" title="Threejs中文文档"></a>Threejs中文文档</h3><p><a target="_blank" rel="noopener" href="http://www.yanhuangxueyuan.com/threejs/docs/index.html">Threejs中文文档</a></p>
+<p>Threejs官网同时提供了英文文档和中文文档，不过有些时候打开会比较慢，所以我在我的个人博客部署了一份官网的中文文档，方便大家查阅。</p>
+<h3 id="Three-js历史版本"><a href="#Three-js历史版本" class="headerlink" title="Three.js历史版本"></a>Three.js历史版本</h3><p>github链接查看所有版本：<a target="_blank" rel="noopener" href="https://github.com/mrdoob/three.js/releases">https://github.com/mrdoob/three.js/releases</a></p>
+<h3 id="Three-js-master文件下载"><a href="#Three-js-master文件下载" class="headerlink" title="Three.js-master文件下载"></a>Three.js-master文件下载</h3><p>github下载threejs比较慢，所以在网盘放了一份，方便大家下载。</p>
+<p>下载地址查看文章：<a target="_blank" rel="noopener" href="http://www.yanhuangxueyuan.com/links.html">Three.js-master包下载</a></p>
+<h3 id="相关库"><a href="#相关库" class="headerlink" title="相关库"></a>相关库</h3><p>下面表格列举了一些Three.js相关的开源库。</p>
+<table>
+<thead>
+<tr>
+<th>库</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/chandlerprall/Physijs">Physijs</a></td>
+<td>Physijs是一款物理引擎，可以协助基于原生WebGL或使用three.js创建模拟物理现象，比如重力下落、物体碰撞等物理现</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/mrdoob/stats.js">stats.js</a></td>
+<td>JavaScript性能监控器，同样也可以测试webgl的渲染性能</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/dataarts/dat.gui">dat.gui</a></td>
+<td>轻量级的icon形用户界面框架，可以用来控制Javascript的变量，比如WebGL中一个物体的尺寸、颜色</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/tweenjs/tween.js/">tween.js</a></td>
+<td>借助tween.js快速创建补间动画，可以非常方便的控制机械、游戏角色运动</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://github.com/sshirokov/ThreeBSP">ThreeBSP</a></td>
+<td>可以作为three.js的插件，完成几何模型的布尔，各类三维建模软件基本都有布尔的概念</td>
+</tr>
+</tbody></table>
+<h2 id="three-js-master目录结构"><a href="#three-js-master目录结构" class="headerlink" title="three.js-master目录结构"></a>three.js-master目录结构</h2><p>为了方便大家学习，准备对Three.js工程目录进行简单介绍。如果能很好的利用three.js-master文件下的资源，对于Threejs学习和Web3D项目的开发会极大的帮助。</p>
+<p>github链接查看所有目录：<a target="_blank" rel="noopener" href="https://github.com/mrdoob/three.js">https://github.com/mrdoob/three.js</a></p>
+<img data-src="/2021/03/23/Three-js%E5%85%A5%E9%97%A8/02.png" class>
 
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">three.js-master</span><br><span class="line">└───build——src目录下各个代码模块打包后的结果</span><br><span class="line">    │───three.js——开发的时候.html文件中要引入的threejs引擎库，和引入jquery一样，可以辅助浏览器调试</span><br><span class="line">    │───three.min.js——three.js压缩后的结构文件体积更小，可以部署项目的时候在.html中引入。</span><br><span class="line">    │</span><br><span class="line">└───docs——Three.js API文档文件</span><br><span class="line">    │───index.html——打开该文件可以实现离线查看threejs API文档</span><br><span class="line">    │</span><br><span class="line">└───editor——Three.js的可视化编辑器，可以编辑3D场景</span><br><span class="line">    │───index.html——打开应用程序</span><br><span class="line">    │</span><br><span class="line">└───docs——Three.js API文档文件</span><br><span class="line">    │───index.html——打开该文件可以实现离线查看threejs API文档</span><br><span class="line">    │</span><br><span class="line">└───examples——里面有大量的threejs案例，平时可以通过代码编辑全局查找某个API、方法或属性来定位到一个案例</span><br><span class="line">    │</span><br><span class="line">└───src——Three.js引擎的各个模块，可以通过阅读源码深度理解threejs引擎</span><br><span class="line">    │───index.html——打开该文件可以实现离线查看threejs API文档</span><br><span class="line">    │</span><br><span class="line">└───utils——一些辅助工具</span><br><span class="line">    │───\utils\exporters\blender——blender导出threejs文件的插件</span><br></pre></td></tr></table></figure>
+<h3 id="html文件引入three-js引擎"><a href="#html文件引入three-js引擎" class="headerlink" title="html文件引入three.js引擎"></a>html文件引入three.js引擎</h3><p>在.html文件中引入three.js就像引入其它.js文件一样直接引入即可。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--相对地址加载--&gt;</span><br><span class="line">&lt;script src=<span class="string">&quot;./three.js&quot;</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>我已经把three.js文件上传到了<a target="_blank" rel="noopener" href="http://www.yanhuangxueyuan.com/">我的博客服务器</a>， 可以通过下面的URL地址去加载</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--http绝对地址远程加载--&gt;</span><br><span class="line">&lt;script src=<span class="string">&quot;http://www.yanhuangxueyuan.com/3D/example/three.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;!-- 压缩版本 --&gt;</span><br><span class="line">&lt;script src=<span class="string">&quot;http://www.yanhuangxueyuan.com/3D/example/three.min.js&quot;</span>&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>.html文件中引入threejs文件之后，可以通过浏览器控制台F12验证是否成功引入，在.html文件引入three.js后可以通过<code>THREE</code>访问所有的API。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如果返回的不是未定义，说明threejs成功引入</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;打印场景API&#x27;</span>,THREE.Scene);</span><br></pre></td></tr></table></figure>
+<h2 id="打开预览Three-js案例-跨域问题"><a href="#打开预览Three-js案例-跨域问题" class="headerlink" title="打开预览Three.js案例(跨域问题)"></a>打开预览Three.js案例(跨域问题)</h2><p>不需要加载外部贴图和模型文件的three.js案例，可以直接使用浏览器打开.html案例文件，通常一个threejs项目案例往往都会加载一些外部模型，因此打开threejs案例要搭建一个本地的静态服务器，否则的话，threejs案例无法正常打开，浏览器控制台会提示<a target="_blank" rel="noopener" href="http://www.yanhuangxueyuan.com/three.js_course/longword/crossdomain.html">跨域问题</a>。</p>
+<p>如果你知道怎么搭建本地静态服务器，自己用任何方式搭建都可以。如果不了解的话，建议使用nodejs去快速搭建一个本地静态服务器，对于一个WebGL工程师或前端工程师来说，肯定是要学习Nodejs的。</p>
+<h3 id="Nodejs本地静态服务器"><a href="#Nodejs本地静态服务器" class="headerlink" title="Nodejs本地静态服务器"></a>Nodejs本地静态服务器</h3><p>使用Nodejs搭建本地静态服务器很简单，首先是你要先百度Nodejs安装的相关文章，先在你的电脑上安装配置好Nodejs，熟悉下NPM的使用，然后使用npm执行<code>npm install -g live-server</code>安装<code>live-server</code>模块，如果你想通过安装好的<code>live-server</code>模块开启一个静态服务器，打开命令行，进入threejs案例所在的文件目录，然后执行<code>live-server</code>命令就可以。</p>
+<p>通过浏览器访问<code>http://localhost:8080</code>或<code>http://127.0.0.1:8080</code>地址，找到threejs案例的.html文件直接打开就可以看到三维场景渲染效果。</p>
+<h3 id="开发调试-热更新"><a href="#开发调试-热更新" class="headerlink" title="开发调试-热更新"></a>开发调试-热更新</h3><p>在学习threejs的过程中，往往需要频繁的代码测试，查看threejs代码的渲染效果。这时候你肯定希望代码修改之后，threejs渲染效果立即热更新。</p>
+<p>如果通过<code>live-server</code>模块搭建的本地静态服务器，你可以实现代码的热加载。也就是说你修改一段代码，然后保存.html代码文件，.html对应的threejs案例就会重新渲染。</p>
+<h1 id="官方中文文档"><a href="#官方中文文档" class="headerlink" title="官方中文文档"></a>官方中文文档</h1>
     </div>
 
     
@@ -372,7 +500,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%A6%E5%89%8D%E5%86%85%E5%AE%B9"><span class="nav-text">学前内容</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%86%E8%A7%A3Three-js"><span class="nav-text">了解Three.js</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Three-js%E9%9B%B6%E5%9F%BA%E7%A1%80%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B-%E9%83%AD%E9%9A%86%E9%82%A6"><span class="nav-text">Three.js零基础入门教程(郭隆邦)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AD%A6%E5%89%8D%E5%86%85%E5%AE%B9"><span class="nav-text">学前内容</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%86%E8%A7%A3Three-js"><span class="nav-text">了解Three.js</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%89%A9%E8%81%94%E7%BD%913D%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="nav-text">物联网3D可视化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A7%E5%93%81720%E5%9C%A8%E7%BA%BF%E9%A2%84%E8%A7%88"><span class="nav-text">产品720在线预览</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="nav-text">数据可视化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#H5-%E5%BE%AE%E4%BF%A1%E5%B0%8F%E6%B8%B8%E6%88%8F"><span class="nav-text">H5&#x2F;微信小游戏</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%91%E6%95%99%E9%A2%86%E5%9F%9F"><span class="nav-text">科教领域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%BA%E6%A2%B0%E9%A2%86%E5%9F%9F"><span class="nav-text">机械领域</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WebVR"><span class="nav-text">WebVR</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%B6%E8%A3%85%E5%AE%A4%E5%86%85%E8%AE%BE%E8%AE%A1%E7%9B%B8%E5%85%B3"><span class="nav-text">家装室内设计相关</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E7%BB%B4%E6%A8%A1%E5%9E%8B%E5%9C%A8%E7%BA%BF%E9%A2%84%E8%A7%88%E5%B9%B3%E5%8F%B0"><span class="nav-text">三维模型在线预览平台</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%A4%E5%86%85%E9%80%86%E5%90%91%E5%85%A8%E6%99%AF%E6%BC%AB%E6%B8%B8%E5%B9%B3%E5%8F%B0"><span class="nav-text">室内逆向全景漫游平台</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Three-js%E8%B5%84%E6%BA%90"><span class="nav-text">Three.js资源</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Threejs%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3"><span class="nav-text">Threejs中文文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Three-js%E5%8E%86%E5%8F%B2%E7%89%88%E6%9C%AC"><span class="nav-text">Three.js历史版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Three-js-master%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD"><span class="nav-text">Three.js-master文件下载</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E5%BA%93"><span class="nav-text">相关库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#three-js-master%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="nav-text">three.js-master目录结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#html%E6%96%87%E4%BB%B6%E5%BC%95%E5%85%A5three-js%E5%BC%95%E6%93%8E"><span class="nav-text">html文件引入three.js引擎</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93%E5%BC%80%E9%A2%84%E8%A7%88Three-js%E6%A1%88%E4%BE%8B-%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98"><span class="nav-text">打开预览Three.js案例(跨域问题)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Nodejs%E6%9C%AC%E5%9C%B0%E9%9D%99%E6%80%81%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-text">Nodejs本地静态服务器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E8%B0%83%E8%AF%95-%E7%83%AD%E6%9B%B4%E6%96%B0"><span class="nav-text">开发调试-热更新</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%98%E6%96%B9%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3"><span class="nav-text">官方中文文档</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -388,7 +516,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">144</span>
+          <span class="site-state-item-count">145</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -456,7 +584,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">61:22</span>
+    <span title="站点阅读时长">61:33</span>
 </div>
 
         
