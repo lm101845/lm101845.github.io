@@ -71,10 +71,13 @@ ul.tabs {
   padding: 0;
   overflow: hidden;
   background-color: #333333;
+  display: flex;
+  justify-content: center; /* 水平居中 */
 }
 
 ul.tabs li {
-  float: left;
+  /* float: left; */
+  text-align: center;
 }
 
 ul.tabs li a {
