@@ -29,6 +29,9 @@ p {
     color: #333;
 }
 footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
     border-top: 6px solid #acaaaa;
     background-color: rgb(245, 245, 245);
     font-size: 1.2em;
