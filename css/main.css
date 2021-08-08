@@ -7,6 +7,10 @@ h1 {
   font-size: 3em;
   font-family: "Helvetica", "Arial", "Sans-Serif";
 }
+h2 {
+  font-size: 2.5em;
+  font-family: "Helvetica", "Arial", "Sans-Serif";
+}
 p {
   font-size: 1.5em;
   line-height: 1.4em;
@@ -109,6 +113,7 @@ footer ul li {
 }
 footer i {
   font-size: 0.8em;
+  font-weight: 400;
   text-align: center;
   display: block;
 }

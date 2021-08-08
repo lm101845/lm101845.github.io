@@ -2,25 +2,18 @@
 <html>
   <head>
     <title>{{ page.title }}</title>
-    <!-- <link rel="stylesheet" type="text/css" href="/css/main.css" /> -->
-    <!-- <link rel="stylesheet" type="text/css" href="../css/main原始版备份我.css" /> -->
-    <!-- <link rel="stylesheet" type="text/css" href="../css/main最原始版-印度小哥.css" /> -->
-    <link rel="stylesheet" type="text/css" href="../css/main.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
   </head>
   <body>
+      <!-- 头部区域、内容区域、尾部区域用一个大盒子给包裹起来 -->
     <div>
-        <!-- 头部区域、内容区域、尾部区域用一个大盒子给包裹起来 -->
         <!-- 导航区域 -->
-      <nav>
+        <nav>
         <ul class="tabs">
           <li><a href="/">首页</a></li>
           <li><a href="/about">关于</a></li>
-          <!-- <li><a href="/education">Education</a></li> -->
           <li><a href="/cv">简历下载</a></li>
           <li><a href="/projects">项目</a></li>
-          <!-- <li><a href="/internships">Internship</a></li> -->
-          <!-- <li><a href="/seminar">Seminar</a></li> -->
-          <!-- <li><a href="/honours">Honours</a></li> -->
           <li><a href="/blog">博客</a></li>
         </ul>
       </nav>
@@ -28,7 +21,7 @@
       <div class="content">
         {{content}}
       </div>
-      <!-- 尾部区域——固定底部且水平居中 -->
+      <!-- 尾部区域——固定底部且水平居中sticky footer -->
           <footer>
           <ul>
             <li><a href="mailto:1018457683@qq.com">Email</a></li>
