@@ -1,108 +1,133 @@
-/* 整体布局 */
+// 我用less重写一下css，less更有逻辑，看上去就不会乱了。——不然我实在是越写越乱。
+// 然后再让less编译为css，这样就大功告成了。
+
+//整体布局
+html,
 body {
-    margin: 60px auto;
-    width: 70%;
-    height: 100%; /*新增*/
-    background-color: rgb(252, 252, 252)
+//   display: flex;
+//   flex-flow: column;
+//   justify-content: center;
+//   min-height: 100vh;
+  margin: 60px auto;
+  width: 70%;
+  background-color: #fcfcfc;
 }
 
-nav ul, 
-footer ul {
-    font-family:'Helvetica', 'Arial', 'Sans-Serif';
-    padding: 0px;
-    list-style: none;
-    font-weight: bold;
-}
-
-nav ul li, footer ul li {
-    display: inline;
-    margin-right: 20px;
-}
-a {
-    text-decoration: none;
-    color: #999;
-}
-a:hover {
-    text-decoration: underline;
-}
 h1 {
-    font-size: 3em;
-    font-family:'Helvetica', 'Arial', 'Sans-Serif';
+  font-size: 3em;
+  font-family: "Helvetica", "Arial", "Sans-Serif";
 }
 
 p {
+  font-size: 1.5em;
+  line-height: 1.4em;
+  color: #333;
+}
+
+ul {
+  &.posts {
+    margin: 20px auto 40px;
     font-size: 1.5em;
-    line-height: 1.4em;
-    color: #333;
+    li {
+      list-style: none;
+    }
+  }
+  &.tabs {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333333;
+    li {
+      float: left;
+      a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 16px 18px;
+        text-decoration: none;
+        &:hover {
+          background-color: #111111;
+        }
+      }
+    }
+  }
 }
-
-
-ul.tabs {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background-color: #333333;
-  display: flex;
-  justify-content: center; 
-}
-
-
-ul.tabs li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 16px 18px;
-  text-decoration: none;
-}
-
-ul.tabs li a:hover {
-  background-color: #111111;
-}
-
-.tab-content{
-	display: none;
-	background: #ededed;
-	padding: 15px;
-}
-
-.tab-content.current{
-	display: inherit;
-}
-
-
-ul.posts { 
-    margin: 20px auto 40px; 
-    font-size: 1.5em;
-}
-
-ul.posts li {
+// 头部nav区域
+nav {
+  font-size: 1.5em;
+  ul {
+    display: flex;
+    justify-content: center;
+    font-family: "Helvetica", "Arial", "Sans-Serif";
+    padding: 0px;
     list-style: none;
+    font-weight: bold;
+    li {
+      display: inline;
+      margin-right: 20px;
+    }
+  }
 }
 
-.project_text{
-	float: left;
-	width: 80%;
+a {
+  text-decoration: none;
+  color: #999;
+  &:hover {
+    text-decoration: underline;
+  }
 }
-.project_image{
-	float: right;
-	width: 30%;
-	margin-top: 20px;
+// 内容content区域
+.content {
+    flex: 1;
 }
-.project_text1{
-	float: left;
-	width: 70%;
+.tab-content {
+  display: none;
+  background: #ededed;
+  padding: 15px;
+  &.current {
+    display: inherit;
+  }
 }
-.project_image1{
-	float: right;
-	width: 30%;
-	margin-top: 20px;
+//project部分
+.project_text {
+  float: left;
+  width: 80%;
 }
-
-/* 页面底部 */
+.project_image {
+  float: right;
+  width: 30%;
+  margin-top: 20px;
+}
+.project_text1 {
+  float: left;
+  width: 70%;
+}
+.project_image1 {
+  float: right;
+  width: 30%;
+  margin-top: 20px;
+}
+// 底部footer区域
 footer {
-    /* flex: 0 0 auto; */
-    border-top: 6px solid #acaaaa;
-    background-color: rgb(245, 245, 245);
-    font-size: 1.2em;
+  border-top: 6px solid #acaaaa;
+  background-color: rgb(245, 245, 245);
+  font-size: 1.5em;
+  ul {
+    display: flex;
+    justify-content: center;
+    font-family: "Helvetica", "Arial", "Sans-Serif";
+    padding: 0px;
+    list-style: none;
+    font-weight: bold;
+    li {
+      display: inline;
+      margin-right: 20px;
+    }
+  }
+  i {
+    font-size: 0.8em;
+    text-align: center;
+    display: block;
+  }
 }

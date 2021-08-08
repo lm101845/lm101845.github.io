@@ -1,38 +1,24 @@
-/* 整体布局 */
+html,
 body {
   margin: 60px auto;
   width: 70%;
-  height: 100%;
-  /*新增*/
   background-color: #fcfcfc;
-}
-nav ul,
-footer ul {
-  font-family: 'Helvetica', 'Arial', 'Sans-Serif';
-  padding: 0px;
-  list-style: none;
-  font-weight: bold;
-}
-nav ul li,
-footer ul li {
-  display: inline;
-  margin-right: 20px;
-}
-a {
-  text-decoration: none;
-  color: #999;
-}
-a:hover {
-  text-decoration: underline;
 }
 h1 {
   font-size: 3em;
-  font-family: 'Helvetica', 'Arial', 'Sans-Serif';
+  font-family: "Helvetica", "Arial", "Sans-Serif";
 }
 p {
   font-size: 1.5em;
   line-height: 1.4em;
   color: #333;
+}
+ul.posts {
+  margin: 20px auto 40px;
+  font-size: 1.5em;
+}
+ul.posts li {
+  list-style: none;
 }
 ul.tabs {
   list-style-type: none;
@@ -40,8 +26,9 @@ ul.tabs {
   padding: 0;
   overflow: hidden;
   background-color: #333333;
-  display: flex;
-  justify-content: center;
+}
+ul.tabs li {
+  float: left;
 }
 ul.tabs li a {
   display: block;
@@ -53,6 +40,31 @@ ul.tabs li a {
 ul.tabs li a:hover {
   background-color: #111111;
 }
+nav {
+  font-size: 1.5em;
+}
+nav ul {
+  display: flex;
+  justify-content: center;
+  font-family: "Helvetica", "Arial", "Sans-Serif";
+  padding: 0px;
+  list-style: none;
+  font-weight: bold;
+}
+nav ul li {
+  display: inline;
+  margin-right: 20px;
+}
+a {
+  text-decoration: none;
+  color: #999;
+}
+a:hover {
+  text-decoration: underline;
+}
+.content {
+  flex: 1;
+}
 .tab-content {
   display: none;
   background: #ededed;
@@ -60,13 +72,6 @@ ul.tabs li a:hover {
 }
 .tab-content.current {
   display: inherit;
-}
-ul.posts {
-  margin: 20px auto 40px;
-  font-size: 1.5em;
-}
-ul.posts li {
-  list-style: none;
 }
 .project_text {
   float: left;
@@ -86,10 +91,25 @@ ul.posts li {
   width: 30%;
   margin-top: 20px;
 }
-/* 页面底部 */
 footer {
-  /* flex: 0 0 auto; */
   border-top: 6px solid #acaaaa;
   background-color: #f5f5f5;
-  font-size: 1.2em;
+  font-size: 1.5em;
+}
+footer ul {
+  display: flex;
+  justify-content: center;
+  font-family: "Helvetica", "Arial", "Sans-Serif";
+  padding: 0px;
+  list-style: none;
+  font-weight: bold;
+}
+footer ul li {
+  display: inline;
+  margin-right: 20px;
+}
+footer i {
+  font-size: 0.8em;
+  text-align: center;
+  display: block;
 }

@@ -2,10 +2,13 @@
 <html>
   <head>
     <title>{{ page.title }}</title>
-    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="/css/main.css" /> -->
+    <!-- <link rel="stylesheet" type="text/css" href="../css/main原始版备份我.css" /> -->
+    <!-- <link rel="stylesheet" type="text/css" href="../css/main最原始版-印度小哥.css" /> -->
+    <link rel="stylesheet" type="text/css" href="../css/main.css" />
   </head>
   <body>
-    <div id="layout">
+    <div>
         <!-- 头部区域、内容区域、尾部区域用一个大盒子给包裹起来 -->
         <!-- 导航区域 -->
       <nav>
@@ -22,20 +25,21 @@
         </ul>
       </nav>
       <!-- 内容区域 -->
-      <div class="content">{{ content }}</div>
+      <div class="content">
+        {{content}}
+      </div>
       <!-- 尾部区域——固定底部且水平居中 -->
-      <footer>
-          <ul class="subnav">
+          <footer>
+          <ul>
             <li><a href="mailto:1018457683@qq.com">Email</a></li>
             <li><a href="https://github.com/lm101845">Github</a></li>
-            <li><a href="https://www.jianshu.com/u/6879af8ace24">简书</a></li>
+            <li><a href="https://www.jianshu.com/u/6879af8ace24">Jianshu</a></li>
             <li><a href="https://space.bilibili.com/9002959">BiliBili</a></li>
             <li>
               <a href="https://www.linkedin.com/in/%E6%98%8E-%E6%9D%8E-98b902218/">Linkedin</a>
             </li>
           </ul>
-          <br />
-          <p>&copy; All rights reserved</p>
+          <i>&copy; All rights reserved</i>
       </footer>
     </div>
   </body>
