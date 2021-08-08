@@ -5,7 +5,9 @@
     <link rel="stylesheet" type="text/css" href="/css/main.css" />
   </head>
   <body>
-    <div id="container">
+    <div id="layout">
+        <!-- 头部区域、内容区域、尾部区域用一个大盒子给包裹起来 -->
+        <!-- 导航区域 -->
       <nav>
         <ul class="tabs">
           <li><a href="/">首页</a></li>
@@ -19,9 +21,11 @@
           <li><a href="/blog">博客</a></li>
         </ul>
       </nav>
-      <div class="container">{{ content }}</div>
+      <!-- 内容区域 -->
+      <div class="content">{{ content }}</div>
+      <!-- 尾部区域——固定底部且水平居中 -->
       <footer>
-          <ul class="footer">
+          <ul class="subnav">
             <li><a href="mailto:1018457683@qq.com">Email</a></li>
             <li><a href="https://github.com/lm101845">Github</a></li>
             <li><a href="https://www.jianshu.com/u/6879af8ace24">简书</a></li>
@@ -31,8 +35,7 @@
             </li>
           </ul>
           <br />
-          <em>&copy; All rights reserved</em>
-          <br /><br />
+          <p>&copy; All rights reserved</p>
       </footer>
     </div>
   </body>

@@ -1,0 +1,43 @@
+/* 头部区域 */
+body {
+    margin: 60px auto;
+    width: 70%;
+    height: 100%; /*新增*/
+    background-color: rgb(252, 252, 252)
+}
+
+.subnav{
+    font-family:'Helvetica', 'Arial', 'Sans-Serif';
+    padding: 0;
+    list-style: none;
+    font-weight: bold;
+}
+
+nav .subnav{
+  margin: 0;
+  overflow: hidden;
+  background-color: #333333;
+  display: flex;
+  justify-content: center; 
+}
+
+nav .subnav{
+
+}
+
+.subnav li{
+    display: inline;
+    margin-right: 20px;
+}
+
+a {
+    text-decoration: none;
+    color: #999;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+/* 内容区域 */
+
+/* 尾部区域 */

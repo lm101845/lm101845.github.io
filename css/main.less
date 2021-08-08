@@ -1,3 +1,4 @@
+/* 整体布局 */
 body {
     margin: 60px auto;
     width: 70%;
@@ -5,18 +6,14 @@ body {
     background-color: rgb(252, 252, 252)
 }
 
- /* 新增 */
-#container{
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-nav ul, footer ul {
+nav ul, 
+footer ul {
     font-family:'Helvetica', 'Arial', 'Sans-Serif';
     padding: 0px;
     list-style: none;
     font-weight: bold;
 }
+
 nav ul li, footer ul li {
     display: inline;
     margin-right: 20px;
@@ -38,21 +35,6 @@ p {
     line-height: 1.4em;
     color: #333;
 }
-footer {
-    flex: 0 0 auto;
-    border-top: 6px solid #acaaaa;
-    background-color: rgb(245, 245, 245);
-    font-size: 1.2em;
-}
-
-ul.posts { 
-    margin: 20px auto 40px; 
-    font-size: 1.5em;
-}
-
-ul.posts li {
-    list-style: none;
-}
 
 
 ul.tabs {
@@ -63,7 +45,6 @@ ul.tabs {
   background-color: #333333;
   display: flex;
   justify-content: center; 
-  /* 水平居中 */
 }
 
 
@@ -89,6 +70,16 @@ ul.tabs li a:hover {
 	display: inherit;
 }
 
+
+ul.posts { 
+    margin: 20px auto 40px; 
+    font-size: 1.5em;
+}
+
+ul.posts li {
+    list-style: none;
+}
+
 .project_text{
 	float: left;
 	width: 80%;
@@ -108,3 +99,10 @@ ul.tabs li a:hover {
 	margin-top: 20px;
 }
 
+/* 页面底部 */
+footer {
+    /* flex: 0 0 auto; */
+    border-top: 6px solid #acaaaa;
+    background-color: rgb(245, 245, 245);
+    font-size: 1.2em;
+}
