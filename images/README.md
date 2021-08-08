@@ -1,1 +1,0 @@
-images displayed on site.

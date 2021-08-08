@@ -16,13 +16,6 @@ p {
   line-height: 1.4em;
   color: #333;
 }
-ul.posts {
-  margin: 20px auto 40px;
-  font-size: 1.5em;
-}
-ul.posts li {
-  list-style: none;
-}
 ul.tabs {
   list-style-type: none;
   margin: 0;
@@ -113,7 +106,7 @@ footer ul li {
 }
 footer i {
   font-size: 0.8em;
-  font-weight: 400;
   text-align: center;
   display: block;
+  color: #999;
 }
