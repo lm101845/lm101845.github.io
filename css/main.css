@@ -58,6 +58,9 @@ a {
 a:hover {
   text-decoration: underline;
 }
+.content {
+  flex: 1;
+}
 .tab-content {
   display: none;
   background: #ededed;
