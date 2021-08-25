@@ -15,12 +15,12 @@ a {
   text-decoration: none;
   transition: all 0.3s ease-out;
 }
-a:link {
+/* a:link {
   color: #008080;
 }
 a:visited {
   color: #008080;
-}
+} */
 a:hover {
   color: #333;
 }
