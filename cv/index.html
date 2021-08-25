@@ -2,10 +2,30 @@
 layout: default
 title: 简历
 ---
+
 <div class="blurb">
-    <br><br><br>
-	<!-- <h1>{{ page.title }}</h1> -->
-	<!-- <p><em> <a href="https://github.com/lm101845/lm101845.github.io/blob/master/cv/pdf/liming.pdf">下载简历</a></em></p> -->
-	<!-- <iframe src="pdf/liming.pdf" width="100%" height="1000px"></iframe> -->
-	<iframe src="pdf/liming.pdf" width="100%" height="1500px" overflow-y:hidden></iframe>
+  <br /><br /><br />
+  <!-- <h1>{{ page.title }}</h1> -->
+  <!-- <p><em> <a href="https://github.com/lm101845/lm101845.github.io/blob/master/cv/pdf/liming.pdf">下载简历</a></em></p> -->
+  <!-- <iframe src="pdf/liming.pdf" width="100%" height="1000px"></iframe> -->
+  <iframe
+    src="pdf/liming.pdf"
+    width="100%"
+  ></iframe>
 </div>
+
+<script>
+  function setIframeHeight(iframe) {
+    if (iframe) {
+      var iframeWin =
+        iframe.contentWindow || iframe.contentDocument.parentWindow;
+      if (iframeWin.document.body) {
+        iframe.height = iframeWin.document.body.scrollHeight;
+      }
+    }
+  }
+
+  setInterval(function () {
+    setIframeHeight($("#iframe")[0]);
+  }, 200);
+</script>
