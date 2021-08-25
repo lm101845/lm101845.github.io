@@ -11,7 +11,39 @@ title: 简历
   <iframe
     src="pdf/liming.pdf"
     width="100%"
-    scrolling : no
+    id="frame"
+    scrolling='no'
+    frameborder="no"
   ></iframe>
 </div>
 
+<script src='./jquery.min.js'></script>
+
+<script>
+  // // iframe高度自适应
+
+  // var ifm= document.getElementById("frame");
+
+  // ifm.height=document.documentElement.clientHeight;
+
+  function setIframeHeight(iframe) {
+    if (iframe) {
+      var iframeWin =
+        iframe.contentWindow || iframe.contentDocument.parentWindow;
+
+      if (iframeWin.document.body) {
+        iframe.height = iframeWin.document.body.scrollHeight;
+      }
+    }
+  }
+
+  $("#frame").each(function (index) {
+    var that = $(this);
+
+    (function () {
+      setInterval(function () {
+        setIframeHeight(that[0]);
+      }, 200);
+    })(that);
+  });
+</script>
