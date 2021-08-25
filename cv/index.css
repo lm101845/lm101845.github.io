@@ -27,7 +27,7 @@ a:hover {
 a:active {
   color: #333;
 }
-html {
+/* html {
   margin: 0;
   padding: 0;
 }
@@ -38,7 +38,7 @@ body {
   margin: 0;
   padding: 0;
   font-size: 16px;
-}
+} */
 h1 {
   font-size: 72px;
 }
@@ -754,16 +754,7 @@ section {
 }
 .skills-item-description {
   padding-left: 28px;
-  /* background-color: pink; */
-  /* text-align: left; */
-  /* width: 400px; */
 }
-
-/* .skills-item-description span{
-  background-color: pink;
-  width: 400px;
-  display: block;
-} */
 .skills-item-description::before {
   font-family: FontAwesome;
   font-size: inherit;
