@@ -20,30 +20,7 @@ title: 简历
 <script src='./jquery.min.js'></script>
 
 <script>
-  // // iframe高度自适应
-
-  // var ifm= document.getElementById("frame");
-
-  // ifm.height=document.documentElement.clientHeight;
-
-  function setIframeHeight(iframe) {
-    if (iframe) {
-      var iframeWin =
-        iframe.contentWindow || iframe.contentDocument.parentWindow;
-
-      if (iframeWin.document.body) {
-        iframe.height = iframeWin.document.body.scrollHeight;
-      }
-    }
-  }
-
-  $("#frame").each(function (index) {
-    var that = $(this);
-
-    (function () {
-      setInterval(function () {
-        setIframeHeight(that[0]);
-      }, 200);
-    })(that);
-  });
+ // iframe高度自适应
+  var ifm= document.getElementById("frame");
+  ifm.height=document.documentElement.clientHeight;
 </script>
