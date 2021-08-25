@@ -11,21 +11,7 @@ title: 简历
   <iframe
     src="pdf/liming.pdf"
     width="100%"
+    scrolling : no
   ></iframe>
 </div>
 
-<script>
-  function setIframeHeight(iframe) {
-    if (iframe) {
-      var iframeWin =
-        iframe.contentWindow || iframe.contentDocument.parentWindow;
-      if (iframeWin.document.body) {
-        iframe.height = iframeWin.document.body.scrollHeight;
-      }
-    }
-  }
-
-  setInterval(function () {
-    setIframeHeight($("#iframe")[0]);
-  }, 200);
-</script>
