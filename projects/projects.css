@@ -7,6 +7,7 @@ section .title {
   text-align: center;
   font-size: 32px;
   height: 42px;
+  margin-top: 50px;
 }
 section .list {
   display: flex;
