@@ -1,0 +1,193 @@
+/*=============================通用代码=======================================*/
+@font-face {
+  font-family: "FontAwesome";
+  src: url("static/fonts/fontawesome-webfont.eot?v=4.3.0");
+  src: url("static/fonts/fontawesome-webfont.eot?#iefix&v=4.3.0") format("embedded-opentype"), url("static/fonts/fontawesome-webfont.woff2?v=4.3.0") format("woff2"), url("static/fonts/fontawesome-webfont.woff?v=4.3.0") format("woff"), url("static/fonts/fontawesome-webfont.ttf?v=4.3.0") format("truetype"), url("static/fonts/fontawesome-webfont.svg?v=4.3.0#fontawesomeregular") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+.icon {
+  font-family: FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transform: translate(0, 0);
+  width: 28px;
+  margin-left: -28px;
+  display: inline-block;
+}
+* {
+  box-sizing: border-box;
+}
+h1 {
+  font-size: 72px;
+}
+h2 {
+  font-size: 20.8px;
+}
+h3 {
+  font-size: 20px;
+}
+a {
+  text-decoration: none;
+  transition: all 0.3s ease-out;
+  color: #fff;
+}
+ul,
+ol,
+dl {
+  line-height: 1.42857143;
+}
+ul {
+  margin: 0;
+  padding: 0;
+}
+ul li {
+  list-style: none;
+}
+strong {
+  font-weight: bold;
+  color: #008080;
+}
+/*========================页面侧边栏(aside标签)=================================*/
+aside {
+  right: 9px;
+  z-index: 100;
+  position: fixed;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+aside ul li {
+  list-style-type: none;
+  margin-top: 6px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 5px 0 0 5px;
+  transition: all 0.3s ease-out;
+}
+aside ul li:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+aside ul li a {
+  width: 100%;
+  padding: 10px;
+  display: inline-block;
+}
+/*==================================container容器标签(主代码)=================================================*/
+.container {
+  background-color: pink;
+  box-shadow: 3px 3px 9px rgba(0, 0, 0, 0.2);
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.container header {
+  overflow: hidden;
+  zoom: 1;
+  padding-bottom: 6px;
+  background-color: #333;
+  color: white;
+  height: 190px;
+  padding: 30px;
+}
+.container header figure {
+  float: left;
+  margin: 0;
+}
+.container header figure img {
+  width: 130px;
+  height: 130px;
+}
+.container header section {
+  float: right;
+  text-align: center;
+}
+.container header section h1 {
+  padding: 5px 0;
+  color: white;
+  line-height: 1;
+}
+.container header section h2 {
+  padding: 5px 6px;
+  font-weight: normal;
+  line-height: 1;
+}
+.container header address {
+  overflow-y: hidden;
+  zoom: 1;
+}
+.container header address ul {
+  float: left;
+  margin: 0;
+  padding-left: 16px;
+}
+.container header address ul li {
+  font-style: normal;
+  line-height: 1.45;
+  font-size: 18px;
+  word-break: break-all;
+  padding-left: 28px;
+}
+.container header address ul li a:hover {
+  color: #a3d3d1;
+}
+.container header address ul .contact-phone::before {
+  font-family: FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transform: translate(0, 0);
+  width: 28px;
+  margin-left: -28px;
+  display: inline-block;
+  content: "\f095";
+}
+.container header address ul .contact-email::before {
+  font-family: FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transform: translate(0, 0);
+  width: 28px;
+  margin-left: -28px;
+  display: inline-block;
+  content: "\f0e0";
+}
+.container header address ul .contact-github::before {
+  font-family: FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transform: translate(0, 0);
+  width: 28px;
+  margin-left: -28px;
+  display: inline-block;
+  content: "\f09b";
+}
+.container header address ul .contact-sinaweibo::before {
+  font-family: FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transform: translate(0, 0);
+  width: 28px;
+  margin-left: -28px;
+  display: inline-block;
+  content: "\f040";
+}
+.container header address ul .contact-blog::before {
+  font-family: FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transform: translate(0, 0);
+  width: 28px;
+  margin-left: -28px;
+  display: inline-block;
+  content: "\f0c1";
+}

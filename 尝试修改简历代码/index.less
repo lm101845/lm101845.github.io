@@ -1,0 +1,195 @@
+/*=============================通用代码=======================================*/
+//字体图标
+@font-face {
+  font-family: "FontAwesome";
+  src: url("static/fonts/fontawesome-webfont.eot?v=4.3.0");
+  src: url("static/fonts/fontawesome-webfont.eot?#iefix&v=4.3.0")
+      format("embedded-opentype"),
+    url("static/fonts/fontawesome-webfont.woff2?v=4.3.0") format("woff2"),
+    url("static/fonts/fontawesome-webfont.woff?v=4.3.0") format("woff"),
+    url("static/fonts/fontawesome-webfont.ttf?v=4.3.0") format("truetype"),
+    url("static/fonts/fontawesome-webfont.svg?v=4.3.0#fontawesomeregular")
+      format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+// 这个是address标签下的图标通用代码,抽离出来,谁用谁拿(使用mixin)
+.icon {
+  font-family: FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transform: translate(0, 0);
+  width: 28px;
+  margin-left: -28px;
+  display: inline-block;
+}
+
+
+
+* {
+  box-sizing: border-box;
+}
+
+h1 {
+  font-size: 72px;
+}
+h2 {
+  font-size: 20.8px;
+}
+h3 {
+  font-size: 20px;
+}
+// h4,h5,h6没看到有，没有写
+
+a {
+  text-decoration: none;
+  transition: all 0.3s ease-out;
+  color: #fff;
+//TODO:颜色我自己加的
+}
+
+ul,
+ol,
+dl {
+    line-height: 1.42857143;
+}
+
+
+ul {
+  margin: 0;
+  padding: 0;
+  li {
+    list-style: none;
+  }
+}
+
+strong {
+    font-weight: bold;
+    color: #008080;
+}
+
+/*========================页面侧边栏(aside标签)=================================*/
+aside {
+  //   right: 0;
+  right: 9px;
+  //   设为0的话标签会跑出去一点，不知道为什么
+  z-index: 100;
+  position: fixed;
+  top: 50%;
+  transform: translate(0, -50%);
+  //垂直居中固定写法
+  ul {
+    li {
+      list-style-type: none;
+      margin-top: 6px;
+      background-color: rgba(0, 0, 0, 0.8);
+      border-radius: 5px 0 0 5px;
+      transition: all 0.3s ease-out;
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.6);
+      }
+      a {
+        width:100%;
+        padding: 10px;
+        display: inline-block;
+        // 行内块元素的默认宽度就是它本身内容的宽度
+      }
+    }
+  }
+}
+
+/*==================================container容器标签(主代码)=================================================*/
+.container {
+//   border: 1px dashed red;
+  background-color: pink;
+//   background-color: white;
+  box-shadow: 3px 3px 9px rgba(0, 0, 0, 0.2);
+  margin-top: 10px;
+  margin-left:auto;
+  margin-right:auto;
+  header {
+    overflow: hidden;
+    zoom: 1;
+    padding-bottom: 6px;
+    background-color: #333;
+    color: white;
+    height:190px;
+    padding: 30px;
+    figure {
+      float: left;
+      margin: 0;
+      img {
+        width: 130px;
+        height: 130px;
+      }
+    }
+    section {
+      float: right;
+      text-align: center;
+      //   margin: 0;
+      h1 {
+        padding: 5px 0;
+        color: white;
+        line-height: 1;
+      }
+      h2 {
+        padding: 5px 6px;
+        font-weight: normal;
+        line-height: 1;
+      }
+    }
+    address {
+      //background-color: blue;
+      //垂直方向溢出隐藏
+      overflow-y: hidden;
+      zoom: 1;
+      ul {
+        float: left;
+        margin: 0;
+        padding-left: 16px;
+        li {
+          font-style: normal;
+          line-height: 1.45;
+          font-size: 18px;
+          word-break: break-all;
+          //18*1.45*5(一共5个li)=130.5px ~= 130px = 图片的高度，这个是作者设计好了的啊
+          // 允许任意非CJK(Chinese/Japanese/Korean)文本间的单词断行。
+          padding-left: 28px;
+          a:hover {
+            color: #a3d3d1;
+          }
+        }
+        //给电话前面添加一个图标
+        .contact-phone::before {
+          .icon;
+          //使用less中的混合(mixin)写法——牛皮，代码立刻清爽不少！！！
+          content: "\f095";
+        }
+        //给邮件前面添加一个图标
+        .contact-email::before {
+          .icon;
+          content: "\f0e0";
+        }
+        //给github前面添加一个图标
+        .contact-github::before {
+          .icon;
+          content: "\f09b";
+        }
+        //给简书前面添加一个图标(fontawesome上好像没简书的图标，用其他图标代替)
+        .contact-sinaweibo::before {
+          .icon;
+          content: "\f040";
+        }
+
+        //给博客前面添加一个图标(使用其他图标代替)
+        .contact-blog::before {
+          .icon;
+          content: "\f0c1";
+        }
+      }
+    }
+  }
+}
