@@ -14,9 +14,12 @@ section .list {
   height: 158px;
 }
 section .list .item {
-  background-color: #ccc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fcfcfc;
   height: 100%;
-  width: 200px;
+  width: 250px;
   margin-right: 20px;
 }
 section .list .item div {
@@ -24,7 +27,12 @@ section .list .item div {
 }
 section .list .item div:nth-child(1) {
   font-size: 20px;
+  margin-top: 10px;
 }
-section .list .item ul li {
-  list-style: none;
+section .list .item span {
+  margin: 20px 0 30px;
+}
+section .list .item span a {
+  color: blue;
+  padding-right: 10px;
 }
