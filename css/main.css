@@ -66,24 +66,6 @@ a:hover {
 .tab-content.current {
   display: inherit;
 }
-.project_text {
-  float: left;
-  width: 80%;
-}
-.project_image {
-  float: right;
-  width: 30%;
-  margin-top: 20px;
-}
-.project_text1 {
-  float: left;
-  width: 70%;
-}
-.project_image1 {
-  float: right;
-  width: 30%;
-  margin-top: 20px;
-}
 footer {
   border-top: 6px solid #acaaaa;
   background-color: #f5f5f5 !important;
