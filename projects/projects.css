@@ -11,17 +11,26 @@ section .title {
 }
 section .list {
   display: flex;
-  justify-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: space-between;
   height: 158px;
 }
 section .list .item {
   display: flex;
+  flex: 1;
+  width: 22%;
+  min-width: 22%;
+  max-width: 22%;
   flex-direction: column;
   align-items: center;
-  background-color: #A0EEE1;
-  height: 100%;
-  width: 250px;
+  background-color: #a0eee1;
   margin-right: 20px;
+}
+section .list .item .item:after {
+  content: "";
+  height: 0;
+  width: 24%;
 }
 section .list .item div {
   text-align: center;
