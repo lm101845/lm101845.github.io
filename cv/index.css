@@ -603,6 +603,10 @@ section {
     position: absolute;
 }
 
+.long-experience{
+    word-break: break-all;
+    max-width: 63%
+}
 .timeline-content {
     margin: 0;
 }
