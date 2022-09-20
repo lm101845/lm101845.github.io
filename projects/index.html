@@ -2,356 +2,468 @@
 layout: default
 title: 项目
 ---
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="projects.css" />
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="project">
+  <div class="font-project">
+    <div class="project-title">前端项目</div>
+    <div class="subtitle">静态页面</div>
+    <ul>
+      <li class="one">
+        <div class="title">云道页面</div>
+        <span class="content">
+                        <a href="http://lm2048.top:8000/static/yundao/" target="_blank">页面链接</a>
+                    </span>
+        <span class="content">
+                        <a href="https://github.com/lm101845/LearnHTMLAndCSS/tree/master/03-%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2/01-%E4%BA%91%E9%81%93%E9%A1%B5%E9%9D%A2(%E5%8E%9F%E7%94%9F)" target="_blank">源码链接</a>
+                    </span>
+        <div class="time">
+          <div>开始日期：2019.10.08</div>
+          <div>完成日期：2019.10.15</div>
+        </div>
+      </li>
 
-  <body>
-    <!-- ==========================================静态页面PC端-原生写法========================================= -->
-    <section>
-      <div class="title">静态页面PC端-原生写法</div>
-      <div class="list">
-        <!-- ==========静态页面——云道页面=============== -->
-        <div class="item">
-          <div>云道页面</div>
-          <span>
-            <a
-              href="https://github.com/lm101845/LearnHTMLAndCSS/tree/master/03-%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2/01-%E4%BA%91%E9%81%93%E9%A1%B5%E9%9D%A2(%E5%8E%9F%E7%94%9F)/02-%E4%BB%A3%E7%A0%81%E6%89%8B%E6%95%B2"
-              target="_blank"
-              >源码</a
-            >
-            <a
-              href="https://lm1024.top/LearnHTMLAndCSS/03-%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2/01-%E4%BA%91%E9%81%93%E9%A1%B5%E9%9D%A2(%E5%8E%9F%E7%94%9F)/02-%E4%BB%A3%E7%A0%81%E6%89%8B%E6%95%B2/index.html"
-              target="_blank"
-              >Demo</a
-            >
-          </span>
-          <div>开始日期:2019.10.08</div>
-          <div>完成日期:2019.10.15</div>
-        </div>
-        <!-- ==========静态页面——京东首页=============== -->
-        <div class="item">
-          <div>京东首页</div>
-          <span>
-            <a
-              href="https://github.com/lm101845/LearnHTMLAndCSS/tree/master/03-%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2/02-%E4%BA%AC%E4%B8%9C%E9%A6%96%E9%A1%B5(%E5%8E%9F%E7%94%9F)/02-%E4%BB%A3%E7%A0%81%E6%89%8B%E6%95%B2"
-              target="_blank"
-              >源码</a
-            >
-            <a
-              href="https://lm1024.top/LearnHTMLAndCSS/03-%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2/02-%E4%BA%AC%E4%B8%9C%E9%A6%96%E9%A1%B5(%E5%8E%9F%E7%94%9F)/02-%E4%BB%A3%E7%A0%81%E6%89%8B%E6%95%B2/index.html"
-              target="_blank"
-              >Demo</a
-            >
-          </span>
-          <div>开始日期:2020.03.01</div>
-          <div>完成日期:2020.03.15</div>
-        </div>
-        <!-- ==========静态页面——品优购=============== -->
-        <div class="item">
-          <div>品优购</div>
-          <span>
-            <a
-              href="https://github.com/lm101845/LearnHTMLAndCSS/tree/master/03-%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2/05-%E5%93%81%E4%BC%98%E8%B4%AD(%E5%8E%9F%E7%94%9F)/02-%E4%BB%A3%E7%A0%81%E6%89%8B%E6%95%B2/shoping"
-              target="_blank"
-              >源码</a
-            >
-            <a
-              href="https://lm1024.top/LearnHTMLAndCSS/03-%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2/05-%E5%93%81%E4%BC%98%E8%B4%AD(%E5%8E%9F%E7%94%9F)/02-%E4%BB%A3%E7%A0%81%E6%89%8B%E6%95%B2/shoping/index.html"
-              target="_blank"
-              >Demo</a
-            >
-          </span>
-          <div>开始日期:2021.08.31</div>
-          <div>完成日期:2021.12.04</div>
-        </div>
-        <!-- ==========静态页面——Echarts大屏展示=============== -->
-        <div class="item">
-          <div>Echarts大屏可视化</div>
-          <span>
-            <a
-              href="https://github.com/lm101845/LearnHTMLAndCSS/tree/master/03-%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2/04-Echarts/01-%E5%A4%A7%E5%B1%8F%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/02-%E4%BB%A3%E7%A0%81%E6%89%8B%E6%95%B2/BigScreen"
-              target="_blank"
-              >源码</a
-            >
-            <a
-              href="https://lm1024.top/LearnHTMLAndCSS/03-%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2/04-Echarts/01-%E5%A4%A7%E5%B1%8F%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96/02-%E4%BB%A3%E7%A0%81%E6%89%8B%E6%95%B2/BigScreen/index.html"
-              target="_blank"
-              >Demo</a
-            >
-          </span>
-          <div>开始日期:2021.04.04</div>
-          <div>完成日期:2021.12.05</div>
-        </div>
-      </div>
-    </section>
-    <!-- ===========================================静态页面PC端-CSS布局写法============================================= -->
-    <section>
-      <div class="title">静态页面PC端-CSS布局写法</div>
-      <div class="list">
-        <div class="item">
-          <div>撩课学院-Bootstrap布局</div>
-          <span>
-            <a
-              href="https://github.com/lm101845/LearnHTMLAndCSS/tree/master/03-%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2/03-CSS%E5%B8%83%E5%B1%80%E7%BB%83%E4%B9%A0/01-%E6%92%A9%E8%AF%BE%E5%AD%A6%E9%99%A2-Bootstrap%E5%B8%83%E5%B1%80"
-              target="_blank"
-              >源码</a
-            >
-            <a
-              href="https://lm1024.top/LearnHTMLAndCSS/03-%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2/03-CSS%E5%B8%83%E5%B1%80%E7%BB%83%E4%B9%A0/01-%E6%92%A9%E8%AF%BE%E5%AD%A6%E9%99%A2-Bootstrap%E5%B8%83%E5%B1%80/index.html"
-              target="_blank"
-              >Demo</a
-            >
-          </span>
-          <div>开始日期:2020.08.05</div>
-          <div>完成日期:2020.08.19</div>
-        </div>
-      </div>
-    </section>
-    <!-- ===============================================静态页面移动端-CSS布局写法======================================== -->
-    <section>
-      <div class="title">静态页面移动端-CSS布局写法</div>
-      <div class="list">
-        <div class="item">
-          <div>京东首页-流式布局</div>
-          <span>
-            <a
-              href="https://github.com/lm101845/LearnHTMLAndCSS/tree/master/03-%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2/03-CSS%E5%B8%83%E5%B1%80%E7%BB%83%E4%B9%A0/02-%E4%BA%AC%E4%B8%9C%E9%A6%96%E9%A1%B5-%E6%B5%81%E5%BC%8F%E5%B8%83%E5%B1%80"
-              target="_blank"
-              >源码</a
-            >
-            <a
-              href="https://lm1024.top/LearnHTMLAndCSS/03-%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2/03-CSS%E5%B8%83%E5%B1%80%E7%BB%83%E4%B9%A0/02-%E4%BA%AC%E4%B8%9C%E9%A6%96%E9%A1%B5-%E6%B5%81%E5%BC%8F%E5%B8%83%E5%B1%80"
-              target="_blank"
-              >Demo</a
-            >
-          </span>
-          <div>开始日期:2020.12.01</div>
-          <div>完成日期:2020.12.12</div>
-        </div>
-        <div class="item">
-          <div>携程首页-Flex布局</div>
-          <span>
-            <a
-              href="https://github.com/lm101845/LearnHTMLAndCSS/tree/master/03-%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2/03-CSS%E5%B8%83%E5%B1%80%E7%BB%83%E4%B9%A0/03-%E6%90%BA%E7%A8%8B%E9%A6%96%E9%A1%B5-Flex%E5%B8%83%E5%B1%80"
-              target="_blank"
-              >源码</a
-            >
-            <a
-              href="https://lm1024.top/LearnHTMLAndCSS/03-%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2/03-CSS%E5%B8%83%E5%B1%80%E7%BB%83%E4%B9%A0/03-%E6%90%BA%E7%A8%8B%E9%A6%96%E9%A1%B5-Flex%E5%B8%83%E5%B1%80/"
-              target="_blank"
-              >Demo</a
-            >
-          </span>
-          <div>开始日期:2020.12.01</div>
-          <div>完成日期:2020.12.12</div>
-        </div>
-        <div class="item">
-          <div>苏宁首页-rem布局(方案1)</div>
-          <span>
-            <a
-              href="https://github.com/lm101845/LearnHTMLAndCSS/tree/master/03-%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2/03-CSS%E5%B8%83%E5%B1%80%E7%BB%83%E4%B9%A0/04-%E8%8B%8F%E5%AE%81%E9%A6%96%E9%A1%B5-rem%E5%B8%83%E5%B1%80%E6%96%B9%E6%A1%881"
-              target="_blank"
-              >源码</a
-            >
-            <a
-              href="https://lm1024.top/LearnHTMLAndCSS/03-%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2/03-CSS%E5%B8%83%E5%B1%80%E7%BB%83%E4%B9%A0/04-%E8%8B%8F%E5%AE%81%E9%A6%96%E9%A1%B5-rem%E5%B8%83%E5%B1%80%E6%96%B9%E6%A1%881"
-              target="_blank"
-              >Demo</a
-            >
-          </span>
-          <div>开始日期:2020.12.01</div>
-          <div>完成日期:2020.12.12</div>
-        </div>
-        <div class="item">
-          <div>苏宁首页-rem布局(方案2)</div>
-          <span>
-            <a
-              href="https://github.com/lm101845/LearnHTMLAndCSS/tree/master/03-%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2/03-CSS%E5%B8%83%E5%B1%80%E7%BB%83%E4%B9%A0/05-%E8%8B%8F%E5%AE%81%E9%A6%96%E9%A1%B5-rem%E5%B8%83%E5%B1%80%E6%96%B9%E6%A1%882"
-              target="_blank"
-              >源码</a
-            >
-            <a
-              href="https://lm1024.top/LearnHTMLAndCSS/03-%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2/03-CSS%E5%B8%83%E5%B1%80%E7%BB%83%E4%B9%A0/05-%E8%8B%8F%E5%AE%81%E9%A6%96%E9%A1%B5-rem%E5%B8%83%E5%B1%80%E6%96%B9%E6%A1%882/"
-              target="_blank"
-              >Demo</a
-            >
-          </span>
-          <div>开始日期:2020.12.01</div>
-          <div>完成日期:2020.12.12</div>
-        </div>
-      </div>
-    </section>
-    <!-- =================小案例=============================== -->
-    <section>
-      <div class="title">小案例</div>
-      <div class="list">
-          <!-- 购物车案例2个 -->
-          <div class="item">
-          <div>购物车(Vue2版)</div>
-          <span>
-            <a href="https://github.com/lm101845/LearnVue/tree/master/02-Vue2%E7%89%88%E6%9C%AC%E5%AD%A6%E4%B9%A0/02-Vue2%E5%B0%8F%E6%A1%88%E4%BE%8B/01-%E8%B4%AD%E7%89%A9%E8%BD%A6" target="_blank">源码</a>
-            <a href="https://github.com/lm101845/LearnVue/blob/master/02-Vue2%E7%89%88%E6%9C%AC%E5%AD%A6%E4%B9%A0/02-Vue2%E5%B0%8F%E6%A1%88%E4%BE%8B/01-%E8%B4%AD%E7%89%A9%E8%BD%A6/index.html" target="_blank">Demo</a>
-          </span>
-          <div>完成日期:2020.12.10</div>
-          </div>
-            <div class="item">
-          <div>购物车(React版)</div>
-          <span>
-            <a href="https://github.com/lm101845/LearnReact/tree/master/04-%E7%8E%8B%E7%BA%A2%E5%85%83/02-%E4%BB%A3%E7%A0%81%E6%89%8B%E6%95%B2/01_learn_react/05_%E9%98%B6%E6%AE%B5%E6%A1%88%E4%BE%8B%E7%BB%83%E4%B9%A0" target="_blank">源码</a>
-            <a href="https://github.com/lm101845/LearnReact/blob/master/04-%E7%8E%8B%E7%BA%A2%E5%85%83/02-%E4%BB%A3%E7%A0%81%E6%89%8B%E6%95%B2/01_learn_react/05_%E9%98%B6%E6%AE%B5%E6%A1%88%E4%BE%8B%E7%BB%83%E4%B9%A0/05_%E4%B9%A6%E7%B1%8D%E7%9A%84%E6%95%B0%E9%87%8F%E6%94%B9%E5%8F%98.html" target="_blank">Demo</a>
-          </span>
-          <div>完成日期:2021.10.30</div>
-          </div>
-            <!-- .todoList案例2个 -->
-        <div class="item">
-          <div>TodoList(Vue2版)</div>
-          <span>
-            <a
-              href="https://github.com/lm101845/LearnVue/tree/master/03-Vue3%E7%89%88%E6%9C%AC%E5%AD%A6%E4%B9%A0/03-%E5%B0%9A%E7%A1%85%E8%B0%B7%E5%BC%A0%E5%A4%A9%E7%A6%B9(%E5%A5%BD)/02-%E4%BB%A3%E7%A0%81%E6%89%8B%E6%95%B2/vue_test/17_TodoList%E6%A1%88%E4%BE%8B7.0-%E5%AE%8C%E6%88%90%E7%89%88(%E6%B7%BB%E5%8A%A0%E5%8A%A8%E7%94%BB%E5%8A%9F%E8%83%BD)"
-              target="_blank"
-              >源码</a
-            >
-            <a href="#" target="_blank">Demo</a>
-          </span>
-          <div>完成日期:2021.08.18</div>
-        </div>
-        <div class="item">
-          <div>TodoList(React版)</div>
-          <span>
-            <a
-              href="https://github.com/lm101845/LearnVue/tree/master/03-Vue3%E7%89%88%E6%9C%AC%E5%AD%A6%E4%B9%A0/03-%E5%B0%9A%E7%A1%85%E8%B0%B7%E5%BC%A0%E5%A4%A9%E7%A6%B9(%E5%A5%BD)/02-%E4%BB%A3%E7%A0%81%E6%89%8B%E6%95%B2/vue_test/17_TodoList%E6%A1%88%E4%BE%8B7.0-%E5%AE%8C%E6%88%90%E7%89%88(%E6%B7%BB%E5%8A%A0%E5%8A%A8%E7%94%BB%E5%8A%9F%E8%83%BD)"
-              target="_blank"
-              >源码</a
-            >
-            <a href="#" target="_blank">Demo</a>
-          </span>
-          <div>完成日期:2021.08.18</div>
-        </div>
-        <!-- gitHub搜索案例2个 -->
-        <div class="item">
-          <div>GitHub搜索案例(Vue2版)</div>
-          <span>
-            <a
-              href="https://github.com/lm101845/LearnVue/tree/master/03-Vue3%E7%89%88%E6%9C%AC%E5%AD%A6%E4%B9%A0/03-%E5%B0%9A%E7%A1%85%E8%B0%B7%E5%BC%A0%E5%A4%A9%E7%A6%B9(%E5%A5%BD)/02-%E4%BB%A3%E7%A0%81%E6%89%8B%E6%95%B2/vue_test/20_Github%E6%90%9C%E7%B4%A2%E6%A1%88%E4%BE%8B2.0%E7%89%88%E6%9C%AC"
-              target="_blank"
-              >源码</a
-            >
-            <a href="#" target="_blank">Demo</a>
-          </span>
-          <div>完成日期:2021.08.20</div>
-        </div>
-        <div class="item">
-          <div>GitHub搜索案例(React版)</div>
-          <span>
-            <a
-              href="https://github.com/lm101845/LearnVue/tree/master/03-Vue3%E7%89%88%E6%9C%AC%E5%AD%A6%E4%B9%A0/03-%E5%B0%9A%E7%A1%85%E8%B0%B7%E5%BC%A0%E5%A4%A9%E7%A6%B9(%E5%A5%BD)/02-%E4%BB%A3%E7%A0%81%E6%89%8B%E6%95%B2/vue_test/20_Github%E6%90%9C%E7%B4%A2%E6%A1%88%E4%BE%8B2.0%E7%89%88%E6%9C%AC"
-              target="_blank"
-              >源码</a
-            >
-            <a href="#" target="_blank">Demo</a>
-          </span>
-          <div>完成日期:2021.08.20</div>
-        </div>
-        <!-- vuex,redux求和案例2个 -->
-        <div class="item">
-          <div>Vuex求和案例(Vue2版)</div>
-          <span>
-            <a
-              href="https://github.com/lm101845/LearnVue/tree/master/03-Vue3%E7%89%88%E6%9C%AC%E5%AD%A6%E4%B9%A0/03-%E5%B0%9A%E7%A1%85%E8%B0%B7%E5%BC%A0%E5%A4%A9%E7%A6%B9(%E5%A5%BD)/02-%E4%BB%A3%E7%A0%81%E6%89%8B%E6%95%B2/vue_test/27_Vuex%E7%89%88%E6%9C%AC%E6%B1%82%E5%92%8C%E6%A1%88%E4%BE%8B7.0-%E5%A4%9A%E7%BB%84%E4%BB%B6%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE3.0"
-              target="_blank"
-              >源码</a
-            >
-            <a href="#" target="_blank">Demo</a>
-          </span>
-          <div>完成日期:2021.08.25</div>
-        </div>
-        <div class="item">
-          <div>Redux求和案例(React版)</div>
-          <span>
-            <a
-              href="https://github.com/lm101845/LearnReact/tree/master/03-%E5%B0%9A%E7%A1%85%E8%B0%B7%E5%BC%A0%E5%A4%A9%E7%A6%B9(%E5%A5%BD)/02-%E4%BB%A3%E7%A0%81%E6%89%8B%E6%95%B2/redux_test/03-redux%E5%AE%8C%E6%95%B4%E7%89%88"
-              target="_blank"
-              >源码</a
-            >
-            <a href="#" target="_blank">Demo</a>
-          </span>
-          <div>完成日期:2021.08.25</div>
-        </div>
-        <!-- TypeScript贪吃蛇案例 -->
-        <div class="item">
-          <div>贪吃蛇(TypeScript版)</div>
-          <span>
-            <a href="https://github.com/lm101845/LearnJavaScript/tree/master/08-TypeScript/02-%E5%B0%9A%E7%A1%85%E8%B0%B7%E6%9D%8E%E6%99%BA%E8%B6%85/02-%E4%BB%A3%E7%A0%81%E6%89%8B%E6%95%B2/snake" target="_blank">源码</a>
-            <a href="" target="_blank">Demo</a>
-          </span>
-          <div>完成日期:2021.09.10</div>
-        </div>
 
-            <!-- Node留言板案例 -->
-        <div class="item">
-          <div>留言板(Node版)</div>
-          <span>
-            <a href="https://github.com/lm101845/LearnNode/tree/master/02-%E9%BB%91%E9%A9%AC%E6%9D%8E%E9%B9%8F%E5%91%A8/02-Node%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0-%E6%89%8B%E6%95%B2/day05/crud-express" target="_blank">源码</a>
-            <a href="" target="_blank">Demo</a>
-          </span>
-          <div>完成日期:2021.08.10</div>
+      <li class="two">
+        <div class="title">京东首页</div>
+        <span class="content">
+                        <a href="http://lm2048.top:8000/static/jingdong/" target="_blank">页面链接</a>
+                    </span>
+        <span class="content">
+                        <a href="https://github.com/lm101845/LearnHTMLAndCSS/tree/master/03-%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2/02-%E4%BA%AC%E4%B8%9C%E9%A6%96%E9%A1%B5(%E5%8E%9F%E7%94%9F)" target="_blank">源码链接</a>
+                    </span>
+        <div class="time">
+          <div>开始日期：2020.03.01</div>
+          <div>完成日期：2020.03.15</div>
         </div>
-        </div>
-      </div>
-      </div>
-    </section>
+      </li>
 
-    <!-- =================静态页面移动端-CSS布局写法=============================== -->
-    <section>
-      <div class="title">Vue项目</div>
-      <div class="list">
-        <div class="item">
-             <div>商城项目(Vue2版)</div>
-          <span>
-            <a href="https://github.com/lm101845/LearnJavaScript/tree/master/08-TypeScript/02-%E5%B0%9A%E7%A1%85%E8%B0%B7%E6%9D%8E%E6%99%BA%E8%B6%85/02-%E4%BB%A3%E7%A0%81%E6%89%8B%E6%95%B2/snake" target="_blank">源码</a>
-            <a href="" target="_blank">Demo</a>
-          </span>
-          <div>完成日期:2021.09.10</div>
-        </div>
-        <div class="item"></div>
-        <div class="item"></div>
-        <div class="item"></div>
-      </div>
-    </section>
-    <!-- =================React项目=============================== -->
 
-    <section>
-      <div class="title">React项目</div>
-      <div class="list">
-        <div class="item"></div>
-        <div class="item"></div>
-      </div>
-    </section>
-    <!-- =================Node项目=============================== -->
-
-    <section>
-      <div class="title">Node项目</div>
-      <div class="list">
-        <div class="item"></div>
-        <div class="item"></div>
-      </div>
-    </section>
-    <!-- =================Node项目=============================== -->
-    <section>
-      <div class="title">小程序项目</div>
-      <div class="list">
-        <div class="item">
-          <div>商场项目</div>
+      <li class="three">
+        <div class="title">品优购</div>
+        <span class="content">
+                        <a href="http://lm2048.top:8000/static/pinyougou/" target="_blank">页面链接</a>
+                    </span>
+        <span class="content">
+                        <a href="https://github.com/lm101845/LearnHTMLAndCSS/tree/master/03-%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2/05-%E5%93%81%E4%BC%98%E8%B4%AD(%E5%8E%9F%E7%94%9F)" target="_blank">源码链接</a>
+                    </span>
+        <div class="time">
+          <div>开始日期：2021.08.31</div>
+          <div>完成日期：2021.12.04</div>
         </div>
-      </div>
-    </section>
-  </body>
+      </li>
+
+      <li class="four">
+        <div class="title">Echarts大屏可视化</div>
+        <span class="content">
+                        <a href="http://lm2048.top:8000/static/daping/" target="_blank">页面链接</a>
+                    </span>
+        <span class="content">
+                        <a href="https://github.com/lm101845/LearnHTMLAndCSS/tree/master/03-%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2/04-Echarts/01-%E5%A4%A7%E5%B1%8F%E6%95%B0%E6%8D%AE%E5%8F%AF%E8%A7%86%E5%8C%96" target="_blank">源码链接</a>
+                    </span>
+        <div class="time">
+          <div>开始日期：2021.04.04</div>
+          <div>完成日期：2021.12.05</div>
+        </div>
+      </li>
+
+
+      <li class="five">
+        <div class="title">撩课学院</div>
+        <span class="content">
+                        <a href="http://lm2048.top:8000/static/liaoke/" target="_blank">页面链接</a>
+                    </span>
+        <span class="content">
+                        <a href="https://github.com/lm101845/LearnHTMLAndCSS/tree/master/03-%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2/03-CSS%E5%B8%83%E5%B1%80%E7%BB%83%E4%B9%A0/01-%E6%92%A9%E8%AF%BE%E5%AD%A6%E9%99%A2-Bootstrap%E5%B8%83%E5%B1%80" target="_blank">源码链接</a>
+                    </span>
+        <div class="time">
+          <div>开始日期：2020.08.05</div>
+          <div>完成日期：2020.08.19</div>
+        </div>
+      </li>
+
+      <li class="six">
+        <div class="title">京东首页-流式布局</div>
+        <span class="content">
+                        <a href="http://lm2048.top:8000/static/jdflow/" target="_blank">页面链接</a>
+                    </span>
+        <span class="content">
+                        <a href="https://github.com/lm101845/LearnHTMLAndCSS/tree/master/03-%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2/03-CSS%E5%B8%83%E5%B1%80%E7%BB%83%E4%B9%A0/02-%E4%BA%AC%E4%B8%9C%E9%A6%96%E9%A1%B5-%E6%B5%81%E5%BC%8F%E5%B8%83%E5%B1%80" target="_blank">源码链接</a>
+                    </span>
+        <div class="time">
+          <div>开始日期：2020.08.05</div>
+          <div>完成日期：2020.08.19</div>
+        </div>
+      </li>
+
+      <li class="seven">
+        <div class="title">携程首页-Flex布局</div>
+        <span class="content">
+                        <a href="http://lm2048.top:8000/static/xiecheng/" target="_blank">页面链接</a>
+                    </span>
+        <span class="content">
+                        <a href="https://github.com/lm101845/LearnHTMLAndCSS/tree/master/03-%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2/03-CSS%E5%B8%83%E5%B1%80%E7%BB%83%E4%B9%A0/03-%E6%90%BA%E7%A8%8B%E9%A6%96%E9%A1%B5-Flex%E5%B8%83%E5%B1%80" target="_blank">源码链接</a>
+                    </span>
+        <div class="time">
+          <div>开始日期：2020.12.01</div>
+          <div>完成日期：2020.12.12</div>
+        </div>
+      </li>
+
+      <li class="eight">
+        <div class="title">苏宁首页-rem布局</div>
+        <span class="content">
+                        <a href="http://lm2048.top:8000/static/suning/" target="_blank">页面链接</a>
+                    </span>
+        <span class="content">
+                        <a href="https://github.com/lm101845/LearnHTMLAndCSS/tree/master/03-%E9%9D%99%E6%80%81%E9%A1%B5%E9%9D%A2/03-CSS%E5%B8%83%E5%B1%80%E7%BB%83%E4%B9%A0/04-%E8%8B%8F%E5%AE%81%E9%A6%96%E9%A1%B5-rem%E5%B8%83%E5%B1%80%E6%96%B9%E6%A1%881" target="_blank">源码链接</a>
+                    </span>
+        <div class="time">
+          <div>开始日期：2020.12.01</div>
+          <div>完成日期：2020.12.12</div>
+        </div>
+      </li>
+    </ul>
+
+    <div class="subtitle">VueDemo</div>
+    <ul>
+      <li class="one">
+        <div class="title">购物车(Vue2)</div>
+        <span class="content">
+                        <a href="http://lm2048.top:8000/vue/shopping/" target="_blank">页面链接</a>
+                    </span>
+        <span class="content">
+                        <a href="https://github.com/lm101845/LearnVue/tree/master/02-Vue2%E7%89%88%E6%9C%AC%E5%AD%A6%E4%B9%A0/02-Vue2%E5%B0%8F%E6%A1%88%E4%BE%8B/01-%E8%B4%AD%E7%89%A9%E8%BD%A6" target="_blank">源码链接</a>
+                    </span>
+        <div class="time">
+          <div>开始日期：2020.12.01</div>
+          <div>完成日期：2020.12.10</div>
+        </div>
+      </li>
+
+      <li class="two">
+        <div class="title">TodoList(Vue2)</div>
+        <span class="content">
+                        <a href="http://lm2048.top:8000/vue/todolist/" target="_blank">页面链接</a>
+                    </span>
+        <span class="content">
+                        <a href="https://github.com/lm101845/LearnVue/tree/master/03-Vue3%E7%89%88%E6%9C%AC%E5%AD%A6%E4%B9%A0/03-%E5%B0%9A%E7%A1%85%E8%B0%B7%E5%BC%A0%E5%A4%A9%E7%A6%B9(%E5%A5%BD)/02-%E4%BB%A3%E7%A0%81%E6%89%8B%E6%95%B2/vue_test/17_TodoList%E6%A1%88%E4%BE%8B7.0-%E5%AE%8C%E6%88%90%E7%89%88(%E6%B7%BB%E5%8A%A0%E5%8A%A8%E7%94%BB%E5%8A%9F%E8%83%BD)" target="_blank">源码链接</a>
+                    </span>
+        <div class="time">
+          <div>开始日期：2021.08.02</div>
+          <div>完成日期：2021.08.18</div>
+        </div>
+      </li>
+
+      <li class="three">
+        <div class="title">GitHub搜索(Vue2)</div>
+        <span class="content">
+                        <a href="http://lm2048.top:8001/" target="_blank">页面链接</a>
+                    </span>
+        <span class="content">
+                        <a href="https://github.com/lm101845/LearnVue/tree/master/03-Vue3%E7%89%88%E6%9C%AC%E5%AD%A6%E4%B9%A0/03-%E5%B0%9A%E7%A1%85%E8%B0%B7%E5%BC%A0%E5%A4%A9%E7%A6%B9(%E5%A5%BD)/02-%E4%BB%A3%E7%A0%81%E6%89%8B%E6%95%B2/vue_test/20_Github%E6%90%9C%E7%B4%A2%E6%A1%88%E4%BE%8B2.0%E7%89%88%E6%9C%AC" target="_blank">源码链接</a>
+                    </span>
+        <div class="time">
+          <div>开始日期：2021.08.12</div>
+          <div>完成日期：2021.08.18</div>
+        </div>
+      </li>
+
+      <li class="four">
+        <div class="title">Vuex求和</div>
+        <span class="content">
+                        <a href="http://lm2048.top:8003/" target="_blank">页面链接</a>
+                    </span>
+        <span class="content">
+                        <a href="https://github.com/lm101845/LearnVue/tree/master/03-Vue3%E7%89%88%E6%9C%AC%E5%AD%A6%E4%B9%A0/03-%E5%B0%9A%E7%A1%85%E8%B0%B7%E5%BC%A0%E5%A4%A9%E7%A6%B9(%E5%A5%BD)/02-%E4%BB%A3%E7%A0%81%E6%89%8B%E6%95%B2/vue_test/27_Vuex%E7%89%88%E6%9C%AC%E6%B1%82%E5%92%8C%E6%A1%88%E4%BE%8B7.0-%E5%A4%9A%E7%BB%84%E4%BB%B6%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE3.0" target="_blank">源码链接</a>
+                    </span>
+        <div class="time">
+          <div>开始日期：2021.08.08</div>
+          <div>完成日期：2021.08.25</div>
+        </div>
+      </li>
+    </ul>
+
+    <div class="subtitle">Vue项目</div>
+    <ul>
+      <li class="one">
+        <div class="title">前端商城(Vue2)</div>
+        <!--                    <span class="content">-->
+        <!--                        <a href="" target="_blank">页面链接</a>-->
+        <!--                    </span>-->
+        <span class="content">
+                        <a href="https://github.com/lm101845/SuperMall" target="_blank">源码链接</a>
+                    </span>
+        <div class="time">
+          <div>开始日期：2020.11.23</div>
+          <div>完成日期：2021.01.07</div>
+        </div>
+      </li>
+
+      <li class="one">
+        <div class="title">黑马后管系统(Vue2)</div>
+        <!--                    <span class="content">-->
+        <!--                        <a href="" target="_blank">页面链接</a>-->
+        <!--                    </span>-->
+        <span class="content">
+                        <a href="https://github.com/lm101845/VueBackstageManagement" target="_blank">源码链接</a>
+                    </span>
+        <div class="time">
+          <div>开始日期：2020.12.01</div>
+          <div>完成日期：2020.12.10</div>
+        </div>
+      </li>
+
+      <li class="one">
+        <div class="title">知乎专栏(Vue3)</div>
+        <!--                    <span class="content">-->
+        <!--                        <a href="http://lm2048.top:8000/vue/shopping/" target="_blank">页面链接(未)</a>-->
+        <!--                    </span>-->
+        <span class="content">
+                        <a href="https://github.com/lm101845/Vue3ZheYeColumn" target="_blank">源码链接</a>
+                    </span>
+        <div class="time">
+          <div>开始日期：2020.12.01</div>
+          <div>完成日期：2020.12.10</div>
+        </div>
+      </li>
+
+      <li class="one">
+        <div class="title">知乎日报(Vue3)</div>
+        <!--                    <span class="content">-->
+        <!--                        <a href="http://lm2048.top:8000/vue/shopping/" target="_blank">页面链接</a>-->
+        <!--                    </span>-->
+        <span class="content">
+                        <a href="https://github.com/lm101845/Vue3ZhiHuDiary" target="_blank">源码链接</a>
+                    </span>
+        <div class="time">
+          <div>开始日期：2020.12.01</div>
+          <div>完成日期：2020.12.10</div>
+        </div>
+      </li>
+    </ul>
+
+    <div class="subtitle">ReactDemo</div>
+    <ul>
+      <li class="one">
+        <div class="title">购物车(React)</div>
+        <span class="content">
+                        <a href="http://lm2048.top:8000/react/shopping/" target="_blank">页面链接</a>
+                    </span>
+        <span class="content">
+                        <a href="https://github.com/lm101845/LearnReact/tree/master/04-%E7%8E%8B%E7%BA%A2%E5%85%83/02-%E4%BB%A3%E7%A0%81%E6%89%8B%E6%95%B2/01_learn_react/05_%E9%98%B6%E6%AE%B5%E6%A1%88%E4%BE%8B%E7%BB%83%E4%B9%A0" target="_blank">源码链接</a>
+                    </span>
+        <div class="time">
+          <div>开始日期：2021.10.17</div>
+          <div>完成日期：2021.10.30</div>
+        </div>
+      </li>
+
+      <li class="two">
+        <div class="title">TodoList(React)</div>
+        <span class="content">
+                        <a href="http://lm2048.top:8005/" target="_blank">页面链接</a>
+                    </span>
+        <span class="content">
+                        <a href="https://github.com/lm101845/LearnReact/tree/master/03-%E5%B0%9A%E7%A1%85%E8%B0%B7%E5%BC%A0%E5%A4%A9%E7%A6%B9(%E5%A5%BD)/02-%E4%BB%A3%E7%A0%81%E6%89%8B%E6%95%B2/react-staging/05-todolist%E5%B0%8F%E6%A1%88%E4%BE%8B" target="_blank">源码链接</a>
+                    </span>
+        <div class="time">
+          <div>开始日期：2021.10.10</div>
+          <div>完成日期：2021.10.30</div>
+        </div>
+      </li>
+
+      <li class="three">
+        <div class="title">GitHub搜索(React)</div>
+        <span class="content">
+                        <a href="http://lm2048.top:8002/" target="_blank">页面链接</a>
+                    </span>
+        <span class="content">
+                        <a href="https://github.com/lm101845/LearnReact/tree/master/03-%E5%B0%9A%E7%A1%85%E8%B0%B7%E5%BC%A0%E5%A4%A9%E7%A6%B9(%E5%A5%BD)/02-%E4%BB%A3%E7%A0%81%E6%89%8B%E6%95%B2/react-staging/07-Github%E6%90%9C%E7%B4%A2%E6%A1%88%E4%BE%8B%E4%BD%BF%E7%94%A8axios%E5%AE%9E%E7%8E%B0" target="_blank">源码链接</a>
+                    </span>
+        <div class="time">
+          <div>开始日期：2021.10.10</div>
+          <div>完成日期：2021.10.30</div>
+        </div>
+      </li>
+
+      <li class="four">
+        <div class="title">Redux求和</div>
+        <span class="content">
+                        <a href="http://lm2048.top:8004/" target="_blank">页面链接</a>
+                    </span>
+        <span class="content">
+                        <a href="https://github.com/lm101845/LearnReact/tree/master/03-%E5%B0%9A%E7%A1%85%E8%B0%B7%E5%BC%A0%E5%A4%A9%E7%A6%B9(%E5%A5%BD)/02-%E4%BB%A3%E7%A0%81%E6%89%8B%E6%95%B2/redux_test/03-redux%E5%AE%8C%E6%95%B4%E7%89%88" target="_blank">源码链接</a>
+                    </span>
+        <div class="time">
+          <div>开始日期：2021.08.30</div>
+          <div>完成日期：2021.09.04</div>
+        </div>
+      </li>
+
+      <li class="five">
+        <div class="title">汉堡到家</div>
+        <span class="content">
+                        <a href="http://lm2048.top:8000/react/hamburger/" target="_blank">页面链接</a>
+                    </span>
+        <span class="content">
+                        <a href="https://github.com/lm101845/React18OrderMeal/tree/master/02-%E4%BB%A3%E7%A0%81%E6%89%8B%E6%95%B2/react-app" target="_blank">源码链接</a>
+                    </span>
+        <div class="time">
+          <div>开始日期：2022.08.22</div>
+          <div>完成日期：2022.09.16</div>
+        </div>
+      </li>
+
+      <li class="six">
+        <div class="title">增删改查</div>
+        <span class="content">
+                        <a href="http://lm2048.top:8007/" target="_blank">页面链接</a>
+                    </span>
+        <span class="content">
+                        <a href="https://github.com/lm101845/React18OrderMeal/tree/master/02-%E4%BB%A3%E7%A0%81%E6%89%8B%E6%95%B2/knowledge" target="_blank">源码链接</a>
+                    </span>
+        <div class="time">
+          <div>开始日期：2022.08.22</div>
+          <div>完成日期：2022.09.16</div>
+        </div>
+      </li>
+    </ul>
+
+    <div class="subtitle">TSDemo</div>
+    <ul>
+      <li class="one">
+        <div class="title">贪吃蛇</div>
+        <!--                    <span class="content">-->
+        <!--                        <a href="#" target="_blank">页面链接(未)</a>-->
+        <!--                    </span>-->
+        <span class="content">
+                        <a href="https://github.com/lm101845/LearnJavaScript/tree/master/08-TypeScript/04-%E5%B0%9A%E7%A1%85%E8%B0%B7%E6%9D%8E%E6%99%BA%E8%B6%85/02-%E4%BB%A3%E7%A0%81%E6%89%8B%E6%95%B2/snake" target="_blank">源码链接</a>
+                    </span>
+        <div class="time">
+          <div>开始日期：2022.01.12</div>
+          <div>完成日期：2022.09.20</div>
+        </div>
+      </li>
+    </ul>
+
+    <div class="subtitle">小程序项目</div>
+    <ul>
+      <li class="one">
+        <div class="title">前端商城</div>
+        <!--                    <span class="content">-->
+        <!--                        <a href="#" target="_blank">页面链接(无)</a>-->
+        <!--因为api地址失效了-->
+        <!--                    </span>-->
+        <span class="content">
+                        <a href="https://github.com/lm101845/SuperMallMiniProgram" target="_blank">源码链接</a>
+                    </span>
+        <div class="time">
+          <div>开始日期：2021.02.23</div>
+          <div>完成日期：2021.02.25</div>
+        </div>
+      </li>
+
+      <li class="one">
+        <div class="title">网易云音乐</div>
+        <span class="content">
+                        <a href="http://lm2048.top:8006/" target="_blank">页面链接</a>
+                    </span>
+        <span class="content">
+                        <a href="https://github.com/lm101845/MiniProgramCloudMusic/tree/master/02-%E4%BB%A3%E7%A0%81%E6%89%8B%E6%95%B2" target="_blank">源码链接</a>
+                    </span>
+        <div class="time">
+          <div>开始日期：2021.08.10</div>
+          <div>完成日期：2022.02.20</div>
+        </div>
+      </li>
+    </ul>
+
+    <div class="subtitle">Node项目</div>
+    <ul>
+      <li class="one">
+        <div class="title">留言板</div>
+        <!--                    <span class="content">-->
+        <!--                        <a href="#" target="_blank">页面链接(未部署)</a>-->
+        <!--                    </span>-->
+        <span class="content">
+                        <a href="https://github.com/lm101845/LearnNode/tree/master/02-%E9%BB%91%E9%A9%AC%E6%9D%8E%E9%B9%8F%E5%91%A8/02-Node%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0-%E6%89%8B%E6%95%B2/day05/crud-express" target="_blank">源码链接</a>
+                    </span>
+        <div class="time">
+          <div>开始日期：2021.06.25</div>
+          <div>完成日期：2021.07.12</div>
+        </div>
+      </li>
+
+      <li class="two">
+        <div class="title">多人博客</div>
+        <!--                    <span class="content">-->
+        <!--                        <a href="#" target="_blank">页面链接(未部署)</a>-->
+        <!--                    </span>-->
+        <span class="content">
+                        <a href="https://github.com/lm101845/LearnNode/tree/master/02-%E9%BB%91%E9%A9%AC%E6%9D%8E%E9%B9%8F%E5%91%A8/02-Node%E4%BB%A3%E7%A0%81%E5%AD%A6%E4%B9%A0-%E6%89%8B%E6%95%B2/day06/blog" target="_blank">源码链接</a>
+                    </span>
+        <div class="time">
+          <div>开始日期：2021.08.04</div>
+          <div>完成日期：2021.08.12</div>
+        </div>
+      </li>
+
+      <li class="three">
+        <div class="title">登录注册</div>
+        <!--                    <span class="content">-->
+        <!--                        <a href="#" target="_blank">页面链接(无)</a>-->
+        <!--                    </span>-->
+        <span class="content">
+                        <a href="https://github.com/lm101845/LearnNode/tree/master/05-Node%E5%B0%8F%E6%A1%88%E4%BE%8B/01-%E7%99%BB%E9%99%86%E6%B3%A8%E5%86%8Cdemo/02-%E4%BB%A3%E7%A0%81%E6%89%8B%E6%95%B2" target="_blank">源码链接</a>
+                    </span>
+        <div class="time">
+          <div>开始日期：2021.07.12</div>
+          <div>完成日期：2021.08.02</div>
+        </div>
+      </li>
+
+      <li class="four">
+        <div class="title">大事件后台管理系统</div>
+        <!--                    <span class="content">-->
+        <!--                        <a href="#" target="_blank">页面链接(未部署)</a>-->
+        <!--                    </span>-->
+        <span class="content">
+                        <a href="https://github.com/lm101845/NodeBigEventBackStageManagement" target="_blank">源码链接</a>
+                    </span>
+        <div class="time">
+          <div>开始日期：2021.09.10</div>
+          <div>完成日期：2021.10.25</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="end-project">
+    <div class="project-title">后端项目</div>
+    <div class="subtitle">JavaWeb项目</div>
+    <ul>
+      <li class="one">
+        <div class="title">水果后台管理系统</div>
+        <!--                    <span class="content">-->
+        <!--                        <a href="#" target="_blank">页面链接</a>-->
+        <!--                    </span>-->
+        <span class="content">
+                        <a href="" target="_blank">源码链接</a>
+                    </span>
+        <div class="time">
+          <div>开始日期：2022.09.07</div>
+          <div>完成日期：2022.09.14</div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+</body>
 </html>

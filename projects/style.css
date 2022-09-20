@@ -1,0 +1,131 @@
+/**
+ * @Author liming
+ * @Date 2022/9/15 14:33
+ **/
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
+    color: #000;
+}
+
+
+html,body{
+    background-color: #fff;
+}
+
+.project{
+    width: 80%;
+    height: auto;
+    /*border: 1px solid #ccc;*/
+    margin: 10px auto;
+}
+
+.font-project,.end-project{
+
+    font-weight: bold;
+    /*background-color: #bfa;*/
+}
+
+.project-title{
+    text-align: center;
+    font-size: 40px;
+}
+
+.subtitle{
+    font-size: 30px;
+    margin-top: 50px;
+}
+
+ul{
+    margin: 10px;
+    /* 声明一个容器 */
+    display: grid;
+    justify-content: center;
+    /* 声明列的宽度,数字4表示的重复4次，即有4列宽度为200px*/
+    grid-template-columns: repeat(4,200px);
+    /* 声明行间距和列间距 */
+    grid-gap: 40px;
+    /* 分别表示两行的高度 */
+    grid-template-rows: 100px 100px;
+}
+
+li{
+    width: 200px;
+    height: 110px;
+    border: 1px solid #ccc;
+    text-align: center;
+    color: grey;
+}
+
+.title{
+    text-align: center;
+    font-size: 20px;
+    padding-bottom: 5px;
+}
+
+.time{
+    padding-top: 10px;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.one{
+    background-color:#ABCDEF;
+}
+.two{
+    background-color: #E9E7EF;
+}
+.three{
+    background-color:#A0EEE1;
+}
+.four{
+    background-color: #F0FCFF;
+}
+
+.five{
+    background-color: #19CAAD;
+}
+
+.six{
+    background-color: #FCDFE3;
+}
+
+.seven{
+    background-color: #ECA571;
+}
+
+.eight{
+    background-color: #DECAFB;
+}
+
+.nine{
+    background-color: #BEE7E9;
+}
+
+.ten{
+    background-color: #BEEDC7;
+}
+
+.eleven{
+    background-color: #D6D5B7;
+}
+
+.twelve{
+    background-color: #D1BA74;
+}
+
+.content a{
+    color: blue;
+}
+
+.content a:hover{
+    color: red;
+}
+
+
+
