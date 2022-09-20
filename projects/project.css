@@ -41,8 +41,7 @@ html,body{
     margin-top: 50px;
 }
 
-.font-project > ul,
-.end-project > ul{
+.project-ul{
     margin: 10px;
     /* 声明一个容器 */
     display: grid;
@@ -55,8 +54,7 @@ html,body{
     grid-template-rows: 100px 100px;
 }
 
-.font-project > li,
-.end-project > li{
+.project-ul  li{
     width: 200px;
     height: 110px;
     border: 1px solid #ccc;
