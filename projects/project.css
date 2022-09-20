@@ -55,7 +55,8 @@ html,body{
     grid-template-rows: 100px 100px;
 }
 
-li{
+.font-project > li,
+.end-project > li{
     width: 200px;
     height: 110px;
     border: 1px solid #ccc;
