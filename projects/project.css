@@ -15,14 +15,13 @@ a{
 
 
 html,body{
-    background-color: #fff;
+    background-color: #FCFCFC;
 }
 
 .project{
     width: 80%;
     height: auto;
-    /*border: 1px solid #ccc;*/
-    margin-top: 10px;
+    margin: 10px auto;
 }
 
 .font-project,.end-project{
