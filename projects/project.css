@@ -24,12 +24,34 @@ html,body{
     margin: 10px auto;
 }
 
-.font-project,.end-project{
-
-    font-weight: bold;
-    /*background-color: #bfa;*/
+.picture1 img {
+    width: 24%;
+    height: 600px;
+    padding-right: 5px;
 }
 
+.picture2 img {
+    width: 32%;
+    height: 600px;
+    padding-right: 5px;
+}
+
+.picture3 img {
+    width: 48%;
+    height: 1200px;
+    padding-right: 5px;
+}
+
+
+.font-project,
+.end-project,
+.work-project{
+    font-weight: bold;
+}
+
+.work-project .picture{
+    display: flex;
+}
 .project-title{
     text-align: center;
     font-size: 40px;
